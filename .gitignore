@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+node_modules/
+dist/
+.npm-cache/
+.env
+runtime/
+*.sqlite*
+*.db
+*.log
+test-results/
+playwright-report/
+.playwright/

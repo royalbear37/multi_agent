@@ -1,0 +1,77 @@
+import { expect, test } from "@playwright/test";
+test("seed → analysis → evidence/trace → review → reread persists", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "載入展示資料" }).click();
+  await expect(
+    page.getByText("展示病例與文件已初始化；既有資料已保留。"),
+  ).toBeVisible();
+  const selector = page.getByLabel("目前病例");
+  const first = "case-01-complete";
+  await selector.selectOption(first);
+  await expect(
+    page.getByRole("button", { name: "執行分析", exact: true }),
+  ).toBeEnabled();
+  await page.getByRole("button", { name: "執行分析", exact: true }).click();
+  await expect(page.getByText("可供審閱的展示候選")).toBeVisible();
+  await expect(
+    page.getByText("DEMO_DRUG_A", { exact: false }).first(),
+  ).toBeVisible();
+  await page.screenshot({ path: "../docs/prototype.png", fullPage: true });
+  await page.getByRole("button", { name: "查看證據與流程" }).click();
+  await expect(page.getByText("工作流 Trace", { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "開啟原始文件" }).first(),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "04人工審閱" }).click();
+  await page.getByLabel("審閱理由").fill("E2E synthetic 人工審閱測試");
+  await page.getByRole("button", { name: "送出審閱" }).click();
+  await expect(page.getByText("審閱已保存。")).toBeVisible();
+  await page.getByRole("button", { name: "重新讀取審閱" }).click();
+  await expect(
+    page.getByText("E2E synthetic 人工審閱測試", { exact: true }).first(),
+  ).toBeVisible();
+  await page.reload();
+  await selector.selectOption(first!);
+  await page.locator(".runrow").first().click();
+  await page.getByRole("button", { name: "04人工審閱" }).click();
+  await expect(
+    page.getByText("E2E synthetic 人工審閱測試", { exact: true }).first(),
+  ).toBeVisible();
+});
+
+test("unknown allergy withholds output and cannot be accepted", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByLabel("目前病例").selectOption("case-03-allergy-unknown");
+  await page.getByRole("button", { name: "執行分析", exact: true }).click();
+  await expect(
+    page.getByText("沒有可發布候選。請查看安全閘門、資料缺漏或模型設定。"),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "前往人工審閱" }).click();
+  await page.getByLabel("審閱理由").fill("不應解除資料缺漏限制");
+  await page.getByRole("button", { name: "送出審閱" }).click();
+  await expect(page.getByRole("alert")).toBeVisible();
+});
+
+test("explicit mock multi-agent and four mode benchmark", async ({ page }) => {
+  await page.goto("/");
+  await page.getByLabel("目前病例").selectOption("case-01-complete");
+  await page.getByLabel("比較模式").selectOption("multi-agent");
+  await page.getByLabel("模型執行方式").selectOption("mock");
+  await page.getByRole("button", { name: "執行分析", exact: true }).click();
+  await expect(page.getByText("可供審閱的展示候選")).toBeVisible();
+  await expect(page.locator(".candidate")).not.toHaveCount(0);
+  await expect(page.locator(".runbanner")).toContainText("MOCK 模擬");
+  await page.getByRole("button", { name: "06研究與設定" }).click();
+  await page.getByLabel("Benchmark 模型").selectOption("mock");
+  await page.getByRole("button", { name: "執行四模式比較" }).click();
+  await expect(
+    page.getByRole("link", { name: "匯出逐案例結果與摘要" }),
+  ).toBeVisible({ timeout: 30000 });
+  await expect(
+    page.getByRole("heading", { name: /Benchmark 結果/ }),
+  ).toContainText("MOCK");
+});

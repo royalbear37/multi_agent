@@ -1,0 +1,8 @@
+{
+  "version":"synthetic-resistance-1",
+  "status":"demo_only",
+  "records":{
+    "demo-resistance-v1":{"scope":"fictional demo population","signal":"DEMO_BASELINE","source":"data/demo_documents/synthetic_resistance.txt","limitation":"群體展示背景不是個別病例藥敏結果"},
+    "DEMO_RESISTANCE_HIGH":{"scope":"fictional demo population","signal":"DEMO_RESTRICTION_TEST","source":"data/demo_documents/synthetic_resistance.txt","limitation":"僅驗證保守限制分支，不代表臨床抗藥比例"}
+  }
+}

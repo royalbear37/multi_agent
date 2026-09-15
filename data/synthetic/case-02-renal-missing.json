@@ -1,0 +1,56 @@
+{
+  "case_id": "case-02-renal-missing",
+  "schema_version": "1.0",
+  "is_synthetic": true,
+  "source": "synthetic-seed",
+  "created_at": "2026-01-02T00:00:00+00:00",
+  "demographics": {
+    "age": 42,
+    "sex": "X",
+    "weight": 70,
+    "weight_unit": "kg"
+  },
+  "encounter": {
+    "infection_site": "demo-site",
+    "severity": "demo-stable",
+    "context": "demo-outpatient",
+    "observed_at": "2026-01-01T00:00:00+00:00"
+  },
+  "renal": {},
+  "allergies": {
+    "status": "known_none",
+    "items": []
+  },
+  "microbiology": {
+    "specimen": "demo-swab",
+    "organism": "DEMO_ORGANISM_A",
+    "collected_at": "2026-01-01T00:00:00+00:00",
+    "report_status": "final"
+  },
+  "ast_results": [
+    {
+      "drug_code": "DEMO_DRUG_A",
+      "mic": 1,
+      "comparator": "=",
+      "unit": "demo-unit",
+      "reported_sir": "S",
+      "method": "demo",
+      "standard": "DEMO",
+      "standard_version": "1",
+      "source": "synthetic"
+    }
+  ],
+  "rapid_identification": null,
+  "medications": [],
+  "resistance_context_ref": [
+    "demo-resistance-v1"
+  ],
+  "policy_refs": [
+    "demo-policy-v1"
+  ],
+  "provenance": {
+    "source_system": "seed",
+    "imported_at": "2026-01-01T00:00:00+00:00",
+    "adapter_version": "canonical-1"
+  }
+}

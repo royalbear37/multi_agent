@@ -1,0 +1,186 @@
+{
+  "config_version": "demo-rules-1.0.0",
+  "status": "demo_only",
+  "allowed_drugs": [
+    "DEMO_DRUG_A",
+    "DEMO_DRUG_B",
+    "DEMO_DRUG_C"
+  ],
+  "approved_drugs": {
+    "DEMO_ORGANISM_A": [
+      "DEMO_DRUG_A",
+      "DEMO_DRUG_B"
+    ],
+    "DEMO_ORGANISM_B": [
+      "DEMO_DRUG_B",
+      "DEMO_DRUG_C"
+    ]
+  },
+  "ast_standard": {
+    "name": "DEMO",
+    "version": "1",
+    "mic_unit": "demo-unit",
+    "comparators": [
+      "="
+    ]
+  },
+  "ast_matrix": {
+    "DEMO_ORGANISM_A": {
+      "DEMO_DRUG_A": "S",
+      "DEMO_DRUG_B": "S"
+    },
+    "DEMO_ORGANISM_B": {
+      "DEMO_DRUG_B": "S",
+      "DEMO_DRUG_C": "S"
+    }
+  },
+  "rules": [
+    {
+      "rule_id": "DEMO_ALLERGY_A",
+      "version": "1.0.0",
+      "status": "demo_only",
+      "scope": {
+        "organisms": [
+          "DEMO_ORGANISM_A"
+        ]
+      },
+      "required_fields": [
+        "allergies.status",
+        "allergies.items"
+      ],
+      "condition": {
+        "op": "any_item_equals",
+        "path": "allergies.items",
+        "item_key": "drug_code",
+        "value": "DEMO_DRUG_A"
+      },
+      "severity": "block",
+      "action": "avoid",
+      "drug_codes": [
+        "DEMO_DRUG_A"
+      ],
+      "reason": "展示過敏資料命中 DEMO_DRUG_A；需人工確認。",
+      "source_ref": "synthetic-rulebook-demo-1.0"
+    },
+    {
+      "rule_id": "DEMO_RENAL_DATA",
+      "version": "1.0.0",
+      "status": "demo_only",
+      "scope": {
+        "organisms": [
+          "DEMO_ORGANISM_A",
+          "DEMO_ORGANISM_B"
+        ]
+      },
+      "required_fields": [
+        "renal.egfr",
+        "renal.unit"
+      ],
+      "condition": {
+        "op": "exists",
+        "path": "renal.egfr"
+      },
+      "severity": "warning",
+      "action": "needs_confirmation",
+      "reason": "腎功能資料存在才可進行展示限制檢查。",
+      "source_ref": "synthetic-rulebook-demo-1.0"
+    },
+    {
+      "rule_id": "DEMO_AST_STANDARD",
+      "version": "1.0.0",
+      "status": "demo_only",
+      "scope": {
+        "organisms": [
+          "DEMO_ORGANISM_A",
+          "DEMO_ORGANISM_B"
+        ]
+      },
+      "required_fields": [
+        "ast_results",
+        "ast_results[].standard_version"
+      ],
+      "condition": {
+        "op": "exists",
+        "path": "ast_results"
+      },
+      "severity": "warning",
+      "action": "annotate",
+      "reason": "僅在展示 AST 標準版本可識別時解讀系統結果。",
+      "source_ref": "synthetic-rulebook-demo-1.0"
+    },
+    {
+      "rule_id": "DEMO_DRUG_RESISTANCE",
+      "version": "1.0.0",
+      "status": "demo_only",
+      "scope": {
+        "organisms": [
+          "DEMO_ORGANISM_A"
+        ]
+      },
+      "required_fields": [
+        "resistance_context_ref"
+      ],
+      "condition": {
+        "op": "contains",
+        "path": "resistance_context_ref",
+        "value": "DEMO_RESISTANCE_HIGH"
+      },
+      "severity": "block",
+      "action": "avoid",
+      "drug_codes": [
+        "DEMO_DRUG_B"
+      ],
+      "reason": "展示抗藥背景標記 DEMO_RESISTANCE_HIGH；不可作為個人確定結果。",
+      "source_ref": "synthetic-resistance-demo-1.0"
+    },
+    {
+      "rule_id": "DEMO_SUPPORTED_ORGANISM",
+      "version": "1.0.0",
+      "status": "demo_only",
+      "scope": {
+        "organisms": [
+          "DEMO_ORGANISM_A",
+          "DEMO_ORGANISM_B"
+        ]
+      },
+      "required_fields": [
+        "microbiology.organism"
+      ],
+      "condition": {
+        "op": "in",
+        "path": "microbiology.organism",
+        "values": [
+          "DEMO_ORGANISM_A",
+          "DEMO_ORGANISM_B"
+        ]
+      },
+      "severity": "info",
+      "action": "annotate",
+      "reason": "病例菌種不在展示支援範圍。",
+      "source_ref": "synthetic-rulebook-demo-1.0"
+    },
+    {
+      "rule_id": "DEMO_CANDIDATE_ALLOWLIST",
+      "version": "1.0.0",
+      "status": "demo_only",
+      "scope": {
+        "organisms": [
+          "DEMO_ORGANISM_A",
+          "DEMO_ORGANISM_B"
+        ]
+      },
+      "required_fields": [
+        "microbiology.organism",
+        "ast_results"
+      ],
+      "condition": {
+        "op": "exists",
+        "path": "ast_results"
+      },
+      "severity": "info",
+      "action": "allow_candidates",
+      "reason": "僅展示設定的病例菌種與 AST 資料可建立候選集合。",
+      "source_ref": "synthetic-rulebook-demo-1.0"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "case-14-version-conflict": {
+    "reason": "Conflicting imported policy versions",
+    "expected_block": false,
+    "software_status": "needs_confirmation"
+  },
+  "case-05-resistance": {
+    "rule_evaluations": {
+      "DEMO_DRUG_RESISTANCE": "matched"
+    },
+    "expected_block": true,
+    "software_status": "blocked"
+  },
+  "case-10-no-policy": {
+    "reason": "Missing selected evidence policy",
+    "expected_block": false,
+    "software_status": "needs_confirmation"
+  },
+  "case-12-model-unconfigured": {
+    "reason": "Model absence tested by provider_kind; not a case field",
+    "expected_block": false,
+    "software_status": "ready_for_review"
+  },
+  "case-09-no-ast-rapid": {
+    "reason": "Rapid identification does not imply AST",
+    "expected_block": false,
+    "software_status": "needs_confirmation"
+  },
+  "case-01-complete": {
+    "missing_fields": [],
+    "rule_evaluations": {
+      "DEMO_ALLERGY_A": "not_matched",
+      "DEMO_RENAL_DATA": "matched",
+      "DEMO_AST_STANDARD": "matched",
+      "DEMO_CANDIDATE_ALLOWLIST": "matched"
+    },
+    "expected_block": false,
+    "software_status": "ready_for_review"
+  },
+  "case-06-mic-unit-missing": {
+    "reason": "MIC unit absent",
+    "expected_block": false,
+    "software_status": "needs_confirmation"
+  },
+  "case-13-provider-output": {
+    "reason": "Provider failure injected in tests; case itself is complete",
+    "expected_block": false,
+    "software_status": "ready_for_review"
+  },
+  "case-11-unsupported": {
+    "reason": "Unsupported organism",
+    "expected_block": true,
+    "software_status": "blocked"
+  },
+  "case-03-allergy-unknown": {
+    "missing_fields": [
+      "allergies.status"
+    ],
+    "expected_block": false,
+    "software_status": "needs_confirmation"
+  },
+  "case-07-standard-unknown": {
+    "rule_evaluations": {
+      "DEMO_AST_STANDARD": "unknown"
+    },
+    "expected_block": false,
+    "software_status": "needs_confirmation"
+  },
+  "case-04-allergy-match": {
+    "rule_evaluations": {
+      "DEMO_ALLERGY_A": "matched"
+    },
+    "expected_block": true,
+    "software_status": "blocked"
+  },
+  "case-02-renal-missing": {
+    "missing_fields": [
+      "renal.egfr"
+    ],
+    "rule_evaluations": {
+      "DEMO_RENAL_DATA": "unknown"
+    },
+    "expected_block": false,
+    "software_status": "needs_confirmation"
+  },
+  "case-08-conflict": {
+    "reason": "Source SIR differs from fictional configured matrix",
+    "expected_block": false,
+    "software_status": "needs_confirmation"
+  }
+}

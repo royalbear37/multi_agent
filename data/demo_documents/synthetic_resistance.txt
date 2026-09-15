@@ -1,0 +1,4 @@
+SYNTHETIC DEMO DOCUMENT - NOT A CLINICAL GUIDELINE
+
+DEMO_ORGANISM_A resistance context is fictional fixture data. It must not be
+used to infer an individual patient's susceptibility or treatment.
