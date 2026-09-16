@@ -668,15 +668,23 @@ class DocumentService:
                     outcome_warnings = ["no_eligible_chunks"]
                 else:
                     try:
+                        # Ollama may take minutes for a book. Compute every
+                        # batch before opening a write transaction: SQLite
+                        # cache spills otherwise block concurrent readers.
+                        prepared = []
+                        for start in range(0, len(rows), _EMBEDDING_BATCH_SIZE):
+                            batch = rows[start:start + _EMBEDDING_BATCH_SIZE]
+                            vectors = self._embed_documents([row["text"] for row in batch])
+                            self._validate_vectors(vectors, len(batch))
+                            prepared.append((batch, vectors))
                         # Replace only this identity's selected vectors in the
                         # same transaction so a failed rebuild restores them.
                         db.execute(
                             f"DELETE FROM chunk_embeddings WHERE fingerprint=? AND chunk_id IN (SELECT chunk_id FROM chunks WHERE doc_id IN ({','.join('?' for _ in permitted)}))",
                             (self._embedding_identity()["fingerprint"], *permitted),
                         )
-                        for start in range(0, len(rows), _EMBEDDING_BATCH_SIZE):
-                            batch = rows[start:start + _EMBEDDING_BATCH_SIZE]
-                            count += self._store_embeddings(db, batch, self._embed_documents([row["text"] for row in batch]))
+                        for batch, vectors in prepared:
+                            count += self._store_embeddings(db, batch, vectors)
                         outcome = "ok"
                     except EmbeddingError as exc:
                         db.rollback()
@@ -720,9 +728,16 @@ class DocumentService:
                 indexed_ids = {row["chunk_id"] for row in indexed}
                 missing_rows = [row for row in rows if row["chunk_id"] not in indexed_ids]
                 if missing_rows:
+                    prepared = []
                     for start in range(0, len(missing_rows), _EMBEDDING_BATCH_SIZE):
                         batch = missing_rows[start:start + _EMBEDDING_BATCH_SIZE]
-                        self._store_embeddings(db, batch, self._embed_documents([row["text"] for row in batch]), expected_dimensions=query_dimensions)
+                        vectors = self._embed_documents([row["text"] for row in batch])
+                        _, dimensions = self._validate_vectors(vectors, len(batch))
+                        if dimensions != query_dimensions:
+                            raise EmbeddingError("embedding dimensions do not match")
+                        prepared.append((batch, vectors))
+                    for batch, vectors in prepared:
+                        self._store_embeddings(db, batch, vectors, expected_dimensions=query_dimensions)
                     indexed = db.execute(
                         f"SELECT e.*, c.*, d.title, d.is_synthetic, d.content_hash, d.source_type FROM chunk_embeddings e JOIN chunks c ON c.chunk_id=e.chunk_id JOIN documents d ON d.doc_id=c.doc_id WHERE e.fingerprint=? AND c.doc_id IN ({','.join('?' for _ in permitted)})",
                         (identity["fingerprint"], *permitted),

@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
 import { api, pretty } from "./api";
 import type { components } from "./api.generated";
+import {
+  BenchmarkOverview,
+  SettingsOverview,
+  WorkflowStep,
+  RunIssues,
+  TechnicalDetails,
+  executionLabel,
+  localTime,
+  modeNames,
+  statusNames,
+} from "./Insights";
 type CaseRecord = components["schemas"]["CaseRecord"];
 
 const sections = [
@@ -26,7 +37,11 @@ const names: Record<string, string> = {
   running: "執行中",
 };
 export function Status({ value }: { value: string }) {
-  return <span className={"badge " + value}>{names[value] || value}</span>;
+  return (
+    <span className={"badge " + value}>
+      {statusNames[value] || names[value] || value}
+    </span>
+  );
 }
 function Json({ value }: { value: unknown }) {
   return <pre>{pretty(value)}</pre>;
@@ -59,7 +74,9 @@ export default function App() {
   const [documents, setDocuments] = useState<any[]>([]),
     [query, setQuery] = useState("DEMO_ORGANISM_A"),
     [search, setSearch] = useState<any>(null),
-    [documentScope, setDocumentScope] = useState<"synthetic" | "reference">("synthetic");
+    [documentScope, setDocumentScope] = useState<"synthetic" | "reference">(
+      "synthetic",
+    );
   const [docFile, setDocFile] = useState<File | null>(null),
     [docTitle, setDocTitle] = useState(""),
     [docVersion, setDocVersion] = useState("1"),
@@ -67,6 +84,7 @@ export default function App() {
   const [benchmark, setBenchmark] = useState<any>(null),
     [benchmarks, setBenchmarks] = useState<any[]>([]),
     [rules, setRules] = useState<any>(null);
+  const [benchmarkProvider, setBenchmarkProvider] = useState("unconfigured");
   async function work(fn: () => Promise<void>) {
     setBusy(true);
     setError("");
@@ -91,6 +109,7 @@ export default function App() {
     setConfig(cf);
     setDocuments(ds);
     setBenchmarks(bs);
+    setBenchmark((current: any) => current ?? bs[0] ?? null);
     setRules(rs);
   }
   useEffect(() => {
@@ -163,14 +182,16 @@ export default function App() {
             正式臨床規則尚未設定。
           </p>
           <label>
-            展示角色
+            審閱紀錄角色（展示）
             <select value={role} onChange={(e) => setRole(e.target.value)}>
               <option value="physician">醫師</option>
               <option value="pharmacist">藥師</option>
               <option value="researcher">研究／管理人員</option>
             </select>
           </label>
-          <small>僅切換展示角色，非登入或權限驗證</small>
+          <small>
+            只記錄審閱身分，不改變分析結果或權限；目前沒有正式登入。
+          </small>
         </div>
       </aside>
       <main>
@@ -186,7 +207,10 @@ export default function App() {
           <div className="connection">
             <span className={config ? "dot" : "dot offline"} />
             {config ? "本機服務已連線" : "等待本機服務"}
-            <small>正式參考文件：{config?.reference_status || config?.who_status || "尚未匯入"}</small>
+            <small>
+              正式參考文件：
+              {config?.reference_status || config?.who_status || "尚未匯入"}
+            </small>
           </div>
         </header>
         {error && (
@@ -333,7 +357,9 @@ export default function App() {
                     onChange={(e) => setMode(e.target.value)}
                   >
                     {modes.map((m) => (
-                      <option key={m}>{m}</option>
+                      <option key={m} value={m}>
+                        {modeNames[m]}（{m}）
+                      </option>
                     ))}
                   </select>
                 </label>
@@ -380,7 +406,12 @@ export default function App() {
                       }
                     >
                       <span>
-                        {r.mode} <small>{r.run_id.slice(0, 8)}</small>
+                        {modeNames[r.mode] || r.mode}{" "}
+                        <small>{r.run_id.slice(0, 8)}</small>
+                        <small className="block">
+                          {localTime(r.created_at || r.nodes?.[0]?.started_at)}{" "}
+                          · {executionLabel(r)}
+                        </small>
                       </span>
                       <Status value={r.status} />
                     </button>
@@ -457,7 +488,7 @@ export default function App() {
               <div className="runbanner">
                 <div>
                   <small>
-                    {run.mode} · {run.is_mock ? "MOCK 模擬" : "非 mock"} ·{" "}
+                    {modeNames[run.mode] || run.mode} · {executionLabel(run)} ·{" "}
                     {run.run_id}
                   </small>
                   <h2>
@@ -506,16 +537,7 @@ export default function App() {
                       </article>
                     ),
                   )}
-                  <Json
-                    value={{
-                      缺漏: run.missing_fields,
-                      限制:
-                        run.output?.limitations ??
-                        run.nodes?.find((n: any) => n.node_id === "safety_gate")
-                          ?.output?.limitations,
-                      錯誤: run.errors,
-                    }}
-                  />
+                  <RunIssues run={run} />
                 </section>
               </div>
               {run.raw_baseline?.withheld && (
@@ -533,17 +555,12 @@ export default function App() {
           (run ? (
             <div className="grid two">
               <section className="panel">
-                <h2>工作流 Trace</h2>
+                <h2>分析步驟與結果</h2>
+                <p>
+                  展開步驟查看做了什麼與得到的結果；「步驟已執行」不代表資料或候選已通過檢核。
+                </p>
                 {run.nodes?.map((n: any, i: number) => (
-                  <details className="node" key={i}>
-                    <summary>
-                      <span>
-                        {String(i + 1).padStart(2, "0")}　{n.node_id || n.name}
-                      </span>
-                      <Status value={n.status} />
-                    </summary>
-                    <Json value={n} />
-                  </details>
+                  <WorkflowStep key={i} node={n} index={i} run={run} />
                 ))}
                 <details>
                   <summary>規則命中與版本</summary>
@@ -556,11 +573,14 @@ export default function App() {
                 </details>
               </section>
               <section className="panel">
-                <h2>版本固定的證據快照</h2>
+                <h2>本次使用的文件片段</h2>
+                <p className="muted">
+                  保留分析當時的版本與內容，供回頭核對依據。
+                </p>
                 {run.evidence_snapshots?.length ? (
                   run.evidence_snapshots.map((e: any, i: number) => (
                     <article className="evidence" key={i}>
-                      <h3>{e.title || e.doc_id}</h3>
+                      <h3>{e.document_title || e.title || e.doc_id}</h3>
                       <small>
                         {e.chunk_id} · v{e.document_version}
                       </small>
@@ -767,26 +787,53 @@ export default function App() {
                   ? "目前使用明確啟用的關鍵字檢索。"
                   : "將問題與文件片段轉為 embedding 向量，以語意相似度檢索。首次搜尋會建立缺少的向量。"}
               </p>
-              <p className="muted">Embedding 模型：{config?.rag?.model || "尚未設定"}</p>
+              <p className="muted">
+                Embedding 模型：{config?.rag?.model || "尚未設定"}
+              </p>
               <button
                 disabled={busy}
-                onClick={() => void work(async () => {
-                  const path = documentScope === "synthetic" ? "/documents/reindex" : "/documents/reindex?scope=" + documentScope;
-                  const result = await api(path, {});
-                  setNotice("向量索引：" + result.status + (result.warnings?.length ? " · " + result.warnings.join("、") : ""));
-                  setConfig(await api("/config"));
-                })}
+                onClick={() =>
+                  void work(async () => {
+                    const path =
+                      documentScope === "synthetic"
+                        ? "/documents/reindex"
+                        : "/documents/reindex?scope=" + documentScope;
+                    const result = await api(path, {});
+                    setNotice(
+                      "向量索引：" +
+                        result.status +
+                        (result.warnings?.length
+                          ? " · " + result.warnings.join("、")
+                          : ""),
+                    );
+                    setConfig(await api("/config"));
+                  })
+                }
               >
                 重建向量索引
               </button>
               <label>
                 文件範圍
-                <select disabled={busy} value={documentScope} onChange={(e) => { setDocumentScope(e.target.value as "synthetic" | "reference"); setSearch(null); }}>
+                <select
+                  disabled={busy}
+                  value={documentScope}
+                  onChange={(e) => {
+                    setDocumentScope(
+                      e.target.value as "synthetic" | "reference",
+                    );
+                    setSearch(null);
+                  }}
+                >
                   <option value="synthetic">synthetic 展示文件（預設）</option>
-                  <option value="reference">reference 正式參考文件（例如 WHO）</option>
+                  <option value="reference">
+                    reference 正式參考文件（例如 WHO）
+                  </option>
                 </select>
               </label>
-              <p className="muted">工作流固定使用 synthetic；切換為 reference 才會查詢正式參考文件。</p>
+              <p className="muted">
+                工作流固定使用 synthetic；切換為 reference
+                才會查詢正式參考文件。
+              </p>
               <label>
                 查詢
                 <input
@@ -800,7 +847,11 @@ export default function App() {
                   void work(async () =>
                     setSearch(
                       await api(
-                        "/documents/search?q=" + encodeURIComponent(query) + (documentScope === "synthetic" ? "" : "&scope=" + documentScope),
+                        "/documents/search?q=" +
+                          encodeURIComponent(query) +
+                          (documentScope === "synthetic"
+                            ? ""
+                            : "&scope=" + documentScope),
                       ),
                     ),
                   )
@@ -819,9 +870,30 @@ export default function App() {
                         {e.doc_id} · {e.chunk_id}
                       </strong>
                       <blockquote>{e.text}</blockquote>
-                      {typeof e.score === "number" && <p>語意相似度：{e.score.toFixed(3)}（非可信度機率）</p>}
-                      <Json value={e.location} />
-                      <a href={"/api/documents/" + e.doc_id + "/source" + (e.location?.page ? "#page=" + e.location.page : "")} target="_blank" rel="noreferrer">開啟原始文件</a>
+                      {typeof e.score === "number" && (
+                        <p>語意相似度：{e.score.toFixed(3)}（非可信度機率）</p>
+                      )}
+                      <p>
+                        {e.location?.page
+                          ? `PDF 第 ${e.location.page} 頁`
+                          : "非 PDF 頁碼定位"}
+                      </p>
+                      <TechnicalDetails
+                        value={e.location}
+                        label="詳細引用位置"
+                      />
+                      <a
+                        href={
+                          "/api/documents/" +
+                          e.doc_id +
+                          "/source" +
+                          (e.location?.page ? "#page=" + e.location.page : "")
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        開啟原始文件
+                      </a>
                     </article>
                   ))}
                 </>
@@ -835,34 +907,32 @@ export default function App() {
           <>
             <div className="grid two">
               <section className="panel">
-                <h2>設定狀態</h2>
-                <Json value={config} />
-                <details>
-                  <summary>展示規則與版本</summary>
-                  <Json value={rules} />
-                </details>
-                <p>API key 僅在後端設定。健康檢查不會呼叫付費模型。</p>
+                <SettingsOverview config={config} rules={rules} />
               </section>
               <section className="panel">
-                <h2>四模式 Benchmark</h2>
+                <h2>四模式比較（Benchmark）</h2>
                 <p>
-                  以已保存的 {cases.length} 個病例比較四種 runner；mock
-                  與真實模型結果分開標示。臨床適當性未評估。
+                  對全部已保存的 {cases.length} 個病例各執行四種模式，共{" "}
+                  {cases.length * 4} 筆結果。不是只比較上方選取的病例。
+                </p>
+                <p className="muted">
+                  規則判斷／文件檢索＋模型／單次模型整合／多節點工作流。後者是多節點整理加一次主要模型生成。這是軟體流程比較，臨床適當性尚未評估。
                 </p>
                 <label>
                   Benchmark 模型
                   <select
-                    value={provider}
-                    onChange={(e) => setProvider(e.target.value)}
+                    value={benchmarkProvider}
+                    onChange={(e) => setBenchmarkProvider(e.target.value)}
                   >
                     <option value="unconfigured">未設定模型</option>
                     <option value="mock">Mock 離線測試</option>
                     <option value="live">外部模型（可能產生費用）</option>
                   </select>
                 </label>
-                {provider === "live" && (
+                {benchmarkProvider === "live" && (
                   <div className="alert">
-                    將向已設定的外部模型傳送必要 synthetic 欄位及片段。
+                    將向已設定的外部模型傳送必要 synthetic
+                    欄位及片段。每個病例有三種模型模式，可能多次呼叫並產生費用。
                   </div>
                 )}
                 <button
@@ -873,7 +943,7 @@ export default function App() {
                       const b = await api("/benchmarks", {
                         case_ids: cases.map((c) => c.case_id),
                         modes,
-                        provider_kind: provider,
+                        provider_kind: benchmarkProvider,
                         request_id: crypto.randomUUID(),
                       });
                       setBenchmark(b);
@@ -883,9 +953,17 @@ export default function App() {
                 >
                   執行四模式比較
                 </button>
-                {benchmarks.map((b: any) => (
+                <h3>比較歷史（時間依本機時區）</h3>
+                {benchmarks.map((b: any, i: number) => (
                   <button
-                    className="runrow"
+                    className={
+                      "runrow benchmark-history " +
+                      (benchmark?.benchmark_id === b.benchmark_id
+                        ? "selected"
+                        : "")
+                    }
+                    aria-pressed={benchmark?.benchmark_id === b.benchmark_id}
+                    disabled={busy}
                     key={b.benchmark_id}
                     onClick={() =>
                       void work(async () =>
@@ -895,41 +973,40 @@ export default function App() {
                       )
                     }
                   >
-                    {b.benchmark_id} · {b.provider_kind}
+                    <span>
+                      <strong>
+                        {localTime(b.created_at)}
+                        {i === 0 ? " · 最新" : ""}
+                      </strong>
+                      <small className="block">
+                        {b.cases?.length ?? "?"} 個病例 ·{" "}
+                        {b.modes?.length ?? "?"} 種模式 ·{" "}
+                        {b.results?.length ?? b.summary?.total_cases ?? "?"}{" "}
+                        筆結果 · {executionLabel(b)}
+                      </small>
+                      <small className="block">
+                        {b.benchmark_id.slice(0, 8)} ·{" "}
+                        {(b.modes || [])
+                          .map((m: string) => modeNames[m] || m)
+                          .join("／")}
+                      </small>
+                    </span>
                   </button>
                 ))}
               </section>
             </div>
             {benchmark && (
               <section className="panel">
-                <h2>
-                  Benchmark 結果 · {benchmark.is_mock ? "MOCK" : "非 mock"}
-                </h2>
-                <p>
-                  synthetic 軟體測試不等於臨床驗證。null 表示 N/A／尚未評估。
-                </p>
-                <a
-                  className="button"
-                  href={"/api/benchmarks/" + benchmark.benchmark_id + "/export"}
-                  download
-                >
-                  匯出逐案例結果與摘要
-                </a>
-                <Json value={benchmark.summary} />
-                <details>
-                  <summary>逐案例結果</summary>
-                  <Json
-                    value={benchmark.results?.map((r: any) => ({
-                      run_id: r.run_id,
-                      case_id: r.case_id,
-                      mode: r.mode,
-                      status: r.status,
-                      gate_status: r.gate_status,
-                      is_mock: r.is_mock,
-                      elapsed_ms: r.elapsed_ms,
-                    }))}
-                  />
-                </details>
+                <BenchmarkOverview
+                  benchmark={benchmark}
+                  onOpenRun={(r) =>
+                    void work(async () => {
+                      await chooseCase(r.case_id);
+                      await chooseRun(r);
+                      setSection(1);
+                    })
+                  }
+                />
               </section>
             )}
           </>

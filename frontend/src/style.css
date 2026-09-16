@@ -565,3 +565,66 @@ summary:focus-visible {
     margin: 22px 0;
   }
 }
+.block {
+  display: block;
+  margin-top: 5px;
+}
+.benchmark-history {
+  text-align: left;
+  line-height: 1.6;
+}
+.benchmark-history.selected {
+  border-color: #087c75;
+  background: #edf8f6;
+  box-shadow: inset 3px 0 #087c75;
+}
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.metric-card,
+.setting-card {
+  border: 1px solid #d8e5e2;
+  background: #f6faf9;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.metric-card h3,
+.setting-card h3 {
+  margin: 0 0 10px;
+}
+.metric-card strong {
+  font-size: 20px;
+  color: #145d59;
+}
+.metric-card p,
+.setting-card small {
+  line-height: 1.7;
+}
+.step-body {
+  padding: 5px 12px 14px;
+}
+.step-outcome {
+  font-weight: 700;
+}
+.readable-list {
+  padding-left: 22px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.technical {
+  margin-top: 14px;
+  border-top: 1px dashed #ccd9d6;
+  padding-top: 10px;
+}
+.technical summary {
+  color: #4e6261;
+  font-size: 13px;
+  cursor: pointer;
+}
+.panel {
+  min-width: 0;
+}

@@ -1,6 +1,8 @@
 from pathlib import Path
 from io import BytesIO
 import math
+import sqlite3
+from contextlib import contextmanager
 
 import pytest
 from pypdf import PdfWriter
@@ -42,6 +44,42 @@ def test_reindex_recovers_changed_dimensions_and_preserves_old_on_failure(tmp_pa
 class BrokenEmbeddings(FakeEmbeddings):
     def embed(self, inputs):
         raise EmbeddingError("embedding provider unavailable")
+
+
+@pytest.mark.parametrize("operation", ["reindex", "search"])
+def test_embedding_computation_does_not_lock_out_index_readers(tmp_path, operation):
+    class ReaderProbe(FakeEmbeddings):
+        def __init__(self):
+            super().__init__()
+            self.read_errors = []
+
+        def embed(self, inputs):
+            # Mimic a settings/search request while Ollama computes a batch.
+            with sqlite3.connect(tmp_path / "rag.sqlite3", timeout=0.01) as reader:
+                try:
+                    reader.execute("SELECT count(*) FROM chunk_embeddings").fetchone()
+                except sqlite3.OperationalError as exc:
+                    self.read_errors.append(str(exc))
+            return [[1.0] * 768 for _ in inputs]
+
+    provider = ReaderProbe()
+    service = DocumentService(tmp_path, embedding_provider=provider, retrieval_mode="embedding")
+    content = "\n".join(f"# Section {n}\nkidney guidance {n}" for n in range(33)).encode()
+    service.import_document("many.md", content, "Many", "v1")
+    original_connect = service._connect
+
+    @contextmanager
+    def small_cache():
+        with original_connect() as db:
+            # Force SQLite's real cache-spill lock with a small test document.
+            db.execute("PRAGMA cache_size=5")
+            yield db
+
+    service._connect = small_cache
+    result = service.reindex() if operation == "reindex" else service.search("renal")
+    assert result["status"] == "ok"
+    assert provider.read_errors == []
+    assert service.status()["index"]["missing_chunks"] == 0
 
 
 class InvalidEmbeddings(FakeEmbeddings):
