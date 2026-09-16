@@ -1189,6 +1189,7 @@ export interface operations {
             query: {
                 q: string;
                 limit?: number;
+                scope?: "synthetic" | "reference";
             };
             header?: never;
             path?: never;
@@ -1218,7 +1219,9 @@ export interface operations {
     };
     document_reindex_api_documents_reindex_post: {
         parameters: {
-            query?: never;
+            query?: {
+                scope?: "synthetic" | "reference";
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -1232,6 +1235,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

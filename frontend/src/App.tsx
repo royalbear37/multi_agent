@@ -58,7 +58,8 @@ export default function App() {
     [role, setRole] = useState("physician");
   const [documents, setDocuments] = useState<any[]>([]),
     [query, setQuery] = useState("DEMO_ORGANISM_A"),
-    [search, setSearch] = useState<any>(null);
+    [search, setSearch] = useState<any>(null),
+    [documentScope, setDocumentScope] = useState<"synthetic" | "reference">("synthetic");
   const [docFile, setDocFile] = useState<File | null>(null),
     [docTitle, setDocTitle] = useState(""),
     [docVersion, setDocVersion] = useState("1"),
@@ -185,7 +186,7 @@ export default function App() {
           <div className="connection">
             <span className={config ? "dot" : "dot offline"} />
             {config ? "本機服務已連線" : "等待本機服務"}
-            <small>WHO 文件：{config?.who_status || "尚未匯入"}</small>
+            <small>正式參考文件：{config?.reference_status || config?.who_status || "尚未匯入"}</small>
           </div>
         </header>
         {error && (
@@ -734,6 +735,7 @@ export default function App() {
                     f.append("is_synthetic", String(synthetic));
                     const d = await api("/documents/import", f);
                     setDocuments(await api("/documents"));
+                    setConfig(await api("/config"));
                     setNotice("文件處理狀態：" + d.processing_status);
                   })
                 }
@@ -769,13 +771,22 @@ export default function App() {
               <button
                 disabled={busy}
                 onClick={() => void work(async () => {
-                  const result = await api("/documents/reindex", {});
+                  const path = documentScope === "synthetic" ? "/documents/reindex" : "/documents/reindex?scope=" + documentScope;
+                  const result = await api(path, {});
                   setNotice("向量索引：" + result.status + (result.warnings?.length ? " · " + result.warnings.join("、") : ""));
                   setConfig(await api("/config"));
                 })}
               >
                 重建向量索引
               </button>
+              <label>
+                文件範圍
+                <select disabled={busy} value={documentScope} onChange={(e) => { setDocumentScope(e.target.value as "synthetic" | "reference"); setSearch(null); }}>
+                  <option value="synthetic">synthetic 展示文件（預設）</option>
+                  <option value="reference">reference 正式參考文件（例如 WHO）</option>
+                </select>
+              </label>
+              <p className="muted">工作流固定使用 synthetic；切換為 reference 才會查詢正式參考文件。</p>
               <label>
                 查詢
                 <input
@@ -789,7 +800,7 @@ export default function App() {
                   void work(async () =>
                     setSearch(
                       await api(
-                        "/documents/search?q=" + encodeURIComponent(query),
+                        "/documents/search?q=" + encodeURIComponent(query) + (documentScope === "synthetic" ? "" : "&scope=" + documentScope),
                       ),
                     ),
                   )
@@ -810,6 +821,7 @@ export default function App() {
                       <blockquote>{e.text}</blockquote>
                       {typeof e.score === "number" && <p>語意相似度：{e.score.toFixed(3)}（非可信度機率）</p>}
                       <Json value={e.location} />
+                      <a href={"/api/documents/" + e.doc_id + "/source" + (e.location?.page ? "#page=" + e.location.page : "")} target="_blank" rel="noreferrer">開啟原始文件</a>
                     </article>
                   ))}
                 </>

@@ -87,5 +87,43 @@
     "reason": "Source SIR differs from fictional configured matrix",
     "expected_block": false,
     "software_status": "needs_confirmation"
+  },
+  "case-15-integrated-complete": {
+    "missing_fields": [],
+    "rule_evaluations": {
+      "DEMO_ALLERGY_A": "not_matched",
+      "DEMO_RENAL_DATA": "matched",
+      "DEMO_AST_STANDARD": "matched",
+      "DEMO_CANDIDATE_ALLOWLIST": "matched"
+    },
+    "expected_block": false,
+    "software_status": "ready_for_review",
+    "interaction_checks": [
+      "renal.egfr_present",
+      "medications_present",
+      "rapid_identification_present",
+      "resistance_context_present",
+      "ast_results_complete",
+      "evidence_required"
+    ]
+  },
+  "case-16-integrated-followup": {
+    "missing_fields": [],
+    "rule_evaluations": {
+      "DEMO_ALLERGY_A": "not_matched",
+      "DEMO_RENAL_DATA": "matched",
+      "DEMO_AST_STANDARD": "matched",
+      "DEMO_CANDIDATE_ALLOWLIST": "matched"
+    },
+    "expected_block": false,
+    "software_status": "ready_for_review",
+    "interaction_checks": [
+      "renal.egfr_present",
+      "medications_present",
+      "rapid_identification_present",
+      "resistance_context_present",
+      "ast_results_complete",
+      "evidence_required"
+    ]
   }
 }

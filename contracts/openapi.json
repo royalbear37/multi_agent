@@ -538,6 +538,20 @@
               "default": 8,
               "title": "Limit"
             }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "synthetic",
+                "reference"
+              ],
+              "type": "string",
+              "default": "synthetic",
+              "title": "Scope"
+            }
           }
         ],
         "responses": {
@@ -566,12 +580,38 @@
       "post": {
         "summary": "Document Reindex",
         "operationId": "document_reindex_api_documents_reindex_post",
+        "parameters": [
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "synthetic",
+                "reference"
+              ],
+              "type": "string",
+              "default": "synthetic",
+              "title": "Scope"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }

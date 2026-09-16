@@ -114,7 +114,9 @@ def health(): return {"status":"ok"}
 def config():
     provider_kind=os.getenv("LLM_PROVIDER", "unconfigured").strip().lower() or "unconfigured"
     svc = _documents()
-    return {"provider":_provider_status(provider_kind),"rag":svc.status() if svc else {"status":"not_configured"},"disclaimer":DISCLAIMER,"rules_status":"demo_only／synthetic","who_status":"尚未匯入"}
+    reference_count = sum(1 for item in svc.list_documents() if not item.get("is_synthetic")) if svc else 0
+    reference_status = f"已匯入 {reference_count} 份正式參考文件" if reference_count else "尚未匯入"
+    return {"provider":_provider_status(provider_kind),"rag":svc.status() if svc else {"status":"not_configured"},"disclaimer":DISCLAIMER,"rules_status":"demo_only／synthetic","reference_document_count":reference_count,"reference_status":reference_status,"who_status":reference_status}
 @app.get("/api/schema")
 def schema():
     from app.schemas.case import Case
@@ -222,14 +224,17 @@ async def import_document(file: UploadFile = File(...), title: str = Form(""), v
     try: return svc.import_document(file.filename,content,title or file.filename,version or "unversioned",is_synthetic)
     except ValueError as exc: raise HTTPException(422,str(exc))
 @app.get("/api/documents/search")
-def document_search(q: str = Query(...,min_length=1), limit: int = Query(8,ge=1,le=50)):
+def document_search(q: str = Query(...,min_length=1), limit: int = Query(8,ge=1,le=50), scope: Literal["synthetic", "reference"] = Query("synthetic")):
     svc=_documents()
-    return svc.search(q,limit) if svc else {"status":"not_configured","evidence":[],"warnings":["document service unavailable"]}
+    if svc is None: return {"status":"not_configured","evidence":[],"warnings":["document service unavailable"],"scope":scope}
+    try: return svc.search(q,limit,scope=scope)
+    except ValueError as exc: raise HTTPException(422,str(exc))
 @app.post("/api/documents/reindex")
-def document_reindex():
+def document_reindex(scope: Literal["synthetic", "reference"] = Query("synthetic")):
     svc = _documents()
     if svc is None: raise HTTPException(503,"DOCUMENT_SERVICE_NOT_AVAILABLE")
-    return svc.reindex()
+    try: return svc.reindex(scope=scope)
+    except ValueError as exc: raise HTTPException(422,str(exc))
 @app.get("/api/documents/{doc_id}")
 def document_detail(doc_id: str):
     svc=_documents()

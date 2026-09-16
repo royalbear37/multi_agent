@@ -2,6 +2,22 @@
 
 更新：2026-09-15。
 
+## 本次使用教學與整合病例更新（最新）
+
+本次工作目錄為 `multi_agent`。以下是本次實際驗證，後面的 embedding 改版紀錄保留作為歷史，不代表全部需求已完成。
+
+- 新增 2 個完整 synthetic 病例，總數 16；新增 `scripts/demo.ps1` 明確使用 lexical＋mock，預先產生並保存結果。
+- 現有本機 DB 已產生兩個新病例各 2 筆成功結果（rule-only／mock multi-agent）：4 筆皆 ready_for_review、missing_fields=[]、errors=[]，等待使用者審閱。
+- 舊 seed 的相同文件可能沒有 policy_refs；準備程式新增標記清楚的展示副本，保留舊文件與病例修改。
+- WHO 附件本機匯入 697 頁、1,442 chunks、indexed_with_warnings；正式參考 scope 的實際 lexical 搜尋成功。6 頁空文字警告，未逐頁驗證表格；未建真實 Ollama 向量。
+- 正式參考文件可獨立索引、搜尋與開啟原始頁面；工作流仍只使用 synthetic 證據。設定畫面改顯示參考文件數量。
+- 後端：**81 passed、4 warnings**，coverage **86%**（RAG **84%**）；Windows Python 3.14.5。
+- 前端：TypeScript/Vite build 通過，**4 項元件測試通過**；**4 項 Playwright E2E 通過**，含上傳／正式參考檢索隔離、分析→審閱→重新讀取、安全阻擋、mock／benchmark。
+- 前端首次在 sandbox 內被 esbuild 目錄讀取權限擋住；核准在 sandbox 外重跑後通過。首次 E2E 與前一測試程序占埠，停止該次測試後重跑通過。
+- 未呼叫付費 OpenAI API，未測真實 Ollama；fake embedding 測試只證明程式行為。沒有重新全新安裝依賴。
+
+完整 [操作教學](USER_GUIDE_ZH_TW.md) 與 [需求核對／待辦](REQUIREMENTS_AUDIT.md)。
+
 ## 中斷位置查核
 
 本機專案為 `multi_agent-main`。此次重新執行修改前的後端測試：**66 passed**；先前聊天中未找到可獨立核對的「65 passed」記錄。修改前 RAG 為 FTS5／關鍵字檢索。

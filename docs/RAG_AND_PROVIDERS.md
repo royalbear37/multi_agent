@@ -7,9 +7,9 @@
 1. 啟動後至「文件資料庫」，選擇原始 PDF／UTF-8 `.md`／`.txt`。
 2. 輸入可辨識標題及版本；真實 WHO 或其他正式文件必須取消 synthetic 勾選，不能冒充展示文件。
 3. 匯入後查看 processing_status、warnings 與 chunk_count。原始檔保留於 runtime 文件目錄。
-4. 檢索頁可查詢已匯入的 synthetic 片段；分析頁引用開啟原始文件。PDF page 表示從 1 開始的實體頁序，不是假定的印刷頁码；Markdown 使用行號與標題路徑。
+4. 檢索頁預設查詢 synthetic 片段；選「reference 正式參考文件」可搜尋 WHO 等非 synthetic 文件。PDF page 表示從 1 開始的實體頁序，不是假定的印刷頁码；Markdown 使用行號與標題路徑。
 
-目前展示工作流只使用 synthetic 文件。正式 WHO 文件可保存與檢查，但要啟用正式檢索政策，需另行確認適用版本、授權、病例範圍與正式規則。匯入不會自動啟用文件中的臨床規則，也不會自動傳送全文至模型。
+目前展示工作流只使用 synthetic 文件。正式 WHO 文件可保存、檢索與檢查；要連到正式候選輸出仍需确认病例範圍與正式規則。匯入本身不會啟用臨床規則或傳送全文至模型；主動搜尋／重建向量時才會將該範圍片段送至配置的 embedding 服務。
 
 相同 hash 避免重複原檔；不同內容版本保持不可變。搜尋遇到未解決的文件版本衝突不提供可發布證據。病例 policy_refs 可限制文件。掃描 PDF 需要 OCR；表格／欄位解析不可靠者標記需審閱並限制使用。這是保守啟發式檢查，未做完整 OCR 或醫療表格結構化。
 
@@ -36,7 +36,9 @@ EMBEDDING_TIMEOUT=30
 
 Embedding 服務失敗時不會暗中切回關鍵字。測試或舊檢索比較可明確設定 `RAG_RETRIEVAL_MODE=lexical`；這個模式不使用語意向量。回答模型的 `LLM_PROVIDER=mock` 不會把 embedding 自動改成 mock。
 
-向量搜尋仍只處理 synthetic 且符合 policy_refs 的文件，仍檢查版本衝突。非 synthetic 文件不會送到 embedding 服務。預設只送到本機 Ollama；若自行設定遠端 URL，符合條件的片段與查詢會傳至該服務。
+工作流向量搜尋仍只處理 synthetic 且符合 policy_refs 的文件，仍檢查版本衝突。文件庫明確選 reference 後，非 synthetic 文件也會送至配置的 embedding 服務；預設為本機 Ollama。若自行設定遠端 URL，選定範圍的片段與查詢會傳至該服務。
+
+API：`GET /api/documents/search?q=pneumonia&scope=reference`、`POST /api/documents/reindex?scope=reference`。省略 scope 維持 synthetic。完整 OpenAI 與 WHO 操作見 [使用教學](USER_GUIDE_ZH_TW.md)。
 
 這是小型語料的精確向量掃描，沒有近似最近鄰資料庫。相似度不是可信度機率；需要用實際查詢與人工相關性標註評估召回率。離線 fake 向量測試驗證索引與排序邏輯，不能證明真實模型的檢索品質。
 

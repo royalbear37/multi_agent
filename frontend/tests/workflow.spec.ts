@@ -1,4 +1,22 @@
 import { expect, test } from "@playwright/test";
+test("reference document upload and search remain separate from synthetic", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: /05.*文件/ }).click();
+  await page.getByLabel("文件", { exact: true }).setInputFiles({ name: "reference-test.txt", mimeType: "text/plain", buffer: Buffer.from("REFERENCE_SEARCH_ONLY_2026 source inspection fixture") });
+  await page.getByLabel("標題", { exact: true }).fill("Reference test fixture");
+  await page.getByLabel("虛構展示文件（正式文件請取消）").uncheck();
+  await page.getByRole("button", { name: "匯入並解析文件" }).click();
+  await expect(page.getByText("文件處理狀態：indexed")).toBeVisible();
+  await page.getByLabel("文件範圍").selectOption("reference");
+  await page.getByLabel("查詢", { exact: true }).fill("REFERENCE_SEARCH_ONLY_2026");
+  await page.getByRole("button", { name: "檢索文件", exact: true }).click();
+  await expect(page.locator(".evidence")).toHaveCount(1);
+  await expect(page.locator(".evidence a")).toHaveAttribute("href", /\/api\/documents\/doc_.*\/source/);
+  await page.getByLabel("文件範圍").selectOption("synthetic");
+  await expect(page.locator(".evidence")).toHaveCount(0);
+  await page.getByRole("button", { name: "檢索文件", exact: true }).click();
+  await expect(page.locator(".evidence")).toHaveCount(0);
+});
 test("seed → analysis → evidence/trace → review → reread persists", async ({
   page,
 }) => {

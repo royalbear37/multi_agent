@@ -149,6 +149,42 @@ def test_non_synthetic_is_never_searchable_and_policy_filter(tmp_path: Path):
     assert service.search("policy", policy_refs=["P1"])["evidence"][0]["doc_id"] == doc["doc_id"]
 
 
+def test_reference_scope_searches_only_non_synthetic_documents(tmp_path: Path):
+    service = DocumentService(tmp_path, retrieval_mode="lexical")
+    reference = service.import_document("who.txt", b"secret term from WHO", "WHO", "2024", is_synthetic=False)
+    service.import_document("demo.txt", b"secret term from demo", "Demo", "v1", is_synthetic=True)
+
+    default_result = service.search("secret term")
+    assert default_result["scope"] == "synthetic"
+    assert default_result["evidence"]
+    assert all(item["doc_id"] != reference["doc_id"] for item in default_result["evidence"])
+    reference_result = service.search("secret term", scope="reference")
+    assert reference_result["status"] == "ok"
+    assert reference_result["scope"] == "reference"
+    assert {item["doc_id"] for item in reference_result["evidence"]} == {reference["doc_id"]}
+
+
+def test_reference_scope_reindex_isolated_from_synthetic_index(tmp_path: Path):
+    provider = FakeEmbeddings()
+    service = DocumentService(tmp_path, embedding_provider=provider)
+    reference = service.import_document("who.txt", b"kidney reference", "WHO", "2024", is_synthetic=False)
+    synthetic = service.import_document("demo.txt", b"kidney demo", "Demo", "v1", is_synthetic=True)
+
+    result = service.reindex(scope="reference")
+    assert result["status"] == "ok"
+    assert result["scope"] == "reference"
+    assert result["count"] == 1
+    assert service.status(scope="reference")["index"]["embedded_chunks"] == 1
+    assert service.status(scope="synthetic")["index"]["embedded_chunks"] == 0
+    embedded_inputs = [text for call in provider.calls for text in call]
+    assert "kidney reference" in embedded_inputs
+    assert "kidney demo" not in embedded_inputs
+    assert service.search("renal", scope="reference")["evidence"][0]["doc_id"] == reference["doc_id"]
+    default_result = service.search("renal")
+    assert all(item["doc_id"] != reference["doc_id"] for item in default_result["evidence"])
+    assert synthetic["doc_id"] != reference["doc_id"]
+
+
 def test_path_boundary_and_unknown_source(tmp_path: Path):
     service = DocumentService(tmp_path, retrieval_mode="lexical")
     with pytest.raises(DocumentServiceError) as exc:

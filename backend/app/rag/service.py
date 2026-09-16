@@ -106,7 +106,7 @@ class DocumentServiceError(ValueError):
 class Retriever(Protocol):
     """Replaceable retrieval boundary used by the workflow."""
 
-    def search(self, query: str, limit: int = 8, policy_refs: list[str] | None = None) -> dict[str, Any]: ...
+    def search(self, query: str, limit: int = 8, policy_refs: list[str] | None = None, *, scope: str = "synthetic") -> dict[str, Any]: ...
 
 
 _ALLOWED_SUFFIXES = {".pdf", ".txt", ".md", ".markdown"}
@@ -115,6 +115,7 @@ _MAX_CHUNK_CHARS = 1400
 _OVERLAP_CHARS = 160
 _EMBEDDING_PROMPT_VERSION = "rag-embedding-v1"
 _EMBEDDING_BATCH_SIZE = 32
+_DOCUMENT_SCOPES = {"synthetic", "reference"}
 
 
 def _utc_now() -> str:
@@ -542,16 +543,33 @@ class DocumentService:
             return "embedding_dimension_mismatch"
         return "embedding_failed"
 
-    def status(self) -> dict[str, Any]:
+    @staticmethod
+    def _validate_scope(scope: str) -> str:
+        value = str(scope or "synthetic").strip().lower()
+        if value not in _DOCUMENT_SCOPES:
+            raise DocumentServiceError("INVALID_SCOPE", "scope 必須是 synthetic 或 reference")
+        return value
+
+    @staticmethod
+    def _scope_is_synthetic(scope: str) -> bool:
+        return scope == "synthetic"
+
+    @staticmethod
+    def _no_documents_warning(scope: str) -> str:
+        return "no_synthetic_documents" if scope == "synthetic" else "no_reference_documents"
+
+    def status(self, *, scope: str = "synthetic") -> dict[str, Any]:
         """Return retrieval configuration and local index counts.
 
         ``configured`` describes configuration presence, not whether an
         Ollama server is reachable; health is tested only during retrieval.
         """
+        scope = self._validate_scope(scope)
         identity = self._embedding_identity()
         with self._connect() as db:
-            total = int(db.execute("SELECT count(*) FROM chunks c JOIN documents d ON d.doc_id=c.doc_id WHERE d.is_synthetic=1").fetchone()[0])
-            indexed = int(db.execute("SELECT count(*) FROM chunk_embeddings e JOIN chunks c ON c.chunk_id=e.chunk_id JOIN documents d ON d.doc_id=c.doc_id WHERE d.is_synthetic=1 AND e.fingerprint=?", (identity["fingerprint"],)).fetchone()[0])
+            scope_value = int(self._scope_is_synthetic(scope))
+            total = int(db.execute("SELECT count(*) FROM chunks c JOIN documents d ON d.doc_id=c.doc_id WHERE d.is_synthetic=?", (scope_value,)).fetchone()[0])
+            indexed = int(db.execute("SELECT count(*) FROM chunk_embeddings e JOIN chunks c ON c.chunk_id=e.chunk_id JOIN documents d ON d.doc_id=c.doc_id WHERE d.is_synthetic=? AND e.fingerprint=?", (scope_value, identity["fingerprint"])).fetchone()[0])
         return {
             "retrieval_method": "lexical" if self.retrieval_mode == "lexical" else "ollama_embeddings",
             "retrieval_mode": self.retrieval_mode,
@@ -559,12 +577,14 @@ class DocumentService:
             "embedding_provider": identity["provider"], "embedding_model": identity["model"],
             "base_url_configured": bool(identity["base_url"]), "prompt_version": identity["prompt_version"],
             "configured": self.retrieval_mode == "lexical" or bool(identity["model"] and identity["base_url"]),
+            "scope": scope,
             "index": {"chunks": total, "embedded_chunks": indexed, "missing_chunks": max(0, total - indexed)},
             "warnings": list(self._configuration_warnings),
         }
 
-    def _permitted_doc_ids(self, db: sqlite3.Connection, policy_refs: list[str] | None) -> tuple[list[sqlite3.Row], set[str]]:
-        docs = db.execute("SELECT * FROM documents WHERE is_synthetic = 1").fetchall()
+    def _permitted_doc_ids(self, db: sqlite3.Connection, policy_refs: list[str] | None, scope: str = "synthetic") -> tuple[list[sqlite3.Row], set[str]]:
+        scope = self._validate_scope(scope)
+        docs = db.execute("SELECT * FROM documents WHERE is_synthetic = ?", (int(self._scope_is_synthetic(scope)),)).fetchall()
         requested_refs = {str(ref) for ref in (policy_refs or [])}
         permitted = {
             row["doc_id"] for row in docs
@@ -624,19 +644,20 @@ class DocumentService:
             raise EmbeddingError("embedding provider unavailable")
         return embed(list(documents))
 
-    def reindex(self, *, policy_refs: list[str] | None = None) -> dict[str, Any]:
+    def reindex(self, *, policy_refs: list[str] | None = None, scope: str = "synthetic") -> dict[str, Any]:
         """Embed all eligible chunks for the current provider identity."""
+        scope = self._validate_scope(scope)
         if self.retrieval_mode == "lexical":
-            info = self.status()
+            info = self.status(scope=scope)
             info.update({"status": "skipped", "count": 0, "warnings": sorted(set(info.get("warnings", []) + ["lexical_mode_enabled"]))})
             return info
         outcome = "no_documents"
         outcome_warnings: list[str] = []
         count = 0
         with self._connect() as db:
-            docs, permitted = self._permitted_doc_ids(db, policy_refs)
+            docs, permitted = self._permitted_doc_ids(db, policy_refs, scope)
             if not docs:
-                outcome_warnings = ["no_synthetic_documents"]
+                outcome_warnings = [self._no_documents_warning(scope)]
             else:
                 rows = db.execute(
                     f"SELECT c.* FROM chunks c WHERE c.doc_id IN ({','.join('?' for _ in permitted)}) ORDER BY c.chunk_id",
@@ -667,25 +688,27 @@ class DocumentService:
                         outcome = "failed"
                         count = 0
                         outcome_warnings = ["embedding_failed"]
-        info = self.status()
+        info = self.status(scope=scope)
+        info["scope"] = scope
         info.update({"status": outcome, "count": count, "warnings": sorted(set(info.get("warnings", []) + outcome_warnings))})
         return info
 
-    def _embedding_search(self, query: str, limit: int, policy_refs: list[str] | None) -> dict[str, Any]:
+    def _embedding_search(self, query: str, limit: int, policy_refs: list[str] | None, scope: str = "synthetic") -> dict[str, Any]:
         warnings: list[str] = []
+        scope = self._validate_scope(scope)
         identity = self._embedding_identity()
         with self._connect() as db:
-            docs, permitted = self._permitted_doc_ids(db, policy_refs)
+            docs, permitted = self._permitted_doc_ids(db, policy_refs, scope)
             if not docs:
-                return {"status": "no_documents", "evidence": [], "warnings": ["no_synthetic_documents"], "retrieval_method": "ollama_embeddings"}
+                return {"status": "no_documents", "evidence": [], "warnings": [self._no_documents_warning(scope)], "retrieval_method": "ollama_embeddings", "scope": scope}
             if not permitted:
-                return {"status": "no_results", "evidence": [], "warnings": ["policy_filter_no_match"], "retrieval_method": "ollama_embeddings"}
+                return {"status": "no_results", "evidence": [], "warnings": ["policy_filter_no_match"], "retrieval_method": "ollama_embeddings", "scope": scope}
             rows = db.execute(
                 f"SELECT c.*, d.title, d.is_synthetic, d.content_hash, d.source_type FROM chunks c JOIN documents d ON d.doc_id=c.doc_id WHERE c.doc_id IN ({','.join('?' for _ in permitted)}) ORDER BY c.chunk_id",
                 tuple(permitted),
             ).fetchall()
             if not rows:
-                return {"status": "no_results", "evidence": [], "warnings": ["no_eligible_chunks"], "retrieval_method": "ollama_embeddings"}
+                return {"status": "no_results", "evidence": [], "warnings": ["no_eligible_chunks"], "retrieval_method": "ollama_embeddings", "scope": scope}
             try:
                 query_vectors = self._embed_query(query)
                 checked_query, query_dimensions = self._validate_vectors(query_vectors, 1)
@@ -716,10 +739,10 @@ class DocumentService:
                 evidence = [self._evidence_row(row, score) for score, row in scored[:limit]]
             except EmbeddingError as exc:
                 db.rollback()
-                return {"status": "failed", "evidence": [], "warnings": [self._embedding_warning(exc)], "retrieval_method": "ollama_embeddings"}
+                return {"status": "failed", "evidence": [], "warnings": [self._embedding_warning(exc)], "retrieval_method": "ollama_embeddings", "scope": scope}
             except Exception:
                 db.rollback()
-                return {"status": "failed", "evidence": [], "warnings": ["embedding_failed"], "retrieval_method": "ollama_embeddings"}
+                return {"status": "failed", "evidence": [], "warnings": ["embedding_failed"], "retrieval_method": "ollama_embeddings", "scope": scope}
             warnings.extend(json.loads(doc["processing_warnings"] or "[]") for doc in docs)
             warnings = [warning for group in warnings for warning in (group if isinstance(group, list) else [group])]
             for row in indexed:
@@ -733,7 +756,7 @@ class DocumentService:
         if conflict:
             warnings.append("document_version_conflict")
             evidence = []
-        return {"status": "conflict" if conflict else ("ok" if evidence else "no_results"), "evidence": evidence, "warnings": sorted(set(warnings)), "retrieval_method": "ollama_embeddings"}
+        return {"status": "conflict" if conflict else ("ok" if evidence else "no_results"), "evidence": evidence, "warnings": sorted(set(warnings)), "retrieval_method": "ollama_embeddings", "scope": scope}
 
     @staticmethod
     def _evidence_row(row: sqlite3.Row, score: float | None = None) -> dict[str, Any]:
@@ -747,38 +770,40 @@ class DocumentService:
             result["score"] = round(float(score), 8)
         return result
 
-    def search(self, query: str, limit: int = 8, policy_refs: list[str] | None = None) -> dict[str, Any]:
+    def search(self, query: str, limit: int = 8, policy_refs: list[str] | None = None, *, scope: str = "synthetic") -> dict[str, Any]:
+        scope = self._validate_scope(scope)
         if self.retrieval_mode == "lexical":
-            return self._lexical_search(query, limit, policy_refs)
+            return self._lexical_search(query, limit, policy_refs, scope)
         warnings: list[str] = []
         identity = self._embedding_identity()
         if not isinstance(query, str) or not query.strip():
-            return {"status": "empty_query", "evidence": [], "warnings": ["query_required"], "retrieval_method": "ollama_embeddings", "embedding_model": identity["model"], "embedding_provider": identity["provider"]}
+            return {"status": "empty_query", "evidence": [], "warnings": ["query_required"], "retrieval_method": "ollama_embeddings", "embedding_model": identity["model"], "embedding_provider": identity["provider"], "scope": scope}
         try:
             limit = max(1, min(int(limit), 50))
         except (TypeError, ValueError):
             limit = 8
             warnings.append("invalid_limit_defaulted")
-        result = self._embedding_search(query, limit, policy_refs)
+        result = self._embedding_search(query, limit, policy_refs, scope)
         result["embedding_model"] = identity["model"]
         result["embedding_provider"] = identity["provider"]
         if warnings:
             result["warnings"] = sorted(set(result.get("warnings", []) + warnings))
         return result
 
-    def _lexical_search(self, query: str, limit: int = 8, policy_refs: list[str] | None = None) -> dict[str, Any]:
+    def _lexical_search(self, query: str, limit: int = 8, policy_refs: list[str] | None = None, scope: str = "synthetic") -> dict[str, Any]:
         warnings: list[str] = []
+        scope = self._validate_scope(scope)
         if not isinstance(query, str) or not query.strip():
-            return {"status": "empty_query", "evidence": [], "warnings": ["query_required"], "retrieval_method": "lexical"}
+            return {"status": "empty_query", "evidence": [], "warnings": ["query_required"], "retrieval_method": "lexical", "scope": scope}
         try:
             limit = max(1, min(int(limit), 50))
         except (TypeError, ValueError):
             limit = 8
             warnings.append("invalid_limit_defaulted")
         with self._connect() as db:
-            docs = db.execute("SELECT * FROM documents WHERE is_synthetic = 1").fetchall()
+            docs = db.execute("SELECT * FROM documents WHERE is_synthetic = ?", (int(self._scope_is_synthetic(scope)),)).fetchall()
             if not docs:
-                return {"status": "no_documents", "evidence": [], "warnings": ["no_synthetic_documents"], "retrieval_method": "lexical"}
+                return {"status": "no_documents", "evidence": [], "warnings": [self._no_documents_warning(scope)], "retrieval_method": "lexical", "scope": scope}
             for doc in docs:
                 warnings.extend(json.loads(doc["processing_warnings"] or "[]"))
             requested_refs = {str(ref) for ref in (policy_refs or [])}
@@ -791,7 +816,7 @@ class DocumentService:
                 or row["title"] in requested_refs
             }
             if not permitted:
-                return {"status": "no_results", "evidence": [], "warnings": ["policy_filter_no_match"], "retrieval_method": "lexical"}
+                return {"status": "no_results", "evidence": [], "warnings": ["policy_filter_no_match"], "retrieval_method": "lexical", "scope": scope}
             # FTS query syntax is intentionally generated from tokens, so a
             # user cannot inject operators or arbitrary SQL.
             tokens = re.findall(r"[\w\u4e00-\u9fff]+", query.casefold())
@@ -850,4 +875,4 @@ class DocumentService:
             # doc_id or policy reference to obtain one unambiguous snapshot.
             evidence = []
         status = "conflict" if conflict else ("ok" if evidence else "no_results")
-        return {"status": status, "evidence": evidence, "warnings": sorted(set(warnings)), "retrieval_method": retrieval_method}
+        return {"status": status, "evidence": evidence, "warnings": sorted(set(warnings)), "retrieval_method": retrieval_method, "scope": scope}
