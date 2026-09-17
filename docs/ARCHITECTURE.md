@@ -25,7 +25,7 @@ flowchart LR
 
 ## 決策紀錄
 
-1. 採 React + TypeScript + Vite、FastAPI + Pydantic，前後端分離。Node 24 與 Python 3.14 為本次 Windows 執行環境。前端依賴使用明確版本並提交 lockfile；後端安裝後凍結相容依賴。
+1. 採 React + TypeScript + Vite、FastAPI + Pydantic，前後端分離。Linux 版本以 Node.js 24 與 Python 3.14 為目標環境；前端依賴使用明確版本並提交 lockfile，後端安裝後凍結相容依賴。
 2. 採標準庫 sqlite3 與編號 SQL migration，未使用 ORM。原型以不可變 JSON 快照為主要資料；直接 SQL 能減少額外依賴，repository 邊界保留日後替換空間。
 3. 文件索引為獨立 SQLite 檔，與病例 DB 置於同一 runtime 儲存範圍。正式備份需同時保存兩個 DB 與原始文件；跨 DB 不提供分散式交易。
 4. 預設檢索使用 Ollama embedding 與 cosine similarity；文件向量保存於 SQLite，查詢時對符合政策的片段計算相似度，適用小型本機語料。模型或索引設定變更會使用獨立索引，舊文件不需重新上傳。FTS5／關鍵字只保留為明確選用的離線測試模式；embedding 失敗不會自動切換。PDF 解析不啟用臨床規則；OCR／複雜表格需另行處理。

@@ -129,8 +129,8 @@ def _json(value: Any) -> str:
 def _safe_filename(filename: str) -> str:
     if not isinstance(filename, str) or not filename.strip():
         raise DocumentServiceError("INVALID_FILENAME", "檔名不可為空白")
-    # A client supplies a filename, never a path.  This catches both slash
-    # conventions on Windows and POSIX, including drive-qualified paths.
+    # A client supplies a filename, never a path. Catch both slash conventions,
+    # including drive-qualified paths from uploaded metadata.
     if Path(filename).name != filename or "/" in filename or "\\" in filename:
         raise DocumentServiceError("INVALID_FILENAME", "檔名不得包含路徑")
     if filename in {".", ".."} or "\x00" in filename:

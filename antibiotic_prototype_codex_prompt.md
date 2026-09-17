@@ -6,7 +6,7 @@
 
 ## 1. 已確認需求與優先順序
 
-- 建立新專案；目標環境為 Windows 本機，使用瀏覽器操作。
+- 建立新專案；目標環境為 Linux 本機，使用瀏覽器操作。
 - 同一個 repository 內前後端分離，先不採微服務。
 - 成果是「可執行、模組可替換、可逐步接入正式資料與規則的 prototype 骨架」，不是空資料夾或大量 TODO。
 - 僅使用 synthetic cases；JSON 為主要病例交換格式；自動建立可重現的測試案例。
@@ -84,7 +84,7 @@
 - configs/demo/：明確 synthetic 規則及藥品設定
 - data/synthetic/：可重現案例、預期軟體結果
 - data/demo_documents/：明確標示的測試文件
-- scripts/：Windows 啟動、初始化、seed、測試命令
+- scripts/：Linux Bash 啟動、初始化、seed、測試命令
 - docs/
 
 資料流：外部 JSON → adapter／schema 驗證 → 標準病例 → 工作流及規則／檢索／模型 → 最終安全驗證 → 人工審閱 → 持久化與匯出。
@@ -286,7 +286,7 @@ RAG-only/single-agent 是離線研究基線，不能繞過使用者介面的最�
 
 ### 階段 A：契約與基本啟動
 
-- 建立專案、依賴、API schema、資料庫初版與 Windows 命令。
+- 建立專案、依賴、API schema、資料庫初版與 Linux 命令。
 - 建立架構文件、決策紀錄及待確認事項清單。
 
 ### 階段 B：最小垂直流程
@@ -307,7 +307,7 @@ RAG-only/single-agent 是離線研究基線，不能繞過使用者介面的最�
 
 - 執行後端／前端測試、型別檢查、build、E2E，修正可修正問題。
 - 以「全新 clone 後依 README 啟動」的角度驗證命令與初始化順序。
-- 若實際環境不是 Windows，不宣稱在 Windows 已實測；提供 PowerShell 命令與可選 Windows CI，列出驗證差距。
+- 若實際環境不是 Linux，不宣稱在 Linux 已實測；提供 Bash 命令與可選 Linux CI，列出驗證差距。
 
 只有涉及新外部付費操作、權限、不可逆資料變更、必要但無法安全推定的重大選擇時才詢問。醫療標準未定就以未設定／展示設定處理，不自行補成正式規則。
 
@@ -315,7 +315,7 @@ RAG-only/single-agent 是離線研究基線，不能繞過使用者介面的最�
 
 不能只交付測試腳本而不執行。至少驗證：
 
-1. Windows 使用說明能在無 Docker 情況下啟動前後端；依賴與資料庫初始化步驟完整。
+1. Linux 使用說明能在無 Docker 情況下啟動前後端；依賴與資料庫初始化步驟完整。
 2. seed 可重複執行，不默默清空既有資料；可列出並匯入 synthetic cases。
 3. 結構錯誤 JSON 有欄位級錯誤；臨床資料缺漏可保存並正確提示。
 4. 資料 adapter 能把第二種測試格式轉成同一內部 schema。
@@ -340,7 +340,7 @@ RAG-only/single-agent 是離線研究基線，不能繞過使用者介面的最�
 
 完成以下文件，可合理合併但不能缺內容：
 
-- README：Windows PowerShell 安裝、啟動、停止、初始化、seed、測試與常見錯誤。
+- README：Linux Bash 安裝、啟動、停止、初始化、seed、測試與常見錯誤。
 - .env.example 與 gitignore：金鑰、上傳檔、runtime DB、log 等適當排除；小型 synthetic fixtures 可追蹤。
 - Architecture：模組、責任邊界、資料流與精簡架構圖。
 - Data Dictionary／JSON Schema：單位、缺漏語意、schema 版本與 adapter 範例。
@@ -358,7 +358,7 @@ RAG-only/single-agent 是離線研究基線，不能繞過使用者介面的最�
 請以繁體中文回覆：
 
 1. 已完成的可操作成果。
-2. 最短 Windows 啟動命令與本機 URL。
+2. 最短 Linux 啟動命令與本機 URL。
 3. 如何用 seed case 走完展示流程。
 4. 哪些是真正實作、哪些是 synthetic/demo、哪些因 API 或正式規則尚未設定而不可執行。
 5. 實際執行的測試與結果；未執行／未通過的原因。

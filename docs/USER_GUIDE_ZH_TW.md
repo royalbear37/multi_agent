@@ -1,27 +1,27 @@
 # 操作教學：完整病例展示、OpenAI API 與 WHO RAG
 
-研究展示用／僅 synthetic 病例／非臨床使用。以下命令均從專案根目錄的 PowerShell 執行。
+研究展示用／僅 synthetic 病例／非臨床使用。以下命令均從 Linux 終端機的專案根目錄執行。
 
 ## 1. 先跑出完整結果（不需要 API key 或 Ollama）
 
 第一次安裝：
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1
+```bash
+bash scripts/setup.sh
 ```
 
 終端機 A：
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\demo.ps1
+```bash
+bash scripts/demo.sh
 ```
 
 這個命令明確選用 **lexical 真實本機文字檢索＋mock 回答模型**，初始化病例與展示文件，預先保存成功的 rule-only 與 multi-agent 執行結果，再啟動後端。它不修改 `.env`，不呼叫付費 API，也不清空既有病例或審閱。相同準備命令重跑會重用既有準備結果。
 
 終端機 B：
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\frontend.ps1
+```bash
+bash scripts/frontend.sh
 ```
 
 開啟 [工作台](http://127.0.0.1:5173)。選完整病例，點既有執行紀錄即可查看預先產生的結果；或選 `multi-agent`、`mock` 再按「執行分析」建立新紀錄。新增的完整病例與預期見 [病例說明](../data/synthetic/README.md)。
@@ -30,7 +30,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\frontend.ps1
 
 注意：腎功能存在檢查、展示 AST、背景與文件引用都有實際執行；用藥清單目前只是保存的病例資料，尚未有藥物交互作用引擎。故障病例刻意保留，用來展示過敏未知、缺資料或衝突時的阻擋。
 
-在兩個终端機按 Ctrl+C 停止。要切換下一節的正式配置，停止 demo 後改用一般 `backend/scripts/run.ps1` 啟動。
+在兩個終端機按 Ctrl+C 停止。要切換下一節的正式配置，停止 demo 後改用一般 `backend/scripts/run.sh` 啟動。
 
 ## 2. 設定 OpenAI 回答 API
 
@@ -46,11 +46,11 @@ OpenAI key 不會自動讓 Ollama 可用；也不能把 OpenAI URL 填進目前�
 1. 在 [OpenAI API 平台](https://platform.openai.com/api-keys) 建立供本專案使用的 API key，確認專案有可用 API 額度及模型權限。金鑰僅輸入本機設定檔，不貼到聊天。
 2. 只在 `.env` 不存在時複製範本：
 
-```powershell
-if (-not (Test-Path .\backend\.env)) {
-    Copy-Item .\backend\.env.example .\backend\.env
-}
-notepad .\backend\.env
+```bash
+if [ ! -f backend/.env ]; then
+  cp backend/.env.example backend/.env
+fi
+${EDITOR:-nano} backend/.env
 ```
 
 3. 在編輯器設定以下欄位；`LLM_API_KEY=` 右側填自己的 key（範例刻意留空）：
@@ -69,8 +69,8 @@ RAG_RETRIEVAL_MODE=lexical
 
 4. 重啟一般後端：
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\backend\scripts\run.ps1
+```bash
+bash backend/scripts/run.sh
 ```
 
 5. 「研究與設定」檢查 configured 與模型名稱。這只是設定檢查，不是付費連線測試。選完整病例、`multi-agent`、外部模型 `live`，看完外傳提示再按執行，才會送出必要 synthetic 欄位與檢索片段，可能產生 API 費用。先試一個病例，再跑 benchmark。
@@ -83,7 +83,7 @@ powershell -ExecutionPolicy Bypass -File .\backend\scripts\run.ps1
 
 已安裝並啟動 Ollama 後：
 
-```powershell
+```bash
 ollama pull embeddinggemma
 ```
 
@@ -120,11 +120,11 @@ WHO 的正式參考範圍與 synthetic 分開；病例分析仍僅使用 synthet
 
 | 現象 | 如何處理 |
 | --- | --- |
-| 所有 multi-agent 都無候選 | 先用 demo.ps1＋mock；確認文件已 seed、retrieval 有片段 |
-| 改 `.env` 沒生效 | 重啟一般後端；系統既有環境變數優先於 `.env`；demo.ps1 明確用 lexical/mock |
+| 所有 multi-agent 都無候選 | 先用 `demo.sh`＋mock；確認文件已 seed、retrieval 有片段 |
+| 改 `.env` 沒生效 | 重啟一般後端；系統既有環境變數優先於 `.env`；`demo.sh` 明確用 lexical/mock |
 | WHO 已匯入但搜不到 | 選正式參考範圍，查看解析警告與該範圍索引結果 |
 | 畫面仍有「非臨床／demo_only」 | 這是正確的研究標記，接 API 也不會消失 |
-| 新病例沒有出現 | 再按載入展示資料，或跑 demo.ps1；seed 保留既有 revision |
+| 新病例沒有出現 | 再按載入展示資料，或跑 `demo.sh`；seed 保留既有 revision |
 | 完整病例的審閱節點 pending | 需由使用者操作人工審閱，不由 mock 自動完成 |
 
 測試與缺口見 [本次需求核對](REQUIREMENTS_AUDIT.md)。備份前停止後端，保存整個 runtime 資料夾；不同資料庫請連同它旁邊的 documents 一起保存。

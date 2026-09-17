@@ -1,6 +1,6 @@
 # 多代理人抗生素用藥輔助決策 Prototype
 
-Windows 本機研究工作台，使用本機 CSV 的實際菌種、測試藥品與藥敏判讀，搭配明確標示的模擬臨床情境、WHO 文件檢索（RAG）、八節點分析、表單審閱與四模式研究比較。
+Linux 本機研究工作台，使用本機 CSV 的實際菌種、測試藥品與藥敏判讀，搭配明確標示的模擬臨床情境、WHO 文件檢索（RAG）、八節點分析、表單審閱與四模式研究比較。
 
 **研究展示用／非臨床使用。** 預設流程不再使用虛構菌種／藥品。來源 S 判讀僅建立待審選項，不等於治療建議；不重新計算 CLSI/EUCAST 界值、不提供給藥方案。WHO 可進入病例 RAG，但檢索到片段不代表已驗證臨床適用性。
 
@@ -25,20 +25,24 @@ Windows 本機研究工作台，使用本機 CSV 的實際菌種、測試藥品�
 <a id="install"></a>
 ## 1. 首次安裝
 
-先安裝 Python 與 Node.js；已測環境包含 Windows Python 3.14.5、Node.js 24。首次安裝需要網路，不需要 Docker。
+先安裝 Python 3、`venv`、Node.js 與 npm。Vite 7 要求 Node.js `20.19+` 或 `22.12+`，本專案 lockfile 已在 Node.js 24 使用。首次安裝需要網路，不需要 Docker。Ubuntu／Debian 可先執行：
 
 以下命令一律從**專案根目錄**執行，也就是可以看到這份 README、`backend`、`frontend`、`scripts` 的資料夾。如果目前在 `backend`，先執行 `cd ..` 回到根目錄。
 
-```powershell
-python --version
+```bash
+sudo apt update
+sudo apt install -y python3 python3-venv python3-pip git curl
+python3 --version
 node --version
-npm.cmd --version
+npm --version
 ```
+
+請另外用發行版、nvm 或組織核准的套件來源安裝符合上述版本的 Node.js；不要用 `sudo npm install` 安裝本專案依賴。
 
 安裝前後端套件並初始化資料庫：
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1
+```bash
+bash scripts/setup.sh
 ```
 
 安裝入口在根目錄的 `scripts/`，會處理以下依賴：
@@ -51,18 +55,18 @@ powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1
 | `frontend/package.json`、`frontend/package-lock.json` | 前端套件與固定版本 |
 | `backend/.env` | 本機設定檔，需自行建立，和 `.venv` 不同 |
 
-requirements 保留在 backend，由根目錄 setup 統一安裝即可。重新安裝前先停止本專案服務，避免 Windows 鎖定套件檔案。
+requirements 保留在 backend，由根目錄 setup 統一安裝即可。重新安裝前先停止本專案服務。
 
 <a id="env"></a>
 ## 2. 建立設定檔與保護金鑰
 
 setup 不會自動建立 `.env`。執行以下命令，只在檔案不存在時複製範本，避免覆蓋已填好的 key：
 
-```powershell
-if (-not (Test-Path .\backend\.env)) {
-    Copy-Item .\backend\.env.example .\backend\.env
-}
-notepad .\backend\.env
+```bash
+if [ ! -f backend/.env ]; then
+  cp backend/.env.example backend/.env
+fi
+${EDITOR:-nano} backend/.env
 ```
 
 - 真實 key 只放在 `backend/.env`，不要填進 `.env.example`、前端或聊天。
@@ -72,7 +76,7 @@ notepad .\backend\.env
 
 確認 Git 沒有追蹤金鑰檔：
 
-```powershell
+```bash
 git check-ignore -v backend/.env
 git ls-files -- backend/.env
 ```
@@ -113,22 +117,22 @@ PROTOTYPE_DB_PATH=../data/runtime/prototype.db
 
 ### 3.2 安裝 Ollama 與 embedding 模型
 
-在 PowerShell 使用 [Ollama 官方 Windows 安裝方式](https://ollama.com/download/windows)：
+依 Ollama 官方 Linux 安裝方式完成安裝，啟動服務：
 
-```powershell
-irm https://ollama.com/install.ps1 | iex
+```bash
+ollama serve
 ```
 
-安裝完重新開啟 PowerShell，啟動 Ollama，下載並檢查模型：
+另開終端機下載並檢查模型：
 
-```powershell
+```bash
 ollama --version
 ollama pull embeddinggemma
 ollama list
-Invoke-RestMethod http://127.0.0.1:11434/api/tags
+curl -fsS http://127.0.0.1:11434/api/tags
 ```
 
-模型列表應包含 `embeddinggemma`，最後一行確認 Ollama 服務可連線。若服務未啟動，可從開始選單開啟 Ollama；或在另一個終端機執行 `ollama serve` 並保持開啟。已經有服務執行時不必再啟動第二份。
+模型列表應包含 `embeddinggemma`，最後一行確認 Ollama 服務可連線。若使用 systemd 安裝，可用 `systemctl status ollama` 檢查；已經有服務執行時不必再啟動第二份。
 
 在同一份 `backend/.env` 加入：
 
@@ -156,16 +160,16 @@ RAG_RETRIEVAL_MODE=lexical
 
 終端機 A：啟動後端，保持視窗開著。
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\backend\scripts\run.ps1
+```bash
+bash backend/scripts/run.sh
 ```
 
 成功時會看到 `Uvicorn running on http://127.0.0.1:8000`。
 
 另開終端機 B：同樣在專案根目錄啟動前端，保持開著。
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\frontend.ps1
+```bash
+bash scripts/frontend.sh
 ```
 
 | 位址 | 用途 |
@@ -183,8 +187,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\frontend.ps1
 
 先完成第 10 節 WHO 匯入，再依第 6 節準備本機 CSV 病例。終端機 A 使用：
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\demo.ps1
+```bash
+bash scripts/demo.sh
 ```
 
 此命令明確選擇 lexical＋mock，為前兩個來源病例各保存 rule-only、mock multi-agent 結果，再啟動後端。WHO 已匯入後，不需 key 或 Ollama。終端機 B 照第 4 節開前端。
@@ -200,8 +204,11 @@ powershell -ExecutionPolicy Bypass -File .\scripts\demo.ps1
 
 CSV 為結構化資料，請使用匯入腳本，不要放進 RAG 文件上傳框。先在文件庫找到 WHO 的 `doc_id`（文件詳細資料），由專案根目錄執行：
 
-```powershell
-.\backend\.venv\Scripts\python.exe .\backend\scripts\import_microbiology.py .\microbiology_cohort_deid_tj_updated.csv --policy-ref doc_c9543071373005e1bf0a --install
+```bash
+backend/.venv/bin/python backend/scripts/import_microbiology.py \
+  ./microbiology_cohort_deid_tj_updated.csv \
+  --policy-ref doc_c9543071373005e1bf0a \
+  --install
 ```
 
 上面的文件 ID 對應目前本機已匯入的 WHO；其他電腦請換成自己的參考文件 ID。`--per-site 4` 是預設，每種檢體最多選 4 個來源培養，再新增 3 個配對情境。CSV 全檔採串流掃描，兩次通讀以完整收集不相鄰的藥敏列，不把 496 萬列都當成病人匯入資料庫。
@@ -379,27 +386,28 @@ null 表示 N/A、無分母或未評估，不是零分。token 只有 provider �
 
 不用開前端也可初始化／seed：
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\backend\scripts\init_db.ps1
-powershell -ExecutionPolicy Bypass -File .\backend\scripts\seed.ps1
+```bash
+bash backend/scripts/init_db.sh
+bash backend/scripts/seed.sh
 ```
 
 只準備離線結果，不啟動後端：
 
-```powershell
-.\backend\.venv\Scripts\python.exe .\backend\scripts\prepare_demo.py
+```bash
+backend/.venv/bin/python backend/scripts/prepare_demo.py
 ```
 
 `scripts/generate_synthetic.py` 僅重建歷史回歸測試 fixture，不供新流程載入；新病例請使用第 6 節 CSV 匯入器。
 
 ### 測試
 
-```powershell
+```bash
 # 後端 coverage、前端型別檢查/build、元件測試
-powershell -ExecutionPolicy Bypass -File .\scripts\test.ps1
+bash scripts/test.sh
 
-# 另下載 Chromium 並執行瀏覽器驗收
-powershell -ExecutionPolicy Bypass -File .\scripts\test.ps1 -E2E
+# 第一次先安裝 Chromium 與 Linux 系統依賴，再執行瀏覽器驗收
+(cd frontend && npx playwright install --with-deps chromium)
+bash scripts/test.sh --e2e
 ```
 
 E2E 自動啟停測試服務，使用獨立 DB 及 8001／5174 埠，請保持這兩個埠可用。預設測試不呼叫付費 API。2026-09-15 驗證記錄：後端 81 項、coverage 86%、元件 4 項、E2E 4 項、build 通過；這是歷史結果，不代表真實 OpenAI／Ollama 已測通。
@@ -422,10 +430,10 @@ E2E 自動啟停測試服務，使用獨立 DB 及 8001／5174 埠，請保持�
 
 schema 修改後從根目錄更新契約與前端型別：
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\backend\scripts\generate_contracts.ps1
-npm.cmd --prefix .\frontend run generate:types
-npm.cmd --prefix .\frontend run build
+```bash
+bash backend/scripts/generate_contracts.sh
+npm --prefix frontend run generate:types
+npm --prefix frontend run build
 ```
 
 <a id="faq"></a>
@@ -434,15 +442,16 @@ npm.cmd --prefix .\frontend run build
 | 問題 | 處理 |
 | --- | --- |
 | 只有 .venv、沒有 .env | 按第 2 節從範本建立，確認不是 .env.txt |
-| 找不到 requirements | 在根目錄執行 scripts/setup.ps1，後端清單在 backend |
-| 找不到 ollama 命令 | 安裝後重新開 PowerShell，確認 PATH 與安裝位置 |
+| `No module named venv` | 安裝 `python3-venv`，移走未完成的 `backend/.venv` 後重跑 setup |
+| 找不到 requirements | 在根目錄執行 `bash scripts/setup.sh`，後端清單在 backend |
+| 找不到 ollama 命令 | 安裝後重新開終端機，確認 PATH 與安裝位置 |
 | 11434 無法連線 | 啟動 Ollama，查 /api/tags，確認 embeddinggemma 已下載 |
 | 8000/ 顯示 404 | 正常，操作頁在 5173；API 文件在 8000/docs |
-| WinError 10048／8000 被占用 | 在舊後端視窗按 Ctrl+C 再啟動，不要開兩份 |
+| `Address already in use` | 在舊後端終端機按 Ctrl+C，或用 `ss -ltnp` 確認占用程序 |
 | 沒有 Uvicorn running | 看終端機最後錯誤、目前目錄，再用 health 確認，勿反覆啟動 |
 | 前端無法連線 | 兩個終端機保持執行，確認 health，再按畫面「重新連線」 |
-| PowerShell 阻擋腳本 | 使用本教學的 ExecutionPolicy Bypass，只作用於該程序 |
-| .env 改了沒生效 | 重啟一般後端，確認未使用 demo.ps1、未被既有環境變數覆蓋 |
+| shell script 無執行權限 | 使用 `bash scripts/setup.sh`；若要用 `./scripts/setup.sh`，先執行 `chmod +x scripts/*.sh backend/scripts/*.sh` |
+| .env 改了沒生效 | 重啟一般後端，確認未使用 demo.sh、未被既有環境變數覆蓋 |
 | 模型 not_configured | 用 mock 展示，或補齊 LLM 設定、重啟並在 UI 選 live |
 | PROVIDER_HTTP_ERROR | 核對 key、API 專案權限、model 與 URL，勿貼出 key |
 | RATE_LIMIT／TIMEOUT | 查配額／速率或網路／timeout，先測單病例 |
@@ -456,22 +465,18 @@ npm.cmd --prefix .\frontend run build
 
 健康檢查：
 
-```powershell
-Invoke-RestMethod http://127.0.0.1:8000/api/health
+```bash
+curl -fsS http://127.0.0.1:8000/api/health
 ```
 
-找不到占用 8000 的視窗時，先查 PID 及命令：
+找不到占用 8000 的終端機時，先查 PID 及命令：
 
-```powershell
-Get-NetTCPConnection -LocalPort 8000 -State Listen |
-    Select-Object LocalAddress,LocalPort,OwningProcess
+```bash
+ss -ltnp | grep ':8000'
+ps -fp 12345
 
-# 把 12345 換成剛查到的 PID，確認是本專案 uvicorn
-Get-CimInstance Win32_Process -Filter 'ProcessId = 12345' |
-    Select-Object ProcessId,CommandLine
-
-# 確認後才停止，不要直接沿用舊聊天中的 PID
-Stop-Process -Id 12345
+# 把 12345 換成剛查到的 PID，確認是本專案 uvicorn 後才停止
+kill 12345
 ```
 
 <a id="limits"></a>

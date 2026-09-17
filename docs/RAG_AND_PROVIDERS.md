@@ -26,7 +26,7 @@ EMBEDDING_MODEL=embeddinggemma
 EMBEDDING_TIMEOUT=30
 ```
 
-1. 安裝並啟動 [Ollama for Windows](https://ollama.com/download/windows)。
+1. 在 Linux 安裝並啟動 [Ollama](https://ollama.com/download/linux)（`ollama serve` 或對應的 systemd 服務）。
 2. 執行 `ollama pull embeddinggemma` 下載模型。
 3. 重啟後端；「研究與設定」顯示非敏感配置。配置存在不代表已通過連線驗證。
 4. 「文件資料庫」點「重建向量索引」，或直接搜尋。索引失敗會顯示 warning；確認 Ollama 啟動與模型名稱。

@@ -17,12 +17,12 @@
 1. 使用 apply_patch 的 Update File 改寫 README，避免在同一次 patch 對同一路徑 Delete/Add。
 2. 章節順序：目錄 → 首次安裝 → 建立 .env／Git 忽略 → OpenAI＋Ollama → 前後端啟停 → 離線 demo → 病例 CRUD／版本 → 分析／狀態 → 證據／trace → 審閱 → 文件與 WHO → benchmark → 匯出備份 → 開發 API／測試 → 排錯 → 限制。
 3. 所有操作直接放 README，不只連結到其他教學。requirements 保留 backend，根目錄 setup 已統一安裝前後端。
-4. 最後檢查相對連結、目錄錨點、PowerShell 路徑、按鈕文案與 git diff；只改文件，不動 .env 或啟停服務。
+4. 最後檢查相對連結、目錄錨點、Bash/POSIX 路徑、按鈕文案與 git diff；只改文件，不動 .env 或啟停服務。
 
 ## 已確認的重點
 
-- setup 建立 .venv，但不建立 .env；使用 Test-Path 後 Copy-Item，避免覆蓋 key。禁止讀出使用者 key。
-- 一般 backend/scripts/run.ps1 讀 .env；scripts/demo.ps1 明確用 lexical/mock，二擇一啟動。前端另開終端機跑 scripts/frontend.ps1；首頁 5173，API docs 8000/docs，8000/ 404 正常。
+- setup 建立 .venv，但不建立 .env；只在檔案不存在時使用 `cp`，避免覆蓋 key。禁止讀出使用者 key。
+- 一般 `backend/scripts/run.sh` 讀 .env；`scripts/demo.sh` 明確用 lexical/mock，二擇一啟動。前端另開終端機跑 `scripts/frontend.sh`；首頁 5173，API docs 8000/docs，8000/ 404 正常。
 - OpenAI 用 LLM_PROVIDER/live、LLM_BASE_URL、LLM_MODEL、LLM_API_KEY；既有 gpt-4.1-mini 範例與官方來源在 USER_GUIDE。Ollama 負責 embedding，不是回答模型；模型 embeddinggemma、11434、EMBEDDING_TIMEOUT=120。可明確改 lexical。
 - 病例 UI 可 JSON 檔案／文字匯入，canonical／alternate，編輯建立 revision、取消、歷史。同 case_id 不代表新病例。以 case-15/16 示範成功，故障案例保留。
 - 四模式與 provider 是兩個選擇；mock 不會自動解決 embedding 失敗。multi-agent 是確定性多節點＋一次主要生成。

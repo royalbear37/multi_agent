@@ -14,7 +14,7 @@ export default defineConfig({
   webServer: [
     {
       command:
-        "..\\backend\\.venv\\Scripts\\python.exe -m uvicorn app.main:app --app-dir ../backend --host 127.0.0.1 --port 8001",
+        "../backend/.venv/bin/python -m uvicorn app.main:app --app-dir ../backend --host 127.0.0.1 --port 8001",
       url: "http://127.0.0.1:8001/api/health",
       reuseExistingServer: false,
       env: {

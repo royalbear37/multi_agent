@@ -13,7 +13,7 @@ context only and must not be read as an interaction result.
 
 ## 完整展示操作
 
-從專案根目錄執行 `powershell -ExecutionPolicy Bypass -File .\scripts\demo.ps1`，另開前端，選以下病例的最近執行紀錄：
+從專案根目錄執行 `bash scripts/demo.sh`，再用另一個終端機執行 `bash scripts/frontend.sh`，選以下病例的最近執行紀錄：
 
 | 病例 | 可觀察結果 |
 | --- | --- |
