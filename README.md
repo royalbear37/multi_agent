@@ -1,8 +1,8 @@
 # 多代理人抗生素用藥輔助決策 Prototype
 
-Windows 本機研究工作台，提供 16 個 synthetic 病例、展示規則、文件檢索（RAG）、八節點分析流程、人工審閱與四模式研究比較。
+Windows 本機研究工作台，使用本機 CSV 的實際菌種、測試藥品與藥敏判讀，搭配明確標示的模擬臨床情境、WHO 文件檢索（RAG）、八節點分析、表單審閱與四模式研究比較。
 
-**研究展示用／僅 synthetic 病例／非臨床使用。** 藥品使用虛構 `DEMO_DRUG_*` 代碼，不提供劑量、頻率、療程或正式醫囑。WHO 文件可供原文檢索，匯入不會自動啟用臨床規則。
+**研究展示用／非臨床使用。** 預設流程不再使用虛構菌種／藥品。來源 S 判讀僅建立待審選項，不等於治療建議；不重新計算 CLSI/EUCAST 界值、不提供給藥方案。WHO 可進入病例 RAG，但檢索到片段不代表已驗證臨床適用性。
 
 ## 目錄
 
@@ -109,7 +109,7 @@ PROTOTYPE_DB_PATH=../data/runtime/prototype.db
 
 目前 adapter 使用 Chat Completions、`temperature=0` 和 JSON mode。`gpt-4.1-mini` 是相容設定範例，模型權限以你的 API 專案為準；更換模型前需確認參數相容。目前沒有 reasoning effort 設定。[OpenAI 模型文件](https://developers.openai.com/api/docs/models/gpt-4.1-mini)、[API 認證說明](https://developers.openai.com/api/reference/overview)。
 
-重啟一般後端後，在「研究與設定」確認模型名稱與 configured。**configured 代表設定齊全，不代表真實連線已成功。** 選完整病例、multi-agent、外部模型，再執行一次，才會呼叫回答 API，傳送必要 synthetic 欄位與檢索片段，可能產生費用。
+重啟一般後端後，在「研究與設定」確認模型名稱與 configured。**configured 代表設定齊全，不代表真實連線已成功。** 選完整病例、multi-agent、外部模型，再執行一次，才會呼叫回答 API，傳送必要病例欄位（來源病例須先確認可外送並開啟病例設定）與檢索片段，可能產生費用。
 
 ### 3.2 安裝 Ollama 與 embedding 模型
 
@@ -181,58 +181,56 @@ powershell -ExecutionPolicy Bypass -File .\scripts\frontend.ps1
 <a id="demo"></a>
 ## 5. 免 API 的完整展示
 
-完成首次安裝後，終端機 A 用以下命令**取代一般後端命令**：
+先完成第 10 節 WHO 匯入，再依第 6 節準備本機 CSV 病例。終端機 A 使用：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\demo.ps1
 ```
 
-終端機 B 照第 4 節開前端。demo 會明確使用 lexical＋mock，載入病例與文件，預先保存 case-15／16 各兩筆結果（rule-only、mock multi-agent），再啟動後端。不需要 key 或 Ollama。
+此命令明確選擇 lexical＋mock，為前兩個來源病例各保存 rule-only、mock multi-agent 結果，再啟動後端。WHO 已匯入後，不需 key 或 Ollama。終端機 B 照第 4 節開前端。
 
-1. 打開工作台，選 `case-15-integrated-complete`。
-2. 點「執行紀錄」中的結果，閱讀候選與安全閘門。
-3. 按「查看證據與流程」，查看完整 AST、背景、快速鑑定與文件引用。
-4. 前往人工審閱，填理由並接受，再按「重新讀取審閱」。
-5. 換 `case-16-integrated-followup`；或選 multi-agent＋mock 再按「執行分析」，產生新結果。
+選 `cohort-...` 病例 → 開啟執行紀錄 → 查看藥敏選項與排除理由 → 查看證據與流程 → 以表單審閱。`-allergy` 是加入模擬過敏與腎功能下降的配對情境，並非來源病人的真實追蹤紀錄。mock 只測資料流程，不代表模型已做推理。
 
-完整案例應出現 `ready_for_review`／`awaiting_review`，沒有缺漏／執行錯誤。Human Review 的 pending 是等待你操作。rule-only 可列 A/B 展示候選，mock 固定挑第一個 A，不是藥效比較。
-
-重跑準備會保留既有病例與審閱，相同請求可重用紀錄；舊文件若缺政策關聯，會新增明確標記的展示副本。若完整病例曾被你改成缺漏資料，程式不會覆蓋修改，會回報準備未通過。
-
-要使用 `.env` 的 OpenAI／Ollama 時，停止 demo，再用 `backend/scripts/run.ps1`。demo 腳本會明確選用 mock／lexical，不修改 `.env`。
+重跑會新增分析，不覆蓋病例或審閱；若資料仍缺漏會回報具體問題。改用 OpenAI／Ollama 時，停止 demo，再用一般後端啟動命令。
 
 <a id="cases"></a>
 ## 6. 病例匯入、編輯與版本
 
-### 6.1 載入與選擇
+### 6.1 準備本機 CSV
 
-按「載入展示資料」，再從「目前病例」選擇。seed 可重複執行，不覆蓋已存在病例。
+CSV 為結構化資料，請使用匯入腳本，不要放進 RAG 文件上傳框。先在文件庫找到 WHO 的 `doc_id`（文件詳細資料），由專案根目錄執行：
 
-| 病例 | 用途 |
+```powershell
+.\backend\.venv\Scripts\python.exe .\backend\scripts\import_microbiology.py .\microbiology_cohort_deid_tj_updated.csv --policy-ref doc_c9543071373005e1bf0a --install
+```
+
+上面的文件 ID 對應目前本機已匯入的 WHO；其他電腦請換成自己的參考文件 ID。`--per-site 4` 是預設，每種檢體最多選 4 個來源培養，再新增 3 個配對情境。CSV 全檔採串流掃描，兩次通讀以完整收集不相鄰的藥敏列，不把 496 萬列都當成病人匯入資料庫。
+
+本機產物：
+
+- `data/local/microbiology/catalog.json`：全檔名稱字典，97 種菌種名稱、95 種測試藥品名稱；包含不同微生物與測試項目，收錄不等於適用於抗生素治療。
+- `profile.json`：欄位分布與原檔 SHA-256。
+- `cases.json`：15 個初始來源／模擬混合病例。初步、多菌種與陰性資料不自動生成完整單菌種情境；原始數值仍以字串保留。
+
+這些檔案與根目錄 `microbiology*.csv` 已由 Git 忽略。腳本不送出網路請求、不呼叫 LLM。`--install` 將準備好的病例加入本機資料庫；同 ID 已存在時保留使用者修改。重啟後端、重新整理前端即可選取，或按「載入已準備的來源病例」。
+
+舊版虛構病例仍保留歷史資料，預設列表及新 benchmark 不納入；需要稽核舊資料可用 `GET /api/cases?include_legacy=true`。舊 `data/synthetic` 與 `configs/demo` 僅供歷史回歸測試，不是預設種子或規則。
+
+### 6.2 資料來源標示與病例 JSON
+
+在「匯入病例 JSON」使用 canonical 格式。所有新增欄位向後相容，日期仍須有時區。
+
+| 資料類型 | 欄位 |
 | --- | --- |
-| case-01 | 基本完整資料；既有 DB 若被編輯，可能不同於檔案 |
-| case-02／03 | 腎功能缺漏／過敏未知 |
-| case-04／05 | 展示過敏／抗藥背景硬性限制 |
-| case-06／07／08 | MIC 單位缺漏／標準版本未知／AST 衝突 |
-| case-09 | 沒有 AST，只有快速鑑定 |
-| case-10／11 | 沒有對應政策／菌種不支援 |
-| case-12／13 | 搭配模型未設定／輸出測試；API 故障由測試替身注入，不由病例自動觸發 |
-| case-14 | 文件版本衝突 |
-| case-15／16 | 完整腎功能、用藥背景、快速鑑定、背景、兩筆 AST 與展示證據 |
+| 全部合成 | `is_synthetic: true`、`data_origin: synthetic` |
+| 純去識別來源 | `is_synthetic: false`、`data_origin: deidentified`、填 `provenance.source_system` |
+| 來源藥敏＋模擬臨床情境 | `is_synthetic: false`、`data_origin: hybrid`、另列 `provenance.simulated_fields` |
 
-case-16 是獨立病例 ID，不是自動串接前案的追蹤功能。用藥欄位目前是背景資料，沒有藥物交互作用引擎。
+`evidence_scope: reference` 與 `policy_refs: [文件 ID]` 決定病例引用哪些參考文件。不得把去識別來源直接標成全部合成。來源檔的偏移日期不拿來補真實病歷時間；症狀、年齡、體重、腎功能、過敏及目前用藥是明確補寫的情境。
 
-### 6.2 匯入 synthetic JSON
+原始 `AST_pheno` 與 `CLSI_2022_pheno` 分開保存。預設使用後者，未提供則不偷偷回退成另一欄。I、R、SDD、NS、缺漏與前後不一致都不自動變成 S。AST_val1/val2 未有單位，不一律當成 MIC，也不以數值推算界值。
 
-1. 在「病例工作台」下方找到「匯入 synthetic JSON」。
-2. 選格式 `canonical`，用「選擇病例 JSON」讀檔，或貼到文字框。
-3. 可複製 `data/synthetic/case-15-integrated-complete.json` 作範例；新病例請改 `case_id`。
-4. 保留 `is_synthetic: true`，日期使用有時區格式，例如 `2026-01-15T00:00:00+00:00`。
-5. 按「驗證並匯入」，看到「病例已保存」再分析。
-
-格式不合法會拒絕保存並顯示驗證訊息；合法但資料不足可保存，分析會列出缺漏。未知過敏不等於無過敏，沒有 AST 不等於敏感。完整欄位見 [JSON Schema](contracts/case.schema.json)。
-
-`alternate` 是第二種來源 adapter，不是任意格式轉換。欄位依 `backend/app/schemas/case.py` 的 AlternateCase 及 `backend/app/adapters/case_adapter.py`；一般操作優先使用 canonical 範例。
+來源病例預設可用 rule-only、mock 或本機 Ollama。若來源資料使用條款允許外送，可在病例摘要勾選「允許此病例的必要分析欄位送至外部模型」，會保存新版本；之後選 live 才會呼叫已設定的 OpenAI 等服務。傳送資料不含來源病人 ID、就醫 ID、原檔列或偏移日期。**此勾選本身不授予資料使用權。**
 
 ### 6.3 編輯與歷史
 
@@ -247,12 +245,12 @@ case-16 是獨立病例 ID，不是自動串接前案的追蹤功能。用藥欄
 
 | 模式 | 做什麼 | 未設定回答模型時 |
 | --- | --- | --- |
-| rule-only | 展示規則與模板候選，不呼叫回答模型 | 可執行 |
+| rule-only | 來源判讀規則與模板選項，不呼叫回答模型 | 可執行 |
 | rag-only | 病例摘要與檢索證據的研究基線生成 | partial／not_configured |
 | single-agent | 病例、來源 AST 與證據的一次主要生成 | partial／not_configured |
 | multi-agent | 多節點整理、規則、檢索、安全與候選呈現 | partial／not_configured |
 
-模型執行方式可選未設定、mock、外部模型 live。mock 與 live 皆須通過輸出檢核。multi-agent 目前是確定性多節點加一次主要生成，不是多個 LLM 互相討論。rule-only 仍可能執行檢索節點供 trace 使用，Ollama 故障時要查看該節點狀態。
+模型執行方式可選未設定、mock、外部模型 live。mock 與 live 皆須通過輸出檢核。來源病例的基線模式取得已測試藥品名稱，multi-agent 取得規則篩選後集合；mock 基線只挑第一項，遇過敏等限制可能被最後檢查阻擋，這不是 API 連線失敗。multi-agent 目前是確定性多節點加一次主要生成，不是多個 LLM 互相討論。rule-only 仍可能執行檢索節點供 trace 使用，Ollama 故障時要查看該節點狀態。
 
 結果包含候選、避免項目、原因、規則／證據引用及限制。來源 AST 的 S/I/R 和系統展示判讀分開，不代表已用正式 breakpoint 重新驗證。
 
@@ -286,7 +284,7 @@ PDF page 是從 1 開始的實體頁序，不一定等於印刷頁碼；Markdown
 1. 左側角色可選醫師、藥師或研究／管理人員；這是展示角色，不是正式登入。
 2. 選 run，按「前往人工審閱」。目前使用者 ID 固定為 `demo-user`。
 3. 「決定」選接受、修改或拒絕，填「審閱理由」。
-4. 修改時編輯預填候選 JSON，可改簡短理由或移除候選，保留合法引用。不得新增未允許藥品、虛構引用或給藥方案。
+4. 修改時使用藥物選單、判斷理由與證據勾選，可新增符合條件的候選或移除候選；「比較原始結果」可核對原文。來源排除項目由後端保留，不得移回候選。醫師不用編輯 JSON。
 5. 按「送出審閱」，看到「審閱已保存」後按「重新讀取審閱」。
 6. 在歷史展開「原始／修改內容」，查看前後內容與時間。
 
@@ -322,13 +320,13 @@ PDF page 是從 1 開始的實體頁序，不一定等於印刷頁碼；Markdown
 | 範圍 | 文件 | 目前病例工作流是否使用 |
 | --- | --- | --- |
 | synthetic | 明確虛構的展示文件 | 是，且需符合病例 policy_refs |
-| reference | WHO 等正式參考文件 | 否，供獨立原文檢索 |
+| reference | WHO 等參考文件 | 是，病例 evidence_scope 為 reference 且符合 policy_refs |
 
 選「文件範圍」→ 填「查詢」→ 按「檢索文件」。首次 embedding 搜尋會補建缺少向量。「重建向量索引」針對所選範圍；更換模型、服務位置或同名模型權重後，重啟並重建。WHO 全書首次索引可能較久。
 
 向量保存在 SQLite，重啟可重用。相似度不是可信度機率。lexical 模式重建向量會顯示 skipped，但仍可文字檢索。
 
-新增 synthetic 文件不一定被病例引用：病例 policy_refs 會限制文件。UI 上傳沒有政策 tag 欄位；若要用自訂文件，可將該 synthetic 文件的 `doc_id` 加入病例 `policy_refs`，保存新版本後分析。不要把 WHO 標成 synthetic 來通過展示閘門。
+新增 synthetic 文件不一定被病例引用：病例 policy_refs 會限制文件。UI 上傳沒有政策 tag 欄位；若要用自訂文件，可將文件的 `doc_id` 加入病例 `policy_refs`，並讓 `evidence_scope` 對應文件分類，保存新版本後分析。不要把 WHO 標成 synthetic 來通過展示閘門。
 
 相同標題的不同版本可能造成衝突，需核對來源與政策參照。解析失敗、OCR／表格警告、無證據或衝突時，不用模型補造來源。目前沒有完整 OCR／表格還原流程。
 
@@ -337,13 +335,13 @@ PDF page 是從 1 開始的實體頁序，不一定等於印刷頁碼；Markdown
 <a id="benchmark"></a>
 ## 11. 研究設定與 Benchmark
 
-設定頁以「生成模型」「文件檢索」「病例規則」分別說明；設定已填齊不代表 API 連線測試成功，展示文件索引數不包含 WHO 等正式參考文件。
+設定頁以「生成模型」「文件檢索」「病例規則」分別說明；設定已填齊不代表 API 連線測試成功，索引數對應 WHO 等 reference 參考文件。
 
 比較歷史會顯示本機時間、病例數、模式數、執行筆數及模型方式，初次載入預設顯示最新紀錄。「可供審閱輸出率」表示通過安全條件且有輸出，不表示人工已核准；每個病例在每種模式各算一筆執行。各指標可展開中文定義、分子與分母；原始 JSON 保留於詳細資料和匯出檔案。整體失敗比例為零仍可能有歸入「已阻擋」的模型檢核錯誤，請同時查看錯誤摘要與逐次結果。
 
 「證據與流程」中的分析步驟會先顯示中文用途、實際結果、提醒及耗時，再展開「詳細資料（原始 JSON）」查看完整 trace。步驟已執行不代表檢核通過；人工審閱節點是執行當時的快照，後續審閱決定以人工審閱頁為準。「審閱紀錄角色（展示）」只用於保存身分標記，不影響分析或權限。
 
-「研究與設定」可查看 provider、檢索方法、模型、索引統計與展示規則版本。設定畫面不提供 key 編輯，請改後端 `.env`；配置查詢不呼叫付費回答 API。一般配置的 RAG 統計預設對應 synthetic。
+「研究與設定」可查看 provider、檢索方法、模型、索引統計與展示規則版本。設定畫面不提供 key 編輯，請改後端 `.env`；配置查詢不呼叫付費回答 API。一般配置的 RAG 統計預設對應 reference。
 
 1. 先確認完整單病例能執行，文件與規則版本符合預期。
 2. 在「Benchmark 模型」選未設定、mock 或外部模型。
@@ -392,7 +390,7 @@ powershell -ExecutionPolicy Bypass -File .\backend\scripts\seed.ps1
 .\backend\.venv\Scripts\python.exe .\backend\scripts\prepare_demo.py
 ```
 
-`scripts/generate_synthetic.py` 供開發者重建現有 fixture 檔案，會改寫 `data/synthetic/case-*.json`，不更新資料庫；一般載入請使用 seed。
+`scripts/generate_synthetic.py` 僅重建歷史回歸測試 fixture，不供新流程載入；新病例請使用第 6 節 CSV 匯入器。
 
 ### 測試
 
@@ -452,7 +450,7 @@ npm.cmd --prefix .\frontend run build
 | WHO 匯入但搜不到 | 選 reference，核對解析警告與該範圍向量結果 |
 | indexed 但向量失敗 | indexed 是解析狀態，向量另需模型連線與索引 |
 | OCR／表格警告 | 人工核對原頁，需要時做 OCR 或整理可靠文字並保留來源 |
-| 沒有候選 | 查 gate、缺漏、policy_refs、衝突；先試 case-15/16，不關閉安全檢核 |
+| 沒有候選 | 查 gate、缺漏、policy_refs、衝突；先試已匯入的 cohort 病例，不關閉安全檢核 |
 | seed 後舊病例沒變 | seed 保留原修改；要更新請建立 revision |
 | Human Review pending | 人工審閱需操作；審閱獨立保存，原 run trace 不被覆寫 |
 
@@ -479,7 +477,7 @@ Stop-Process -Id 12345
 <a id="limits"></a>
 ## 15. 限制與詳細文件
 
-目前可操作的是 synthetic prototype。正式 AST breakpoint、腎功能調整、藥物交互作用、正式登入、院端整合及臨床驗證仍未完成；真實 OpenAI／Ollama 需在自己的環境驗證，WHO 切段與檢索品質尚未完整人工評估。本專案僅本機執行，不包含公開部署流程。
+目前可操作的是來源藥敏＋模擬臨床情境的研究 prototype。正式 AST breakpoint、腎功能調整、藥物交互作用、正式登入、院端整合及臨床驗證仍未完成；真實 OpenAI／Ollama 需在自己的環境驗證，WHO 切段與檢索品質尚未完整人工評估。本專案僅本機執行，不包含公開部署流程。
 
 - [需求核對與待辦](docs/REQUIREMENTS_AUDIT.md)
 - [實作狀態與測試證據](docs/IMPLEMENTATION_STATUS.md)
@@ -487,6 +485,6 @@ Stop-Process -Id 12345
 - [資料字典、規則與待確認事項](docs/DATA_AND_RULES.md)
 - [RAG／provider 技術說明](docs/RAG_AND_PROVIDERS.md)
 - [工作流、審閱與 Benchmark 指標](docs/WORKFLOW_AND_BENCHMARK.md)
-- [完整病例說明](data/synthetic/README.md)
+- [歷史回歸測試病例說明](data/synthetic/README.md)
 - [OpenAI／WHO 集中教學](docs/USER_GUIDE_ZH_TW.md)
 - [病例 JSON Schema](contracts/case.schema.json)、[OpenAPI 契約](contracts/openapi.json)

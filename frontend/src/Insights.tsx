@@ -46,7 +46,7 @@ export function executionLabel(value: any): string {
   )
     return "規則執行（不使用 LLM）";
   if (value.is_mock || value.provider_kind === "mock") return "MOCK 模擬";
-  if (value.provider_kind === "live") return "選用外部模型";
+  if (value.provider_kind === "live") return "選用已設定模型";
   if (value.provider_kind === "unconfigured") return "未啟用生成模型";
   return "模型方式未記錄";
 }
@@ -74,11 +74,14 @@ const fields: Record<string, string> = {
   "ast_results.unverified_or_conflicting": "藥敏結果未通過展示規則核對",
   "ast_results[].standard_or_version": "藥敏標準或版本",
   "ast_results[].unit_or_comparator": "MIC 單位或比較符號",
-  "ast_results.no_approved_drug": "沒有符合展示規則的候選藥物",
+  "ast_results.no_approved_drug": "沒有通過來源藥敏與限制檢查的選項",
   "evidence.version_conflict": "引用文件版本衝突",
   "resistance_context_ref.unconfigured": "抗藥性背景來源未設定",
 };
 const errorNames: Record<string, string> = {
+  NON_SYNTHETIC_INPUT:
+    "來源病例尚未啟用外送；請使用本機模型，或確認資料可外送後更新病例設定",
+  duplicate_candidate: "候選清單有重複藥物，請保留一筆",
   UNALLOWED_DRUG: "模型輸出包含允許清單以外的藥品代碼",
   drug_not_allowed: "候選藥品未符合此病例的允許清單",
   OUTPUT_CONTENT_FORBIDDEN: "模型輸出包含目前不允許的內容，需檢查原始錯誤",
@@ -139,7 +142,7 @@ const steps: Record<string, [string, string]> = {
   ],
   ast: [
     "藥敏資料核對",
-    "保留來源藥敏報告，與展示用標準、版本及矩陣核對；尚未實作正式 MIC 界值判讀。",
+    "保留原始報告與指定來源判讀，核對衝突、最終報告及同名過敏；不重新計算 MIC 界值。",
   ],
   resistance_context: [
     "抗藥性背景整理",
@@ -151,7 +154,7 @@ const steps: Record<string, [string, string]> = {
   ],
   evidence_retrieval: [
     "文件證據檢索",
-    "依菌種、感染部位與政策範圍搜尋展示文件，保存本次引用片段。",
+    "依菌種、感染部位與政策範圍搜尋病例指定的文件，保存本次引用片段。",
   ],
   safety_gate: [
     "安全條件檢查",
@@ -203,7 +206,7 @@ export function WorkflowStep({
       result = (
         <>
           <p>
-            來源報告 {o.source_report?.length ?? 0} 筆；展示核對通過{" "}
+            來源報告 {o.source_report?.length ?? 0} 筆；已處理{" "}
             {o.system_evaluations?.filter((x: any) => x.status === "evaluated")
               .length ?? 0}{" "}
             筆。
@@ -211,7 +214,10 @@ export function WorkflowStep({
           {o.system_evaluations?.map((x: any, i: number) => (
             <p key={i}>
               {x.drug_code}：來源 {x.source_reported_sir || "未提供"} →{" "}
-              {x.status === "evaluated" ? "符合展示矩陣" : "需要人工核對"}
+              {x.reason ||
+                (x.status === "evaluated"
+                  ? "歷史測試規則核對完成"
+                  : "需要人工核對")}
             </p>
           ))}
           {items(o.warnings)}
@@ -369,12 +375,12 @@ export function SettingsOverview({
         </p>
         {rag.index && (
           <p>
-            展示文件向量：{rag.index.embedded_chunks ?? "—"}／
+            參考文件向量：{rag.index.embedded_chunks ?? "—"}／
             {rag.index.chunks ?? "—"} 個片段（
             {rag.retrieval_method === "lexical"
               ? "關鍵字模式不需要向量"
               : `待建立 ${rag.index.missing_chunks ?? "—"} 個`}
-            ）。此數字不包含 WHO 等正式參考文件。
+            ）。此數字對應 WHO 等參考文件範圍。
           </p>
         )}
         <p>
@@ -382,12 +388,21 @@ export function SettingsOverview({
           {config.reference_status || config.who_status || "狀態未記錄"}
         </p>
         <small>
-          正式文件可在文件庫搜尋；目前病例分析只使用展示文件。匯入文件不代表已完成向量索引。
+          來源病例使用參考文件，並保存引用快照。匯入文件不代表已完成向量索引。
         </small>
       </div>
       <div className="setting-card">
         <h3>病例規則</h3>
-        <p>目前使用虛構展示規則，尚未啟用正式臨床判讀。</p>
+        <p>
+          {rules?.config?.ast_mode === "reported_phenotype"
+            ? "使用來源藥敏判讀、衝突與同名過敏檢查；不重新計算臨床界值。"
+            : "歷史測試規則；尚未啟用正式臨床判讀。"}
+        </p>
+        <p>
+          來源字典：{rules?.config?.organisms?.length ?? 0} 種菌種名稱、
+          {rules?.config?.allowed_drugs?.length ?? 0}{" "}
+          種測試藥品名稱。收錄不代表治療適用。
+        </p>
         <small>規則版本：{rules?.version || "未記錄"}</small>
       </div>
       <p className="muted">API key 在後端 .env 設定；此頁不會呼叫付費模型。</p>

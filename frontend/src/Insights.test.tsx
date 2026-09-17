@@ -100,8 +100,8 @@ test("configuration presence and demo index do not claim service health or WHO c
   expect(
     screen.getByText(/設定已填齊，連線與輸出仍須實際執行驗證/),
   ).toBeVisible();
-  expect(screen.getByText(/此數字不包含 WHO/)).toBeVisible();
+  expect(screen.getByText(/此數字對應 WHO/)).toBeVisible();
   expect(screen.getByText(/匯入文件不代表已完成向量索引/)).toBeVisible();
-  expect(executionLabel({ provider_kind: "live" })).toBe("選用外部模型");
+  expect(executionLabel({ provider_kind: "live" })).toBe("選用已設定模型");
   expect(localTime(undefined)).toBe("時間未記錄");
 });

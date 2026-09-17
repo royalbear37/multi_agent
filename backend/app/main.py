@@ -25,7 +25,7 @@ if not _configured_db_path.is_absolute():
 DB_PATH = _configured_db_path
 repo = SQLiteRepository(DB_PATH)
 _document_service_instance = None
-DISCLAIMER = "研究展示用／僅 synthetic 資料／非臨床使用"
+DISCLAIMER = "研究展示用／病例標示來源與模擬欄位／非臨床使用"
 app = FastAPI(title="Antibiotic Prototype API", version="1.0", description=DISCLAIMER)
 app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"], allow_credentials=False, allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
 
@@ -116,13 +116,20 @@ def config():
     svc = _documents()
     reference_count = sum(1 for item in svc.list_documents() if not item.get("is_synthetic")) if svc else 0
     reference_status = f"已匯入 {reference_count} 份正式參考文件" if reference_count else "尚未匯入"
-    return {"provider":_provider_status(provider_kind),"rag":svc.status() if svc else {"status":"not_configured"},"disclaimer":DISCLAIMER,"rules_status":"demo_only／synthetic","reference_document_count":reference_count,"reference_status":reference_status,"who_status":reference_status}
+    return {"provider":_provider_status(provider_kind),"rag":svc.status(scope='reference') if svc else {"status":"not_configured"},"disclaimer":DISCLAIMER,"rules_status":rules()['status'],"reference_document_count":reference_count,"reference_status":reference_status,"who_status":reference_status}
 @app.get("/api/schema")
 def schema():
     from app.schemas.case import Case
     return Case.model_json_schema()
 @app.get("/api/cases", response_model=list[CaseRecord])
-def list_cases(): return repo.list_cases()
+def list_cases(include_legacy: bool = False):
+    records = repo.list_cases()
+    if include_legacy or os.getenv('PROTOTYPE_FIXTURE_DIR'):
+        return records
+    return [r for r in records if not _legacy_case(r['case'])]
+
+def _legacy_case(case):
+    return str(case.get('microbiology', {}).get('organism', '')).startswith('DEMO_') or any(str(x.get('drug_code', '')).startswith('DEMO_') for x in case.get('ast_results', []))
 @app.post("/api/cases/import")
 def import_case(body: ImportBody):
     try: case,warnings=normalize_case(body.payload,body.format)
@@ -140,28 +147,33 @@ def create_revision(case_id: str, body: ImportBody):
     if body.payload.get("case_id") != case_id: raise HTTPException(422,"case_id mismatch")
     return import_case(body)
 
-def _fixture_files(): return sorted((ROOT / "data" / "synthetic").glob("case-*.json"))
+def _fixture_files(): return sorted(Path(os.getenv('PROTOTYPE_FIXTURE_DIR', str(ROOT / 'data/local/microbiology/seeds'))).glob('case-*.json'))
+def _seed_payloads():
+    if os.getenv('PROTOTYPE_FIXTURE_DIR'):
+        return [json.loads(path.read_text(encoding='utf-8')) for path in _fixture_files()]
+    path = ROOT / 'data/local/microbiology/cases.json'
+    return json.loads(path.read_text(encoding='utf-8')) if path.exists() else []
 @app.get("/api/seed-cases")
 def seed_cases():
     expectations_path=ROOT / "data" / "synthetic" / "expectations.json"
     expectations=json.loads(expectations_path.read_text(encoding="utf-8")) if expectations_path.exists() else {}
     out=[]
-    for path in _fixture_files():
-        payload=json.loads(path.read_text(encoding="utf-8")); expected=payload.pop("expected",{})
-        out.append({"case_id":payload["case_id"],"title":path.stem,"payload":payload,"expected":expected or expectations.get(payload["case_id"],{})})
+    for payload in _seed_payloads():
+        expected=payload.pop("expected",{})
+        out.append({"case_id":payload["case_id"],"title":payload['case_id'],"payload":payload,"expected":expected or expectations.get(payload["case_id"],{})})
     return out
 @app.post("/api/seed")
 def seed():
     count=0
-    for path in _fixture_files():
-        payload=json.loads(path.read_text(encoding="utf-8")); payload.pop("expected",None)
+    for payload in _seed_payloads():
+        payload.pop("expected",None)
         if not repo.get_case(payload["case_id"]):
             case,warnings=normalize_case(payload); repo.upsert_case(case.model_dump(mode="json"),payload,warnings); count += 1
     # Seed synthetic documents when the document service is present. Hash based
     # deduplication in that service makes this safe to repeat.
     svc=_documents()
     docs_dir=ROOT / "data" / "demo_documents"
-    if svc and docs_dir.exists():
+    if svc and docs_dir.exists() and os.getenv('PROTOTYPE_FIXTURE_DIR'):
         for path in sorted(docs_dir.iterdir()):
             if path.is_file() and path.suffix.lower() in {".md",".markdown",".txt",".pdf"}:
                 if path.name == 'README.md': continue
@@ -172,7 +184,7 @@ def seed():
                     refs=["demo-policy-v1"] if "policy" in path.stem.lower() else []
                     svc.import_document(path.name,path.read_bytes(),path.stem,"demo-v1",True,policy_refs=refs)
                 except (ValueError,FileExistsError): pass
-    return {"imported":count,"disclaimer":DISCLAIMER}
+    return {"imported":count,"disclaimer":DISCLAIMER,"message":"請先執行本機 CSV 匯入，再載入來源病例；不再載入虛構菌種／藥品。" if not _seed_payloads() else "來源病例已備妥"}
 
 @app.post("/api/runs")
 def start_run(body: RunBody):
@@ -288,7 +300,7 @@ def rules():
 
 @app.post("/api/benchmarks")
 def benchmark(body: BenchmarkBody):
-    cases=body.case_ids or [x["case_id"] for x in repo.list_cases()]
+    cases=body.case_ids or [x["case_id"] for x in list_cases()]
     if body.request_id:
         for old in repo.list_benchmarks():
             if old.get("request_id") == body.request_id: return _public_benchmark(old)
@@ -303,8 +315,10 @@ def benchmark(body: BenchmarkBody):
     frozen_evidence={}
     for cid, item in case_inputs.items():
         case=item['case']
-        query=' '.join(str(x) for x in (case.get('microbiology',{}).get('organism'),case.get('encounter',{}).get('infection_site')) if x)
-        frozen_evidence[cid]=documents_service.search(query or 'synthetic',policy_refs=case.get('policy_refs')) if documents_service else {'status':'not_configured','evidence':[],'warnings':[]}
+        from app.workflow.engine import evidence_query
+        query=evidence_query(case)
+        scope_kwargs={'scope':'reference'} if case.get('evidence_scope') == 'reference' else {}
+        frozen_evidence[cid]=documents_service.search(query or 'synthetic',policy_refs=case.get('policy_refs'), **scope_kwargs) if documents_service else {'status':'not_configured','evidence':[],'warnings':[]}
     class FrozenDocuments:
         def __init__(self, result): self.result=copy.deepcopy(result)
         def search(self, *args, **kwargs): return copy.deepcopy(self.result)

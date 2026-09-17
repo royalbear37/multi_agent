@@ -50,7 +50,22 @@ def _summary(case: dict[str, Any]) -> dict[str, Any]:
         "allergy_status": _get(case, "allergies.status"),
         "ast_count": len(case.get("ast_results") or []) if isinstance(case.get("ast_results"), list) else 0,
         "is_synthetic": case.get("is_synthetic") is True,
+        "data_origin": case.get("data_origin", "synthetic"),
+        "external_model_allowed": case.get("external_model_allowed", False),
+        "demographics": copy.deepcopy(case.get("demographics")),
+        "clinical_context": _get(case, "encounter.context"),
+        "allergies": copy.deepcopy(case.get("allergies")),
+        "medications": copy.deepcopy(case.get("medications")),
+        "simulated_fields": copy.deepcopy(_get(case, "provenance.simulated_fields") or []),
     }
+
+
+def evidence_query(case: dict[str, Any]) -> str:
+    terms = [_get(case, 'microbiology.organism'), _get(case, 'encounter.infection_site')]
+    age = _get(case, 'demographics.age')
+    if isinstance(age, (int, float)) and not isinstance(age, bool):
+        terms.append('adults' if age >= 18 else 'children')
+    return ' '.join(str(term) for term in terms if term)
 
 
 def _deterministic_output(engine: RuleEngine, evaluations: list[dict[str, Any]], evidence: list[dict[str, Any]],
@@ -61,7 +76,7 @@ def _deterministic_output(engine: RuleEngine, evaluations: list[dict[str, Any]],
     evidence_ids = [str(x.get("chunk_id")) for x in evidence if x.get("chunk_id")]
     rule_ids = [str(x.get("rule_id")) for x in evaluations if x.get("status") == "matched" and x.get("action") == "allow_candidates"]
     for code in engine.candidate_drugs(case):
-        item = {"drug_code": code, "reason": "展示規則允許；仍需人工確認。", "rule_refs": rule_ids, "evidence_refs": evidence_ids}
+        item = {"drug_code": code, "reason": "來源藥敏為 S，未命中已記錄的同名過敏；檢索文件供審閱，尚未確認感染適用性。" if engine.reported_mode else "展示規則允許；仍需人工確認。", "rule_refs": rule_ids, "evidence_refs": evidence_ids}
         if code in blocked_codes:
             item["reason"] = "展示限制命中，應避免並由人工確認。"
             avoid.append(item)
@@ -69,6 +84,9 @@ def _deterministic_output(engine: RuleEngine, evaluations: list[dict[str, Any]],
             candidates.append(item)
     if gate == "blocked":
         candidates = []
+    if engine.reported_mode:
+        avoid = [{"drug_code": code, "reason": x["reason"], "rule_refs": [x["rule_id"]], "evidence_refs": []}
+                 for x in evaluations if x.get("action") == "avoid" for code in x.get("drug_codes", [])]
     return {"candidates": candidates, "avoid": avoid, "limitations": list(dict.fromkeys(limitations))}
 
 
@@ -101,15 +119,15 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
     ast_output = {"source_report": copy.deepcopy(case.get("ast_results") or []), "system_result": "not_configured", "system_evaluations": [], "warnings": []}
     if case.get("ast_results"):
         standards_ok = all(x.get("standard") and x.get("standard_version") for x in case["ast_results"] if isinstance(x, dict))
-        ast_output["system_result"] = "evaluated_demo" if standards_ok else "needs_review"
+        ast_output["system_result"] = "source_phenotype_reviewed" if engine.reported_mode else "evaluated_demo" if standards_ok else "needs_review"
         ast_output["system_evaluations"] = engine.evaluate_ast(case)
         if any(x['status'] != 'evaluated' for x in ast_output['system_evaluations']):
             ast_output['system_result'] = 'needs_review'
             missing.append('ast_results.unverified_or_conflicting')
-        if not standards_ok:
+        if not standards_ok and not engine.reported_mode:
             ast_output["warnings"].append("AST 標準版本未知，保留來源報告結果且不重新判讀。")
             missing.append("ast_results[].standard_or_version")
-        if any(isinstance(x, dict) and (not x.get("unit") or not x.get("comparator")) for x in case["ast_results"]):
+        if not engine.reported_mode and any(isinstance(x, dict) and (not x.get("unit") or not x.get("comparator")) for x in case["ast_results"]):
             ast_output["warnings"].append("MIC 單位或比較符號缺漏，不進行精確比較。")
             missing.append("ast_results[].unit_or_comparator")
         if not engine.candidate_drugs(case):
@@ -138,12 +156,13 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
                        output=copy.deepcopy(rapid) if rapid else {"status": "skipped", "reason": "沒有快速鑑定資料；未連線儀器。"}, version="rapid-summary-1.0"))
 
     t = time.perf_counter()
-    query = " ".join(str(x) for x in (_get(case, "microbiology.organism"), _get(case, "encounter.infection_site")) if x)
+    query = evidence_query(case)
     if document_service is None:
         search_result = {"status": "not_configured", "evidence": [], "warnings": ["文件服務未設定"]}
     else:
         try:
-            search_result = document_service.search(query or "synthetic", policy_refs=case.get("policy_refs"))
+            kwargs = {"scope": "reference"} if case.get("evidence_scope") == "reference" else {}
+            search_result = document_service.search(query or "synthetic", policy_refs=case.get("policy_refs"), **kwargs)
         except Exception as exc:  # document service failures are data, never fatal to the whole trace
             search_result = {"status": "failed", "evidence": [], "warnings": ["文件檢索失敗"]}
             errors.append({"node_id": "evidence_retrieval", "code": "EVIDENCE_SEARCH_FAILED", "detail": type(exc).__name__})
@@ -153,7 +172,7 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
                                "retrieval_method": search_result.get("retrieval_method"), "embedding_model": search_result.get("embedding_model")}, version="retrieval-2.0",
                        evidence_refs=[str(x.get("chunk_id")) for x in evidence if x.get("chunk_id")]))
 
-    supported = _get(case, "microbiology.organism") in {"DEMO_ORGANISM_A", "DEMO_ORGANISM_B"}
+    supported = engine.supports(_get(case, "microbiology.organism"))
     # Every publishable candidate needs a local, versioned evidence snapshot,
     # including the deterministic baseline.  Rule-only simply does not call a
     # model; it still observes the same evidence boundary.
@@ -189,9 +208,14 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
                 provider_attempted = True
                 internal_rule_refs = [x["rule_id"] for x in evaluations]
                 generation_allowlist = engine.candidate_drugs(case) if mode == 'multi-agent' else engine.allowed_drugs()
+                if engine.reported_mode:
+                    # Baselines receive source-tested names, not the entire cohort vocabulary.
+                    generation_allowlist = engine.candidate_drugs(case) if mode == 'multi-agent' else list(dict.fromkeys(x['drug_code'] for x in case.get('ast_results', []) if x['drug_code'] in engine.allowed_drugs()))
                 summary_for_provider = _summary(case)
                 context = {"mode": mode, "case_summary": summary_for_provider, "allowed_drugs": generation_allowlist,
                            "evidence": evidence, "rule_refs": internal_rule_refs}
+                if engine.reported_mode:
+                    context['allowed_avoid'] = [code for x in evaluations if x.get('action') == 'avoid' for code in x.get('drug_codes', [])] if mode == 'multi-agent' else list(dict.fromkeys(x['drug_code'] for x in case.get('ast_results', [])))
                 if mode == "rag-only":
                     context["rule_refs"] = []
                 elif mode == "single-agent":
@@ -207,6 +231,7 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
                 provider_rule_refs = [] if mode in {"rag-only", "single-agent"} else {x["rule_id"] for x in evaluations}
                 candidate_payload = copy.deepcopy(generated.get("output"))
                 validated, validation_errors = validate_provider_output(candidate_payload, allowed_drugs=set(engine.candidate_drugs(case)),
+                                                                       allowed_avoid={code for x in evaluations if x.get('action') == 'avoid' for code in x.get('drug_codes', [])} if engine.reported_mode else None,
                                                                        allowed_rules=provider_rule_refs,
                                                                        allowed_evidence={str(x.get("chunk_id")) for x in evidence},
                                                                        require_rule_refs=mode == "multi-agent" and bool(provider_rule_refs),
@@ -234,6 +259,10 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
                   for x in evaluations if x.get("status") == "matched" and x.get("action") in {"avoid", "block"}
                   for code in (x.get("drug_codes") or [])]
     if output is not None:
+        if engine.reported_mode:
+            # Source exclusions cannot disappear because a model omits them.
+            output['avoid'] = safe_avoid
+            limitations = limitations + ["敏感選項不等於建議治療；感染適用性、交叉過敏與腎功能調整仍需核對。", "引用片段為檢索結果，不代表每項藥物已獲指引支持。"]
         output["limitations"] = list(dict.fromkeys((output.get("limitations") or []) + limitations))
     will_publish = output is not None and candidate_status == "completed" and gate == "ready_for_review"
     nodes.append(_node("candidate_presentation", candidate_status, t, output={"published": will_publish, "withheld": not will_publish,
@@ -306,6 +335,7 @@ def validate_review(run: dict[str, Any], proposed: dict[str, Any] | None = None)
     evals = run.get("rule_evaluations") or []
     hard_avoid = {x.get("drug_code") for x in (run.get("output") or {}).get("avoid", []) if isinstance(x, dict)}
     validated, errors = validate_provider_output(proposed, allowed_drugs=allowed,
+                                                 allowed_avoid=hard_avoid if engine.reported_mode else None,
                                                  allowed_rules={str(x.get("rule_id")) for x in evals},
                                                  allowed_evidence={str(x.get("chunk_id")) for x in run.get("evidence_snapshots", [])},
                                                  require_rule_refs=bool(evals), require_evidence_refs=bool(run.get("evidence_snapshots")))
@@ -313,4 +343,6 @@ def validate_review(run: dict[str, Any], proposed: dict[str, Any] | None = None)
         raise ValueError("review output rejected: " + ",".join(errors))
     if any(x.get("drug_code") in hard_avoid for x in validated.get("candidates", [])):
         raise ValueError("review cannot move an avoided drug into candidates")
+    if engine.reported_mode:
+        validated['avoid'] = copy.deepcopy((run.get('output') or {}).get('avoid', []))
     return {"valid": True, "output": {**validated, "run_id": run.get("run_id"), "demo_only": True, "gate_status": run.get("gate_status")}}

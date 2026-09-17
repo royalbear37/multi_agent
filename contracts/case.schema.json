@@ -115,6 +115,47 @@
           ],
           "default": null,
           "title": "Source"
+        },
+        "interpretation_basis": {
+          "default": "legacy",
+          "enum": [
+            "legacy",
+            "source_report",
+            "CLSI_2022_pheno"
+          ],
+          "title": "Interpretation Basis",
+          "type": "string"
+        },
+        "source_phenotype": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Phenotype"
+        },
+        "clsi_2022_phenotype": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Clsi 2022 Phenotype"
+        },
+        "raw_measurement": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Raw Measurement",
+          "type": "object"
         }
       },
       "required": [
@@ -451,6 +492,32 @@
           ],
           "default": null,
           "title": "Source Record Id"
+        },
+        "source_file_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source File Sha256"
+        },
+        "simulated_fields": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Simulated Fields",
+          "type": "array"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
         }
       },
       "title": "Provenance",
@@ -624,6 +691,30 @@
     },
     "is_synthetic": {
       "title": "Is Synthetic",
+      "type": "boolean"
+    },
+    "data_origin": {
+      "default": "synthetic",
+      "enum": [
+        "synthetic",
+        "deidentified",
+        "hybrid"
+      ],
+      "title": "Data Origin",
+      "type": "string"
+    },
+    "evidence_scope": {
+      "default": "synthetic",
+      "enum": [
+        "synthetic",
+        "reference"
+      ],
+      "title": "Evidence Scope",
+      "type": "string"
+    },
+    "external_model_allowed": {
+      "default": false,
+      "title": "External Model Allowed",
       "type": "boolean"
     },
     "source": {

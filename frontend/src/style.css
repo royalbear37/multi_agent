@@ -628,3 +628,28 @@ summary:focus-visible {
 .panel {
   min-width: 0;
 }
+.review-editor fieldset {
+  min-width: 0;
+  border: 1px solid #d4e1dd;
+  border-radius: 10px;
+  margin: 16px 0;
+  padding: 16px;
+}
+.review-editor legend {
+  font-weight: 600;
+  padding: 0 6px;
+}
+.check-label {
+  display: block;
+  margin: 12px 0;
+  line-height: 1.6;
+}
+.check-label input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+}
+.check-label small {
+  display: block;
+  color: #4e6261;
+  margin-left: 24px;
+}

@@ -1,18 +1,73 @@
 import { expect, test } from "@playwright/test";
+
+test.beforeAll(async ({ request }) => {
+  const doc = await request.post("/api/documents/import", {
+    multipart: {
+      file: {
+        name: "reference-fixture.md",
+        mimeType: "text/markdown",
+        buffer: Buffer.from(
+          "# REFERENCE TEST FIXTURE\nurinary tract infection ESCHERICHIA COLI ceftriaxone. Software retrieval test only; not a treatment guideline.",
+        ),
+      },
+      title: "Workflow reference fixture",
+      version: "e2e-reference-v1",
+      is_synthetic: "false",
+    },
+  });
+  expect(doc.ok()).toBeTruthy();
+  const source = await doc.json();
+  for (const [id, status] of [
+    ["case-01-complete", "known_none"],
+    ["case-03-allergy-unknown", "unknown"],
+  ]) {
+    const imported = await request.post("/api/cases/import", {
+      data: {
+        payload: {
+          case_id: id,
+          created_at: "2026-09-17T00:00:00Z",
+          is_synthetic: true,
+          evidence_scope: "reference",
+          source:
+            "Independently authored software fixture; real names, entirely synthetic observations",
+          microbiology: {
+            organism: "ESCHERICHIA COLI",
+            specimen: "URINE",
+            report_status: "final",
+          },
+          encounter: {
+            infection_site: "urinary tract infection",
+            severity: "stable",
+          },
+          renal: { egfr: 90, unit: "mL/min/1.73m2" },
+          allergies: { status, items: [] },
+          ast_results: [
+            {
+              drug_code: "ceftriaxone",
+              reported_sir: "S",
+              interpretation_basis: "source_report",
+              source_phenotype: "Susceptible",
+              source: "synthetic test",
+            },
+          ],
+          policy_refs: [source.doc_id],
+        },
+      },
+    });
+    expect(imported.ok()).toBeTruthy();
+  }
+});
+
 test("reference document upload and search remain separate from synthetic", async ({
   page,
 }) => {
   await page.goto("/");
   await page.getByRole("button", { name: /05.*文件/ }).click();
-  await page
-    .getByLabel("文件", { exact: true })
-    .setInputFiles({
-      name: "reference-test.txt",
-      mimeType: "text/plain",
-      buffer: Buffer.from(
-        "REFERENCE_SEARCH_ONLY_2026 source inspection fixture",
-      ),
-    });
+  await page.getByLabel("文件", { exact: true }).setInputFiles({
+    name: "reference-test.txt",
+    mimeType: "text/plain",
+    buffer: Buffer.from("REFERENCE_SEARCH_ONLY_2026 source inspection fixture"),
+  });
   await page.getByLabel("標題", { exact: true }).fill("Reference test fixture");
   await page.getByLabel("虛構展示文件（正式文件請取消）").uncheck();
   await page.getByRole("button", { name: "匯入並解析文件" }).click();
@@ -36,10 +91,6 @@ test("seed → analysis → evidence/trace → review → reread persists", asyn
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "載入展示資料" }).click();
-  await expect(
-    page.getByText("展示病例與文件已初始化；既有資料已保留。"),
-  ).toBeVisible();
   const selector = page.getByLabel("目前病例");
   const first = "case-01-complete";
   await selector.selectOption(first);
@@ -47,9 +98,9 @@ test("seed → analysis → evidence/trace → review → reread persists", asyn
     page.getByRole("button", { name: "執行分析", exact: true }),
   ).toBeEnabled();
   await page.getByRole("button", { name: "執行分析", exact: true }).click();
-  await expect(page.getByText("可供審閱的展示候選")).toBeVisible();
+  await expect(page.getByText("可供審閱的藥敏選項")).toBeVisible();
   await expect(
-    page.getByText("DEMO_DRUG_A", { exact: false }).first(),
+    page.getByText("ceftriaxone", { exact: false }).first(),
   ).toBeVisible();
   await page.screenshot({
     path: "test-results/analysis-overview.png",
@@ -67,7 +118,15 @@ test("seed → analysis → evidence/trace → review → reread persists", asyn
     page.getByRole("link", { name: "開啟原始文件" }).first(),
   ).toBeVisible();
   await page.getByRole("button", { name: "04人工審閱" }).click();
+  await page.getByLabel("決定", { exact: true }).selectOption("modify");
+  await page
+    .getByLabel("藥物理由 1")
+    .fill("已核對來源與參考片段，保留待審選項");
   await page.getByLabel("審閱理由").fill("E2E synthetic 人工審閱測試");
+  await page.screenshot({
+    path: "test-results/review-form.png",
+    fullPage: true,
+  });
   await page.getByRole("button", { name: "送出審閱" }).click();
   await expect(page.getByText("審閱已保存。")).toBeVisible();
   await page.getByRole("button", { name: "重新讀取審閱" }).click();
@@ -104,7 +163,7 @@ test("explicit mock multi-agent and four mode benchmark", async ({ page }) => {
   await page.getByLabel("比較模式").selectOption("multi-agent");
   await page.getByLabel("模型執行方式").selectOption("mock");
   await page.getByRole("button", { name: "執行分析", exact: true }).click();
-  await expect(page.getByText("可供審閱的展示候選")).toBeVisible();
+  await expect(page.getByText("可供審閱的藥敏選項")).toBeVisible();
   await expect(page.locator(".candidate")).not.toHaveCount(0);
   await expect(page.locator(".runbanner")).toContainText("MOCK 模擬");
   await page.getByRole("button", { name: "06研究與設定" }).click();
@@ -127,20 +186,44 @@ test("explicit mock multi-agent and four mode benchmark", async ({ page }) => {
     fullPage: true,
   });
   await page.getByText(/逐次執行結果（/).click();
-  await page.getByRole("button", { name: "查看分析", exact: true }).first().click();
-  await expect(page.getByRole("heading", { name: "分析結果", exact: true })).toBeVisible();
+  await page
+    .getByRole("button", { name: "查看分析", exact: true })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "分析結果", exact: true }),
+  ).toBeVisible();
   await expect(page.getByLabel("目前病例")).toHaveValue("case-01-complete");
 });
 
-test("benchmark history distinguishes a one-mode record from four modes", async ({ page }) => {
-  const one = await page.request.post("/api/benchmarks", { data: { case_ids: ["case-01-complete"], modes: ["rule-only"], provider_kind: "unconfigured" } });
+test("benchmark history distinguishes a one-mode record from four modes", async ({
+  page,
+}) => {
+  const one = await page.request.post("/api/benchmarks", {
+    data: {
+      case_ids: ["case-01-complete"],
+      modes: ["rule-only"],
+      provider_kind: "unconfigured",
+    },
+  });
   expect(one.ok()).toBeTruthy();
   await page.goto("/");
   await page.getByRole("button", { name: "06研究與設定" }).click();
-  await expect(page.locator(".benchmark-history").first()).toContainText("1 種模式");
-  await expect(page.locator(".benchmark-history").first()).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".benchmark-history").first()).toContainText(
+    "1 種模式",
+  );
+  await expect(page.locator(".benchmark-history").first()).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
   await expect(page.getByText(/並非完整四模式比較/)).toBeVisible();
-  await page.locator(".benchmark-history").filter({ hasText: "4 種模式" }).first().click();
+  await page
+    .locator(".benchmark-history")
+    .filter({ hasText: "4 種模式" })
+    .first()
+    .click();
   await expect(page.getByText(/並非完整四模式比較/)).not.toBeVisible();
-  await expect(page.getByRole("heading", { name: /Benchmark 結果/ })).toContainText("MOCK");
+  await expect(
+    page.getByRole("heading", { name: /Benchmark 結果/ }),
+  ).toContainText("MOCK");
 });

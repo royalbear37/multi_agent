@@ -7,17 +7,19 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 from pathlib import Path
 from typing import Any
 
 
 DEFAULT_RULE_VERSION = "demo-rules-1.0.0"
-RULE_CONFIG_PATH = Path(__file__).resolve().parents[3] / "configs" / "demo" / "rules.json"
+ROOT = Path(__file__).resolve().parents[3]
+RULE_CONFIG_PATH = ROOT / "configs" / "research" / "rules.json"
 
 
 def load_demo_rules(path: Path | None = None) -> dict[str, Any]:
     """Load and snapshot the demo rule file, failing closed on bad config."""
-    selected = path or RULE_CONFIG_PATH
+    selected = path or Path(os.getenv("PROTOTYPE_RULE_CONFIG", str(RULE_CONFIG_PATH)))
     if not selected.exists():
         return {"config_version": DEFAULT_RULE_VERSION, "status": "not_configured", "rules": []}
     try:
@@ -30,6 +32,16 @@ def load_demo_rules(path: Path | None = None) -> dict[str, Any]:
     snapshot = copy.deepcopy(data)
     snapshot.setdefault("config_version", DEFAULT_RULE_VERSION)
     snapshot.setdefault("status", "demo_only")
+    if snapshot.get("ast_mode") == "reported_phenotype":
+        catalog_path = Path(os.getenv("PROTOTYPE_CATALOG_PATH", str(ROOT / "data/local/microbiology/catalog.json")))
+        if catalog_path.exists():
+            try:
+                catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+                snapshot["allowed_drugs"] = catalog["antibiotics"]
+                snapshot["organisms"] = catalog["organisms"]
+                snapshot["catalog_sha256"] = catalog["source_sha256"]
+            except (OSError, ValueError, KeyError):
+                snapshot["status"] = "error"
     return snapshot
 
 
@@ -91,6 +103,9 @@ class RuleEngine:
         return copy.deepcopy(self.config)
 
     def evaluate(self, case: dict[str, Any]) -> list[dict[str, Any]]:
+        if self.reported_mode and self.config.get("status") != "error":
+            from .reported import evaluate_rules
+            return evaluate_rules(self, case)
         evaluations: list[dict[str, Any]] = []
         if self.config.get("status") in {"not_configured", "error"}:
             return [{"rule_id": "RULES_NOT_CONFIGURED", "version": self.version,
@@ -122,8 +137,19 @@ class RuleEngine:
         values = self.config.get("allowed_drugs", [])
         return [str(x) for x in values if isinstance(x, str)]
 
+    @property
+    def reported_mode(self) -> bool:
+        return self.config.get("ast_mode") == "reported_phenotype"
+
+    def supports(self, organism: str | None) -> bool:
+        if self.reported_mode:
+            return organism in self.config.get("organisms", [])
+        return organism in self.config.get("approved_drugs", {})
+
     def candidate_drugs(self, case: dict[str, Any]) -> list[str]:
         """Return a case-specific allowlist; unknown AST data yields none."""
+        if self.reported_mode:
+            return [x["drug_code"] for x in self.evaluate_ast(case) if x["eligible"]]
         organism = _get_path(case, "microbiology.organism")
         mapping = self.config.get("approved_drugs", {})
         selected = mapping.get(organism, []) if isinstance(mapping, dict) else []
@@ -144,6 +170,9 @@ class RuleEngine:
 
     def evaluate_ast(self, case: dict[str, Any]) -> list[dict[str, Any]]:
         """Apply only the fictional configured matrix; never infer thresholds."""
+        if self.reported_mode:
+            from .reported import evaluate_ast
+            return evaluate_ast(self, case)
         standard = self.config.get("ast_standard") or {}
         matrix = (self.config.get("ast_matrix") or {}).get(_get_path(case, "microbiology.organism"), {})
         results: list[dict[str, Any]] = []

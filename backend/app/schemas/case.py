@@ -1,4 +1,4 @@
-"""Versioned, synthetic-only case contract.
+"""Versioned research case contract with explicit observed/simulated provenance.
 
 The schema deliberately models source observations separately from any later
 rule interpretation.  It is an engineering contract, not a clinical standard.
@@ -104,6 +104,10 @@ class ASTResult(StrictModel):
     standard: str | None = None
     standard_version: str | None = None
     source: str | None = None
+    interpretation_basis: Literal["legacy", "source_report", "CLSI_2022_pheno"] = "legacy"
+    source_phenotype: str | None = None
+    clsi_2022_phenotype: str | None = None
+    raw_measurement: dict[str, str] = Field(default_factory=dict)
 
 class RapidIdentification(StrictModel):
     method: str | None = None
@@ -121,6 +125,9 @@ class Provenance(StrictModel):
     imported_at: datetime | None = None
     adapter_version: str | None = None
     source_record_id: str | None = None
+    source_file_sha256: str | None = None
+    simulated_fields: list[str] = Field(default_factory=list)
+    notes: list[str] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def timestamp_aware(self):
@@ -131,6 +138,9 @@ class Case(StrictModel):
     case_id: str = Field(min_length=1, max_length=128, pattern=r"^[A-Za-z0-9._:-]+$")
     schema_version: Literal["1.0"] = "1.0"
     is_synthetic: StrictBool
+    data_origin: Literal["synthetic", "deidentified", "hybrid"] = "synthetic"
+    evidence_scope: Literal["synthetic", "reference"] = "synthetic"
+    external_model_allowed: StrictBool = False
     source: str | None = None
     created_at: datetime
     demographics: Demographics = Field(default_factory=Demographics)
@@ -154,8 +164,14 @@ class Case(StrictModel):
 
     @model_validator(mode="after")
     def synthetic_only(self):
-        if self.is_synthetic is not True:
-            raise ValueError("prototype import accepts synthetic cases only")
+        if not self.is_synthetic and self.data_origin == "synthetic":
+            raise ValueError("non-synthetic cases must identify deidentified or hybrid data_origin")
+        if self.is_synthetic and self.data_origin != "synthetic":
+            raise ValueError("source-derived cases must not be labelled entirely synthetic")
+        if self.data_origin != "synthetic" and not self.provenance.source_system:
+            raise ValueError("source-derived cases require provenance.source_system")
+        if self.data_origin == "hybrid" and not self.provenance.simulated_fields:
+            raise ValueError("hybrid cases require provenance.simulated_fields")
         return self
 
 

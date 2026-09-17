@@ -15,3 +15,7 @@ runtime/
 test-results/
 playwright-report/
 .playwright/
+
+# Local source cohort and derived patient-level research data
+/microbiology*.csv
+/data/local/

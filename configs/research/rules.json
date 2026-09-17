@@ -1,0 +1,9 @@
+{
+  "config_version": "reported-ast-1.0",
+  "status": "research_only",
+  "ast_mode": "reported_phenotype",
+  "description": "保留來源藥敏判讀，僅列出敏感且未命中明確過敏的待審選項。不重新計算 CLSI/EUCAST 界值，不代表感染適用性或治療排序。",
+  "allowed_drugs": ["amoxicillin_clavulanate", "ampicillin", "ceftriaxone", "cefepime", "ciprofloxacin", "gentamicin", "meropenem", "nitrofurantoin", "piperacillin_tazobactam", "trimethoprim_sulfamethoxazole", "vancomycin"],
+  "organisms": ["ESCHERICHIA COLI", "KLEBSIELLA PNEUMONIAE", "STAPHYLOCOCCUS AUREUS", "PSEUDOMONAS AERUGINOSA", "ENTEROCOCCUS FAECALIS"],
+  "rules": []
+}

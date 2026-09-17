@@ -440,6 +440,20 @@ export interface components {
             standard_version?: string | null;
             /** Source */
             source?: string | null;
+            /**
+             * Interpretation Basis
+             * @default legacy
+             * @enum {string}
+             */
+            interpretation_basis: "legacy" | "source_report" | "CLSI_2022_pheno";
+            /** Source Phenotype */
+            source_phenotype?: string | null;
+            /** Clsi 2022 Phenotype */
+            clsi_2022_phenotype?: string | null;
+            /** Raw Measurement */
+            raw_measurement?: {
+                [key: string]: string;
+            };
         };
         /** Allergies */
         Allergies: {
@@ -507,6 +521,23 @@ export interface components {
             schema_version: "1.0";
             /** Is Synthetic */
             is_synthetic: boolean;
+            /**
+             * Data Origin
+             * @default synthetic
+             * @enum {string}
+             */
+            data_origin: "synthetic" | "deidentified" | "hybrid";
+            /**
+             * Evidence Scope
+             * @default synthetic
+             * @enum {string}
+             */
+            evidence_scope: "synthetic" | "reference";
+            /**
+             * External Model Allowed
+             * @default false
+             */
+            external_model_allowed: boolean;
             /** Source */
             source?: string | null;
             /**
@@ -630,6 +661,12 @@ export interface components {
             adapter_version?: string | null;
             /** Source Record Id */
             source_record_id?: string | null;
+            /** Source File Sha256 */
+            source_file_sha256?: string | null;
+            /** Simulated Fields */
+            simulated_fields?: string[];
+            /** Notes */
+            notes?: string[];
         };
         /** RapidIdentification */
         RapidIdentification: {
@@ -786,7 +823,9 @@ export interface operations {
     };
     list_cases_api_cases_get: {
         parameters: {
-            query?: never;
+            query?: {
+                include_legacy?: boolean;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -800,6 +839,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CaseRecord"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

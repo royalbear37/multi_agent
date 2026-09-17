@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Antibiotic Prototype API",
-    "description": "研究展示用／僅 synthetic 資料／非臨床使用",
+    "description": "研究展示用／病例標示來源與模擬欄位／非臨床使用",
     "version": "1.0"
   },
   "paths": {
@@ -58,17 +58,39 @@
       "get": {
         "summary": "List Cases",
         "operationId": "list_cases_api_cases_get",
+        "parameters": [
+          {
+            "name": "include_legacy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Legacy"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
+                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/CaseRecord"
                   },
-                  "type": "array",
                   "title": "Response List Cases Api Cases Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -1019,6 +1041,45 @@
               }
             ],
             "title": "Source"
+          },
+          "interpretation_basis": {
+            "type": "string",
+            "enum": [
+              "legacy",
+              "source_report",
+              "CLSI_2022_pheno"
+            ],
+            "title": "Interpretation Basis",
+            "default": "legacy"
+          },
+          "source_phenotype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Phenotype"
+          },
+          "clsi_2022_phenotype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clsi 2022 Phenotype"
+          },
+          "raw_measurement": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Raw Measurement"
           }
         },
         "additionalProperties": false,
@@ -1186,6 +1247,30 @@
           "is_synthetic": {
             "type": "boolean",
             "title": "Is Synthetic"
+          },
+          "data_origin": {
+            "type": "string",
+            "enum": [
+              "synthetic",
+              "deidentified",
+              "hybrid"
+            ],
+            "title": "Data Origin",
+            "default": "synthetic"
+          },
+          "evidence_scope": {
+            "type": "string",
+            "enum": [
+              "synthetic",
+              "reference"
+            ],
+            "title": "Evidence Scope",
+            "default": "synthetic"
+          },
+          "external_model_allowed": {
+            "type": "boolean",
+            "title": "External Model Allowed",
+            "default": false
           },
           "source": {
             "anyOf": [
@@ -1630,6 +1715,31 @@
               }
             ],
             "title": "Source Record Id"
+          },
+          "source_file_sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source File Sha256"
+          },
+          "simulated_fields": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Simulated Fields"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notes"
           }
         },
         "additionalProperties": false,

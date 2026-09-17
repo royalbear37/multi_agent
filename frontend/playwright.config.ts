@@ -20,8 +20,12 @@ export default defineConfig({
       env: {
         PROTOTYPE_DB_PATH: resolve(
           "../data/runtime/e2e",
-          `test-${Date.now()}.db`,
+          `test-${Date.now()}`,
+          "test.db",
         ),
+        PROTOTYPE_RULE_CONFIG: resolve("../configs/research/rules.json"),
+        PROTOTYPE_CATALOG_PATH: resolve("../data/runtime/e2e-no-catalog.json"),
+        PROTOTYPE_FIXTURE_DIR: resolve("../data/runtime/e2e-empty-seed"),
         LLM_PROVIDER: "unconfigured",
         RAG_RETRIEVAL_MODE: "lexical",
       },

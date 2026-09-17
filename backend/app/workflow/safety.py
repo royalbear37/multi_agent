@@ -17,7 +17,12 @@ _AVOID_KEYS = {"drug_code", "reason", "rule_refs", "evidence_refs"}
 
 
 def forbidden_text(value: Any) -> bool:
-    return bool(FORBIDDEN_TEXT.search(value)) if isinstance(value, str) else False
+    if not isinstance(value, str):
+        return False
+    # A narrow negative scope statement is not a prescription. Other text,
+    # including any appended numeric instructions, still gets checked.
+    checked = re.sub(r"不(?:提供|包含)劑量、頻率(?:及|與|、)療程", "", value)
+    return bool(FORBIDDEN_TEXT.search(checked))
 
 
 def _clean_refs(value: Any) -> list[str] | None:
@@ -34,6 +39,7 @@ def validate_provider_output(
     allowed_evidence: set[str],
     require_rule_refs: bool = False,
     require_evidence_refs: bool = False,
+    allowed_avoid: set[str] | None = None,
 ) -> tuple[dict[str, Any] | None, list[str]]:
     """Validate an LLM/provider object against strict, explainable boundaries."""
     errors: list[str] = []
@@ -50,6 +56,9 @@ def validate_provider_output(
     if not all(isinstance(x, str) for x in limitations) or any(forbidden_text(x) for x in limitations):
         errors.append("forbidden_text")
     clean: dict[str, Any] = {"candidates": [], "avoid": [], "limitations": list(limitations)}
+    codes = [x.get('drug_code') for x in candidates if isinstance(x, dict) and isinstance(x.get('drug_code'), str)]
+    if len(codes) != len(set(codes)):
+        errors.append('duplicate_candidate')
     for collection, keyset, destination in ((candidates, _CANDIDATE_KEYS, "candidates"), (avoid, _AVOID_KEYS, "avoid")):
         for item in collection:
             if not isinstance(item, dict) or set(item) != keyset:
@@ -58,7 +67,8 @@ def validate_provider_output(
             item_errors: list[str] = []
             code, reason = item.get("drug_code"), item.get("reason")
             rules, evidence = _clean_refs(item.get("rule_refs")), _clean_refs(item.get("evidence_refs"))
-            if not isinstance(code, str) or code not in allowed_drugs:
+            permitted = allowed_avoid if destination == "avoid" and allowed_avoid is not None else allowed_drugs
+            if not isinstance(code, str) or code not in permitted:
                 item_errors.append("drug_not_allowed")
             if not isinstance(reason, str) or not reason.strip() or forbidden_text(reason):
                 item_errors.append("forbidden_or_missing_reason")
@@ -68,7 +78,7 @@ def validate_provider_output(
                 item_errors.append("rule_ref_required")
             if evidence is None or any(x not in allowed_evidence for x in evidence):
                 item_errors.append("evidence_ref_not_allowed")
-            if require_evidence_refs and not evidence:
+            if require_evidence_refs and not evidence and not (destination == "avoid" and allowed_avoid is not None):
                 item_errors.append("evidence_ref_required")
             errors.extend(item_errors)
             if not item_errors:

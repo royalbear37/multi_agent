@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api, pretty } from "./api";
 import type { components } from "./api.generated";
+import { ReviewEditor, reviewOutput } from "./ReviewEditor";
 import {
   BenchmarkOverview,
   SettingsOverview,
@@ -69,13 +70,13 @@ export default function App() {
     [history, setHistory] = useState<any[]>([]);
   const [reason, setReason] = useState(""),
     [action, setAction] = useState("accept"),
-    [proposed, setProposed] = useState(""),
+    [proposed, setProposed] = useState(reviewOutput(null)),
     [role, setRole] = useState("physician");
   const [documents, setDocuments] = useState<any[]>([]),
-    [query, setQuery] = useState("DEMO_ORGANISM_A"),
+    [query, setQuery] = useState("urinary tract infection"),
     [search, setSearch] = useState<any>(null),
     [documentScope, setDocumentScope] = useState<"synthetic" | "reference">(
-      "synthetic",
+      "reference",
     );
   const [docFile, setDocFile] = useState<File | null>(null),
     [docTitle, setDocTitle] = useState(""),
@@ -132,7 +133,7 @@ export default function App() {
   async function chooseRun(value: any) {
     const detail = await api("/runs/" + value.run_id);
     setRun(detail);
-    setProposed(pretty(detail.output));
+    setProposed(reviewOutput(detail.output));
     setReviews(await api("/reviews?run_id=" + detail.run_id));
   }
   async function startRun() {
@@ -177,9 +178,9 @@ export default function App() {
         <div className="sidebar-bottom">
           <Status value="demo_only" />
           <p>
-            規則與病例皆為虛構展示資料。
+            病例區分來源藥敏與模擬臨床資訊。
             <br />
-            正式臨床規則尚未設定。
+            來源敏感判讀不等於治療建議。
           </p>
           <label>
             審閱紀錄角色（展示）
@@ -196,7 +197,7 @@ export default function App() {
       </aside>
       <main>
         <div className="disclaimer">
-          研究展示用／僅 synthetic 資料／非臨床使用
+          研究展示用／病例標示來源與模擬欄位／非臨床使用
         </div>
         <header>
           <div>
@@ -240,7 +241,7 @@ export default function App() {
                 if (e.target.value) void work(() => chooseCase(e.target.value));
               }}
             >
-              <option value="">選擇 synthetic 病例</option>
+              <option value="">選擇研究病例</option>
               {cases.map((x) => (
                 <option key={x.case_id} value={x.case_id}>
                   {x.case_id} · revision {x.revision}
@@ -252,13 +253,13 @@ export default function App() {
             disabled={busy}
             onClick={() =>
               void work(async () => {
-                await api("/seed", {});
+                const seeded = await api("/seed", {});
                 await refresh();
-                setNotice("展示病例與文件已初始化；既有資料已保留。");
+                setNotice(seeded.message || "來源病例已備妥");
               })
             }
           >
-            載入展示資料
+            載入已準備的來源病例
           </button>
           <span className="muted">
             {cases.length} 個病例 ·{" "}
@@ -272,6 +273,46 @@ export default function App() {
                 <h2>病例摘要</h2>
                 {c ? (
                   <>
+                    <p className="notice">
+                      {c.source || "研究病例"} ·{" "}
+                      {c.is_synthetic ? "全部合成" : "含去識別來源資料"}
+                    </p>
+                    <p>{c.encounter?.context}</p>
+                    {!!c.provenance?.simulated_fields?.length && (
+                      <p>
+                        模擬欄位：{c.provenance.simulated_fields.join("、")}
+                        。菌種與藥敏來源請見下表。
+                      </p>
+                    )}
+                    <p>
+                      證據範圍：
+                      {c.evidence_scope === "reference"
+                        ? "WHO 等參考文件"
+                        : "測試文件"}
+                    </p>
+                    {!c.is_synthetic && (
+                      <label className="check-label">
+                        <input
+                          type="checkbox"
+                          checked={c.external_model_allowed ?? false}
+                          disabled={busy}
+                          onChange={(e) => {
+                            const allowed = e.target.checked;
+                            void work(async () => {
+                              await api("/cases/" + c.case_id + "/revisions", {
+                                payload: {
+                                  ...c,
+                                  external_model_allowed: allowed,
+                                },
+                              });
+                              await chooseCase(c.case_id);
+                            });
+                          }}
+                        />
+                        允許此病例的必要分析欄位送至外部模型（請先確認來源資料使用條款允許；本機
+                        Ollama 不需開啟）
+                      </label>
+                    )}
                     <div className="facts">
                       <div>
                         <small>病例 ID</small>
@@ -302,9 +343,10 @@ export default function App() {
                         <thead>
                           <tr>
                             <th>藥品代碼</th>
-                            <th>MIC</th>
-                            <th>來源 S/I/R</th>
-                            <th>標準／版本</th>
+                            <th>原始測量</th>
+                            <th>原始報告</th>
+                            <th>CLSI 2022 衍生判讀</th>
+                            <th>採用來源</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -312,13 +354,32 @@ export default function App() {
                             <tr key={i}>
                               <td>{a.drug_code}</td>
                               <td>
-                                {a.comparator ?? "?"} {a.mic ?? "未知"}{" "}
-                                {a.unit ?? "單位缺漏"}
+                                {a.interpretation_basis &&
+                                a.interpretation_basis !== "legacy" ? (
+                                  <>
+                                    {a.raw_measurement?.AST_inequality}{" "}
+                                    {a.raw_measurement?.AST_val1 || "未提供"}{" "}
+                                    {a.raw_measurement?.AST_val2 &&
+                                      `／${a.raw_measurement.AST_val2}`}
+                                    <small>{a.method} · 原檔未提供單位</small>
+                                  </>
+                                ) : (
+                                  <>
+                                    {a.comparator ?? "?"} {a.mic ?? "未知"}{" "}
+                                    {a.unit ?? "單位缺漏"}
+                                  </>
+                                )}
                               </td>
-                              <td>{a.reported_sir || "未知"}</td>
                               <td>
-                                {a.standard || "未知"} /{" "}
-                                {a.standard_version || "未知"}
+                                {a.source_phenotype ||
+                                  a.reported_sir ||
+                                  "未提供"}
+                              </td>
+                              <td>{a.clsi_2022_phenotype || "未提供"}</td>
+                              <td>
+                                {a.interpretation_basis === "CLSI_2022_pheno"
+                                  ? "資料集衍生欄位（未重新計算）"
+                                  : `${a.standard || "未知"} / ${a.standard_version || "未知"}`}
                               </td>
                             </tr>
                           ))}
@@ -344,7 +405,7 @@ export default function App() {
                     </details>
                   </>
                 ) : (
-                  <Empty>選擇病例，或先載入展示資料。</Empty>
+                  <Empty>選擇病例，或先載入已準備的來源病例。</Empty>
                 )}
               </section>
               <section className="panel">
@@ -371,12 +432,14 @@ export default function App() {
                   >
                     <option value="unconfigured">未設定模型</option>
                     <option value="mock">明確啟用 mock（離線展示）</option>
-                    <option value="live">外部模型（須設定後端 API）</option>
+                    <option value="live">
+                      已設定模型（OpenAI／本機 Ollama）
+                    </option>
                   </select>
                 </label>
                 {provider === "live" && (
                   <div className="alert">
-                    執行時將傳送必要 synthetic
+                    執行時將傳送必要病例
                     欄位及檢索片段至已設定的外部模型，可能產生費用。
                   </div>
                 )}
@@ -422,7 +485,7 @@ export default function App() {
               </section>
             </div>
             <section className="panel">
-              <h2>{editing ? "建立病例新版本" : "匯入 synthetic JSON"}</h2>
+              <h2>{editing ? "建立病例新版本" : "匯入病例 JSON"}</h2>
               <label>
                 格式
                 <select
@@ -447,7 +510,7 @@ export default function App() {
                 rows={7}
                 value={payload}
                 onChange={(e) => setPayload(e.target.value)}
-                placeholder="貼上病例 JSON；僅接受 is_synthetic: true"
+                placeholder="貼上病例 JSON；請標示資料來源與模擬欄位"
               />
               <button
                 disabled={busy || !payload}
@@ -506,7 +569,7 @@ export default function App() {
               </div>
               <div className="grid two">
                 <section className="panel">
-                  <h2>可供審閱的展示候選</h2>
+                  <h2>可供審閱的藥敏選項</h2>
                   {run.output?.candidates?.length ? (
                     run.output.candidates.map((x: any) => (
                       <article className="candidate" key={x.drug_code}>
@@ -528,7 +591,7 @@ export default function App() {
                   )}
                 </section>
                 <section className="panel">
-                  <h2>避免使用與限制</h2>
+                  <h2>來源排除／待確認項目</h2>
                   {(run.safety_summary?.avoid ?? run.output?.avoid)?.map(
                     (x: any, i: number) => (
                       <article key={i}>
@@ -618,6 +681,7 @@ export default function App() {
                 <label>
                   決定
                   <select
+                    aria-label="決定"
                     value={action}
                     onChange={(e) => setAction(e.target.value)}
                   >
@@ -627,14 +691,11 @@ export default function App() {
                   </select>
                 </label>
                 {action === "modify" && (
-                  <label>
-                    修改結構化候選（仍需通過安全檢核）
-                    <textarea
-                      rows={12}
-                      value={proposed}
-                      onChange={(e) => setProposed(e.target.value)}
-                    />
-                  </label>
+                  <ReviewEditor
+                    run={run}
+                    value={proposed}
+                    onChange={setProposed}
+                  />
                 )}
                 <label>
                   審閱理由
@@ -647,7 +708,17 @@ export default function App() {
                 </label>
                 <button
                   className="primary"
-                  disabled={busy || !reason.trim()}
+                  disabled={
+                    busy ||
+                    !reason.trim() ||
+                    (action === "modify" &&
+                      proposed.candidates.some(
+                        (x) =>
+                          !x.reason.trim() ||
+                          (!!run.evidence_snapshots?.length &&
+                            !x.evidence_refs.length),
+                      ))
+                  }
                   onClick={() =>
                     void work(async () => {
                       await api("/reviews", {
@@ -657,7 +728,7 @@ export default function App() {
                         reviewer_id: "demo-user",
                         role,
                         ...(action === "modify"
-                          ? { proposed_output: JSON.parse(proposed) }
+                          ? { proposed_output: proposed }
                           : {}),
                       });
                       setReviews(await api("/reviews?run_id=" + run.run_id));
@@ -742,7 +813,8 @@ export default function App() {
                 虛構展示文件（正式文件請取消）
               </label>
               <p className="muted">
-                正式文件可保存，展示工作流只檢索 synthetic 證據。
+                來源病例依 evidence_scope 檢索參考文件；上傳 WHO
+                時請取消合成文件勾選。
               </p>
               <button
                 disabled={busy || !docFile || !docTitle || !docVersion}
@@ -824,15 +896,15 @@ export default function App() {
                     setSearch(null);
                   }}
                 >
-                  <option value="synthetic">synthetic 展示文件（預設）</option>
+                  <option value="synthetic">synthetic 測試文件</option>
                   <option value="reference">
                     reference 正式參考文件（例如 WHO）
                   </option>
                 </select>
               </label>
               <p className="muted">
-                工作流固定使用 synthetic；切換為 reference
-                才會查詢正式參考文件。
+                這裡切換文件查詢範圍。病例分析使用該病例設定的證據範圍；來源病例使用
+                reference。
               </p>
               <label>
                 查詢
@@ -931,7 +1003,7 @@ export default function App() {
                 </label>
                 {benchmarkProvider === "live" && (
                   <div className="alert">
-                    將向已設定的外部模型傳送必要 synthetic
+                    將向已設定的模型傳送必要病例
                     欄位及片段。每個病例有三種模型模式，可能多次呼叫並產生費用。
                   </div>
                 )}
@@ -1012,7 +1084,7 @@ export default function App() {
           </>
         )}
         <footer>
-          研究展示用／僅 synthetic 資料／非臨床使用 ·
+          研究展示用／病例標示來源與模擬欄位／非臨床使用 ·
           不提供劑量、頻率、療程或正式醫囑
         </footer>
       </main>
