@@ -47,8 +47,9 @@
 ## GitHub 草稿 PR 交接
 
 - 已在 multi_agent_pr 建立乾淨 worktree，分支 codex/multi-agent-v2；已成功 fetch origin main。
-- 尚未將修改版程式複製進該 worktree，尚未 commit、push 或建立草稿 PR；GitHub 主分支未修改。
+- 已將修改版程式整理至該 worktree，完成 commit `24b3cca` 並推送；GitHub 主分支未修改。
 - 修改版仍在 multi_agent_download/multi_agent-main。github_latest/backend/.env.example 有使用者修改，請保留，不可直接提交或顯示其中可能的憑證。
-- 下一步：核對遠端基準、只整理程式／測試／文件至 multi_agent_pr，排除資料集、PDF、.env、runtime、依賴與任何金鑰，再掃描待提交內容。
-- Git 尚未取得 user.name/user.email，提交前需向使用者確認提交署名與電子郵件（可使用 GitHub noreply 位址）；GitHub 登入及推送權限尚未驗證。gh CLI 未安裝，可在推送後透過瀏覽器建立 draft PR，勿合併 main。
-- 最新用量檢查：五小時剩 0%、每週剩 50%；依 10% 收尾要求暫停後續工作，未使用重置額度。
+- 草稿 PR 已建立：`https://github.com/royalbear37/multi_agent/pull/1`，基準 `main`、來源 `codex/multi-agent-v2`；尚未合併。
+- 提交前已排除資料集、PDF、`.env`、runtime、依賴與任何金鑰；`backend/.env.example` 只含空白範本與 v2 設定說明。
+- gh CLI 未安裝；透過瀏覽器完成 GitHub 登入、推送與 draft PR 建立。
+- 最新用量檢查：五小時剩 0%、每週剩 50%；依 10% 收尾要求未使用重置額度。
