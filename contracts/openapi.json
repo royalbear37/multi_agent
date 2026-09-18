@@ -54,6 +54,22 @@
         }
       }
     },
+    "/api/agents/v2/contracts": {
+      "get": {
+        "summary": "Agent Contracts V2",
+        "operationId": "agent_contracts_v2_api_agents_v2_contracts_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/cases": {
       "get": {
         "summary": "List Cases",
@@ -576,6 +592,53 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/documents/{doc_id}/population": {
+      "post": {
+        "summary": "Update Document Population",
+        "operationId": "update_document_population_api_documents__doc_id__population_post",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentPopulationBody"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -1168,7 +1231,8 @@
                 "rule-only",
                 "rag-only",
                 "single-agent",
-                "multi-agent"
+                "multi-agent",
+                "multi-agent-v2"
               ]
             },
             "type": "array",
@@ -1221,6 +1285,18 @@
             "type": "boolean",
             "title": "Is Synthetic",
             "default": true
+          },
+          "population": {
+            "type": "string",
+            "enum": [
+              "unspecified",
+              "all",
+              "adult",
+              "pediatric",
+              "mixed"
+            ],
+            "title": "Population",
+            "default": "unspecified"
           }
         },
         "type": "object",
@@ -1490,6 +1566,40 @@
         "additionalProperties": false,
         "type": "object",
         "title": "Demographics"
+      },
+      "DocumentPopulationBody": {
+        "properties": {
+          "population": {
+            "type": "string",
+            "enum": [
+              "unspecified",
+              "all",
+              "adult",
+              "pediatric",
+              "mixed"
+            ],
+            "title": "Population"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Reason"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Expected Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "population",
+          "reason",
+          "expected_revision"
+        ],
+        "title": "DocumentPopulationBody"
       },
       "Encounter": {
         "properties": {
@@ -1960,7 +2070,8 @@
               "rule-only",
               "rag-only",
               "single-agent",
-              "multi-agent"
+              "multi-agent",
+              "multi-agent-v2"
             ],
             "title": "Mode"
           },

@@ -28,6 +28,15 @@ def test_mock_is_marked_and_schema_valid():
     assert result["output"]["candidates"][0]["drug_code"] == "DEMO_DRUG_A"
 
 
+def test_live_adapter_rejects_contradictory_lists():
+    from app.providers.service import _safe_output
+    item = {'drug_code': 'DEMO_DRUG_A', 'reason': 'Fixture',
+            'rule_refs': [], 'evidence_refs': []}
+    with pytest.raises(ProviderError) as exc:
+        _safe_output({'candidates': [item], 'avoid': [dict(item)], 'limitations': []}, _context())
+    assert exc.value.code == 'CANDIDATE_AVOID_OVERLAP'
+
+
 def test_fake_http_live_adapter_and_payload_allowlist():
     calls = []
 

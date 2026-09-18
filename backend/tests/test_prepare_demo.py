@@ -26,7 +26,7 @@ def test_prepare_source_cases_preserves_reference_and_retries_failed_runs(tmp_pa
             script['main_cli']()
         failed_ids = {r['run_id'] for r in database.list_runs()}
         assert len(failed_ids) == 4
-        original = service.import_document('reference.md', b'ESCHERICHIA COLI urinary tract infection reference fixture; not clinical guidance.', 'Reference fixture', 'who-v1', False)
+        original = service.import_document('reference.md', b'ESCHERICHIA COLI urinary tract infection reference fixture; not clinical guidance.', 'Reference fixture', 'who-v1', False, population='all')
         script['main_cli']()
         first = [r for r in database.list_runs() if r['run_id'] not in failed_ids]
         assert len(first) == 4
@@ -34,6 +34,6 @@ def test_prepare_source_cases_preserves_reference_and_retries_failed_runs(tmp_pa
         assert all(r['output']['candidates'] and r['evidence_snapshots'] for r in first)
         script['main_cli']()
         assert len(database.list_runs()) == 12
-        assert service.detail(original['doc_id'])['metadata']['policy_refs'] == []
+        assert service.detail(original['doc_id'])['metadata'] == {'policy_refs': [], 'population': 'all', 'population_revision': 0}
     finally:
         database.close()

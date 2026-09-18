@@ -23,7 +23,7 @@ const sections = [
   "文件資料庫",
   "研究與設定",
 ];
-const modes = ["rule-only", "rag-only", "single-agent", "multi-agent"];
+const modes = ["rule-only", "rag-only", "single-agent", "multi-agent", "multi-agent-v2"];
 const names: Record<string, string> = {
   completed: "已完成",
   awaiting_review: "待人工審閱",
@@ -81,11 +81,13 @@ export default function App() {
   const [docFile, setDocFile] = useState<File | null>(null),
     [docTitle, setDocTitle] = useState(""),
     [docVersion, setDocVersion] = useState("1"),
+    [docPopulation, setDocPopulation] = useState("unspecified"),
     [synthetic, setSynthetic] = useState(true);
   const [benchmark, setBenchmark] = useState<any>(null),
     [benchmarks, setBenchmarks] = useState<any[]>([]),
     [rules, setRules] = useState<any>(null);
   const [benchmarkProvider, setBenchmarkProvider] = useState("unconfigured");
+  const [includeV2, setIncludeV2] = useState(false);
   async function work(fn: () => Promise<void>) {
     setBusy(true);
     setError("");
@@ -448,6 +450,7 @@ export default function App() {
                     MOCK 模擬輸出，不能視為真實模型研究結果。
                   </div>
                 )}
+                {mode === "multi-agent-v2" && <p>v2 每病例通常有 5 次獨立模型呼叫；遇缺漏或失敗會提早停止。可在「證據與流程」查看各 Agent 的輸入、輸出與用量。</p>}
                 <button
                   className="primary wide"
                   disabled={busy || !c}
@@ -804,6 +807,19 @@ export default function App() {
                   onChange={(e) => setDocVersion(e.target.value)}
                 />
               </label>
+              <label>
+                適用族群
+                <select
+                  value={docPopulation}
+                  onChange={(e) => setDocPopulation(e.target.value)}
+                >
+                  <option value="unspecified">尚未標示</option>
+                  <option value="all">所有年齡</option>
+                  <option value="adult">成人</option>
+                  <option value="pediatric">兒童</option>
+                  <option value="mixed">成人與兒童混合（待整理適用片段）</option>
+                </select>
+              </label>
               <label className="check">
                 <input
                   type="checkbox"
@@ -815,6 +831,8 @@ export default function App() {
               <p className="muted">
                 來源病例依 evidence_scope 檢索參考文件；上傳 WHO
                 時請取消合成文件勾選。
+                適用族群須由上傳者核對。混合或未標示的內容可供搜尋，
+                但須先整理成附來源與定位的單一族群文件，才能支持候選。
               </p>
               <button
                 disabled={busy || !docFile || !docTitle || !docVersion}
@@ -825,6 +843,7 @@ export default function App() {
                     f.append("title", docTitle);
                     f.append("version", docVersion);
                     f.append("is_synthetic", String(synthetic));
+                    f.append("population", docPopulation);
                     const d = await api("/documents/import", f);
                     setDocuments(await api("/documents"));
                     setConfig(await api("/config"));
@@ -842,6 +861,38 @@ export default function App() {
                     <Status value={d.processing_status} />
                   </summary>
                   <Json value={d} />
+                  <form
+                    key={d.metadata?.population_revision ?? 0}
+                    onSubmit={(event) => {
+                      event.preventDefault();
+                      const form = new FormData(event.currentTarget);
+                      void work(async () => {
+                        await api("/documents/" + d.doc_id + "/population", {
+                          population: String(form.get("population")),
+                          reason: String(form.get("reason")),
+                          expected_revision: d.metadata?.population_revision ?? 0,
+                        });
+                        setDocuments(await api("/documents"));
+                        setNotice("族群標示已保存；請重新分析病例，舊執行紀錄維持原快照。");
+                      });
+                    }}
+                  >
+                    <label>
+                      此文件適用族群
+                      <select name="population" defaultValue={d.metadata?.population ?? "unspecified"}>
+                        <option value="unspecified">尚未標示</option>
+                        <option value="all">所有年齡</option>
+                        <option value="adult">成人</option>
+                        <option value="pediatric">兒童</option>
+                        <option value="mixed">混合（待整理適用片段）</option>
+                      </select>
+                    </label>
+                    <label>
+                      標示依據
+                      <input name="reason" required maxLength={2000} placeholder="請填來源頁碼或適用範圍的核對依據" />
+                    </label>
+                    <button type="submit" disabled={busy}>儲存族群標示</button>
+                  </form>
                   <a
                     href={"/api/documents/" + d.doc_id + "/source"}
                     target="_blank"
@@ -983,6 +1034,7 @@ export default function App() {
               </section>
               <section className="panel">
                 <h2>四模式比較（Benchmark）</h2>
+                <label><input type="checkbox" checked={includeV2} onChange={e => setIncludeV2(e.target.checked)} /> 加入獨立代理協作 v2（增加模型呼叫）</label>
                 <p>
                   對全部已保存的 {cases.length} 個病例各執行四種模式，共{" "}
                   {cases.length * 4} 筆結果。不是只比較上方選取的病例。
@@ -1014,7 +1066,7 @@ export default function App() {
                     void work(async () => {
                       const b = await api("/benchmarks", {
                         case_ids: cases.map((c) => c.case_id),
-                        modes,
+                        modes: includeV2 ? modes : modes.filter(m => m !== "multi-agent-v2"),
                         provider_kind: benchmarkProvider,
                         request_id: crypto.randomUUID(),
                       });
@@ -1023,7 +1075,7 @@ export default function App() {
                     })
                   }
                 >
-                  執行四模式比較
+                  {includeV2 ? "執行五模式比較（含 v2）" : "執行四模式比較"}
                 </button>
                 <h3>比較歷史（時間依本機時區）</h3>
                 {benchmarks.map((b: any, i: number) => (

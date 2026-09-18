@@ -27,7 +27,7 @@ class Documents:
     def __init__(self): self.scopes = []
     def search(self, query, policy_refs=None, *, scope='synthetic'):
         self.scopes.append(scope)
-        return {'status': 'ok', 'evidence': [{'chunk_id':'ref-1','doc_id':'who-v1','document_version':'2022','text':'Reference fixture for retrieval plumbing; no clinical recommendation.','location':{'page':1},'is_synthetic':False}]}
+        return {'status': 'ok', 'evidence': [{'chunk_id':'ref-1','doc_id':'who-v1','document_version':'2022','text':'Adult reference fixture for retrieval plumbing; no clinical recommendation.','location':{'page':1},'is_synthetic':False,'population':'adult'}]}
 
 
 def test_actual_names_and_reference_evidence_reach_review():
@@ -160,3 +160,86 @@ def test_evidence_query_preserves_age_population():
     assert evidence_query(value).endswith('children')
     value['demographics']['age']=None
     assert 'children' not in evidence_query(value) and 'adults' not in evidence_query(value)
+
+
+def test_reference_evidence_is_filtered_by_patient_population():
+    class MixedDocuments:
+        def search(self, query, policy_refs=None, *, scope='synthetic'):
+            return {'status': 'ok', 'evidence': [
+                {'chunk_id':'adult','text':'Guidance for adults.', 'population':'adult'},
+                {'chunk_id':'child','text':'Pediatric guidance for children.', 'population':'pediatric'},
+                {'chunk_id':'unknown','text':'Guidance without a named age group.', 'population':'mixed'},
+            ]}
+
+    adult = execute(case(), 'rule-only', document_service=MixedDocuments())
+    assert adult['gate_status'] == 'ready_for_review'
+    assert adult['output']['candidates'][0]['evidence_refs'] == ['adult']
+    population = next(n for n in adult['nodes'] if n['node_id'] == 'evidence_retrieval')['output']['population_filter']
+    assert {k: population[k] for k in ('case_population','matched','mismatched','unverified')} == {'case_population':'adult', 'matched':1, 'mismatched':1, 'unverified':1}
+    assert [e['chunk_id'] for e in population['excluded']] == ['child', 'unknown']
+
+    child_case = case()
+    child_case['demographics']['age'] = 10
+    child = execute(child_case, 'rule-only', document_service=MixedDocuments())
+    assert child['output']['candidates'][0]['evidence_refs'] == ['child']
+
+
+def test_reference_evidence_requires_age_and_verified_population():
+    value = case()
+    value['demographics']['age'] = None
+    run = execute(value, 'rule-only', document_service=Documents())
+    assert run['gate_status'] == 'needs_confirmation'
+    assert run['output'] is None
+    assert 'demographics.age_for_evidence' in run['missing_fields']
+
+    class PediatricOnly:
+        def search(self, query, policy_refs=None, *, scope='synthetic'):
+            return {'status':'ok', 'evidence':[{'chunk_id':'peds','text':'Children only guidance.', 'population':'pediatric'}]}
+    mismatched = execute(case(), 'rule-only', document_service=PediatricOnly())
+    assert mismatched['gate_status'] == 'needs_confirmation'
+    assert mismatched['output'] is None
+    assert 'evidence.population_applicability' in mismatched['missing_fields']
+
+
+@pytest.mark.parametrize('text', [
+    'Not applicable to adults.',
+    'Adult guidance is discussed elsewhere; this fragment has no recommendation.',
+    '成人不適用本段。',
+    'Adults and children have different sections.',
+])
+def test_age_keywords_do_not_certify_unlabelled_evidence(text):
+    from app.workflow.engine import _evidence_population
+    assert _evidence_population({'text': text}, 'adult') != 'matched'
+    assert _evidence_population({'text': text, 'population': 'mixed'}, 'adult') != 'matched'
+
+
+@pytest.mark.parametrize('population', ['all', 'adult'])
+def test_document_label_cannot_override_pediatric_fragment(population):
+    from app.workflow.engine import _evidence_population
+    assert _evidence_population(
+        {'text': 'Pediatric chart for children.', 'population': population}, 'adult'
+    ) != 'matched'
+
+
+@pytest.mark.parametrize('mode', ['rag-only','single-agent','multi-agent'])
+def test_no_applicable_reference_skips_generation(monkeypatch, mode):
+    from app.providers import service
+    def unexpected_provider(kind):
+        raise AssertionError('Generation should not be attempted without applicable evidence')
+    monkeypatch.setattr(service, 'get_provider', unexpected_provider)
+    class Unlabelled:
+        def search(self, *args, **kwargs):
+            return {'status':'ok', 'evidence':[{'chunk_id':'unverified', 'text':'Adults only?'}]}
+    run = execute(case(), mode, 'live', Unlabelled())
+    assert run['output'] is None
+    assert run['gate_status'] == 'needs_confirmation'
+    assert run['errors'] == []
+    node = next(n for n in run['nodes'] if n['node_id'] == 'candidate_presentation')
+    assert node['status'] == 'skipped' and node['output']['attempted'] is False
+
+
+def test_legacy_unlabelled_snapshot_cannot_be_accepted_as_population_verified():
+    run = execute(case(), 'rule-only', document_service=Documents())
+    run['evidence_snapshots'][0].pop('population')
+    with pytest.raises(ValueError, match='population-labelled'):
+        validate_review(run, run['output'])

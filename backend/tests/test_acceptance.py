@@ -88,6 +88,20 @@ def test_document_multipart_roundtrip_and_missing_source(client):
     assert not c.get('/api/documents/search?q=DOCUMENT_TEST_TOKEN').json()['evidence']
     assert c.get('/api/documents/missing/source').status_code==404
 
+
+def test_population_annotation_api_and_revision_conflict(client):
+    c, _, docs = client
+    doc = docs.import_document("label.txt", b"Scope fixture", "Scope", "v1", False)
+    url = '/api/documents/' + doc['doc_id'] + '/population'
+    body = {'population':'adult', 'reason':'Fixture scope reviewed', 'expected_revision':0}
+    updated = c.post(url, json=body)
+    assert updated.status_code == 200
+    assert updated.json()['metadata']['population_revision'] == 1
+    assert c.post(url, json=body).status_code == 409
+    assert c.post(url, json={**body, 'expected_revision':1, 'reason':'   '}).status_code == 422
+    assert c.post(url, json={**body, 'population':'invalid'}).status_code == 422
+    assert c.post('/api/documents/missing/population', json=body).status_code == 404
+
 def test_restart_recovers_running_task(client):
     _, repository, _ = client
     repository.create_run('interrupted-test','case-01-complete','rule-only','unconfigured',None,None,{'run_id':'interrupted-test','status':'running'})

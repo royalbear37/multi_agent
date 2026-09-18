@@ -72,7 +72,20 @@ def _core(results: list[dict[str, Any]], expectations: dict[str, Any]) -> dict[s
         whitelist_violations += sum(1 for err in result.get("errors", []) if any(t in str(err).upper() for t in ("NOT_ALLOWED", "UNALLOWED", "WHITELIST")))
 
     labeled_nonblock = sum(1 for r in results if _expect(expectations, str(r.get("case_id", ""))).get("expected_block") is False)
+    agent_nodes = [n for r in results for n in r.get("nodes", []) if n.get("agent_id")]
+    agent_ids = sorted({n["agent_id"] for n in agent_nodes})
+    def agent_stats(nodes):
+        attempts = [a for n in nodes for a in n.get("attempts", [])]
+        tokens = [a["usage"]["total_tokens"] for a in attempts if "total_tokens" in (a.get("usage") or {})]
+        return {"executions": len(nodes), "calls": len(attempts),
+                "failed": sum(n["status"] == "failed" for n in nodes),
+                "skipped": sum(n["status"] == "skipped" for n in nodes),
+                "known_total_tokens": sum(tokens) if tokens else None,
+                "usage_complete": bool(attempts) and len(tokens) == len(attempts),
+                "elapsed_ms": round(sum(n.get("elapsed_ms", 0) for n in nodes), 3)}
     return {
+        "agent_execution": agent_stats(agent_nodes),
+        "by_agent": {agent_id: agent_stats([n for n in agent_nodes if n["agent_id"] == agent_id]) for agent_id in agent_ids},
         "total_cases": total, "status_counts": dict(statuses),
         "completion": _metric(sum(1 for r in results if r.get("gate_status") == "ready_for_review" and r.get("output") is not None), total),
         "failed_ratio": _metric(statuses.get("failed", 0), total), "blocked_ratio": _metric(statuses.get("blocked", 0), total),
