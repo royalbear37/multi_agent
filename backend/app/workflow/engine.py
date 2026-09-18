@@ -6,6 +6,7 @@ import copy
 import time
 import uuid
 import json
+import re
 from pathlib import Path
 from contextvars import ContextVar
 from typing import Any
@@ -66,6 +67,59 @@ def evidence_query(case: dict[str, Any]) -> str:
     if isinstance(age, (int, float)) and not isinstance(age, bool):
         terms.append('adults' if age >= 18 else 'children')
     return ' '.join(str(term) for term in terms if term)
+
+
+_ADULT_TERMS = re.compile(r"(?i)(?:\badults?\b|\badult[- ]onset\b|成人)")
+_PEDIATRIC_TERMS = re.compile(r"(?i)(?:\bpediatri\w*\b|\bpaediatri\w*\b|\bchildren\b|\bchild\b|\binfants?\b|\bneonat\w*\b|\badolescen\w*\b|兒童|小兒|嬰兒|新生兒)")
+
+
+def _case_population(case: dict[str, Any]) -> str | None:
+    age = _get(case, "demographics.age")
+    if not isinstance(age, (int, float)) or isinstance(age, bool):
+        return None
+    return "adult" if age >= 18 else "pediatric"
+
+
+def _evidence_population(item: dict[str, Any], case_population: str) -> str:
+    """Check a human-supplied scope label, never certify scope from keywords.
+
+    Words can occur in negations, examples, or cross-references. They can raise
+    a conflict for review but cannot establish applicability. Mixed books need
+    separately curated, scope-labelled excerpts before supporting candidates.
+    """
+    declared = item.get("population", "unspecified")
+    if declared in {"adult", "pediatric"} and declared != case_population:
+        return "mismatched"
+    location = item.get("location") or {}
+    headings = location.get("heading_path", []) if isinstance(location, dict) else []
+    text = str(item.get("text", "")) + " " + str(headings)
+    adult = bool(_ADULT_TERMS.search(text))
+    pediatric = bool(_PEDIATRIC_TERMS.search(text))
+    if (case_population == "adult" and pediatric) or (case_population == "pediatric" and adult):
+        return "unverified" if adult == pediatric else "mismatched"
+    if declared not in {"all", case_population}:
+        return "unverified"
+    return "matched"
+
+
+def _filter_population_evidence(case: dict[str, Any], evidence: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    population = _case_population(case)
+    counts = {"matched": 0, "mismatched": 0, "unverified": 0}
+    accepted: list[dict[str, Any]] = []
+    excluded: list[dict[str, Any]] = []
+    for original in evidence:
+        item = copy.deepcopy(original)
+        applicability = _evidence_population(item, population) if population else "unverified"
+        counts[applicability] += 1
+        item["population_applicability"] = applicability
+        if applicability == "matched":
+            accepted.append(item)
+        else:
+            excluded.append({key: item.get(key) for key in
+                             ("chunk_id", "doc_id", "document_version", "location",
+                              "population", "population_applicability")})
+    return accepted, {"case_population": population or "unknown", **counts,
+                      "excluded": excluded, "policy_version": "population-label-1.0"}
 
 
 def _deterministic_output(engine: RuleEngine, evaluations: list[dict[str, Any]], evidence: list[dict[str, Any]],
@@ -166,10 +220,20 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
         except Exception as exc:  # document service failures are data, never fatal to the whole trace
             search_result = {"status": "failed", "evidence": [], "warnings": ["文件檢索失敗"]}
             errors.append({"node_id": "evidence_retrieval", "code": "EVIDENCE_SEARCH_FAILED", "detail": type(exc).__name__})
-    evidence = [copy.deepcopy(x) for x in (search_result.get("evidence") or []) if isinstance(x, dict)]
+    retrieved_evidence = [copy.deepcopy(x) for x in (search_result.get("evidence") or []) if isinstance(x, dict)]
+    population_filter: dict[str, Any] | None = None
+    if case.get("evidence_scope") == "reference":
+        evidence, population_filter = _filter_population_evidence(case, retrieved_evidence)
+        if population_filter["case_population"] == "unknown":
+            missing.append("demographics.age_for_evidence")
+        if retrieved_evidence and not evidence:
+            missing.append("evidence.population_applicability")
+    else:
+        evidence = retrieved_evidence
     nodes.append(_node("evidence_retrieval", "completed" if search_result.get("status") in {"ok", "completed", "no_results"} else "blocked" if search_result.get('status') == 'conflict' else str(search_result.get("status", "completed")), t,
                        output={"status": search_result.get("status"), "warnings": search_result.get("warnings", []), "count": len(evidence),
-                               "retrieval_method": search_result.get("retrieval_method"), "embedding_model": search_result.get("embedding_model")}, version="retrieval-2.0",
+                               "retrieved_count": len(retrieved_evidence), "population_filter": population_filter,
+                               "retrieval_method": search_result.get("retrieval_method"), "embedding_model": search_result.get("embedding_model")}, version="retrieval-2.1",
                        evidence_refs=[str(x.get("chunk_id")) for x in evidence if x.get("chunk_id")]))
 
     supported = engine.supports(_get(case, "microbiology.organism"))
@@ -193,6 +257,10 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
     t = time.perf_counter()
     if mode == "rule-only":
         output = _deterministic_output(engine, evaluations, evidence, gate, limitations, case)
+    elif population_filter is not None and not evidence:
+        # No applicable reference input: do not spend a generation call on an
+        # output which the final gate must withhold.
+        candidate_status = "skipped"
     elif provider_kind == "unconfigured":
         candidate_status = "not_configured"
         errors.append({"node_id": "candidate_presentation", "code": "MODEL_NOT_CONFIGURED"})
@@ -303,8 +371,8 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
     }
 
 
-def execute(case: dict[str, Any], mode: str, provider_kind: str = "unconfigured", document_service: Any = None, run_id: str | None = None, *, rules_snapshot: dict | None = None) -> dict[str, Any]:
-    if mode not in {"rule-only", "rag-only", "single-agent", "multi-agent"}:
+def execute(case: dict[str, Any], mode: str, provider_kind: str = "unconfigured", document_service: Any = None, run_id: str | None = None, *, rules_snapshot: dict | None = None, checkpoint=None) -> dict[str, Any]:
+    if mode not in {"rule-only", "rag-only", "single-agent", "multi-agent", "multi-agent-v2"}:
         raise ValueError("unsupported workflow mode")
     if provider_kind not in {"unconfigured", "mock", "live"}:
         raise ValueError("unsupported provider kind")
@@ -313,6 +381,9 @@ def execute(case: dict[str, Any], mode: str, provider_kind: str = "unconfigured"
     from app.agents.runners import RUNNERS
     token = _PINNED_RULES.set(copy.deepcopy(rules_snapshot))
     try:
+        if mode == "multi-agent-v2":
+            from .v2 import execute_v2
+            return execute_v2(case, provider_kind, document_service, run_id, checkpoint=checkpoint)
         return RUNNERS[mode].run(case, provider_kind, document_service, run_id)
     finally:
         _PINNED_RULES.reset(token)
@@ -332,12 +403,27 @@ def validate_review(run: dict[str, Any], proposed: dict[str, Any] | None = None)
     engine = RuleEngine(config=snapshot) if isinstance(snapshot, dict) else RuleEngine()
     case_snapshot = run.get("case_snapshot")
     allowed = set(engine.candidate_drugs(case_snapshot)) if isinstance(case_snapshot, dict) else set()
+    if run.get("mode") == "multi-agent-v2":
+        boundary = run.get("v2_candidate_boundary") or {}
+        allowed &= set(boundary.get("allowed_drugs", []))
+        evidence_by_drug = boundary.get("evidence_by_drug", {})
+        for candidate in proposed.get("candidates", []):
+            if isinstance(candidate, dict):
+                refs = candidate.get("evidence_refs")
+                code = candidate.get("drug_code")
+                if not isinstance(code, str) or not isinstance(refs, list) or not all(isinstance(ref, str) for ref in refs) or not refs or not set(refs) <= set(evidence_by_drug.get(code, [])):
+                    raise ValueError("v2 review requires the pinned per-drug specialist evidence")
     evals = run.get("rule_evaluations") or []
     hard_avoid = {x.get("drug_code") for x in (run.get("output") or {}).get("avoid", []) if isinstance(x, dict)}
+    review_evidence = run.get("evidence_snapshots", [])
+    if isinstance(case_snapshot, dict) and case_snapshot.get("evidence_scope") == "reference":
+        review_evidence, _ = _filter_population_evidence(case_snapshot, review_evidence)
+        if proposed.get("candidates") and not review_evidence:
+            raise ValueError("review requires population-labelled evidence; re-run after confirming document scope")
     validated, errors = validate_provider_output(proposed, allowed_drugs=allowed,
                                                  allowed_avoid=hard_avoid if engine.reported_mode else None,
                                                  allowed_rules={str(x.get("rule_id")) for x in evals},
-                                                 allowed_evidence={str(x.get("chunk_id")) for x in run.get("evidence_snapshots", [])},
+                                                 allowed_evidence={str(x.get("chunk_id")) for x in review_evidence},
                                                  require_rule_refs=bool(evals), require_evidence_refs=bool(run.get("evidence_snapshots")))
     if errors or validated is None:
         raise ValueError("review output rejected: " + ",".join(errors))

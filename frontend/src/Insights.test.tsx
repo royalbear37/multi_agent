@@ -8,6 +8,32 @@ import {
   localTime,
 } from "./Insights";
 
+test("v2 trace shows independent agent messages and model attempts", () => {
+  render(<WorkflowStep index={7} run={{}} node={{
+    node_id: "ast_agent", agent_id: "ast_agent", status: "completed", model: "test-ast-model",
+    is_mock: true, depends_on: ["case_agent"], elapsed_ms: 12, usage: { total_tokens: 42 },
+    input: { case_assessment: { findings: [] } }, output: { reviewed_drugs: ["TEST"] },
+    attempts: [{ attempt: 1, status: "completed" }],
+  }} />);
+  fireEvent.click(screen.getByText(/藥敏分析 Agent/));
+  expect(screen.getByText(/模型：test-ast-model/)).toBeVisible();
+  expect(screen.getByText(/Token：42/)).toBeVisible();
+  expect(screen.getByText(/接收上游：病例整理 Agent/)).toBeVisible();
+  fireEvent.click(screen.getByText("Agent 輸入"));
+  expect(screen.getAllByText(/case_assessment/)[0]).toBeVisible();
+  expect(screen.getByText("模型呼叫與重試紀錄")).toBeVisible();
+});
+
+test("withheld agent content stays hidden in the readable trace", () => {
+  render(<WorkflowStep index={8} run={{}} node={{
+    node_id: "synthesis_agent", agent_id: "synthesis_agent", status: "failed",
+    content_withheld: true, input: null, output: null, errors: [{ code: "AGENT_SCHEMA_INVALID" }],
+  }} />);
+  fireEvent.click(screen.getByText(/結果整合 Agent/));
+  expect(screen.getByText(/中間內容已隔離/)).toBeVisible();
+  expect(screen.queryByText("Agent 輸入")).toBeNull();
+});
+
 test("single mode history distinguishes runs, N/A and no LLM", () => {
   const onOpen = vi.fn();
   render(

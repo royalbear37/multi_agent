@@ -59,6 +59,11 @@ def validate_provider_output(
     codes = [x.get('drug_code') for x in candidates if isinstance(x, dict) and isinstance(x.get('drug_code'), str)]
     if len(codes) != len(set(codes)):
         errors.append('duplicate_candidate')
+    avoid_codes = [x.get('drug_code') for x in avoid if isinstance(x, dict) and isinstance(x.get('drug_code'), str)]
+    if set(codes).intersection(avoid_codes):
+        errors.append('candidate_avoid_overlap')
+    if len(avoid_codes) != len(set(avoid_codes)):
+        errors.append('duplicate_avoid')
     for collection, keyset, destination in ((candidates, _CANDIDATE_KEYS, "candidates"), (avoid, _AVOID_KEYS, "avoid")):
         for item in collection:
             if not isinstance(item, dict) or set(item) != keyset:
@@ -104,4 +109,3 @@ def gate_status(*, missing_fields: list[str], evaluations: list[dict[str, Any]],
     if require_evidence and not evidence:
         limitations.append("沒有可定位的展示證據")
     return ("needs_confirmation" if limitations else "ready_for_review"), limitations
-

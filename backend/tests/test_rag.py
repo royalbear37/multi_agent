@@ -151,6 +151,40 @@ def test_markdown_import_search_and_location(tmp_path: Path):
     assert result["evidence"][0]["location"]["heading_path"] == ["Section"]
 
 
+def test_document_population_metadata_reaches_evidence(tmp_path: Path):
+    service = DocumentService(tmp_path, retrieval_mode="lexical")
+    document = service.import_document("adult.md", b"# Adult\nadults only", "Adult", "v1", population="adult")
+    assert document["metadata"]["population"] == "adult"
+    assert service.search("adults")["evidence"][0]["population"] == "adult"
+    with pytest.raises(DocumentServiceError) as exc:
+        service.import_document("bad.md", b"bad", "Bad", "v1", population="unknown-value")
+    assert exc.value.code == "INVALID_POPULATION"
+
+
+@pytest.mark.parametrize("mode", ["lexical", "embedding"])
+def test_relabel_preserves_original_and_old_evidence_and_reuses_vectors(tmp_path, mode):
+    service = DocumentService(tmp_path, retrieval_mode=mode, embedding_provider=FakeEmbeddings())
+    content = b"kidney reference fixture"
+    document = service.import_document("reference.txt", content, "Reference", "v1", False)
+    old = service.search("kidney", scope="reference")["evidence"][0]
+    before_index = service.status(scope="reference")["index"]
+    revised = service.update_population(document["doc_id"], "adult", "Verified fixture scope", 0)
+    new = service.search("kidney", scope="reference")["evidence"][0]
+    assert old["population"] == "unspecified" and old["population_revision"] == 0
+    assert new["population"] == "adult" and new["population_revision"] == 1
+    assert old["chunk_id"] == new["chunk_id"]
+    assert service.source(document["doc_id"])[0].read_bytes() == content
+    assert revised["metadata"]["population_history"][0]["previous"] == "unspecified"
+    assert service.status(scope="reference")["index"] == before_index
+    with pytest.raises(DocumentServiceError) as conflict:
+        service.update_population(document["doc_id"], "pediatric", "Stale edit", 0)
+    assert conflict.value.code == "POPULATION_REVISION_CONFLICT"
+    with pytest.raises(DocumentServiceError) as duplicate:
+        service.import_document("reference.txt", content, "Reference", "v1", False, population="pediatric")
+    assert duplicate.value.code == "POPULATION_LABEL_CONFLICT"
+    assert service.detail(document["doc_id"])["metadata"]["population"] == "adult"
+
+
 def test_hash_deduplicates_and_versions_are_immutable(tmp_path: Path):
     service = DocumentService(tmp_path, retrieval_mode="lexical")
     first = service.import_document("a.txt", b"same", "A", "v1")

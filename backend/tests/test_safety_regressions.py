@@ -70,3 +70,27 @@ def test_document_conflict_cannot_be_hidden_by_limit(tmp_path):
     docs.import_document('a.md',b'# POLICY\nDEMO_ORGANISM_A first','Same policy','v1')
     docs.import_document('b.md',b'# POLICY\nDEMO_ORGANISM_A second','Same policy','v2')
     assert docs.search('DEMO_ORGANISM_A',limit=1)['status']=='conflict'
+
+
+@pytest.mark.parametrize('mode', ['rag-only', 'single-agent', 'multi-agent'])
+def test_overlapping_candidate_and_avoid_is_rejected_at_final_gate(monkeypatch, mode):
+    from app.providers import service
+    class Contradictory:
+        def status(self): return {'configured': True}
+        def generate(self, context):
+            item = {'drug_code': 'DEMO_DRUG_A', 'reason': 'Fixture',
+                    'rule_refs': context['rule_refs'], 'evidence_refs': ['demo_chunk']}
+            return {'output': {'candidates': [item], 'avoid': [copy.deepcopy(item)], 'limitations': []}}
+    monkeypatch.setattr(service, 'get_provider', lambda _: Contradictory())
+    run = execute(case(), mode, 'mock', DocStub())
+    assert run['output'] is None
+    assert run['gate_status'] == 'blocked'
+    assert 'candidate_avoid_overlap' in run['errors'][0]['validation_errors']
+
+
+def test_review_cannot_add_candidate_to_avoid_without_removing_candidate():
+    run = execute(case(), 'rule-only', document_service=DocStub())
+    edited = copy.deepcopy(run['output'])
+    edited['avoid'] = [copy.deepcopy(edited['candidates'][0])]
+    with pytest.raises(ValueError, match='candidate_avoid_overlap'):
+        validate_review(run, edited)

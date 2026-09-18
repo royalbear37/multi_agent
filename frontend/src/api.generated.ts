@@ -55,6 +55,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/agents/v2/contracts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Agent Contracts V2 */
+        get: operations["agent_contracts_v2_api_agents_v2_contracts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/cases": {
         parameters: {
             query?: never;
@@ -278,6 +295,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/documents/{doc_id}/population": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Update Document Population */
+        post: operations["update_document_population_api_documents__doc_id__population_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/documents/reindex": {
         parameters: {
             query?: never;
@@ -479,7 +513,7 @@ export interface components {
             /** Case Ids */
             case_ids?: string[];
             /** Modes */
-            modes?: ("rule-only" | "rag-only" | "single-agent" | "multi-agent")[];
+            modes?: ("rule-only" | "rag-only" | "single-agent" | "multi-agent" | "multi-agent-v2")[];
             /**
              * Provider Kind
              * @default unconfigured
@@ -508,6 +542,12 @@ export interface components {
              * @default true
              */
             is_synthetic: boolean;
+            /**
+             * Population
+             * @default unspecified
+             * @enum {string}
+             */
+            population: "unspecified" | "all" | "adult" | "pediatric" | "mixed";
         };
         /** Case */
         Case: {
@@ -601,6 +641,18 @@ export interface components {
             weight?: number | null;
             /** Weight Unit */
             weight_unit?: ("kg" | "lb") | null;
+        };
+        /** DocumentPopulationBody */
+        DocumentPopulationBody: {
+            /**
+             * Population
+             * @enum {string}
+             */
+            population: "unspecified" | "all" | "adult" | "pediatric" | "mixed";
+            /** Reason */
+            reason: string;
+            /** Expected Revision */
+            expected_revision: number;
         };
         /** Encounter */
         Encounter: {
@@ -727,7 +779,7 @@ export interface components {
              * Mode
              * @enum {string}
              */
-            mode: "rule-only" | "rag-only" | "single-agent" | "multi-agent";
+            mode: "rule-only" | "rag-only" | "single-agent" | "multi-agent" | "multi-agent-v2";
             /**
              * Provider Kind
              * @default unconfigured
@@ -802,6 +854,26 @@ export interface operations {
         };
     };
     schema_api_schema_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    agent_contracts_v2_api_agents_v2_contracts_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -1244,6 +1316,41 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_document_population_api_documents__doc_id__population_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocumentPopulationBody"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {

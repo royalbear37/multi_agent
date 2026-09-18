@@ -33,10 +33,15 @@ class ImportBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
     payload: dict[str, Any]
     format: Literal["canonical", "alternate"] = "canonical"
+class DocumentPopulationBody(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    population: Literal["unspecified", "all", "adult", "pediatric", "mixed"]
+    reason: str = Field(min_length=1, max_length=2000)
+    expected_revision: int = Field(ge=0)
 class RunBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
     case_id: str
-    mode: Literal["rule-only", "rag-only", "single-agent", "multi-agent"]
+    mode: Literal["rule-only", "rag-only", "single-agent", "multi-agent", "multi-agent-v2"]
     provider_kind: Literal["unconfigured", "mock", "live"] = "unconfigured"
     request_id: str | None = Field(default=None, max_length=200)
     previous_run_id: str | None = None
@@ -59,7 +64,7 @@ class ReviewBody(BaseModel):
 class BenchmarkBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
     case_ids: list[str] = Field(default_factory=list, max_length=100)
-    modes: list[Literal["rule-only", "rag-only", "single-agent", "multi-agent"]] = Field(default_factory=lambda: ["rule-only"])
+    modes: list[Literal["rule-only", "rag-only", "single-agent", "multi-agent", "multi-agent-v2"]] = Field(default_factory=lambda: ["rule-only"])
     provider_kind: Literal["unconfigured", "mock", "live"] = "unconfigured"
     request_id: str | None = None
 class CaseRecord(BaseModel):
@@ -95,6 +100,9 @@ def _provider_status(kind: str = "unconfigured"):
 def _public_run(run: dict[str, Any]) -> dict[str, Any]:
     """Remove quarantined baseline model text from normal API/UI responses."""
     public=copy.deepcopy(run)
+    if run.get("mode") == "multi-agent-v2":
+        from app.workflow.v2 import public_agent_nodes
+        public["nodes"] = public_agent_nodes(public.get("nodes", []), publish=bool(public.get("output")) and public.get("gate_status") == "ready_for_review")
     baseline=public.get("raw_baseline")
     if isinstance(baseline,dict):
         baseline.pop("payload",None)
@@ -121,6 +129,14 @@ def config():
 def schema():
     from app.schemas.case import Case
     return Case.model_json_schema()
+@app.get("/api/agents/v2/contracts")
+def agent_contracts_v2():
+    from app.agents.runtime_v2 import AGENTS, PROMPT_VERSION, COMMON
+    return {"version": PROMPT_VERSION, "agents": [
+        {"agent_id": agent.id, "depends_on": list(agent.dependencies),
+         "system_prompt": COMMON + " " + agent.instruction,
+         "input_schema": agent.input_type.model_json_schema(),
+         "output_schema": agent.output_type.model_json_schema()} for agent in AGENTS]}
 @app.get("/api/cases", response_model=list[CaseRecord])
 def list_cases(include_legacy: bool = False):
     records = repo.list_cases()
@@ -198,8 +214,12 @@ def start_run(body: RunBody):
     if engine is None:
         result={**initial,"status":"failed","gate_status":"needs_confirmation","errors":[{"code":"WORKFLOW_NOT_AVAILABLE","detail":"workflow engine is not installed"}],"output":None}
     else:
-        try: result=engine.execute(item["case"],body.mode,body.provider_kind,docs,rid)
-        except Exception: result={**initial,"status":"failed","errors":[{"code":"WORKFLOW_FAILED","detail":"工作流執行失敗，請查看節點狀態"}]}
+        try:
+            def checkpoint(snapshot):
+                repo.save_run(rid, {**initial, **snapshot, "case_revision": item["revision"]})
+            result=engine.execute(item["case"],body.mode,body.provider_kind,docs,rid,checkpoint=checkpoint)
+        except Exception:
+            result={**(repo.get_run(rid) or initial),"status":"failed","gate_status":"blocked","output":None,"errors":[{"code":"WORKFLOW_FAILED","detail":"工作流執行失敗，請查看已保存的節點狀態"}]}
     # Every run is an immutable snapshot of the case revision used to produce it.
     result={**initial, **result, "case_revision":item["revision"], "case_snapshot":item["case"], "provider_kind":body.provider_kind, "mode":body.mode, "disclaimer":DISCLAIMER, "demo_only":True}
     return _public_run(repo.save_run(rid,result))
@@ -214,7 +234,7 @@ def get_run(run_id: str):
 def trace(run_id: str):
     run=repo.get_run(run_id)
     if not run: raise HTTPException(404,"RUN_NOT_FOUND")
-    return {"run_id":run_id,"nodes":run.get("nodes",[]),"disclaimer":DISCLAIMER}
+    return {"run_id":run_id,"nodes":_public_run(run).get("nodes",[]),"disclaimer":DISCLAIMER}
 @app.get("/api/runs/{run_id}/export")
 def export_run(run_id: str):
     run=repo.get_run(run_id)
@@ -226,14 +246,14 @@ def documents():
     svc=_documents()
     return svc.list_documents() if svc else []
 @app.post("/api/documents/import")
-async def import_document(file: UploadFile = File(...), title: str = Form(""), version: str = Form(""), is_synthetic: bool = Form(True)):
+async def import_document(file: UploadFile = File(...), title: str = Form(""), version: str = Form(""), is_synthetic: bool = Form(True), population: Literal["unspecified", "all", "adult", "pediatric", "mixed"] = Form("unspecified")):
     if not file.filename or Path(file.filename).name != file.filename: raise HTTPException(400,"unsafe filename")
     if Path(file.filename).suffix.lower() not in {".pdf",".md",".markdown",".txt"}: raise HTTPException(422,"unsupported file format")
     content=await file.read()
     if len(content)>10*1024*1024: raise HTTPException(413,"file too large")
     svc=_documents()
     if svc is None: raise HTTPException(503,"DOCUMENT_SERVICE_NOT_AVAILABLE")
-    try: return svc.import_document(file.filename,content,title or file.filename,version or "unversioned",is_synthetic)
+    try: return svc.import_document(file.filename,content,title or file.filename,version or "unversioned",is_synthetic,population=population)
     except ValueError as exc: raise HTTPException(422,str(exc))
 @app.get("/api/documents/search")
 def document_search(q: str = Query(...,min_length=1), limit: int = Query(8,ge=1,le=50), scope: Literal["synthetic", "reference"] = Query("synthetic")):
@@ -241,6 +261,16 @@ def document_search(q: str = Query(...,min_length=1), limit: int = Query(8,ge=1,
     if svc is None: return {"status":"not_configured","evidence":[],"warnings":["document service unavailable"],"scope":scope}
     try: return svc.search(q,limit,scope=scope)
     except ValueError as exc: raise HTTPException(422,str(exc))
+@app.post("/api/documents/{doc_id}/population")
+def update_document_population(doc_id: str, body: DocumentPopulationBody):
+    svc = _documents()
+    if svc is None: raise HTTPException(503, "DOCUMENT_SERVICE_NOT_AVAILABLE")
+    try:
+        return svc.update_population(doc_id, body.population, body.reason, body.expected_revision)
+    except ValueError as exc:
+        code = getattr(exc, "code", "")
+        status = 404 if code == "DOCUMENT_NOT_FOUND" else 409 if code == "POPULATION_REVISION_CONFLICT" else 422
+        raise HTTPException(status, detail={"code": code, "message": str(exc)})
 @app.post("/api/documents/reindex")
 def document_reindex(scope: Literal["synthetic", "reference"] = Query("synthetic")):
     svc = _documents()

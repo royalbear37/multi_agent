@@ -1,5 +1,28 @@
 import { expect, test } from "@playwright/test";
 
+test("v2 independent agents are persisted and visible in the workflow", async ({ page }) => {
+  await page.goto("/");
+  await page.getByLabel("目前病例").selectOption("case-01-complete");
+  await page.getByLabel("比較模式").selectOption("multi-agent-v2");
+  await page.getByLabel("模型執行方式").selectOption("mock");
+  const response = page.waitForResponse(r => r.url().endsWith("/api/runs") && r.request().method() === "POST");
+  await page.getByRole("button", { name: "執行分析", exact: true }).click();
+  const run = await (await response).json();
+  expect(run.mode).toBe("multi-agent-v2");
+  expect(run.output).not.toBeNull();
+  const agents = run.nodes.filter((n: any) => n.agent_id);
+  expect(agents).toHaveLength(5);
+  expect(agents.every((n: any) => n.attempts.length === 1)).toBeTruthy();
+  await page.getByRole("button", { name: "查看證據與流程" }).click();
+  const synthesis = page.locator("details.node").filter({ hasText: "結果整合 Agent" });
+  await synthesis.locator("summary").first().click();
+  await expect(synthesis.getByText(/模型：synthetic-agent-mock-v2/)).toBeVisible();
+  await synthesis.getByText("Agent 輸入", { exact: true }).click();
+  await expect(synthesis.getByText(/clinical_assessment/).first()).toBeVisible();
+  const trace = await page.request.get(`/api/runs/${run.run_id}/trace`);
+  expect((await trace.json()).nodes.filter((n: any) => n.agent_id)).toHaveLength(5);
+});
+
 test.beforeAll(async ({ request }) => {
   const doc = await request.post("/api/documents/import", {
     multipart: {
@@ -13,6 +36,7 @@ test.beforeAll(async ({ request }) => {
       title: "Workflow reference fixture",
       version: "e2e-reference-v1",
       is_synthetic: "false",
+      population: "all",
     },
   });
   expect(doc.ok()).toBeTruthy();
@@ -30,6 +54,7 @@ test.beforeAll(async ({ request }) => {
           evidence_scope: "reference",
           source:
             "Independently authored software fixture; real names, entirely synthetic observations",
+          demographics: { age: 55, sex: "female" },
           microbiology: {
             organism: "ESCHERICHIA COLI",
             specimen: "URINE",
@@ -69,6 +94,7 @@ test("reference document upload and search remain separate from synthetic", asyn
     buffer: Buffer.from("REFERENCE_SEARCH_ONLY_2026 source inspection fixture"),
   });
   await page.getByLabel("標題", { exact: true }).fill("Reference test fixture");
+  await page.getByRole("combobox", { name: "適用族群", exact: true }).selectOption("adult");
   await page.getByLabel("虛構展示文件（正式文件請取消）").uncheck();
   await page.getByRole("button", { name: "匯入並解析文件" }).click();
   await expect(page.getByText("文件處理狀態：indexed")).toBeVisible();
@@ -86,6 +112,57 @@ test("reference document upload and search remain separate from synthetic", asyn
   await expect(page.locator(".evidence")).toHaveCount(0);
   await page.getByRole("button", { name: "檢索文件", exact: true }).click();
   await expect(page.locator(".evidence")).toHaveCount(0);
+});
+
+test("existing reference scope can be annotated with a reason and reloaded", async ({ page }) => {
+  const uploaded = await page.request.post("/api/documents/import", { multipart: {
+    file: { name: "annotation.txt", mimeType: "text/plain", buffer: Buffer.from("Annotation roundtrip fixture") },
+    title: "Annotation fixture", version: "v1", is_synthetic: "false",
+  } });
+  expect(uploaded.ok()).toBeTruthy();
+  await page.goto("/");
+  await page.getByRole("button", { name: /05.*文件/ }).click();
+  const record = page.locator("details").filter({
+    has: page.locator("summary", { hasText: "Annotation fixture" }),
+  });
+  await record.locator("summary").first().click();
+  await record.getByLabel("此文件適用族群").selectOption("mixed");
+  await record.getByLabel("標示依據").fill("E2E fixture scope correction");
+  await record.getByRole("button", { name: "儲存族群標示" }).click();
+  await expect(page.getByText(/族群標示已保存/)).toBeVisible();
+  await page.reload();
+  await page.getByRole("button", { name: /05.*文件/ }).click();
+  await record.locator("summary").first().click();
+  await expect(record.getByLabel("此文件適用族群")).toHaveValue("mixed");
+  await expect(record.locator("pre")).toContainText("E2E fixture scope correction");
+});
+
+test("adult case with pediatric-only reference withholds output and explains why", async ({ page }) => {
+  const response = await page.request.post("/api/documents/import", {
+    multipart: {
+      file: { name: "pediatric.txt", mimeType: "text/plain",
+        buffer: Buffer.from("ESCHERICHIA COLI urinary tract infection pediatric fixture for children.") },
+      title: "Pediatric-only fixture", version: "v1", is_synthetic: "false", population: "pediatric",
+    },
+  });
+  expect(response.ok()).toBeTruthy();
+  const doc = await response.json();
+  const original = await (await page.request.get("/api/cases/case-01-complete")).json();
+  const saved = await page.request.post("/api/cases/import", { data: {
+    payload: { ...original.case, case_id: "case-population-mismatch", policy_refs: [doc.doc_id] },
+  } });
+  expect(saved.ok()).toBeTruthy();
+  await page.goto("/");
+  await page.getByLabel("目前病例").selectOption("case-population-mismatch");
+  await page.getByLabel("比較模式").selectOption("multi-agent");
+  await page.getByLabel("模型執行方式").selectOption("mock");
+  await page.getByRole("button", { name: "執行分析", exact: true }).click();
+  await expect(page.locator(".candidate")).toHaveCount(0);
+  await expect(page.getByText("沒有族群相符且已標示的參考片段，請確認文件範圍後重新分析")).toBeVisible();
+  await page.getByRole("button", { name: "查看證據與流程" }).click();
+  const retrieval = page.locator("details.node").nth(4);
+  await retrieval.locator("summary").first().click();
+  await expect(retrieval).toContainText("不符 1 個");
 });
 test("seed → analysis → evidence/trace → review → reread persists", async ({
   page,
@@ -199,6 +276,12 @@ test("explicit mock multi-agent and four mode benchmark", async ({ page }) => {
 test("benchmark history distinguishes a one-mode record from four modes", async ({
   page,
 }) => {
+  const four = await page.request.post("/api/benchmarks", { data: {
+    case_ids: ["case-01-complete"],
+    modes: ["rule-only", "rag-only", "single-agent", "multi-agent"],
+    provider_kind: "mock",
+  } });
+  expect(four.ok()).toBeTruthy();
   const one = await page.request.post("/api/benchmarks", {
     data: {
       case_ids: ["case-01-complete"],

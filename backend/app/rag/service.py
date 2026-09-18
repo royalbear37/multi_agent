@@ -269,6 +269,7 @@ class DocumentService:
         is_synthetic: bool = True,
         *,
         policy_refs: list[str] | None = None,
+        population: str = "unspecified",
     ) -> dict[str, Any]:
         filename = _safe_filename(filename)
         if not isinstance(content, (bytes, bytearray)):
@@ -282,6 +283,8 @@ class DocumentService:
             raise DocumentServiceError("INVALID_VERSION", "文件版本不可為空白")
         if not isinstance(is_synthetic, bool):
             raise DocumentServiceError("INVALID_SYNTHETIC_FLAG", "is_synthetic 必須是布林值")
+        if population not in {"unspecified", "all", "adult", "pediatric", "mixed"}:
+            raise DocumentServiceError("INVALID_POPULATION", "文件適用族群設定無效")
 
         digest = hashlib.sha256(content).hexdigest()
         with self._connect() as db:
@@ -289,6 +292,9 @@ class DocumentService:
                 "SELECT * FROM documents WHERE content_hash = ?", (digest,)
             ).fetchone()
             if existing:
+                stored_population = json.loads(existing["metadata"] or "{}").get("population", "unspecified")
+                if population != "unspecified" and population != stored_population:
+                    raise DocumentServiceError("POPULATION_LABEL_CONFLICT", "相同內容已存在且族群標示不同；請在原文件的族群標示表單更新並填寫理由")
                 return self._document_row(existing, deduplicated=True)
 
         doc_id = _new_id("doc")
@@ -302,7 +308,7 @@ class DocumentService:
         if self.originals_dir not in source_path.resolve().parents:
             raise DocumentServiceError("STORAGE_BOUNDARY", "無法建立安全的文件儲存位置")
         source_path.write_bytes(content)
-        metadata = {"policy_refs": list(policy_refs or [])}
+        metadata = {"policy_refs": list(policy_refs or []), "population": population, "population_revision": 0}
         imported_at = _utc_now()
         try:
             with self._connect() as db:
@@ -466,6 +472,28 @@ class DocumentService:
         with self._connect() as db:
             rows = db.execute("SELECT * FROM documents ORDER BY imported_at, doc_id").fetchall()
         return [self._document_row(row) for row in rows]
+
+    def update_population(self, doc_id: str, population: str, reason: str, expected_revision: int) -> dict[str, Any]:
+        """Update a human scope annotation; existing run snapshots stay fixed."""
+        if population not in {"unspecified", "all", "adult", "pediatric", "mixed"}:
+            raise DocumentServiceError("INVALID_POPULATION", "文件適用族群設定無效")
+        if not isinstance(reason, str) or not reason.strip() or len(reason) > 2000:
+            raise DocumentServiceError("INVALID_REASON", "請填寫族群標示依據（最多 2000 字）")
+        with self._connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute("SELECT metadata FROM documents WHERE doc_id=?", (doc_id,)).fetchone()
+            if row is None:
+                raise DocumentServiceError("DOCUMENT_NOT_FOUND", "找不到文件")
+            metadata = json.loads(row["metadata"] or "{}")
+            revision = metadata.get("population_revision", 0)
+            if revision != expected_revision:
+                raise DocumentServiceError("POPULATION_REVISION_CONFLICT", "文件族群標示已更新，請重新載入後再試")
+            history = metadata.setdefault("population_history", [])
+            history.append({"revision": revision + 1, "previous": metadata.get("population", "unspecified"),
+                            "population": population, "reason": reason.strip(), "updated_at": _utc_now()})
+            metadata.update(population=population, population_revision=revision + 1)
+            db.execute("UPDATE documents SET metadata=? WHERE doc_id=?", (_json(metadata), doc_id))
+        return self.detail(doc_id)
 
     def detail(self, doc_id: str) -> dict[str, Any]:
         with self._connect() as db:
@@ -712,7 +740,7 @@ class DocumentService:
             if not permitted:
                 return {"status": "no_results", "evidence": [], "warnings": ["policy_filter_no_match"], "retrieval_method": "ollama_embeddings", "scope": scope}
             rows = db.execute(
-                f"SELECT c.*, d.title, d.is_synthetic, d.content_hash, d.source_type FROM chunks c JOIN documents d ON d.doc_id=c.doc_id WHERE c.doc_id IN ({','.join('?' for _ in permitted)}) ORDER BY c.chunk_id",
+                f"SELECT c.*, d.title, d.is_synthetic, d.content_hash, d.source_type, d.metadata FROM chunks c JOIN documents d ON d.doc_id=c.doc_id WHERE c.doc_id IN ({','.join('?' for _ in permitted)}) ORDER BY c.chunk_id",
                 tuple(permitted),
             ).fetchall()
             if not rows:
@@ -722,7 +750,7 @@ class DocumentService:
                 checked_query, query_dimensions = self._validate_vectors(query_vectors, 1)
                 query_vector = checked_query[0]
                 indexed = db.execute(
-                    f"SELECT e.*, c.*, d.title, d.is_synthetic, d.content_hash, d.source_type FROM chunk_embeddings e JOIN chunks c ON c.chunk_id=e.chunk_id JOIN documents d ON d.doc_id=c.doc_id WHERE e.fingerprint=? AND c.doc_id IN ({','.join('?' for _ in permitted)})",
+                    f"SELECT e.*, c.*, d.title, d.is_synthetic, d.content_hash, d.source_type, d.metadata FROM chunk_embeddings e JOIN chunks c ON c.chunk_id=e.chunk_id JOIN documents d ON d.doc_id=c.doc_id WHERE e.fingerprint=? AND c.doc_id IN ({','.join('?' for _ in permitted)})",
                     (identity["fingerprint"], *permitted),
                 ).fetchall()
                 indexed_ids = {row["chunk_id"] for row in indexed}
@@ -739,7 +767,7 @@ class DocumentService:
                     for batch, vectors in prepared:
                         self._store_embeddings(db, batch, vectors, expected_dimensions=query_dimensions)
                     indexed = db.execute(
-                        f"SELECT e.*, c.*, d.title, d.is_synthetic, d.content_hash, d.source_type FROM chunk_embeddings e JOIN chunks c ON c.chunk_id=e.chunk_id JOIN documents d ON d.doc_id=c.doc_id WHERE e.fingerprint=? AND c.doc_id IN ({','.join('?' for _ in permitted)})",
+                        f"SELECT e.*, c.*, d.title, d.is_synthetic, d.content_hash, d.source_type, d.metadata FROM chunk_embeddings e JOIN chunks c ON c.chunk_id=e.chunk_id JOIN documents d ON d.doc_id=c.doc_id WHERE e.fingerprint=? AND c.doc_id IN ({','.join('?' for _ in permitted)})",
                         (identity["fingerprint"], *permitted),
                     ).fetchall()
                 scored: list[tuple[float, sqlite3.Row]] = []
@@ -776,10 +804,13 @@ class DocumentService:
     @staticmethod
     def _evidence_row(row: sqlite3.Row, score: float | None = None) -> dict[str, Any]:
         location = json.loads(row["location"])
+        metadata = json.loads(row["metadata"] or "{}")
         result = {
             "chunk_id": row["chunk_id"], "doc_id": row["doc_id"], "document_version": row["document_version"], "document_title": row["title"],
             "text": row["text"], "location": location, "parse_warnings": json.loads(row["parse_warnings"] or "[]"),
             "content_hash": row["content_hash"], "is_synthetic": bool(row["is_synthetic"]), "source_type": row["source_type"], "source_location": location,
+            "population": metadata.get("population", "unspecified"),
+            "population_revision": metadata.get("population_revision", 0),
         }
         if score is not None:
             result["score"] = round(float(score), 8)
@@ -842,7 +873,7 @@ class DocumentService:
                 placeholders = ",".join("?" for _ in permitted)
                 try:
                     rows = db.execute(
-                        f"""SELECT c.*, d.title, d.is_synthetic, d.content_hash, d.source_type
+                        f"""SELECT c.*, d.title, d.is_synthetic, d.content_hash, d.source_type, d.metadata
                         FROM chunks_fts f JOIN chunks c ON c.chunk_id=f.chunk_id
                         JOIN documents d ON d.doc_id=c.doc_id
                         WHERE chunks_fts MATCH ? AND c.doc_id IN ({placeholders})
@@ -857,7 +888,7 @@ class DocumentService:
                 retrieval_method = "lexical"
                 lowered = query.casefold()
                 rows = db.execute(
-                    f"""SELECT c.*, d.title, d.is_synthetic, d.content_hash, d.source_type
+                    f"""SELECT c.*, d.title, d.is_synthetic, d.content_hash, d.source_type, d.metadata
                     FROM chunks c JOIN documents d ON d.doc_id=c.doc_id
                     WHERE c.doc_id IN ({','.join('?' for _ in permitted)})
                     ORDER BY c.chunk_id""", tuple(permitted),
@@ -873,6 +904,8 @@ class DocumentService:
                     "parse_warnings": json.loads(row["parse_warnings"] or "[]"),
                     "content_hash": row["content_hash"], "is_synthetic": bool(row["is_synthetic"]),
                     "source_type": row["source_type"],
+                    "population": json.loads(row["metadata"] or "{}").get("population", "unspecified"),
+                    "population_revision": json.loads(row["metadata"] or "{}").get("population_revision", 0),
                     "source_location": json.loads(row["location"]),
                 })
                 warnings.extend(json.loads(row["parse_warnings"] or "[]"))

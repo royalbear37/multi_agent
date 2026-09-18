@@ -142,6 +142,12 @@ def _safe_output(value: Any, context: dict[str, Any]) -> dict[str, Any]:
         raise ProviderError("OUTPUT_SCHEMA_INVALID", "限制欄位格式不符合要求")
     if any(forbidden_text(x) for x in value["limitations"]):
         raise ProviderError("OUTPUT_CONTENT_FORBIDDEN", "模型輸出含有未允許的用藥方案內容")
+    candidate_codes = [item["drug_code"] for item in candidates]
+    avoid_codes = [item["drug_code"] for item in avoid]
+    if set(candidate_codes).intersection(avoid_codes):
+        raise ProviderError("CANDIDATE_AVOID_OVERLAP", "同一藥物不可同時列為候選與避免")
+    if len(candidate_codes) != len(set(candidate_codes)) or len(avoid_codes) != len(set(avoid_codes)):
+        raise ProviderError("OUTPUT_SCHEMA_INVALID", "藥物清單含有重複項目")
     return {"candidates": candidates, "avoid": avoid, "limitations": value["limitations"]}
 
 

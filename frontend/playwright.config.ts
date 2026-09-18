@@ -31,7 +31,7 @@ export default defineConfig({
       },
     },
     {
-      command: "npm run dev -- --port 5174",
+      command: "node_modules\\.bin\\vite.cmd --host 127.0.0.1 --port 5174",
       url: "http://127.0.0.1:5174",
       reuseExistingServer: false,
       env: { API_TARGET: "http://127.0.0.1:8001" },

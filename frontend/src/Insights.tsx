@@ -5,6 +5,7 @@ export const modeNames: Record<string, string> = {
   "rag-only": "文件檢索＋模型",
   "single-agent": "單次模型整合",
   "multi-agent": "多節點工作流",
+  "multi-agent-v2": "獨立代理協作 v2（研究）",
 };
 export const statusNames: Record<string, string> = {
   completed: "步驟已執行",
@@ -76,12 +77,26 @@ const fields: Record<string, string> = {
   "ast_results[].unit_or_comparator": "MIC 單位或比較符號",
   "ast_results.no_approved_drug": "沒有通過來源藥敏與限制檢查的選項",
   "evidence.version_conflict": "引用文件版本衝突",
+  "demographics.age_for_evidence": "請補上病例年齡，以核對參考文件適用族群",
+  "evidence.population_applicability": "沒有族群相符且已標示的參考片段，請確認文件範圍後重新分析",
   "resistance_context_ref.unconfigured": "抗藥性背景來源未設定",
 };
 const errorNames: Record<string, string> = {
+  PREFLIGHT_WITHHELD: "前置資料或證據檢查未通過，未呼叫 Agent",
+  AGENT_INPUT_INVALID: "Agent 輸入資料不符合契約",
+  AGENT_SCHEMA_INVALID: "Agent 輸出格式、藥品或引用檢查未通過",
+  AGENT_NEEDS_CONFIRMATION: "Agent 發現尚待確認的事項，請檢查資料後重新分析",
+  AGENT_NO_SUPPORTED_CANDIDATES: "各 Agent 的結果尚未形成有依據的共同候選",
+  AGENT_BUDGET_EXCEEDED: "已達本次呼叫次數或時間上限",
+  AGENT_INPUT_TOO_LARGE: "Agent 輸入超過大小上限，未發送模型",
+  AGENT_EXECUTION_FAILED: "Agent 執行失敗，後續步驟已停止",
+  V2_FINAL_VALIDATION_FAILED: "整合結果未通過最終安全檢查",
   NON_SYNTHETIC_INPUT:
     "來源病例尚未啟用外送；請使用本機模型，或確認資料可外送後更新病例設定",
   duplicate_candidate: "候選清單有重複藥物，請保留一筆",
+  duplicate_avoid: "避免清單有重複藥物，請保留一筆",
+  candidate_avoid_overlap: "同一藥物同時出現在候選與避免清單",
+  CANDIDATE_AVOID_OVERLAP: "同一藥物同時出現在候選與避免清單",
   UNALLOWED_DRUG: "模型輸出包含允許清單以外的藥品代碼",
   drug_not_allowed: "候選藥品未符合此病例的允許清單",
   OUTPUT_CONTENT_FORBIDDEN: "模型輸出包含目前不允許的內容，需檢查原始錯誤",
@@ -136,6 +151,11 @@ export function RunIssues({ run }: { run: any }) {
   );
 }
 const steps: Record<string, [string, string]> = {
+  case_agent: ["病例整理 Agent", "獨立整理病例資訊與缺漏，提供後續 Agent 使用。"],
+  ast_agent: ["藥敏分析 Agent", "依病例整理結果核對來源藥敏；保留原報告的判讀依據。"],
+  evidence_agent: ["證據核對 Agent", "核對檢索片段與病例的適用性，列出支持依據及待確認問題。"],
+  clinical_agent: ["臨床背景 Agent", "核對已提供的過敏、腎功能與用藥背景，整理限制與不確定事項。"],
+  synthesis_agent: ["結果整合 Agent", "接收四個 Agent 的結構化結果，整合後送交確定性安全檢查。"],
   case_completeness: [
     "病例整理與缺漏檢查",
     "整理菌種、感染部位、腎功能與過敏資料，檢查分析所需欄位。",
@@ -266,6 +286,14 @@ export function WorkflowStep({
             。取得片段不代表內容已支持結論。
           </p>
           {items(o.warnings, errorNames)}
+          {o.population_filter && (
+            <p>
+              族群篩選：標示相符 {o.population_filter.matched ?? 0} 個、
+              不符 {o.population_filter.mismatched ?? 0} 個、
+              尚待確認 {o.population_filter.unverified ?? 0} 個。
+              標示相符仍需核對片段是否支持結論。
+            </p>
+          )}
         </>
       );
       break;
@@ -323,6 +351,20 @@ export function WorkflowStep({
       <div className="step-body">
         <p className="muted">{description}</p>
         {result}
+        {n.agent_id && (
+          <section aria-label="Agent 執行紀錄">
+            <p>模型：{n.model || "未呼叫"} · {n.is_mock ? "MOCK 訊息測試" : "模型執行"}</p>
+            <p>呼叫 {n.attempts?.length ?? 0} 次 · Token：{n.usage?.total_tokens ?? "未提供"}</p>
+            <p>接收上游：{n.depends_on?.map((id: string) => steps[id]?.[0] || id).join("、") || "原始病例"}</p>
+            {n.content_withheld ? <p>本次未通過完整檢核，中間內容已隔離；可查看狀態與錯誤。</p> : <>
+              <TechnicalDetails value={n.input} label="Agent 輸入" />
+              <TechnicalDetails value={n.output} label="Agent 輸出（待人工核對）" />
+            </>}
+            <TechnicalDetails value={n.attempts} label="模型呼叫與重試紀錄" />
+            {!!n.errors?.length && <p>錯誤：{n.errors.map((e: any) => errorNames[e.code] || e.code).join("、")}</p>}
+            {n.skip_reason && <p>未執行原因：{errorNames[n.skip_reason] || n.skip_reason}</p>}
+          </section>
+        )}
         <p className="muted">
           耗時{" "}
           {typeof n.elapsed_ms === "number"
@@ -523,7 +565,7 @@ export function BenchmarkOverview({
         筆執行結果
       </p>
       <p className="muted">記錄編號：{b.benchmark_id}</p>
-      {selectedModes.length !== 4 && (
+      {selectedModes.length < 4 && (
         <div className="alert">
           這筆紀錄只包含 {selectedModes.length} 種模式，並非完整四模式比較。
         </div>
@@ -543,6 +585,17 @@ export function BenchmarkOverview({
         )}
       </div>
       <h3>按模式比較</h3>
+      {!!Object.keys(s.by_agent || {}).length && <details>
+        <summary>v2 各 Agent 用量與執行統計</summary>
+        <p>MOCK 沒有真實 Token 用量；失敗呼叫可能沒有回傳用量，已知合計不代表完整帳單。</p>
+        <div className="tablewrap"><table>
+          <thead><tr><th>Agent</th><th>呼叫次數</th><th>失敗／略過</th><th>已知 Token</th><th>耗時</th></tr></thead>
+          <tbody>{Object.entries(s.by_agent).map(([id, stat]: [string, any]) => <tr key={id}>
+            <th>{steps[id]?.[0] || id}</th><td>{stat.calls}</td><td>{stat.failed}／{stat.skipped}</td>
+            <td>{stat.known_total_tokens ?? "未提供"}{!stat.usage_complete && "（未完整）"}</td><td>{stat.elapsed_ms} ms</td>
+          </tr>)}</tbody>
+        </table></div>
+      </details>}
       <div className="tablewrap">
         <table>
           <thead>
