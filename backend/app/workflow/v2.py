@@ -47,6 +47,7 @@ def project(case: dict, evidence: list) -> tuple[dict, list, list]:
         "chunk_id": x["chunk_id"], "doc_id": x["doc_id"],
         "document_version": str(x.get("document_version", "")), "text": x.get("text", ""),
         "page": (x.get("location") or {}).get("page"), "population": x.get("population"),
+        "is_synthetic": x.get("is_synthetic", False), "external_model_allowed": x.get("external_model_allowed", False),
     })).model_dump(mode="json") for x in evidence]
     return facts, ast, excerpts
 
@@ -180,7 +181,7 @@ def execute_v2(case, provider_kind, document_service, run_id, checkpoint=None):
                 trace["input"], trace["input_hash"] = copy.deepcopy(data), digest(data)
                 provider = runtime.AgentProvider(provider_kind, agent)
                 trace["model"] = provider.model or None
-                provider.check(case)
+                provider.check(case, data)
                 raw = None
                 for attempt_no in range(max_retries + 1):
                     remaining = deadline - time.perf_counter()

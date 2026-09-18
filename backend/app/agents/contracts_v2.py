@@ -48,6 +48,8 @@ class Evidence(Message):
     text: str = Field(max_length=16000)
     page: int | None = None
     population: str | None = None
+    is_synthetic: bool = False
+    external_model_allowed: bool = False
 
 
 class Finding(Message):

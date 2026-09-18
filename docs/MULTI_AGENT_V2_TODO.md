@@ -26,9 +26,9 @@
 
 ## 接續事項（不可當作已完成）
 
-0. **Sol／High 程式審查尚未完成**：已依指定啟動 GPT-5.6 Sol／High reviewer，但服務回報「Selected model is at capacity」。沒有改用其他模型或宣稱審查通過。下一輪優先使用 Sol／High 審查新增的 contracts_v2.py、runtime_v2.py、workflow/v2.py，以及 engine.py/main.py 的整合、安全邊界與 trace 隔離；審查意見修正後才做後續 live 驗收。
+0. **Sol／High 程式審查已完成（9 項）**：已修正三項 P1：證據逐文件外送授權、劑量／途徑／頻率文字正規化阻擋、非本機端點 HTTPS／URL 帳密／重新導向限制。其餘 P2/P3（規則適用範圍、idempotency fingerprint、硬 deadline／回應大小、PII 掃描、benchmark attempted、retry backoff）仍待後續處理。
 
-1. 使用獨立合成病例與新 key 做少量 live 驗收，確認五個實際模型呼叫的格式、延遲、用量、prompt 品質；不要直接對整份 CSV 跑 benchmark。
+1. 使用獨立合成病例與新 key 做少量 live 驗收，確認五個實際模型呼叫的格式、延遲、用量、prompt 品質；目前已嘗試三次但證據檢索均為 `no_documents`，五個 Agent 全部跳過，沒有模型呼叫、用量或費用；待匯入可定位且具文件級授權的合成證據後再試。不要直接對整份 CSV 跑 benchmark。
 2. 完成 WHO 適用片段整理、族群與引用支持的人工核對，再決定哪些病例可啟用 reference 工作流。CSV／WHO 已放在工作區 incoming_data，本輪未匯入。
 3. 保留 HANDOFF_2026-09-17.md 所列原工作站 benchmark 診斷、檢索召回率評估、AST 方法／單位、交叉過敏／交互作用／腎功能等待辦；v2 架構完成不代表這些臨床／資料工作完成。
 4. 若研究需要雙向交叉質疑或多輪辯論，需另訂回合數、停止條件及評估設計；本版為單輪有向協作、固定序列排程。
@@ -42,7 +42,7 @@
 
 依使用者最新要求：五小時或每週用量任一剩餘接近 10% 時開始收尾，保存可驗證進度並更新本檔；此要求取代先前交接檔的 5% 門檻。不使用重置額度。記錄最後通過測試、未完成項目與下一個具體步驟，不把離線測試寫成 live 或臨床驗證。
 
-本輪收尾檢查：五小時剩 14%、每週剩 53%；v2 實作及離線驗收完成，已開始收尾以保留餘額。Sol 審查因容量不足未完成，真實模型驗收尚未執行。
+本輪進度：已確認 `multi_agent_pr/backend/.env` 存在且 provider/base URL/model/key 均非空（未輸出 key）；離線 P1 回歸測試 28 項通過。真實模型驗收仍未執行成功，因證據檢索缺資料而安全阻擋；CSV／WHO 未送出。
 
 ## GitHub 草稿 PR 交接
 

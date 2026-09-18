@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from typing import Any
 
 
 # This intentionally catches both common English prescription vocabulary and
 # Chinese wording.  Candidate reasons are explanatory text, never a dosing API.
 FORBIDDEN_TEXT = re.compile(
-    r"(?i)(?:\bdose\b|\bdosage\b|\bfrequency\b|\bduration\b|\bmg\b|\bmcg\b|\bmilligram\w*\b|\bq\d{1,3}\s*h\b|\bbid\b|\btid\b|\bqid\b|\bevery\s+\d+\s*(?:hours?|hrs?|h)\b|\bper\s+day\b|\btake\s+\d+\s+(?:tablets?|pills?|capsules?)\b|\bfor\s+\d+\s+days?\b|\b\d+\s+days?\b|每天|每日|每次|每\S{0,4}小時|服用|注射|口服|靜脈|静脉|劑量|剂量|頻率|频率|療程|疗程)"
+    r"(?i)(?:\bdose\b|\bdosage\b|\bfrequency\b|\bduration\b|\b(?:mg|mcg|g|gram|milligram)\b|\bq\d{1,3}\s*h\b|\bbid\b|\btid\b|\bqid\b|\bevery\s+\d+\s*(?:hours?|hrs?|h)\b|\b(?:twice|three|once)\s+(?:daily|a\s+day)\b|\b(?:intravenous|iv|intramuscular|im|oral|po)\b|\bper\s+day\b|\btake\s+\d+\s+(?:tablets?|pills?|capsules?)\b|\bfor\s+\d+\s+days?\b|\b\d+\s+days?\b|每天|每日|每次|每\S{0,4}小時|一日\s*\d+\s*次|服用|注射|口服|靜脈|静脉|靜滴|劑量|剂量|頻率|频率|療程|疗程)"
 )
 
 _CANDIDATE_KEYS = {"drug_code", "reason", "rule_refs", "evidence_refs"}
@@ -21,7 +22,8 @@ def forbidden_text(value: Any) -> bool:
         return False
     # A narrow negative scope statement is not a prescription. Other text,
     # including any appended numeric instructions, still gets checked.
-    checked = re.sub(r"不(?:提供|包含)劑量、頻率(?:及|與|、)療程", "", value)
+    checked = unicodedata.normalize("NFKC", value)
+    checked = re.sub(r"不(?:提供|包含)劑量、頻率(?:及|與|、)療程", "", checked)
     return bool(FORBIDDEN_TEXT.search(checked))
 
 

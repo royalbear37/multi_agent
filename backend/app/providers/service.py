@@ -180,6 +180,14 @@ class OpenAICompatibleProvider(BaseProvider):
         self.timeout = max(1.0, float(timeout))
         self.max_retries = max(0, min(int(retries), 4))
         self._http_post = http_post
+        parsed = urlparse(self.base_url)
+        host = (parsed.hostname or "").lower()
+        if parsed.username or parsed.password:
+            raise ProviderError("INVALID_PROVIDER_URL", "模型服務網址不可包含帳密")
+        # Tests and in-process adapters inject a transport; no network leaves
+        # the process in that case. Real configured endpoints remain HTTPS-only.
+        if self.base_url and not self._http_post and host not in {"localhost", "127.0.0.1", "::1"} and parsed.scheme != "https":
+            raise ProviderError("INSECURE_PROVIDER_URL", "非本機模型服務必須使用 HTTPS")
 
     def status(self) -> dict[str, Any]:
         configured = bool(self.base_url and self.model and self.api_key)
@@ -200,7 +208,11 @@ class OpenAICompatibleProvider(BaseProvider):
                         return data, attempts
                     return result, attempts
                 request = urllib.request.Request(url, data=json.dumps(payload).encode(), headers=headers, method="POST")
-                with urllib.request.urlopen(request, timeout=self.timeout) as response:  # nosec B310 - configured user URL
+                class _NoRedirect(urllib.request.HTTPRedirectHandler):
+                    def redirect_request(self, req, fp, code, msg, headers, new):
+                        return None
+                opener = urllib.request.build_opener(_NoRedirect)
+                with opener.open(request, timeout=self.timeout) as response:  # nosec B310 - validated URL
                     return json.loads(response.read().decode("utf-8")), attempts
             except (TimeoutError, urllib.error.URLError, urllib.error.HTTPError, OSError, ValueError) as exc:
                 status = getattr(exc, "code", None)

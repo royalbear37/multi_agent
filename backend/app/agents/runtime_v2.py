@@ -91,7 +91,7 @@ class AgentProvider:
         self.base_url = os.getenv("LLM_BASE_URL", "")
         self.key = os.getenv("LLM_API_KEY", "")
 
-    def check(self, case: dict) -> None:
+    def check(self, case: dict, data: dict | None = None) -> None:
         if self.kind == "mock":
             return
         if self.kind != "live" or not all((self.model, self.base_url, self.key)):
@@ -102,6 +102,9 @@ class AgentProvider:
             and (local or case.get("external_model_allowed") is True)
         ):
             raise ProviderError("NON_SYNTHETIC_INPUT")
+        for item in (data or {}).get("evidence", []):
+            if isinstance(item, dict) and item.get("is_synthetic") is not True and item.get("external_model_allowed") is not True:
+                raise ProviderError("NON_SYNTHETIC_EVIDENCE")
 
     def complete(self, agent: Agent, data: dict, *, timeout: float) -> dict:
         if self.kind == "mock":
