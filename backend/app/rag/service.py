@@ -199,6 +199,7 @@ class DocumentService:
         """Yield one connection and always close it after commit/rollback."""
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA foreign_keys=ON")
         try:
             yield conn
             conn.commit()
@@ -358,7 +359,9 @@ class DocumentService:
             for page_no, page in enumerate(reader.pages, 1):
                 page_text = (page.extract_text() or "").strip()
                 if not page_text:
-                    warnings.append(f"page_{page_no}_requires_ocr")
+                    contents = page.get_contents()
+                    blank = (contents is None or not contents.get_data().strip()) and not page.get('/Annots')
+                    warnings.append(f"page_{page_no}_blank" if blank else f"page_{page_no}_requires_ocr")
                     continue
                 if self._looks_like_table(page_text):
                     warnings.append(f"page_{page_no}_table_needs_review")
@@ -367,9 +370,11 @@ class DocumentService:
             if not chunks:
                 if any("table_needs_review" in warning for warning in warnings):
                     return [], warnings, "needs_review"
+                if warnings and all(w.endswith('_blank') for w in warnings):
+                    return [], warnings, 'empty'
                 warnings.append("scanned_pdf_requires_ocr")
                 return [], warnings, "needs_ocr"
-            if warnings:
+            if any(not w.endswith('_blank') for w in warnings):
                 return chunks, warnings, "indexed_with_warnings"
             return chunks, warnings, "indexed"
         except DocumentServiceError:
@@ -472,6 +477,35 @@ class DocumentService:
         with self._connect() as db:
             rows = db.execute("SELECT * FROM documents ORDER BY imported_at, doc_id").fetchall()
         return [self._document_row(row) for row in rows]
+
+    def delete_document(self, doc_id: str) -> dict[str, Any]:
+        """Remove this document and its retrieval data, leaving run snapshots intact."""
+        removed = False
+        backup = None
+        path = None
+        try:
+            with self._connect() as db:
+                db.execute('BEGIN IMMEDIATE')
+                row = db.execute('SELECT source_path FROM documents WHERE doc_id=?', (doc_id,)).fetchone()
+                if row is None:
+                    raise DocumentServiceError('DOCUMENT_NOT_FOUND', '找不到文件')
+                path = Path(row['source_path']).resolve()
+                if path.parent != self.originals_dir.resolve():
+                    raise DocumentServiceError('UNSAFE_SOURCE_PATH', '文件路徑不在原始文件目錄內，未刪除')
+                # Upload size is bounded; retain bytes until commit so ordinary
+                # transaction failures can restore the original alongside rollback.
+                backup = path.read_bytes() if path.exists() else None
+                db.execute('DELETE FROM chunk_embeddings WHERE chunk_id IN (SELECT chunk_id FROM chunks WHERE doc_id=?)', (doc_id,))
+                db.execute('DELETE FROM chunks_fts WHERE doc_id=?', (doc_id,))
+                db.execute('DELETE FROM chunks WHERE doc_id=?', (doc_id,))
+                db.execute('DELETE FROM documents WHERE doc_id=?', (doc_id,))
+                path.unlink(missing_ok=True)
+                removed = backup is not None
+        except Exception:
+            if removed and path is not None and not path.exists():
+                path.write_bytes(backup)
+            raise
+        return {'deleted': True, 'doc_id': doc_id}
 
     def update_population(self, doc_id: str, population: str, reason: str, expected_revision: int) -> dict[str, Any]:
         """Update a human scope annotation; existing run snapshots stay fixed."""

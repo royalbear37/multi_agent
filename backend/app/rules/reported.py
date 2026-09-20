@@ -26,10 +26,11 @@ def evaluate_ast(engine, case):
             label = phenotype(raw)
             labels.append(label)
             if basis not in {"CLSI_2022_pheno", "source_report"} or label is None:
-                reasons.append("來源判讀缺漏或無法識別；未自行推算")
+                source_name = "CLSI 2022 衍生判讀" if basis == "CLSI_2022_pheno" else "原始報告判讀"
+                reasons.append(f"規則採用的{source_name}缺漏或無法識別；未自行推算，不等於抗藥")
             if basis == 'CLSI_2022_pheno' and (row.get('standard') != 'CLSI' or row.get('standard_version') != '2022'):
                 reasons.append("所選 CLSI 2022 來源與標示的標準版本不一致")
-            if label != "S":
+            if label is not None and label != "S":
                 reasons.append("來源結果不是 S，不自動列入敏感選項")
             if row.get("reported_sir") != (label if label in {"S", "I", "R"} else None):
                 reasons.append("正規化判讀與指定來源不一致")

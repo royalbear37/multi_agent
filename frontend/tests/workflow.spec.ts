@@ -226,7 +226,7 @@ test("unknown allergy withholds output and cannot be accepted", async ({
   await page.getByLabel("目前病例").selectOption("case-03-allergy-unknown");
   await page.getByRole("button", { name: "執行分析", exact: true }).click();
   await expect(
-    page.getByText("沒有可發布候選。請查看安全閘門、資料缺漏或模型設定。"),
+    page.getByText(/未產生候選：.*前置安全檢查未通過，因此 Agent 尚未呼叫。/),
   ).toBeVisible();
   await page.getByRole("button", { name: "前往人工審閱" }).click();
   await page.getByLabel("審閱理由").fill("不應解除資料缺漏限制");

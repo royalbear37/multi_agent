@@ -12,7 +12,7 @@ from contextvars import ContextVar
 from typing import Any
 
 from app.rules.engine import RuleEngine
-from .safety import gate_status, validate_provider_output
+from .safety import gate_status, validate_provider_output, normalize_demo_output
 
 
 NODE_IDS = (
@@ -162,7 +162,7 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
         missing.append("allergies.status")
     if not case.get("renal") or _get(case, "renal.egfr") is None:
         missing.append("renal.egfr")
-    if not case.get("policy_refs"):
+    if not case.get("policy_refs") and case.get('evidence_scope') != 'reference':
         missing.append("policy_refs")
     if not case.get("ast_results"):
         missing.append("ast_results")
@@ -252,6 +252,7 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
     candidate_status = "completed"
     provider_meta: dict[str, Any] = {"model": None, "usage": None, "retries": 0, "is_mock": is_mock}
     candidate_retries = 0
+    demo_adjustments = []
     quarantined_raw: Any = None
     provider_attempted = mode == "rule-only"
     t = time.perf_counter()
@@ -280,7 +281,7 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
                     # Baselines receive source-tested names, not the entire cohort vocabulary.
                     generation_allowlist = engine.candidate_drugs(case) if mode == 'multi-agent' else list(dict.fromkeys(x['drug_code'] for x in case.get('ast_results', []) if x['drug_code'] in engine.allowed_drugs()))
                 summary_for_provider = _summary(case)
-                context = {"mode": mode, "case_summary": summary_for_provider, "allowed_drugs": generation_allowlist,
+                context = {"mode": mode, "demo_relaxed": True, "case_summary": summary_for_provider, "allowed_drugs": generation_allowlist,
                            "evidence": evidence, "rule_refs": internal_rule_refs}
                 if engine.reported_mode:
                     context['allowed_avoid'] = [code for x in evaluations if x.get('action') == 'avoid' for code in x.get('drug_codes', [])] if mode == 'multi-agent' else list(dict.fromkeys(x['drug_code'] for x in case.get('ast_results', [])))
@@ -298,6 +299,12 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
                 provider_meta.update({k: generated.get(k) for k in ("model", "usage", "retries", "is_mock") if k in generated})
                 provider_rule_refs = [] if mode in {"rag-only", "single-agent"} else {x["rule_id"] for x in evaluations}
                 candidate_payload = copy.deepcopy(generated.get("output"))
+                candidate_payload, repaired = normalize_demo_output(candidate_payload,
+                    allowed_drugs=set(engine.candidate_drugs(case)),
+                    allowed_avoid={code for x in evaluations if x.get('action') == 'avoid' for code in x.get('drug_codes', [])} if engine.reported_mode else set(engine.allowed_drugs()),
+                    allowed_rules=set(provider_rule_refs), allowed_evidence={str(x.get('chunk_id')) for x in evidence},
+                    require_rule_refs=mode == 'multi-agent' and bool(provider_rule_refs), require_evidence_refs=bool(evidence))
+                demo_adjustments = sorted(set(generated.get('demo_adjustments', []) + context.get('demo_adjustments', []) + repaired))
                 validated, validation_errors = validate_provider_output(candidate_payload, allowed_drugs=set(engine.candidate_drugs(case)),
                                                                        allowed_avoid={code for x in evaluations if x.get('action') == 'avoid' for code in x.get('drug_codes', [])} if engine.reported_mode else None,
                                                                        allowed_rules=provider_rule_refs,
@@ -345,6 +352,7 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
         # gate/node trace but never publish a candidate medication output.
         output = None
     nodes[-1]["output"]["schema_valid"] = output_schema_valid and candidate_status == "completed"
+    nodes[-1]['demo_adjustments'] = demo_adjustments
     final_gate = "blocked" if candidate_status == "failed" else gate
     t = time.perf_counter()
     nodes.append(_node("human_review", "pending", t, output={"action_required": True}, version="review-1.0"))

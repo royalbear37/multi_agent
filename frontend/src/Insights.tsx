@@ -1,5 +1,94 @@
 import { pretty } from "./api";
 
+export function evidenceOrigin(e: any): string {
+  if (e.is_synthetic === true) return "合成測試文件（僅供流程展示）";
+  if (e.is_synthetic === false) return "真實參考文件（適用性仍需核對）";
+  return "文件來源類型未記錄";
+}
+
+export function RetrievalWarnings({ warnings = [] }: { warnings?: string[] }) {
+  const technical = warnings.filter(w => w === 'long_text_split' || /^page_\d+_blank$/.test(w));
+  const important = warnings.filter(w => !technical.includes(w));
+  const label = (w: string) => {
+    if (w === 'long_text_split') return '長文字已正常切段供檢索，不是錯誤。';
+    const page = w.match(/^page_(\d+)_(blank|requires_ocr)$/);
+    if (page) return page[2] === 'blank' ? `第 ${page[1]} 頁為空白頁，已略過。` : `第 ${page[1]} 頁未擷取到文字（舊紀錄可能包含空白頁；有影像內容才需 OCR）。`;
+    return errorNames[w] || w;
+  };
+  return <>
+    {!!important.length && <ul>{important.map(w => <li key={w}>{label(w)}</li>)}</ul>}
+    {!!technical.length && <details><summary>文件解析細節（{technical.length} 項，不代表本次分析失敗）</summary><ul>{technical.map(w => <li key={w}>{label(w)}</li>)}</ul></details>}
+  </>;
+}
+
+export function sourceExclusionReason(run: any, code: string, reason: string) {
+  const source = run.nodes?.find((n: any) => n.node_id === 'ast')?.output?.source_report ?? run.case_snapshot?.ast_results ?? [];
+  const row = source.find((x: any) => x.drug_code === code);
+  if (row?.interpretation_basis === 'CLSI_2022_pheno' && !row.clsi_2022_phenotype && reason.includes('來源判讀缺漏')) {
+    return reason.replace('來源判讀缺漏或無法識別；未自行推算', `原始報告為 ${row.source_phenotype || '未提供'}；規則採用的 CLSI 2022 衍生判讀未提供，不等於抗藥`).replace('；來源結果不是 S，不自動列入敏感選項', '；本次未列入候選');
+  }
+  return reason;
+}
+
+export function drugDisposition(run: any) {
+  const ast = run.nodes?.find((n: any) => n.node_id === "ast")?.output;
+  const source = ast?.source_report ?? run.case_snapshot?.ast_results ?? [];
+  const codes: string[] = [...new Set<string>(source.map((a: any) => a.drug_code))];
+  const evaluations = ast?.system_evaluations ?? [];
+  const excluded = new Set<string>([
+    ...evaluations.filter((e: any) => e.eligible === false).map((e: any) => e.drug_code),
+    ...(run.safety_summary?.avoid ?? []).map((e: any) => e.drug_code),
+  ]);
+  const selected = new Set<string>((run.output?.candidates ?? []).map((e: any) => e.drug_code));
+  const rows = codes.map((code) => {
+    const evaluation = evaluations.find((e: any) => e.drug_code === code);
+    const avoid = (run.output?.avoid ?? run.safety_summary?.avoid ?? []).find((e: any) => e.drug_code === code);
+    if (excluded.has(code)) return { code, group: "excluded", label: "規則排除", reason: sourceExclusionReason(run, code, avoid?.reason ?? evaluation?.reason ?? "命中規則限制") };
+    if (selected.has(code)) return { code, group: "selected", label: "列入最終候選", reason: "本次輸出已列入，待人工審閱" };
+    if (evaluation?.eligible === true) return { code, group: "unselected", label: run.output ? "通過規則，未選入" : "通過規則，候選未發布", reason: run.output ? "未提供逐藥未選原因；不代表不適用" : "整份分析結果未發布，並非此藥品被排除；請查看執行錯誤與限制。" };
+    return { code, group: "unknown", label: "核對狀態未記錄", reason: "此紀錄不足以確認是否通過規則" };
+  });
+  return { sourceCount: source.length, rows };
+}
+
+export function DrugOverview({ run }: { run: any }) {
+  const { sourceCount, rows } = drugDisposition(run);
+  const count = (group: string) => rows.filter((r) => r.group === group).length;
+  const docs = (run.evidence_snapshots ?? []).filter((e: any, i: number, all: any[]) => all.findIndex((x) => x.doc_id === e.doc_id && x.document_version === e.document_version) === i);
+  return <section className="panel">
+    <h2>藥品數量與去向</h2>
+    <p>來源 {sourceCount} 筆藥敏／{rows.length} 項藥品；規則排除 {count("excluded")} 項；{run.mode === "rule-only" ? "規則" : "模型"}選入 {count("selected")} 項；{run.output ? "其餘通過規則但未選入" : "通過規則但候選未發布"} {count("unselected")} 項；核對狀態未記錄 {count("unknown")} 項。</p>
+    <p>來源筆數不是建議用藥數。通過規則僅表示符合目前來源判讀條件，不等於已取得臨床證據支持。</p>
+    {!!count('unselected') && run.output && <p>本次未保存這些藥品與候選之間的逐藥比較或排序理由；不能據此認定未選藥品較差或不適用。</p>}
+    {run.mode === "rag-only" && <p>此模式的藥敏核對由程式規則執行；生成模型收到病例摘要、測試藥品名稱與文件片段，未收到完整逐筆 AST。</p>}
+    <details><summary>查看每項藥品去向</summary>
+      <table><thead><tr><th>藥品</th><th>狀態</th><th>說明</th></tr></thead><tbody>
+        {rows.map((r) => <tr key={r.code}><td>{r.code}</td><td>{r.label}</td><td>{r.reason}</td></tr>)}
+      </tbody></table>
+    </details>
+    <h3>本次證據來源</h3>
+    {docs.length ? <ul>{docs.map((e: any) => <li key={`${e.doc_id}:${e.document_version}`}>{e.document_title || e.title || e.doc_id}：{evidenceOrigin(e)}</li>)}</ul> : <p>沒有可用文件證據。</p>}
+  </section>;
+}
+
+export function DemoSourceResult({ run }: { run: any }) {
+  if (run.output?.candidates?.length) return null;
+  const ast = run.nodes?.find((n: any) => n.node_id === 'ast')?.output;
+  if (!ast?.system_evaluations?.length) return null;
+  const { rows } = drugDisposition(run);
+  const sourceOptions = rows.filter(r => r.group === 'unselected');
+  return <section className="panel" aria-label="來源藥敏 demo 整理結果">
+    <h2>來源藥敏整理結果（demo）</h2>
+    <p>本次沒有可發布的最終候選，以下先顯示本機規則整理的來源資料。這不是模型推薦，也尚未完成逐藥證據核對。</p>
+    <p>來源共 {rows.length} 項藥品；{sourceOptions.length} 項通過來源判讀規則；{rows.filter(r => r.group === 'excluded').length} 項被規則排除。</p>
+    {sourceOptions.length ? <div className="tablewrap"><table aria-label="來源藥敏整理表">
+      <thead><tr><th>藥品</th><th>來源規則核對</th><th>證據與適用性</th></tr></thead>
+      <tbody>{sourceOptions.map(r => <tr key={r.code}><td>{r.code}</td><td>通過</td><td>尚待確認</td></tr>)}</tbody>
+    </table></div> : <p>目前沒有通過來源判讀規則的項目。</p>}
+    <p>每項排除原因、未知狀態及文件類型請見「藥品數量與去向」。本整理不開放當作模型候選接受審閱。</p>
+  </section>;
+}
+
 export const modeNames: Record<string, string> = {
   "rule-only": "規則判斷",
   "rag-only": "文件檢索＋模型",
@@ -9,7 +98,7 @@ export const modeNames: Record<string, string> = {
 };
 export const statusNames: Record<string, string> = {
   completed: "步驟已執行",
-  awaiting_review: "等待人工處理",
+  awaiting_review: "分析已完成，待人工審閱",
   ready_for_review: "可送審閱",
   needs_confirmation: "需補資料或確認",
   blocked: "已阻擋",
@@ -53,7 +142,7 @@ export function executionLabel(value: any): string {
 }
 export function TechnicalDetails({
   value,
-  label = "詳細資料（原始 JSON）",
+  label = "技術資料（原始 JSON，供除錯）",
 }: {
   value: unknown;
   label?: string;
@@ -93,6 +182,7 @@ const errorNames: Record<string, string> = {
   V2_FINAL_VALIDATION_FAILED: "整合結果未通過最終安全檢查",
   NON_SYNTHETIC_INPUT:
     "來源病例尚未啟用外送；請使用本機模型，或確認資料可外送後更新病例設定",
+  NON_SYNTHETIC_EVIDENCE: "參考文件片段尚未允許外送；請確認病例的資料與文件片段外送設定，或使用本機模型",
   duplicate_candidate: "候選清單有重複藥物，請保留一筆",
   duplicate_avoid: "避免清單有重複藥物，請保留一筆",
   candidate_avoid_overlap: "同一藥物同時出現在候選與避免清單",
@@ -107,6 +197,22 @@ const errorNames: Record<string, string> = {
   embedding_failed: "向量檢索失敗",
   embedding_unavailable: "無法取得 embedding 向量，請檢查 Ollama 與模型",
 };
+
+export function withheldSummary(run: any): string {
+  const missing = Array.isArray(run?.missing_fields) ? run.missing_fields : [];
+  if (missing.length) {
+    const detail = missing
+      .map((value: unknown) => fields[String(value)] || String(value))
+      .join("；");
+    return `未產生候選：${detail}。前置安全檢查未通過，因此 Agent 尚未呼叫。`;
+  }
+  const errors = Array.isArray(run?.errors) ? run.errors : [];
+  const firstCode = errors.map((value: any) => value?.code).find(Boolean);
+  if (firstCode) {
+    return `未產生候選：${errorNames[String(firstCode)] || String(firstCode)}。`;
+  }
+  return "沒有可發布候選。請查看安全閘門、資料缺漏或模型設定。";
+}
 function items(values: any[] | undefined, labels: Record<string, string> = {}) {
   return values?.length ? (
     <ul className="readable-list">
@@ -121,20 +227,32 @@ function items(values: any[] | undefined, labels: Record<string, string> = {}) {
 export function RunIssues({ run }: { run: any }) {
   const limitations =
     run.safety_summary?.limitations ?? run.output?.limitations ?? [];
+  const confirmations = (run.nodes ?? []).filter((n: any) => n.agent_id && n.status === 'needs_confirmation');
+  const errors = (run.errors ?? []).filter((e: any) => e.code !== 'AGENT_NEEDS_CONFIRMATION' || !confirmations.some((n: any) => n.node_id === e.node_id));
   return (
     <div>
+      {run.nodes?.some((n: any) => n.agent_id && n.status === "needs_confirmation") && <p>{run.output ? "寬鬆 demo：Agent 的待確認事項已保留為限制，本次候選僅供展示與人工核對。" : "Agent 有待確認事項，請查看本次錯誤與限制。"} 額外病史或影像未知不需要補造資料。</p>}
       <h3>需要補充或確認</h3>
-      {items(run.missing_fields, fields)}
+      {!!run.missing_fields?.length && items(run.missing_fields, fields)}
+      {confirmations.map((n: any) => <section key={n.node_id}>
+        <h4>{steps[n.node_id]?.[0] || n.node_id}</h4>
+        {n.content_withheld ? <p>此步驟未通過檢核，內容未公開；請在「證據與流程」查看錯誤原因。</p> : <>
+          {!!n.output?.missing_fields?.length && items(n.output.missing_fields, fields)}
+          {!!n.output?.limitations?.length && items(n.output.limitations)}
+          {!n.output?.missing_fields?.length && !n.output?.limitations?.length && <p>此 Agent 標示需確認，但未提供具體事項；請核對其發現，勿視為已確認。</p>}
+        </>}
+      </section>)}
+      {!run.missing_fields?.length && !confirmations.length && <p>本次未列出待補欄位或 Agent 待確認事項。</p>}
       <h3>限制與提醒</h3>
-      {items(limitations)}
-      {!!run.errors?.length && (
+      {limitations.length ? items(limitations) : <p>未列出額外限制；Agent 待確認事項請見上方。</p>}
+      {!!errors.length && (
         <>
           <h3>執行／輸出檢核問題</h3>
           <ul className="readable-list">
-            {run.errors.map((e: any, i: number) => (
+            {errors.map((e: any, i: number) => (
               <li key={i}>
                 {errorNames[e.code] || e.code || "未分類錯誤"}
-                {items(e.validation_errors, errorNames)}
+                {!!e.validation_errors?.length && items(e.validation_errors, errorNames)}
               </li>
             ))}
           </ul>
@@ -234,10 +352,10 @@ export function WorkflowStep({
           {o.system_evaluations?.map((x: any, i: number) => (
             <p key={i}>
               {x.drug_code}：來源 {x.source_reported_sir || "未提供"} →{" "}
-              {x.reason ||
+              {sourceExclusionReason(run, x.drug_code, x.reason ||
                 (x.status === "evaluated"
                   ? "歷史測試規則核對完成"
-                  : "需要人工核對")}
+                  : "需要人工核對"))}
             </p>
           ))}
           {items(o.warnings)}
@@ -285,7 +403,7 @@ export function WorkflowStep({
                 : "未記錄"}
             。取得片段不代表內容已支持結論。
           </p>
-          {items(o.warnings, errorNames)}
+          <RetrievalWarnings warnings={o.warnings} />
           {o.population_filter && (
             <p>
               族群篩選：標示相符 {o.population_filter.matched ?? 0} 個、
@@ -336,7 +454,7 @@ export function WorkflowStep({
       );
       break;
     default:
-      result = <p>請展開詳細資料。</p>;
+      result = n.agent_id ? <p>以下是此 Agent 的回覆摘要；引用上游內容不代表另有獨立臨床驗證。</p> : <p>請展開詳細資料。</p>;
   }
   return (
     <details className="node">
@@ -351,14 +469,25 @@ export function WorkflowStep({
       <div className="step-body">
         <p className="muted">{description}</p>
         {result}
+        {!!n.demo_adjustments?.length && <p>Demo 容錯已套用：格式已整理，無法核對的項目或說明已省略；未補造藥敏或引用。</p>}
         {n.agent_id && (
           <section aria-label="Agent 執行紀錄">
             <p>模型：{n.model || "未呼叫"} · {n.is_mock ? "MOCK 訊息測試" : "模型執行"}</p>
             <p>呼叫 {n.attempts?.length ?? 0} 次 · Token：{n.usage?.total_tokens ?? "未提供"}</p>
             <p>接收上游：{n.depends_on?.map((id: string) => steps[id]?.[0] || id).join("、") || "原始病例"}</p>
+            {!!n.validation_issues?.length && <TechnicalDetails value={n.validation_issues} label="格式檢核原因" />}
             {n.content_withheld ? <p>本次未通過完整檢核，中間內容已隔離；可查看狀態與錯誤。</p> : <>
-              <TechnicalDetails value={n.input} label="Agent 輸入" />
-              <TechnicalDetails value={n.output} label="Agent 輸出（待人工核對）" />
+              <h4>缺少的資料</h4>
+              {o.missing_fields?.length ? items(o.missing_fields, fields) : <p>此 Agent 未列出具體缺漏欄位；「需確認」也可能是資料衝突或分析限制。</p>}
+              <h4>需要確認的事項與限制（Agent 回覆）</h4>
+              {o.limitations?.length ? items(o.limitations) : <p>未提供具體限制說明。</p>}
+              <h4>核對發現（Agent 回覆，待人工確認）</h4>
+              {o.findings?.length ? <ul>{o.findings.map((f: any, i: number) => <li key={i}>{f.statement}
+                {!!f.evidence_refs?.length && <small>　引用：{f.evidence_refs.join('、')}</small>}
+              </li>)}</ul> : <p>未提供核對發現。</p>}
+              {!!o.support?.length && <><h4>逐藥證據支持</h4><ul>{o.support.map((s: any) => <li key={s.drug_code}><strong>{s.drug_code}</strong>：{s.explanation}<br /><small>引用：{s.evidence_refs?.join('、')}</small></li>)}</ul></>}
+              <TechnicalDetails value={n.input} label="技術資料：Agent 輸入（JSON）" />
+              <TechnicalDetails value={n.output} label="技術資料：Agent 輸出（JSON）" />
             </>}
             <TechnicalDetails value={n.attempts} label="模型呼叫與重試紀錄" />
             {!!n.errors?.length && <p>錯誤：{n.errors.map((e: any) => errorNames[e.code] || e.code).join("、")}</p>}
@@ -370,7 +499,7 @@ export function WorkflowStep({
           {typeof n.elapsed_ms === "number"
             ? `${n.elapsed_ms.toFixed(0)} ms`
             : "未記錄"}{" "}
-          · 規則引用 {n.rule_refs?.length ?? 0} · 文件引用{" "}
+          · 規則引用 {n.rule_refs?.length ?? 0} · 文件片段引用{" "}
           {n.evidence_refs?.length ?? 0}
         </p>
         <TechnicalDetails value={n} />

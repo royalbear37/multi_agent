@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import { api, pretty } from "./api";
 import type { components } from "./api.generated";
 import { ReviewEditor, reviewOutput } from "./ReviewEditor";
+import { CaseContext, CandidateEvidence, evidenceLocation } from './ClinicalContext';
 import {
   BenchmarkOverview,
+  DrugOverview,
+  DemoSourceResult,
+  evidenceOrigin,
   SettingsOverview,
   WorkflowStep,
   RunIssues,
@@ -12,6 +16,9 @@ import {
   localTime,
   modeNames,
   statusNames,
+  withheldSummary,
+  RetrievalWarnings,
+  sourceExclusionReason,
 } from "./Insights";
 type CaseRecord = components["schemas"]["CaseRecord"];
 
@@ -69,7 +76,7 @@ export default function App() {
     [editing, setEditing] = useState(false),
     [history, setHistory] = useState<any[]>([]);
   const [reason, setReason] = useState(""),
-    [action, setAction] = useState("accept"),
+    [action, setAction] = useState(""),
     [proposed, setProposed] = useState(reviewOutput(null)),
     [role, setRole] = useState("physician");
   const [documents, setDocuments] = useState<any[]>([]),
@@ -82,7 +89,7 @@ export default function App() {
     [docTitle, setDocTitle] = useState(""),
     [docVersion, setDocVersion] = useState("1"),
     [docPopulation, setDocPopulation] = useState("unspecified"),
-    [synthetic, setSynthetic] = useState(true);
+    [synthetic, setSynthetic] = useState(false);
   const [benchmark, setBenchmark] = useState<any>(null),
     [benchmarks, setBenchmarks] = useState<any[]>([]),
     [rules, setRules] = useState<any>(null);
@@ -135,6 +142,8 @@ export default function App() {
   async function chooseRun(value: any) {
     const detail = await api("/runs/" + value.run_id);
     setRun(detail);
+    setAction('');
+    setReason('');
     setProposed(reviewOutput(detail.output));
     setReviews(await api("/reviews?run_id=" + detail.run_id));
   }
@@ -154,6 +163,19 @@ export default function App() {
     });
   }
   const c = selected?.case;
+  const referencedDocuments = c?.evidence_scope === 'reference' && !c.policy_refs?.length
+    ? documents.filter(d => d.is_synthetic === false)
+    : (c?.policy_refs || [])
+    .map((id: string) => documents.find((d: any) => d.doc_id === id))
+    .filter(Boolean);
+  const unverifiedPopulationDocuments =
+    c?.evidence_scope === "reference"
+      ? referencedDocuments.filter((d: any) =>
+          ["unspecified", "mixed"].includes(
+            d.metadata?.population || "unspecified",
+          ),
+        )
+      : [];
   return (
     <div className="app">
       <aside>
@@ -279,20 +301,37 @@ export default function App() {
                       {c.source || "研究病例"} ·{" "}
                       {c.is_synthetic ? "全部合成" : "含去識別來源資料"}
                     </p>
-                    <p>{c.encounter?.context}</p>
-                    {!!c.provenance?.simulated_fields?.length && (
-                      <p>
-                        模擬欄位：{c.provenance.simulated_fields.join("、")}
-                        。菌種與藥敏來源請見下表。
-                      </p>
-                    )}
+                    <CaseContext value={c} />
                     <p>
                       證據範圍：
                       {c.evidence_scope === "reference"
                         ? "WHO 等參考文件"
                         : "測試文件"}
                     </p>
-                    {!c.is_synthetic && (
+                    <p>文件選擇：{c.policy_refs?.length ? `指定文件（${c.policy_refs.join('、')}）` : c.evidence_scope === 'reference' ? '文件庫全部參考文件；按病例相關性檢索' : '尚未指定測試文件'}</p>
+                    <button type="button" disabled={busy} onClick={() => void work(async () => {
+                      await api('/cases/' + c.case_id + '/revisions', {payload: {...c, evidence_scope:'reference', policy_refs:[]}});
+                      await chooseCase(c.case_id);
+                      setNotice('已改用文件庫全部參考文件；新上傳的參考文件也會納入搜尋，請重新分析。');
+                    })}>使用文件庫全部參考文件</button>
+                    <details><summary>改為指定參考文件</summary>
+                      <form key={`${c.case_id}:${selected?.revision}`} onSubmit={event => {
+                        event.preventDefault();
+                        const refs = new FormData(event.currentTarget).getAll('policy_refs').map(String);
+                        if (!refs.length) { setError('請至少選擇一份參考文件，或使用全部參考文件。'); return; }
+                        void work(async () => {
+                          await api('/cases/' + c.case_id + '/revisions', {payload:{...c, evidence_scope:'reference', policy_refs:refs}});
+                          await chooseCase(c.case_id);
+                          setNotice('指定文件已保存，請重新分析。');
+                        });
+                      }}>
+                        {documents.filter(d => d.is_synthetic === false).map(d => <label className="check-label" key={d.doc_id}>
+                          <input type="checkbox" name="policy_refs" value={d.doc_id} defaultChecked={c.policy_refs?.includes(d.doc_id)} />{d.title} · {d.document_version}
+                        </label>)}
+                        <button disabled={busy} type="submit">保存指定文件</button>
+                      </form>
+                    </details>
+                    {(
                       <label className="check-label">
                         <input
                           type="checkbox"
@@ -311,10 +350,11 @@ export default function App() {
                             });
                           }}
                         />
-                        允許此病例的必要分析欄位送至外部模型（請先確認來源資料使用條款允許；本機
+                        允許此病例的必要分析欄位與所選文件片段送至外部模型（請先確認來源資料及文件使用條款允許；本機
                         Ollama 不需開啟）
                       </label>
                     )}
+                    <p className="muted">上方勾選為此病例已保存的外送設定，變更會建立新版本；不是本次分析的臨時選項。</p>
                     <div className="facts">
                       <div>
                         <small>病例 ID</small>
@@ -451,6 +491,15 @@ export default function App() {
                   </div>
                 )}
                 {mode === "multi-agent-v2" && <p>v2 每病例通常有 5 次獨立模型呼叫；遇缺漏或失敗會提早停止。可在「證據與流程」查看各 Agent 的輸入、輸出與用量。</p>}
+                {!!unverifiedPopulationDocuments.length && (
+                  <div className="alert" role="alert">
+                    此病例引用的文件{" "}
+                    {unverifiedPopulationDocuments
+                      .map((d: any) => d.title)
+                      .join("、")}{" "}
+                    尚未有可用的單一族群標示，相關片段可能被排除。若沒有其他適用證據，分析會暫緩；請到「文件資料庫」核對適用族群。
+                  </div>
+                )}
                 <button
                   className="primary wide"
                   disabled={busy || !c}
@@ -570,8 +619,11 @@ export default function App() {
                   匯出 JSON
                 </a>
               </div>
+              <section className="panel"><CaseContext value={run.case_snapshot} snapshot /></section>
               <div className="grid two">
                 <section className="panel">
+                  <DrugOverview run={run} />
+                  <DemoSourceResult run={run} />
                   <h2>可供審閱的藥敏選項</h2>
                   {run.output?.candidates?.length ? (
                     run.output.candidates.map((x: any) => (
@@ -579,18 +631,13 @@ export default function App() {
                         <h3>
                           {x.drug_code} <Status value="demo_only" />
                         </h3>
-                        <p>{x.reason}</p>
-                        <small>
-                          規則：{x.rule_refs?.join(", ")}
-                          <br />
-                          引用：{x.evidence_refs?.join(", ")}
-                        </small>
+                        <p><strong>模型理由（待核對）：</strong>{x.reason}</p>
+                        <CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots} />
+                        <TechnicalDetails value={{rule_refs:x.rule_refs,evidence_refs:x.evidence_refs}} label="技術資料：規則與引用代碼（JSON）" />
                       </article>
                     ))
                   ) : (
-                    <Empty>
-                      沒有可發布候選。請查看安全閘門、資料缺漏或模型設定。
-                    </Empty>
+                    <Empty>{withheldSummary(run)}</Empty>
                   )}
                 </section>
                 <section className="panel">
@@ -599,7 +646,7 @@ export default function App() {
                     (x: any, i: number) => (
                       <article key={i}>
                         <h3>{x.drug_code}</h3>
-                        <p>{x.reason}</p>
+                        <p>{sourceExclusionReason(run, x.drug_code, x.reason)}</p>
                       </article>
                     ),
                   )}
@@ -622,6 +669,7 @@ export default function App() {
             <div className="grid two">
               <section className="panel">
                 <h2>分析步驟與結果</h2>
+                <DrugOverview run={run} />
                 <p>
                   展開步驟查看做了什麼與得到的結果；「步驟已執行」不代表資料或候選已通過檢核。
                 </p>
@@ -643,15 +691,17 @@ export default function App() {
                 <p className="muted">
                   保留分析當時的版本與內容，供回頭核對依據。
                 </p>
+                <p>{new Set((run.evidence_snapshots ?? []).map((e: any) => e.doc_id)).size} 份文件 · {run.evidence_snapshots?.length ?? 0} 個檢索片段 · 候選採用 {new Set((run.output?.candidates ?? []).flatMap((x: any) => x.evidence_refs ?? [])).size} 個片段。取得片段不等於被候選採用。</p>
                 {run.evidence_snapshots?.length ? (
                   run.evidence_snapshots.map((e: any, i: number) => (
                     <article className="evidence" key={i}>
                       <h3>{e.document_title || e.title || e.doc_id}</h3>
+                      <p><strong>{evidenceOrigin(e)}</strong></p>
                       <small>
                         {e.chunk_id} · v{e.document_version}
                       </small>
                       <blockquote>{e.text}</blockquote>
-                      <Json value={e.location} />
+                      <p>{evidenceLocation(e.location)}</p>
                       <a
                         href={
                           "/api/documents/" +
@@ -679,6 +729,12 @@ export default function App() {
             <div className="grid two">
               <section className="panel">
                 <h2>人工審閱</h2>
+                <p>分析：{run.run_id} · {modeNames[run.mode] || run.mode} · {localTime(run.created_at || run.nodes?.[0]?.started_at)}</p>
+                <CaseContext value={run.case_snapshot} snapshot />
+                <h3>本次待審候選</h3>
+                {run.output?.candidates?.length ? run.output.candidates.map((x: any) => <article key={x.drug_code}><h4>{x.drug_code}</h4><p><strong>模型理由（待核對）：</strong>{x.reason}</p><CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots} /></article>) : <p>本次沒有可接受或修改的候選；可以拒絕並記錄原因。</p>}
+                <button onClick={() => setSection(1)}>回看病例情境與待確認事項</button>
+                <RunIssues run={run} />
                 <p>審閱者 demo-user · {role} · 僅展示角色</p>
                 <Status value={run.gate_status} />
                 <label>
@@ -688,8 +744,9 @@ export default function App() {
                     value={action}
                     onChange={(e) => setAction(e.target.value)}
                   >
-                    <option value="accept">接受</option>
-                    <option value="modify">修改</option>
+                    <option value="">請選擇審閱決定</option>
+                    <option value="accept" disabled={run.gate_status !== 'ready_for_review' || !run.output?.candidates?.length}>接受</option>
+                    <option value="modify" disabled={run.gate_status !== 'ready_for_review' || !run.output?.candidates?.length}>修改</option>
                     <option value="reject">拒絕</option>
                   </select>
                 </label>
@@ -709,10 +766,13 @@ export default function App() {
                     placeholder="請輸入可追溯的審閱理由"
                   />
                 </label>
+                <p className="muted">請先選擇決定並填寫審閱理由，才能送出。修改候選時，每項須有理由與必要引用。</p>
                 <button
                   className="primary"
                   disabled={
                     busy ||
+                    !action ||
+                    (action !== 'reject' && (run.gate_status !== 'ready_for_review' || !run.output?.candidates?.length)) ||
                     !reason.trim() ||
                     (action === "modify" &&
                       proposed.candidates.some(
@@ -759,10 +819,10 @@ export default function App() {
                   reviews.map((r: any, i: number) => (
                     <article className="review" key={i}>
                       <strong>
-                        {r.action} · {r.reviewer_id}
+                        {({accept:'接受',modify:'修改',reject:'拒絕'} as Record<string,string>)[r.action] || r.action} · {r.reviewer_id}
                       </strong>
                       <p>{r.reason}</p>
-                      <small>{r.created_at}</small>
+                      <small>{localTime(r.created_at)}</small>
                       <details>
                         <summary>原始／修改內容</summary>
                         <Json value={r} />
@@ -854,13 +914,19 @@ export default function App() {
                 匯入並解析文件
               </button>
               <h3>文件版本（{documents.length}）</h3>
+              <p className="muted">刪除文件會移除原檔與檢索索引，保留歷史分析的證據快照；病例引用不會自動切換到 WHO。</p>
               {documents.map((d: any) => (
                 <details key={d.doc_id}>
                   <summary>
                     {d.title} · v{d.document_version}{" "}
                     <Status value={d.processing_status} />
                   </summary>
-                  <Json value={d} />
+                  <p>{evidenceOrigin(d)} · 已解析 {d.chunk_count ?? 0} 個片段</p>
+                  <RetrievalWarnings warnings={d.processing_warnings} />
+                  <h4>目前族群標示與依據</h4>
+                  <p>{({all:'所有年齡',adult:'成人',pediatric:'兒童',mixed:'成人與兒童混合',unspecified:'尚未標示'} as Record<string,string>)[d.metadata?.population || 'unspecified']}</p>
+                  {d.metadata?.population_history?.length ? d.metadata.population_history.map((entry: any, i: number) => <p key={i}>{localTime(entry.updated_at)} · 標示為 {({all:'所有年齡',adult:'成人',pediatric:'兒童',mixed:'混合',unspecified:'尚未標示'} as Record<string,string>)[entry.population] || entry.population} · 依據：{entry.reason || '未記錄'} · 操作者：{entry.updated_by || '未記錄'}</p>) : <p>未保存族群標示的變更紀錄或依據，請核對文件。</p>}
+                  <TechnicalDetails value={d} label="技術資料：文件索引與中繼資料（JSON）" />
                   <form
                     key={d.metadata?.population_revision ?? 0}
                     onSubmit={(event) => {
@@ -888,7 +954,7 @@ export default function App() {
                       </select>
                     </label>
                     <label>
-                      標示依據
+                      本次變更的標示依據
                       <input name="reason" required maxLength={2000} placeholder="請填來源頁碼或適用範圍的核對依據" />
                     </label>
                     <button type="submit" disabled={busy}>儲存族群標示</button>
@@ -900,6 +966,16 @@ export default function App() {
                   >
                     開啟原始文件
                   </a>
+                  <button type="button" disabled={busy} onClick={() => {
+                    if (!window.confirm(`確定刪除「${d.title}」（${d.document_version}）？\n原檔與檢索索引將刪除。歷史證據快照保留，但原始文件連結將失效。病例引用不會自動改成 WHO。`)) return;
+                    void work(async () => {
+                      const result = await api('/documents/' + encodeURIComponent(d.doc_id), undefined, 'DELETE');
+                      setDocuments(current => current.filter(x => x.doc_id !== d.doc_id));
+                      setSearch(null);
+                      setNotice(result.message);
+                      await refresh();
+                    });
+                  }}>刪除此文件</button>
                 </details>
               ))}
             </section>
@@ -986,7 +1062,7 @@ export default function App() {
                 <>
                   <Status value={search.status} />
                   <p>檢索方式：{search.retrieval_method}</p>
-                  <Json value={search.warnings} />
+                  <RetrievalWarnings warnings={search.warnings} />
                   {search.evidence?.map((e: any) => (
                     <article className="evidence" key={e.chunk_id}>
                       <strong>

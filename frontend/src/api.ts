@@ -9,14 +9,14 @@ export function api<P extends keyof RequestMap>(
   path: P,
   body: RequestMap[P],
 ): Promise<any>;
-export function api<T = any>(path: string, body?: unknown): Promise<T>;
-export async function api<T = any>(path: string, body?: unknown): Promise<T> {
+export function api<T = any>(path: string, body?: unknown, method?: "POST" | "DELETE"): Promise<T>;
+export async function api<T = any>(path: string, body?: unknown, method?: "POST" | "DELETE"): Promise<T> {
   const response = await fetch(
     "/api" + path,
-    body === undefined
+    body === undefined && !method
       ? undefined
       : {
-          method: "POST",
+          method: method ?? "POST",
           headers:
             body instanceof FormData
               ? undefined

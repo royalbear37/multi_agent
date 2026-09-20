@@ -340,7 +340,8 @@ export interface paths {
         get: operations["document_detail_api_documents__doc_id__get"];
         put?: never;
         post?: never;
-        delete?: never;
+        /** Delete Document */
+        delete: operations["delete_document_api_documents__doc_id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1404,6 +1405,37 @@ export interface operations {
         };
     };
     document_detail_api_documents__doc_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_document_api_documents__doc_id__delete: {
         parameters: {
             query?: never;
             header?: never;

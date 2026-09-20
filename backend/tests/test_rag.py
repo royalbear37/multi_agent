@@ -295,15 +295,28 @@ def test_valid_pdf_extracts_real_text_and_page_location(tmp_path: Path):
     assert source_path.read_bytes() == output.getvalue()
 
 
-def test_blank_scanned_pdf_is_marked_for_ocr_and_not_indexed(tmp_path: Path):
+def test_blank_pdf_is_not_mislabeled_as_requiring_ocr(tmp_path: Path):
     writer = PdfWriter()
     writer.add_blank_page(300, 300)
     output = BytesIO()
     writer.write(output)
     doc = DocumentService(tmp_path, retrieval_mode="lexical").import_document("scan.pdf", output.getvalue(), "Scan Fixture", "v1")
-    assert doc["processing_status"] == "needs_ocr"
-    assert "scanned_pdf_requires_ocr" in doc["processing_warnings"]
+    assert doc["processing_status"] == "empty"
+    assert doc["processing_warnings"] == ['page_1_blank']
     assert doc["chunk_count"] == 0
+
+
+def test_graphical_page_without_text_still_requires_review(tmp_path: Path):
+    writer = PdfWriter()
+    page = writer.add_blank_page(300, 300)
+    stream = DecodedStreamObject()
+    stream.set_data(b'0 0 0 rg 0 0 100 100 re f')
+    page[NameObject('/Contents')] = writer._add_object(stream)
+    output = BytesIO()
+    writer.write(output)
+    doc = DocumentService(tmp_path, retrieval_mode='lexical').import_document('image.pdf', output.getvalue(), 'Image', 'v1')
+    assert doc['processing_status'] == 'needs_ocr'
+    assert 'page_1_requires_ocr' in doc['processing_warnings']
 
 
 def test_pdf_table_page_is_excluded_until_review(tmp_path: Path):

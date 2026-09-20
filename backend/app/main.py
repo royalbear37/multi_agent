@@ -27,7 +27,7 @@ repo = SQLiteRepository(DB_PATH)
 _document_service_instance = None
 DISCLAIMER = "研究展示用／病例標示來源與模擬欄位／非臨床使用"
 app = FastAPI(title="Antibiotic Prototype API", version="1.0", description=DISCLAIMER)
-app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"], allow_credentials=False, allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
+app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"], allow_credentials=False, allow_methods=["GET", "POST", "DELETE"], allow_headers=["Content-Type"])
 
 class ImportBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -290,6 +290,19 @@ def document_source(doc_id: str):
     if not svc: raise HTTPException(503,"DOCUMENT_SERVICE_NOT_AVAILABLE")
     try: path,mime=svc.source(doc_id); return Response(content=path.read_bytes(),media_type=mime)
     except Exception: raise HTTPException(404,"DOCUMENT_NOT_FOUND")
+
+@app.delete('/api/documents/{doc_id}')
+def delete_document(doc_id: str):
+    svc = _documents()
+    if svc is None: raise HTTPException(503, 'DOCUMENT_SERVICE_NOT_AVAILABLE')
+    try:
+        result = svc.delete_document(doc_id)
+        return {**result, 'message': '文件與檢索索引已刪除。歷史證據快照保留，原始文件連結不再可用；病例引用不會自動改成 WHO。'}
+    except ValueError as exc:
+        code = getattr(exc, 'code', 'DOCUMENT_DELETE_FAILED')
+        raise HTTPException(404 if code == 'DOCUMENT_NOT_FOUND' else 422, detail={'code': code, 'message': str(exc)})
+    except OSError:
+        raise HTTPException(409, detail={'code': 'SOURCE_DELETE_FAILED', 'message': '無法刪除原始檔，請關閉佔用檔案的程式後重試。'})
 
 def _reject_forbidden(value: Any):
     forbidden=("dose","frequency","duration","dosage","給藥")

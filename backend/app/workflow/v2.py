@@ -13,7 +13,7 @@ from app.agents import runtime_v2 as runtime
 from app.agents.contracts_v2 import ASTFacts, CaseFacts, Evidence
 from app.providers.service import ProviderError
 from app.rules.engine import RuleEngine
-from .safety import forbidden_text, validate_provider_output
+from .safety import forbidden_text, validate_provider_output, normalize_demo_output
 
 
 def utc() -> str:
@@ -28,7 +28,7 @@ def project(case: dict, evidence: list) -> tuple[dict, list, list]:
     def pick(obj, keys):
         return {k: obj[k] for k in keys if k in (obj or {})}
     facts = {
-        **pick(case.get("microbiology"), ("organism",)),
+        **pick(case.get("microbiology"), ("organism", "specimen", "report_status")),
         **pick(case.get("encounter"), ("infection_site", "severity")),
         "clinical_context": (case.get("encounter") or {}).get("context"),
         "demographics": pick(case.get("demographics"), ("age", "sex", "weight", "weight_unit")),
@@ -50,6 +50,100 @@ def project(case: dict, evidence: list) -> tuple[dict, list, list]:
         "is_synthetic": x.get("is_synthetic", False), "external_model_allowed": x.get("external_model_allowed", False),
     })).model_dump(mode="json") for x in evidence]
     return facts, ast, excerpts
+
+
+def normalize_demo_assessment(agent, raw, data=None):
+    """Tolerate presentation differences; never create drug choices or citations."""
+    if not isinstance(raw, dict):
+        return raw, []
+    if agent.id == 'synthesis_agent' and data is not None:
+        return normalize_demo_output(raw, allowed_drugs=set(data['allowed_drugs']),
+            allowed_avoid=set(data['allowed_avoid']), allowed_rules=set(data['rule_refs']),
+            allowed_evidence={e['chunk_id'] for e in data['evidence']},
+            require_rule_refs=True, require_evidence_refs=True)
+    notes = []
+    def message(model, value):
+        if not isinstance(value, dict):
+            return value
+        result = {k: copy.deepcopy(v) for k, v in value.items() if k in model.model_fields}
+        if set(value) - set(result):
+            notes.append('EXTRA_FIELDS_IGNORED')
+        for key in ('limitations', 'missing_fields', 'evidence_refs', 'rule_refs', 'avoid'):
+            if key in model.model_fields and result.get(key) is None:
+                result[key] = []
+                notes.append('EMPTY_LIST_DEFAULTED')
+        return result
+    output = message(agent.output_type, raw)
+    from app.agents.contracts_v2 import Finding, Candidate, DrugSupport
+    for key, model in (('findings', Finding), ('candidates', Candidate), ('avoid', Candidate), ('support', DrugSupport)):
+        if isinstance(output.get(key), list):
+            output[key] = [message(model, x) for x in output[key]]
+    if isinstance(output.get('needs_confirmation'), str) and output['needs_confirmation'].lower() in {'true', 'false'}:
+        output['needs_confirmation'] = output['needs_confirmation'].lower() == 'true'
+        notes.append('BOOLEAN_NORMALIZED')
+    if agent.id == 'evidence_agent' and isinstance(output.get('support'), list):
+        # Empty citations express no support; omit that entry instead of treating
+        # it as a schema failure. Never supply citations on the model's behalf.
+        unsupported = {x.get('drug_code') for x in output['support']
+                       if isinstance(x, dict) and x.get('evidence_refs') == []}
+        if unsupported:
+            output['support'] = [x for x in output['support']
+                                 if not isinstance(x, dict) or x.get('drug_code') not in unsupported]
+            if isinstance(output.get('supported_drugs'), list):
+                output['supported_drugs'] = [x for x in output['supported_drugs'] if x not in unsupported]
+            notes.append('EMPTY_SUPPORT_OMITTED')
+    # Omit disallowed free text instead of blocking the entire demo. References,
+    # per-drug support and drug identifiers still pass the original validators.
+    for item in output.get('findings', []) if isinstance(output.get('findings'), list) else []:
+        if isinstance(item, dict) and isinstance(item.get('statement'), str) and forbidden_text(item['statement']):
+            item['statement'] = '部分模型說明已省略，請核對來源資料。'
+            notes.append('TEXT_WITHHELD')
+    if isinstance(output.get('limitations'), list):
+        for i, value in enumerate(output['limitations']):
+            if isinstance(value, str) and (not value.strip() or forbidden_text(value)):
+                output['limitations'][i] = '部分模型限制說明已省略；本結果僅供展示與人工核對。'
+                notes.append('TEXT_WITHHELD')
+    if agent.id == 'evidence_agent' and data is not None:
+        evidence_ids = {x['chunk_id'] for x in data.get('evidence', [])}
+        allowed = set(data.get('allowed_drugs', []))
+        valid_support = {}
+        for entry in output.get('support', []) if isinstance(output.get('support'), list) else []:
+            if not isinstance(entry, dict) or not isinstance(entry.get('drug_code'), str):
+                notes.append('INVALID_SUPPORT_OMITTED')
+                continue
+            code, refs, explanation = entry['drug_code'], entry.get('evidence_refs'), entry.get('explanation')
+            if (code not in allowed or not isinstance(refs, list)
+                    or not all(isinstance(ref, str) for ref in refs)
+                    or not refs or not set(refs) <= evidence_ids
+                    or not isinstance(explanation, str) or not explanation.strip()
+                    or len(explanation) > 2000 or forbidden_text(explanation)):
+                notes.append('INVALID_SUPPORT_OMITTED')
+                continue
+            if code in valid_support:
+                notes.append('DUPLICATE_SUPPORT_MERGED')
+                previous = valid_support[code]
+                previous['evidence_refs'] = list(dict.fromkeys(previous['evidence_refs'] + refs))
+            else:
+                valid_support[code] = {**entry, 'evidence_refs': list(dict.fromkeys(refs))}
+        support = list(valid_support.values())
+        if output.get('support') != support or output.get('supported_drugs') != list(valid_support):
+            notes.append('SUPPORT_LIST_RECONCILED')
+        output['support'], output['supported_drugs'] = support, list(valid_support)
+        if isinstance(output.get('findings'), list):
+            for finding in output['findings']:
+                if not isinstance(finding, dict):
+                    continue
+                refs = finding.get('evidence_refs')
+                if isinstance(refs, list):
+                    clean = list(dict.fromkeys(r for r in refs if isinstance(r, str) and r in evidence_ids))
+                    if clean != refs or finding.get('rule_refs'):
+                        finding.update(statement='摘要引用不完整，請以逐藥支持紀錄核對。', evidence_refs=clean, rule_refs=[])
+                        notes.append('SUMMARY_REFERENCES_NORMALIZED')
+        if notes:
+            if isinstance(output.get('limitations'), list):
+                output['limitations'] = output['limitations'][:19] + ['Demo 僅保留可核對的逐藥支持；不完整項目已省略，未補造引用。']
+            output['needs_confirmation'] = True
+    return output, sorted(set(notes))
 
 
 def validate_assessment(agent, raw, data):
@@ -84,8 +178,6 @@ def validate_assessment(agent, raw, data):
         field, allowed = scopes[agent.id]
         if not set(output[field]) <= allowed or len(output[field]) != len(set(output[field])):
             raise ValueError("unknown or duplicate drug")
-    if agent.id == "evidence_agent" and output["supported_drugs"] and not any(x["evidence_refs"] for x in output["findings"]):
-        raise ValueError("support without citation")
     if agent.id == "evidence_agent":
         supported = output["supported_drugs"]
         support = output["support"]
@@ -106,8 +198,8 @@ def execute_v2(case, provider_kind, document_service, run_id, checkpoint=None):
     run.update(mode="multi-agent-v2", is_mock=provider_kind == "mock", output=None,
                model=None, usage=None, cost=None,
                raw_baseline={"withheld": True, "available": False, "payload": None})
-    run["versions"]["workflow"] = "multi-agent-v2.1"
-    run["versions"]["agent_contract"] = "agents-v2.1"
+    run["versions"]["workflow"] = "multi-agent-v2.4-demo"
+    run["versions"]["agent_contract"] = "agents-v2.4-demo"
     run["nodes"] = [n for n in run["nodes"] if n["node_id"] not in {"candidate_presentation", "human_review"}]
     traces, outputs, span_ids = [], {}, {}
     max_calls = runtime.setting("LLM_V2_MAX_CALLS", 8, 1, 10)
@@ -155,7 +247,9 @@ def execute_v2(case, provider_kind, document_service, run_id, checkpoint=None):
                 data = {"facts": facts}
                 if agent.dependencies:
                     data["case_assessment"] = outputs["case_agent"]
-                if agent.id == "ast_agent":
+                if agent.id == "case_agent":
+                    data.update(ast_results=ast)
+                elif agent.id == "ast_agent":
                     data.update(ast_results=ast, allowed_drugs=allowed, rule_refs=rule_refs)
                 elif agent.id == "evidence_agent":
                     data.update(evidence=evidence, allowed_drugs=allowed)
@@ -207,6 +301,8 @@ def execute_v2(case, provider_kind, document_service, run_id, checkpoint=None):
                         raise
                     finally:
                         attempt.update(finished_at=utc(), elapsed_ms=round((time.perf_counter() - attempt_tick) * 1000, 3))
+                raw, adjustments = normalize_demo_assessment(agent, raw, data)
+                trace['demo_adjustments'] = adjustments
                 output = validate_assessment(agent, raw, data)
                 trace["attempts"][-1]["validation_status"] = "valid"
                 if time.perf_counter() > deadline:
@@ -219,9 +315,21 @@ def execute_v2(case, provider_kind, document_service, run_id, checkpoint=None):
                 if agent.id != "synthesis_agent" and (output["needs_confirmation"] or output.get("missing_fields")
                                                      or (agent.id == "evidence_agent" and not output["supported_drugs"])):
                     trace["status"] = "needs_confirmation"
-                    raise ProviderError("AGENT_NEEDS_CONFIRMATION")
+                    trace["errors"] = [{"code": "AGENT_NEEDS_CONFIRMATION"}]
+                    run["errors"].append({"node_id": agent.id, "code": "AGENT_NEEDS_CONFIRMATION"})
+                    run['safety_summary']['limitations'].append(
+                        f'{agent.id} 有待確認事項；本次為寬鬆 demo，候選僅供展示，仍需人工核對。')
             except (ProviderError, ValidationError, ValueError, TypeError, KeyError) as exc:
                 stop = exc.code if isinstance(exc, ProviderError) else "AGENT_SCHEMA_INVALID"
+                if isinstance(exc, ValidationError):
+                    trace['validation_issues'] = [{'type': e['type']} for e in exc.errors(include_input=False, include_context=False)][:10]
+                elif stop == 'AGENT_SCHEMA_INVALID':
+                    reasons = {'secret-like output', 'forbidden output content', 'synthesis output rejected',
+                               "synthesis changed the specialist's per-drug evidence", 'unknown reference',
+                               'unknown or duplicate drug', 'each supported drug needs exactly one support record',
+                               'invalid per-drug support'}
+                    trace['validation_issues'] = [{'type': type(exc).__name__,
+                                                   'reason': str(exc) if str(exc) in reasons else 'invalid_structure'}]
                 if stop == "AGENT_SCHEMA_INVALID" and trace["attempts"]:
                     trace["attempts"][-1]["validation_status"] = "invalid"
                 if trace["status"] != "needs_confirmation":
@@ -268,7 +376,7 @@ def execute_v2(case, provider_kind, document_service, run_id, checkpoint=None):
     run["usage"] = sum_usage([a for t in traces for a in t["attempts"]])
     run["models"] = sorted({t["model"] for t in traces if t["attempts"] and t["model"]})
     run["model"] = run["models"][0] if len(run["models"]) == 1 else None
-    run["agent_execution"] = {"workflow_version": "multi-agent-v2.1", "calls": calls, "max_calls": max_calls,
+    run["agent_execution"] = {"workflow_version": "multi-agent-v2.4-demo", "calls": calls, "max_calls": max_calls,
                               "completed_agents": sum(t["status"] == "completed" for t in traces),
                               "usage_complete": all(all(k in (a.get("usage") or {}) for k in ("prompt_tokens", "completion_tokens", "total_tokens")) for t in traces for a in t["attempts"]) and calls > 0}
     run["elapsed_ms"] = round((time.perf_counter() - start) * 1000, 3)
@@ -283,7 +391,7 @@ def sum_usage(attempts):
 def public_agent_nodes(nodes, *, publish: bool):
     result = copy.deepcopy(nodes)
     for node in result:
-        if node.get("agent_id") and (not publish or node.get("status") != "completed"):
+        if node.get("agent_id") and (not publish or node.get("status") not in {"completed", "needs_confirmation"}):
             node["input"] = None
             node["output"] = None
             node["content_withheld"] = True

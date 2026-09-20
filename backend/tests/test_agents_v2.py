@@ -16,6 +16,21 @@ def agents(run):
     return [n for n in run["nodes"] if n.get("agent_id")]
 
 
+@pytest.mark.parametrize('local,consent,allowed', [(False,False,False),(False,True,True),(True,False,True)])
+def test_reference_evidence_uses_explicit_case_consent_or_local_transport(monkeypatch, local, consent, allowed):
+    monkeypatch.setenv('LLM_BASE_URL', 'http://localhost:1234/v1' if local else 'https://example.invalid/v1')
+    monkeypatch.setenv('LLM_MODEL', 'test')
+    monkeypatch.setenv('LLM_API_KEY', 'unused')
+    provider = runtime.AgentProvider('live', runtime.AGENTS[2])
+    data = {'evidence':[{'is_synthetic':False, 'external_model_allowed':False}]}
+    value = {'is_synthetic':True, 'external_model_allowed':consent}
+    if allowed:
+        provider.check(value, data)
+    else:
+        with pytest.raises(ProviderError) as error: provider.check(value, data)
+        assert error.value.code == 'NON_SYNTHETIC_EVIDENCE'
+
+
 def test_five_independent_calls_receive_validated_upstream_results(monkeypatch):
     recorded = []
     original = runtime.AgentProvider.complete
@@ -51,10 +66,10 @@ def test_missing_case_fields_prevent_all_generation(monkeypatch):
 
 
 @pytest.mark.parametrize("role,change", [
-    ("case_agent", lambda o: o.update(unexpected="bad")),
+    ("case_agent", lambda o: o.update(findings=42)),
     ("ast_agent", lambda o: o.update(reviewed_drugs=["invented"])),
-    ("evidence_agent", lambda o: o["findings"][0].update(evidence_refs=["invented"])),
-    ("clinical_agent", lambda o: o["findings"][0].update(statement="take 2 tablets every 8 hours")),
+    ("case_agent", lambda o: o["findings"][0].update(evidence_refs=["invented"])),
+    ("clinical_agent", lambda o: o.update(excluded_drugs=['invented'])),
     ("synthesis_agent", lambda o: o["candidates"][0].update(drug_code="DEMO_DRUG_C")),
     ("synthesis_agent", lambda o: o["candidates"][0].update(evidence_refs=["invented"])),
 ])
@@ -67,7 +82,7 @@ def test_invalid_agent_output_blocks_downstream_and_public_content(monkeypatch, 
         return out
     monkeypatch.setattr(runtime, "mock_output", altered)
     run = execute(case(), "multi-agent-v2", "mock", DocStub())
-    assert run["output"] is None and run["gate_status"] == "blocked"
+    assert run["output"] is None and run["gate_status"] in {"blocked", "needs_confirmation"}
     traces = agents(run)
     index = [x["agent_id"] for x in traces].index(role)
     assert traces[index]["status"] == "failed"
@@ -76,7 +91,7 @@ def test_invalid_agent_output_blocks_downstream_and_public_content(monkeypatch, 
     assert all(x["output"] is None and x["input"] is None for x in public if x.get("agent_id"))
 
 
-def test_specialist_uncertainty_is_not_overruled_by_synthesis(monkeypatch):
+def test_demo_specialist_uncertainty_is_retained_in_result(monkeypatch):
     original = runtime.mock_output
     def uncertain(agent, data):
         result = original(agent, data)
@@ -85,8 +100,106 @@ def test_specialist_uncertainty_is_not_overruled_by_synthesis(monkeypatch):
         return result
     monkeypatch.setattr(runtime, "mock_output", uncertain)
     run = execute(case(), "multi-agent-v2", "mock", DocStub())
-    assert run["gate_status"] == "needs_confirmation" and run["output"] is None
-    assert agents(run)[-1]["skip_reason"] == "AGENT_NEEDS_CONFIRMATION"
+    assert run['output'] and run['gate_status'] == 'ready_for_review'
+    assert agents(run)[3]['status'] == 'needs_confirmation'
+    assert any('clinical_agent' in x for x in run['output']['limitations'])
+
+
+@pytest.mark.parametrize("role", ["case_agent", "ast_agent", "evidence_agent"])
+def test_demo_uncertainty_allows_result_with_explicit_limitations(monkeypatch, role):
+    original = runtime.mock_output
+    def uncertain(agent, data):
+        result = original(agent, data)
+        if agent.id == role:
+            result['needs_confirmation'] = True
+        return result
+    monkeypatch.setattr(runtime, 'mock_output', uncertain)
+    run = execute(case(), 'multi-agent-v2', 'mock', DocStub())
+    traces = agents(run)
+    assert all(n['attempts'] for n in traces[:4])
+    assert traces[-1]['status'] == 'completed'
+    assert run['output'] and run['gate_status'] == 'ready_for_review'
+    assert any(role in x for x in run['output']['limitations'])
+
+
+def test_demo_normalizes_presentation_without_inventing_choices(monkeypatch):
+    original = runtime.mock_output
+    def changed(agent, data):
+        result = original(agent, data)
+        if agent.id == 'case_agent':
+            result.update(extra='ignored', missing_fields=None, needs_confirmation='false')
+            result['findings'][0] = {'statement': '不提供劑量建議'}
+        return result
+    monkeypatch.setattr(runtime, 'mock_output', changed)
+    run = execute(case(), 'multi-agent-v2', 'mock', DocStub())
+    assert run['output']
+    assert 'TEXT_WITHHELD' in agents(run)[0]['demo_adjustments']
+    assert agents(run)[0]['output']['findings'][0]['evidence_refs'] == []
+
+
+def test_empty_support_becomes_unsupported_without_fabricated_citation():
+    from app.workflow.v2 import normalize_demo_assessment
+    agent = next(a for a in runtime.AGENTS if a.id == 'evidence_agent')
+    raw = {'findings': [], 'limitations': [], 'needs_confirmation': True,
+           'supported_drugs': ['a', 'b'], 'support': [
+               {'drug_code': 'a', 'evidence_refs': [], 'explanation': 'unsupported'},
+               {'drug_code': 'b', 'evidence_refs': ['real_chunk'], 'explanation': 'supported'}]}
+    result, notes = normalize_demo_assessment(agent, raw)
+    assert result['supported_drugs'] == ['b']
+    assert [x['drug_code'] for x in result['support']] == ['b']
+    assert notes == ['EMPTY_SUPPORT_OMITTED']
+
+
+@pytest.mark.parametrize('variation', ['summary_no_refs', 'summary_bad_refs', 'duplicate', 'list_mismatch', 'one_bad_support'])
+def test_evidence_demo_keeps_valid_per_drug_support(monkeypatch, variation):
+    original = runtime.mock_output
+    def changed(agent, data):
+        result = original(agent, data)
+        if agent.id == 'evidence_agent':
+            if variation == 'summary_no_refs':
+                result['findings'][0]['evidence_refs'] = []
+            elif variation == 'summary_bad_refs':
+                result['findings'][0]['evidence_refs'] = ['invented']
+            elif variation == 'duplicate':
+                result['support'].append(copy.deepcopy(result['support'][0]))
+            elif variation == 'list_mismatch':
+                result['supported_drugs'] = []
+            else:
+                result['support'].append({'drug_code':'invented', 'evidence_refs':['fake'], 'explanation':'unsupported'})
+        return result
+    monkeypatch.setattr(runtime, 'mock_output', changed)
+    run = execute(case(), 'multi-agent-v2', 'mock', DocStub())
+    assert run['output'], run['errors']
+    assert agents(run)[2]['status'] in {'completed', 'needs_confirmation'}
+    assert agents(run)[2]['output']['supported_drugs'] == ['DEMO_DRUG_A']
+    assert run['output']['candidates'][0]['evidence_refs'] == ['demo_chunk']
+
+
+def test_no_valid_evidence_support_still_runs_clinical_agent(monkeypatch):
+    original = runtime.mock_output
+    def changed(agent, data):
+        result = original(agent, data)
+        if agent.id == 'evidence_agent':
+            result['support'][0]['evidence_refs'] = ['invented']
+        return result
+    monkeypatch.setattr(runtime, 'mock_output', changed)
+    run = execute(case(), 'multi-agent-v2', 'mock', DocStub())
+    assert agents(run)[2]['status'] == 'needs_confirmation'
+    assert agents(run)[2]['output']['support'] == []
+    assert agents(run)[3]['status'] == 'completed'
+    assert run['output'] is None
+    assert run['errors'][-1]['code'] == 'AGENT_NO_SUPPORTED_CANDIDATES'
+
+
+def test_case_agent_receives_source_ast_and_culture_without_identifiers():
+    value = case()
+    value['microbiology'].update(specimen='BLOOD', report_status='final', collected_at='PRIVATE_TIME')
+    run = execute(value, 'multi-agent-v2', 'mock', DocStub())
+    data = agents(run)[0]['input']
+    assert data['facts']['specimen'] == 'BLOOD'
+    assert data['facts']['report_status'] == 'final'
+    assert data['ast_results'][0]['drug_code'] == value['ast_results'][0]['drug_code']
+    assert 'PRIVATE_TIME' not in json.dumps(data)
 
 
 def test_disagreement_narrows_to_empty_without_calling_synthesis(monkeypatch):
@@ -222,7 +335,12 @@ def test_live_adapter_uses_separate_prompts_and_projected_payloads(monkeypatch):
     monkeypatch.setattr(runtime.OpenAICompatibleProvider, "_request", request)
     data = case(case_id="PRIVATE_CASE_IDENTIFIER", provenance={"source_record_id": "PRIVATE_SOURCE_IDENTIFIER"})
     data["renal"]["sampled_at"] = "PRIVATE_TIMESTAMP"
-    run = execute(data, "multi-agent-v2", "live", DocStub())
+    class SyntheticDocuments(DocStub):
+        def search(self, *args, **kwargs):
+            result = super().search(*args, **kwargs)
+            result['evidence'][0]['is_synthetic'] = True
+            return result
+    run = execute(data, "multi-agent-v2", "live", SyntheticDocuments())
     assert run["output"], run["errors"]
     assert len(payloads) == 5
     assert len({p["messages"][0]["content"] for p in payloads}) == 5

@@ -12,7 +12,7 @@ from app.adapters.microbiology import prepare
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('csv', type=Path)
-    parser.add_argument('--policy-ref', required=True, help='Existing reference document ID or version')
+    parser.add_argument('--policy-ref', help='Optional: pin a reference document; default searches the reference library')
     parser.add_argument('--out', type=Path, default=ROOT / 'data/local/microbiology')
     parser.add_argument('--per-site', type=int, default=4)
     parser.add_argument('--install', action='store_true', help='Add prepared cases to the configured local DB')
@@ -21,7 +21,7 @@ def main():
         parser.error('--per-site must be between 1 and 10')
     if args.install:
         from app import main as api
-        if args.policy_ref not in {v for d in api._documents().list_documents() if not d['is_synthetic'] for v in (d['doc_id'], d['document_version'], d['title'])}:
+        if args.policy_ref and args.policy_ref not in {v for d in api._documents().list_documents() if not d['is_synthetic'] for v in (d['doc_id'], d['document_version'], d['title'])}:
             raise SystemExit('Reference document not found. No files prepared or cases installed.')
     report = prepare(args.csv, args.out, args.policy_ref, args.per_site)
     if args.install:

@@ -16,6 +16,9 @@ SITES = {'URINE': ('urinary tract infection', '模擬情境：排尿疼痛、頻
          'BLOOD': ('bloodstream infection', '模擬情境：發燒與寒顫，需評估感染來源；未由血液培養推定真實菌血症。'),
          'RESPIRATORY_TRACT': ('pneumonia', '模擬情境：發燒、咳嗽與新發肺部浸潤；症狀及影像均為補寫。')}
 SCENARIO_ORGANISMS = {'ESCHERICHIA COLI', 'KLEBSIELLA PNEUMONIAE', 'STAPHYLOCOCCUS AUREUS', 'PSEUDOMONAS AERUGINOSA'}
+DEMO_CONTEXT = (' Demo 範圍：依所列模擬感染情境分析來源藥敏與引用。'
+                '既往病史、免疫狀態、詳細生命徵象及額外影像未提供，保留為未知與展示限制；'
+                '不代表正常、陰性或已完成臨床確診。')
 
 
 def group_key(row):
@@ -55,13 +58,13 @@ def build_case(key, group, digest, policy_ref, index):
              'is_synthetic': False, 'data_origin': 'hybrid', 'evidence_scope': 'reference',
              'source': '來源藥敏＋模擬臨床情境；不是真實完整病歷',
              'demographics': {'age': 55, 'sex': 'female', 'weight': 65, 'weight_unit': 'kg'},
-             'encounter': {'infection_site': site, 'severity': 'stable', 'context': context},
+             'encounter': {'infection_site': site, 'severity': 'stable', 'context': context + DEMO_CONTEXT},
              'renal': {'egfr': 90, 'unit': 'mL/min/1.73m2', 'dialysis_status': 'none'},
              'allergies': {'status': 'known_none', 'items': []},
              'microbiology': {'specimen': first['culture_description'], 'organism': first['organism'],
                               'report_status': 'needs_review' if nonfinal else 'final'},
              'ast_results': [ast_row(r) for r in group if r.get('antibiotic')],
-             'policy_refs': [policy_ref],
+             'policy_refs': [policy_ref] if policy_ref else [],
              'provenance': {'source_system': 'local-microbiology-csv', 'source_file_sha256': digest,
                             'adapter_version': 'microbiology-1.0', 'imported_at': now,
                             'source_record_id': hashlib.sha256('|'.join(key).encode()).hexdigest(),

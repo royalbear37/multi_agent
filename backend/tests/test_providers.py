@@ -12,7 +12,7 @@ from app.providers.service import (
 
 
 def _context():
-    return {"mode": "single-agent", "case_summary": {"is_synthetic": True}, "allowed_drugs": ["DEMO_DRUG_A"], "rule_refs": ["rule.demo"], "evidence": [{"chunk_id": "doc_chunk_0001", "document_version": "v1", "text": "fixture", "location": {"page": 1}}]}
+    return {"mode": "single-agent", "case_summary": {"is_synthetic": True}, "allowed_drugs": ["DEMO_DRUG_A"], "rule_refs": ["rule.demo"], "evidence": [{"chunk_id": "doc_chunk_0001", "document_version": "v1", "text": "fixture", "is_synthetic": True, "location": {"page": 1}}]}
 
 
 def test_unconfigured_is_explicit():
@@ -149,3 +149,30 @@ def test_avoid_uses_same_strict_reference_schema():
 
 
 json_module = json
+
+
+@pytest.mark.parametrize('base_url,consent,document_consent,synthetic,allowed', [
+    ('https://remote.invalid/v1', False, False, False, False),
+    ('https://remote.invalid/v1', False, False, None, False),
+    ('https://remote.invalid/v1', True, False, False, True),
+    ('https://remote.invalid/v1', False, True, False, True),
+    ('https://remote.invalid/v1', False, False, True, True),
+    ('http://localhost:9000/v1', False, False, False, True),
+])
+def test_reference_evidence_requires_consent_before_request(base_url, consent, document_consent, synthetic, allowed):
+    context = _context()
+    context['case_summary']['external_model_allowed'] = consent
+    context['evidence'][0].update(is_synthetic=synthetic, external_model_allowed=document_consent)
+    calls = []
+    def fake_post(*args, **kwargs):
+        calls.append(kwargs)
+        return {'choices': [{'message': {'content': json.dumps({'candidates': [], 'avoid': [], 'limitations': []})}}]}
+    provider = OpenAICompatibleProvider(base_url, 'demo', 'fake', http_post=fake_post)
+    if allowed:
+        provider.generate(context)
+        assert len(calls) == 1
+    else:
+        with pytest.raises(ProviderError) as exc:
+            provider.generate(context)
+        assert exc.value.code == 'NON_SYNTHETIC_EVIDENCE'
+        assert calls == []

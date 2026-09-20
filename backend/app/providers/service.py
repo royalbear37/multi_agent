@@ -23,7 +23,7 @@ class ProviderError(RuntimeError):
 
 
 from app.workflow.safety import FORBIDDEN_TEXT as _FORBIDDEN_TERMS
-from app.workflow.safety import forbidden_text
+from app.workflow.safety import forbidden_text, normalize_demo_output
 
 _NODE_OUTPUT_KEYS = {
     "case_completeness": {"summary", "missing_fields"},
@@ -98,6 +98,13 @@ class UnconfiguredProvider(BaseProvider):
 
 
 def _safe_output(value: Any, context: dict[str, Any]) -> dict[str, Any]:
+    if context.get('demo_relaxed'):
+        value, notes = normalize_demo_output(value,
+            allowed_drugs=set(context.get('allowed_drugs') or []),
+            allowed_avoid=set(context.get('allowed_avoid', context.get('allowed_drugs')) or []),
+            allowed_rules=set(context.get('rule_refs') or []),
+            allowed_evidence={e['chunk_id'] for e in context.get('evidence', [])})
+        context['demo_adjustments'] = notes
     if not isinstance(value, dict):
         raise ProviderError("OUTPUT_SCHEMA_INVALID", "模型輸出格式不符合要求")
     expected = {"candidates", "avoid", "limitations"}
@@ -248,7 +255,12 @@ class OpenAICompatibleProvider(BaseProvider):
         local = urlparse(self.base_url).hostname in {'127.0.0.1', 'localhost', '::1'}
         if not isinstance(summary, dict) or (summary.get("is_synthetic") is not True and not (summary.get('data_origin') in {'deidentified','hybrid'} and (local or summary.get('external_model_allowed') is True))):
             raise ProviderError("NON_SYNTHETIC_INPUT", "來源病例預設僅供本機模型；外部模型需確認資料可傳送並啟用病例設定")
-        # Only synthetic, necessary structured fields and snippets are sent.
+        for item in context.get("evidence") or []:
+            if (not local and isinstance(item, dict) and item.get("is_synthetic") is not True
+                    and item.get("external_model_allowed") is not True
+                    and summary.get("external_model_allowed") is not True):
+                raise ProviderError("NON_SYNTHETIC_EVIDENCE", "參考文件片段尚未允許外送")
+        # Send only necessary structured fields and authorized snippets.
         evidence = [{k: e.get(k) for k in ("chunk_id", "document_version", "text", "location") if k in e} for e in (context.get("evidence") or []) if isinstance(e, dict)]
         # Keep the outbound context deliberately narrow.  A caller may attach
         # internal trace fields to context; they must never become HTTP body
@@ -300,7 +312,8 @@ class OpenAICompatibleProvider(BaseProvider):
             usage = {key: raw_usage[key] for key in ("prompt_tokens", "completion_tokens", "total_tokens") if isinstance(raw_usage.get(key), (int, float)) and not isinstance(raw_usage.get(key), bool) and raw_usage[key] >= 0}
             if not usage:
                 usage = None
-        return {"output": output, "usage": usage, "model": self.model, "is_mock": False, "retries": retries}
+        return {"output": output, "usage": usage, "model": self.model, "is_mock": False, "retries": retries,
+                "demo_adjustments": context.get('demo_adjustments', [])}
 
 
 def get_provider(kind: str = "unconfigured") -> BaseProvider:

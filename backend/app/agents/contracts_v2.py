@@ -19,6 +19,8 @@ class RenalFacts(Message):
 
 class CaseFacts(Message):
     organism: str | None = None
+    specimen: str | None = None
+    report_status: str | None = None
     infection_site: str | None = None
     severity: str | None = None
     clinical_context: str | None = Field(default=None, max_length=4000)
@@ -102,6 +104,7 @@ class SynthesisOutput(Message):
 
 class CaseInput(Message):
     facts: CaseFacts
+    ast_results: list[ASTFacts] = Field(max_length=100)
 
 
 class ASTInput(Message):

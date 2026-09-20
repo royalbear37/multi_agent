@@ -33,6 +33,69 @@ def _clean_refs(value: Any) -> list[str] | None:
     return list(dict.fromkeys(value))
 
 
+def normalize_demo_output(value: Any, *, allowed_drugs: set[str], allowed_avoid: set[str],
+                          allowed_rules: set[str], allowed_evidence: set[str],
+                          require_rule_refs: bool = False, require_evidence_refs: bool = False):
+    """Repair presentation and retain only individually valid demo entries."""
+    if not isinstance(value, dict):
+        return value, []
+    notes = []
+    if set(value) - {'candidates', 'avoid', 'limitations'}:
+        notes.append('EXTRA_FIELDS_IGNORED')
+    result = {'candidates': [], 'avoid': [], 'limitations': []}
+    for key in ('candidates', 'avoid'):
+        entries = value.get(key)
+        if entries is None:
+            entries = []
+            notes.append('EMPTY_LIST_DEFAULTED')
+        if not isinstance(entries, list):
+            return value, []
+        seen = set()
+        for item in entries:
+            if not isinstance(item, dict):
+                notes.append('INVALID_ITEM_OMITTED')
+                continue
+            code = item.get('drug_code')
+            allowed = allowed_drugs if key == 'candidates' else allowed_avoid
+            refs = _clean_refs(item.get('rule_refs') or [])
+            erefs = _clean_refs(item.get('evidence_refs') or [])
+            if (not isinstance(code, str) or code not in allowed or refs is None or erefs is None
+                    or not set(refs) <= allowed_rules or not set(erefs) <= allowed_evidence
+                    or (key == 'candidates' and require_rule_refs and not refs)
+                    or (key == 'candidates' and require_evidence_refs and not erefs)):
+                notes.append('INVALID_ITEM_OMITTED')
+                continue
+            if code in seen:
+                notes.append('DUPLICATE_ITEM_OMITTED')
+                continue
+            seen.add(code)
+            reason = item.get('reason')
+            if not isinstance(reason, str) or not reason.strip() or forbidden_text(reason):
+                reason = '模型原說明已省略；此項僅供 demo 核對，適用性仍待確認。'
+                notes.append('TEXT_WITHHELD')
+            if set(item) - _CANDIDATE_KEYS:
+                notes.append('EXTRA_FIELDS_IGNORED')
+            result[key].append({'drug_code': code, 'reason': reason, 'rule_refs': refs, 'evidence_refs': erefs})
+    avoid_codes = {x['drug_code'] for x in result['avoid']}
+    if any(x['drug_code'] in avoid_codes for x in result['candidates']):
+        result['candidates'] = [x for x in result['candidates'] if x['drug_code'] not in avoid_codes]
+        notes.append('OVERLAPPING_CANDIDATE_OMITTED')
+    limits = value.get('limitations') or []
+    if isinstance(limits, str):
+        limits = [limits]
+        notes.append('LIMITATION_LIST_NORMALIZED')
+    if not isinstance(limits, list):
+        return value, []
+    for text in limits:
+        if not isinstance(text, str) or not text.strip() or forbidden_text(text):
+            notes.append('TEXT_WITHHELD')
+            continue
+        result['limitations'].append(text)
+    if notes:
+        result['limitations'].append('Demo 已整理輸出格式並省略無法核對的項目或文字；未補造藥敏或引用。')
+    return result, sorted(set(notes))
+
+
 def validate_provider_output(
     value: Any,
     *,
