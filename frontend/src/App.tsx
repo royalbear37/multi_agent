@@ -30,7 +30,7 @@ const sections = [
   "文件資料庫",
   "研究與設定",
 ];
-const modes = ["rule-only", "rag-only", "single-agent", "multi-agent", "multi-agent-v2"];
+const modes = ["rule-only", "rag-only", "single-agent", "multi-agent"];
 const names: Record<string, string> = {
   completed: "已完成",
   awaiting_review: "待人工審閱",
@@ -94,7 +94,6 @@ export default function App() {
     [benchmarks, setBenchmarks] = useState<any[]>([]),
     [rules, setRules] = useState<any>(null);
   const [benchmarkProvider, setBenchmarkProvider] = useState("unconfigured");
-  const [includeV2, setIncludeV2] = useState(false);
   async function work(fn: () => Promise<void>) {
     setBusy(true);
     setError("");
@@ -490,7 +489,7 @@ export default function App() {
                     MOCK 模擬輸出，不能視為真實模型研究結果。
                   </div>
                 )}
-                {mode === "multi-agent-v2" && <p>v2 每病例通常有 5 次獨立模型呼叫；遇缺漏或失敗會提早停止。可在「證據與流程」查看各 Agent 的輸入、輸出與用量。</p>}
+                {mode === "multi-agent" && <p>每病例通常有 5 次獨立模型呼叫；遇缺漏或失敗會提早停止。可在「證據與流程」查看各 Agent 的輸入、輸出與用量。</p>}
                 {!!unverifiedPopulationDocuments.length && (
                   <div className="alert" role="alert">
                     此病例引用的文件{" "}
@@ -521,7 +520,7 @@ export default function App() {
                       }
                     >
                       <span>
-                        {modeNames[r.mode] || r.mode}{" "}
+                        {modeNames[r.display_mode || r.mode] || r.mode}{" "}
                         <small>{r.run_id.slice(0, 8)}</small>
                         <small className="block">
                           {localTime(r.created_at || r.nodes?.[0]?.started_at)}{" "}
@@ -603,7 +602,7 @@ export default function App() {
               <div className="runbanner">
                 <div>
                   <small>
-                    {modeNames[run.mode] || run.mode} · {executionLabel(run)} ·{" "}
+                    {modeNames[run.display_mode || run.mode] || run.mode} · {executionLabel(run)} ·{" "}
                     {run.run_id}
                   </small>
                   <h2>
@@ -729,7 +728,7 @@ export default function App() {
             <div className="grid two">
               <section className="panel">
                 <h2>人工審閱</h2>
-                <p>分析：{run.run_id} · {modeNames[run.mode] || run.mode} · {localTime(run.created_at || run.nodes?.[0]?.started_at)}</p>
+                <p>分析：{run.run_id} · {modeNames[run.display_mode || run.mode] || run.mode} · {localTime(run.created_at || run.nodes?.[0]?.started_at)}</p>
                 <CaseContext value={run.case_snapshot} snapshot />
                 <h3>本次待審候選</h3>
                 {run.output?.candidates?.length ? run.output.candidates.map((x: any) => <article key={x.drug_code}><h4>{x.drug_code}</h4><p><strong>模型理由（待核對）：</strong>{x.reason}</p><CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots} /></article>) : <p>本次沒有可接受或修改的候選；可以拒絕並記錄原因。</p>}
@@ -1110,13 +1109,12 @@ export default function App() {
               </section>
               <section className="panel">
                 <h2>四模式比較（Benchmark）</h2>
-                <label><input type="checkbox" checked={includeV2} onChange={e => setIncludeV2(e.target.checked)} /> 加入獨立代理協作 v2（增加模型呼叫）</label>
                 <p>
                   對全部已保存的 {cases.length} 個病例各執行四種模式，共{" "}
                   {cases.length * 4} 筆結果。不是只比較上方選取的病例。
                 </p>
                 <p className="muted">
-                  規則判斷／文件檢索＋模型／單次模型整合／多節點工作流。後者是多節點整理加一次主要模型生成。這是軟體流程比較，臨床適當性尚未評估。
+                  規則判斷／文件檢索＋模型／單次模型整合／獨立代理協作。獨立代理協作每病例通常有五次模型呼叫。這是軟體流程比較，臨床適當性尚未評估。
                 </p>
                 <label>
                   Benchmark 模型
@@ -1142,7 +1140,7 @@ export default function App() {
                     void work(async () => {
                       const b = await api("/benchmarks", {
                         case_ids: cases.map((c) => c.case_id),
-                        modes: includeV2 ? modes : modes.filter(m => m !== "multi-agent-v2"),
+                        modes,
                         provider_kind: benchmarkProvider,
                         request_id: crypto.randomUUID(),
                       });
@@ -1151,7 +1149,7 @@ export default function App() {
                     })
                   }
                 >
-                  {includeV2 ? "執行五模式比較（含 v2）" : "執行四模式比較"}
+                  執行四模式比較
                 </button>
                 <h3>比較歷史（時間依本機時區）</h3>
                 {benchmarks.map((b: any, i: number) => (
@@ -1187,7 +1185,7 @@ export default function App() {
                       <small className="block">
                         {b.benchmark_id.slice(0, 8)} ·{" "}
                         {(b.modes || [])
-                          .map((m: string) => modeNames[m] || m)
+                          .map((m: string) => modeNames[b.display_modes?.[m] || m] || m)
                           .join("／")}
                       </small>
                     </span>

@@ -1,6 +1,6 @@
 # 多代理人抗生素用藥輔助決策 Prototype
 
-2026-09-18 新增可選的 **`multi-agent-v2` 獨立代理協作流程**：五個 Agent 各有輸入／輸出契約、獨立模型呼叫及 trace，接收上游結構化結果。操作、限制及架構見 [v2 說明](docs/MULTI_AGENT_V2.md)，驗收與待辦見 [v2 TODO](docs/MULTI_AGENT_V2_TODO.md)。下文原 `multi-agent` 仍指舊的八節點加一次生成流程。Benchmark 預設保留舊四模式，可勾選加入 v2。
+目前提供四模式：**rule-only、rag-only、single-agent、multi-agent**。2026-09-20 已移除舊的一次生成 multi-agent，原 multi-agent-v2 改名為 multi-agent：五個 Agent 各有輸入／輸出契約、獨立模型呼叫及 trace。架構見 [多代理說明](docs/MULTI_AGENT_V2.md)。Benchmark 固定比較這四模式；舊分析紀錄仍可查閱，並標示歷史流程。
 
 Windows 本機研究工作台，使用本機 CSV 的實際菌種、測試藥品與藥敏判讀，搭配明確標示的模擬臨床情境、WHO 文件檢索（RAG）、八節點分析、表單審閱與四模式研究比較。
 
@@ -250,9 +250,9 @@ CSV 為結構化資料，請使用匯入腳本，不要放進 RAG 文件上傳�
 | rule-only | 來源判讀規則與模板選項，不呼叫回答模型 | 可執行 |
 | rag-only | 病例摘要與檢索證據的研究基線生成 | partial／not_configured |
 | single-agent | 病例、來源 AST 與證據的一次主要生成 | partial／not_configured |
-| multi-agent | 多節點整理、規則、檢索、安全與候選呈現 | partial／not_configured |
+| multi-agent | 五個獨立 Agent 依序整理病例、AST、證據、臨床限制及整合 | partial／not_configured |
 
-模型執行方式可選未設定、mock、外部模型 live。mock 與 live 皆須通過輸出檢核。來源病例的基線模式取得已測試藥品名稱，multi-agent 取得規則篩選後集合；mock 基線只挑第一項，遇過敏等限制可能被最後檢查阻擋，這不是 API 連線失敗。multi-agent 目前是確定性多節點加一次主要生成，不是多個 LLM 互相討論。rule-only 仍可能執行檢索節點供 trace 使用，Ollama 故障時要查看該節點狀態。
+模型執行方式可選未設定、mock、外部模型 live。mock 與 live 皆須通過輸出檢核。來源病例的基線模式取得已測試藥品名稱，multi-agent 取得規則篩選後集合；mock 基線只挑第一項，遇過敏等限制可能被最後檢查阻擋，這不是 API 連線失敗。multi-agent 先通過規則與檢索檢核，再執行五個獨立 Agent；通常有五次模型呼叫，失敗會提前停止。rule-only 仍可能執行檢索節點供 trace 使用，Ollama 故障時要查看該節點狀態。
 
 結果包含候選、避免項目、原因、規則／證據引用及限制。來源 AST 的 S/I/R 和系統展示判讀分開，不代表已用正式 breakpoint 重新驗證。
 

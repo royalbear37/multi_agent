@@ -145,6 +145,8 @@ def _deterministic_output(engine: RuleEngine, evaluations: list[dict[str, Any]],
 
 
 def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, document_service: Any, run_id: str) -> dict[str, Any]:
+    if mode not in {"rule-only", "rag-only", "single-agent"}:
+        raise ValueError("unsupported baseline workflow mode")
     started_all = time.perf_counter()
     engine = RuleEngine(config=_PINNED_RULES.get())
     nodes: list[dict[str, Any]] = []
@@ -275,45 +277,43 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
                 errors.append({"node_id": "candidate_presentation", "code": "MODEL_NOT_CONFIGURED"})
             else:
                 provider_attempted = True
-                internal_rule_refs = [x["rule_id"] for x in evaluations]
-                generation_allowlist = engine.candidate_drugs(case) if mode == 'multi-agent' else engine.allowed_drugs()
+                generation_allowlist = engine.allowed_drugs()
                 if engine.reported_mode:
                     # Baselines receive source-tested names, not the entire cohort vocabulary.
-                    generation_allowlist = engine.candidate_drugs(case) if mode == 'multi-agent' else list(dict.fromkeys(x['drug_code'] for x in case.get('ast_results', []) if x['drug_code'] in engine.allowed_drugs()))
+                    generation_allowlist = list(dict.fromkeys(x['drug_code'] for x in case.get('ast_results', []) if x['drug_code'] in engine.allowed_drugs()))
                 summary_for_provider = _summary(case)
                 context = {"mode": mode, "demo_relaxed": True, "case_summary": summary_for_provider, "allowed_drugs": generation_allowlist,
-                           "evidence": evidence, "rule_refs": internal_rule_refs}
+                           "evidence": evidence, "rule_refs": []}
                 if engine.reported_mode:
-                    context['allowed_avoid'] = [code for x in evaluations if x.get('action') == 'avoid' for code in x.get('drug_codes', [])] if mode == 'multi-agent' else list(dict.fromkeys(x['drug_code'] for x in case.get('ast_results', [])))
+                    context['allowed_avoid'] = list(dict.fromkeys(x['drug_code'] for x in case.get('ast_results', [])))
                 if mode == "rag-only":
                     context["rule_refs"] = []
                 elif mode == "single-agent":
                     context["rule_refs"] = []
                     context['case_summary']['ast_results'] = copy.deepcopy(case.get('ast_results', []))
-                else:
-                    # Provider adapters serialize case_summary, so bounded
-                    # node summaries are included there for multi-agent input.
-                    context["node_summaries"] = [{"node_id": n["node_id"], "status": n["status"], "output": n["output"]} for n in nodes]
                 generated = provider.generate(context)
                 quarantined_raw = copy.deepcopy(generated.get("output")) if isinstance(generated, dict) else None
                 provider_meta.update({k: generated.get(k) for k in ("model", "usage", "retries", "is_mock") if k in generated})
-                provider_rule_refs = [] if mode in {"rag-only", "single-agent"} else {x["rule_id"] for x in evaluations}
+                provider_rule_refs = []
                 candidate_payload = copy.deepcopy(generated.get("output"))
                 candidate_payload, repaired = normalize_demo_output(candidate_payload,
                     allowed_drugs=set(engine.candidate_drugs(case)),
                     allowed_avoid={code for x in evaluations if x.get('action') == 'avoid' for code in x.get('drug_codes', [])} if engine.reported_mode else set(engine.allowed_drugs()),
                     allowed_rules=set(provider_rule_refs), allowed_evidence={str(x.get('chunk_id')) for x in evidence},
-                    require_rule_refs=mode == 'multi-agent' and bool(provider_rule_refs), require_evidence_refs=bool(evidence))
+                    require_rule_refs=False, require_evidence_refs=bool(evidence))
                 demo_adjustments = sorted(set(generated.get('demo_adjustments', []) + context.get('demo_adjustments', []) + repaired))
                 validated, validation_errors = validate_provider_output(candidate_payload, allowed_drugs=set(engine.candidate_drugs(case)),
                                                                        allowed_avoid={code for x in evaluations if x.get('action') == 'avoid' for code in x.get('drug_codes', [])} if engine.reported_mode else None,
                                                                        allowed_rules=provider_rule_refs,
                                                                        allowed_evidence={str(x.get("chunk_id")) for x in evidence},
-                                                                       require_rule_refs=mode == "multi-agent" and bool(provider_rule_refs),
+                                                                       require_rule_refs=False,
                                                                        require_evidence_refs=mode != "rule-only" and bool(evidence))
                 if validation_errors:
                     candidate_status = "failed"
                     errors.append({"node_id": "candidate_presentation", "code": "OUTPUT_SCHEMA_INVALID", "validation_errors": validation_errors})
+                elif not validated.get("candidates"):
+                    candidate_status = "needs_confirmation"
+                    errors.append({"node_id": "candidate_presentation", "code": "NO_VALID_CANDIDATES"})
                 else:
                     output = validated
                     if mode in {"rag-only", "single-agent"} and output is not None:
@@ -353,7 +353,7 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
         output = None
     nodes[-1]["output"]["schema_valid"] = output_schema_valid and candidate_status == "completed"
     nodes[-1]['demo_adjustments'] = demo_adjustments
-    final_gate = "blocked" if candidate_status == "failed" else gate
+    final_gate = "blocked" if candidate_status == "failed" else ("needs_confirmation" if candidate_status == "needs_confirmation" and gate == "ready_for_review" else gate)
     t = time.perf_counter()
     nodes.append(_node("human_review", "pending", t, output={"action_required": True}, version="review-1.0"))
     if candidate_status == "not_configured":
@@ -380,7 +380,7 @@ def _execute_workflow(case: dict[str, Any], mode: str, provider_kind: str, docum
 
 
 def execute(case: dict[str, Any], mode: str, provider_kind: str = "unconfigured", document_service: Any = None, run_id: str | None = None, *, rules_snapshot: dict | None = None, checkpoint=None) -> dict[str, Any]:
-    if mode not in {"rule-only", "rag-only", "single-agent", "multi-agent", "multi-agent-v2"}:
+    if mode not in {"rule-only", "rag-only", "single-agent", "multi-agent"}:
         raise ValueError("unsupported workflow mode")
     if provider_kind not in {"unconfigured", "mock", "live"}:
         raise ValueError("unsupported provider kind")
@@ -389,7 +389,7 @@ def execute(case: dict[str, Any], mode: str, provider_kind: str = "unconfigured"
     from app.agents.runners import RUNNERS
     token = _PINNED_RULES.set(copy.deepcopy(rules_snapshot))
     try:
-        if mode == "multi-agent-v2":
+        if mode == "multi-agent":
             from .v2 import execute_v2
             return execute_v2(case, provider_kind, document_service, run_id, checkpoint=checkpoint)
         return RUNNERS[mode].run(case, provider_kind, document_service, run_id)
@@ -411,7 +411,7 @@ def validate_review(run: dict[str, Any], proposed: dict[str, Any] | None = None)
     engine = RuleEngine(config=snapshot) if isinstance(snapshot, dict) else RuleEngine()
     case_snapshot = run.get("case_snapshot")
     allowed = set(engine.candidate_drugs(case_snapshot)) if isinstance(case_snapshot, dict) else set()
-    if run.get("mode") == "multi-agent-v2":
+    if "v2_candidate_boundary" in run or run.get("agent_execution") is not None or run.get("mode") == "multi-agent-v2":
         boundary = run.get("v2_candidate_boundary") or {}
         allowed &= set(boundary.get("allowed_drugs", []))
         evidence_by_drug = boundary.get("evidence_by_drug", {})

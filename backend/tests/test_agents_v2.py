@@ -38,7 +38,7 @@ def test_five_independent_calls_receive_validated_upstream_results(monkeypatch):
         recorded.append((agent.id, copy.deepcopy(data)))
         return original(self, agent, data, **kwargs)
     monkeypatch.setattr(runtime.AgentProvider, "complete", spy)
-    run = execute(case(), "multi-agent-v2", "mock", DocStub())
+    run = execute(case(), "multi-agent", "mock", DocStub())
     assert run["gate_status"] == "ready_for_review", run["errors"]
     assert run["output"] and validate_review(run, run["output"])["valid"]
     assert [x[0] for x in recorded] == [a.id for a in runtime.AGENTS]
@@ -58,7 +58,7 @@ def test_missing_case_fields_prevent_all_generation(monkeypatch):
     def forbidden(*args, **kwargs):
         pytest.fail("provider called despite preflight failure")
     monkeypatch.setattr(runtime.AgentProvider, "complete", forbidden)
-    run = execute(case(allergies={"status": "unknown", "items": []}), "multi-agent-v2", "mock", DocStub())
+    run = execute(case(allergies={"status": "unknown", "items": []}), "multi-agent", "mock", DocStub())
     assert run["output"] is None
     assert run["gate_status"] == "needs_confirmation"
     assert all(n["status"] == "skipped" for n in agents(run))
@@ -81,7 +81,7 @@ def test_invalid_agent_output_blocks_downstream_and_public_content(monkeypatch, 
             change(out)
         return out
     monkeypatch.setattr(runtime, "mock_output", altered)
-    run = execute(case(), "multi-agent-v2", "mock", DocStub())
+    run = execute(case(), "multi-agent", "mock", DocStub())
     assert run["output"] is None and run["gate_status"] in {"blocked", "needs_confirmation"}
     traces = agents(run)
     index = [x["agent_id"] for x in traces].index(role)
@@ -99,7 +99,7 @@ def test_demo_specialist_uncertainty_is_retained_in_result(monkeypatch):
             result["needs_confirmation"] = True
         return result
     monkeypatch.setattr(runtime, "mock_output", uncertain)
-    run = execute(case(), "multi-agent-v2", "mock", DocStub())
+    run = execute(case(), "multi-agent", "mock", DocStub())
     assert run['output'] and run['gate_status'] == 'ready_for_review'
     assert agents(run)[3]['status'] == 'needs_confirmation'
     assert any('clinical_agent' in x for x in run['output']['limitations'])
@@ -114,7 +114,7 @@ def test_demo_uncertainty_allows_result_with_explicit_limitations(monkeypatch, r
             result['needs_confirmation'] = True
         return result
     monkeypatch.setattr(runtime, 'mock_output', uncertain)
-    run = execute(case(), 'multi-agent-v2', 'mock', DocStub())
+    run = execute(case(), 'multi-agent', 'mock', DocStub())
     traces = agents(run)
     assert all(n['attempts'] for n in traces[:4])
     assert traces[-1]['status'] == 'completed'
@@ -131,7 +131,7 @@ def test_demo_normalizes_presentation_without_inventing_choices(monkeypatch):
             result['findings'][0] = {'statement': '不提供劑量建議'}
         return result
     monkeypatch.setattr(runtime, 'mock_output', changed)
-    run = execute(case(), 'multi-agent-v2', 'mock', DocStub())
+    run = execute(case(), 'multi-agent', 'mock', DocStub())
     assert run['output']
     assert 'TEXT_WITHHELD' in agents(run)[0]['demo_adjustments']
     assert agents(run)[0]['output']['findings'][0]['evidence_refs'] == []
@@ -168,7 +168,7 @@ def test_evidence_demo_keeps_valid_per_drug_support(monkeypatch, variation):
                 result['support'].append({'drug_code':'invented', 'evidence_refs':['fake'], 'explanation':'unsupported'})
         return result
     monkeypatch.setattr(runtime, 'mock_output', changed)
-    run = execute(case(), 'multi-agent-v2', 'mock', DocStub())
+    run = execute(case(), 'multi-agent', 'mock', DocStub())
     assert run['output'], run['errors']
     assert agents(run)[2]['status'] in {'completed', 'needs_confirmation'}
     assert agents(run)[2]['output']['supported_drugs'] == ['DEMO_DRUG_A']
@@ -183,7 +183,7 @@ def test_no_valid_evidence_support_still_runs_clinical_agent(monkeypatch):
             result['support'][0]['evidence_refs'] = ['invented']
         return result
     monkeypatch.setattr(runtime, 'mock_output', changed)
-    run = execute(case(), 'multi-agent-v2', 'mock', DocStub())
+    run = execute(case(), 'multi-agent', 'mock', DocStub())
     assert agents(run)[2]['status'] == 'needs_confirmation'
     assert agents(run)[2]['output']['support'] == []
     assert agents(run)[3]['status'] == 'completed'
@@ -194,7 +194,7 @@ def test_no_valid_evidence_support_still_runs_clinical_agent(monkeypatch):
 def test_case_agent_receives_source_ast_and_culture_without_identifiers():
     value = case()
     value['microbiology'].update(specimen='BLOOD', report_status='final', collected_at='PRIVATE_TIME')
-    run = execute(value, 'multi-agent-v2', 'mock', DocStub())
+    run = execute(value, 'multi-agent', 'mock', DocStub())
     data = agents(run)[0]['input']
     assert data['facts']['specimen'] == 'BLOOD'
     assert data['facts']['report_status'] == 'final'
@@ -210,7 +210,7 @@ def test_disagreement_narrows_to_empty_without_calling_synthesis(monkeypatch):
             result["excluded_drugs"] = data["allowed_drugs"]
         return result
     monkeypatch.setattr(runtime, "mock_output", exclude)
-    run = execute(case(), "multi-agent-v2", "mock", DocStub())
+    run = execute(case(), "multi-agent", "mock", DocStub())
     assert run["gate_status"] == "needs_confirmation" and run["output"] is None
     assert agents(run)[-1]["attempts"] == []
 
@@ -223,7 +223,7 @@ def test_retry_accounting_and_usage_aggregation(monkeypatch):
             raise ProviderError("PROVIDER_RATE_LIMIT", retryable=True)
         return {"output": runtime.mock_output(agent, data), "usage": {"prompt_tokens": 7, "completion_tokens": 3, "total_tokens": 10}}
     monkeypatch.setattr(runtime.AgentProvider, "complete", fake)
-    run = execute(case(), "multi-agent-v2", "mock", DocStub())
+    run = execute(case(), "multi-agent", "mock", DocStub())
     assert run["output"]
     assert run["agent_execution"]["calls"] == 6
     assert agents(run)[0]["retry_count"] == 1
@@ -234,7 +234,7 @@ def test_retry_accounting_and_usage_aggregation(monkeypatch):
 
 def test_budget_exhaustion_never_falls_back_to_legacy_candidate(monkeypatch):
     monkeypatch.setenv("LLM_V2_MAX_CALLS", "2")
-    run = execute(case(), "multi-agent-v2", "mock", DocStub())
+    run = execute(case(), "multi-agent", "mock", DocStub())
     assert run["agent_execution"]["calls"] == 2
     assert run["output"] is None and run["gate_status"] == "blocked"
     assert run["errors"][-1]["code"] == "AGENT_BUDGET_EXCEEDED"
@@ -242,14 +242,14 @@ def test_budget_exhaustion_never_falls_back_to_legacy_candidate(monkeypatch):
 
 def test_unconfigured_is_partial_and_makes_no_call(monkeypatch):
     monkeypatch.delenv("LLM_API_KEY", raising=False)
-    run = execute(case(), "multi-agent-v2", "unconfigured", DocStub())
+    run = execute(case(), "multi-agent", "unconfigured", DocStub())
     assert run["status"] == "partial" and run["output"] is None
     assert run["agent_execution"]["calls"] == 0
 
 
 def test_checkpoint_saves_call_start_and_completed_messages_before_next_agent():
     checkpoints = []
-    run = execute(case(), "multi-agent-v2", "mock", DocStub(), checkpoint=lambda x: checkpoints.append(copy.deepcopy(x)))
+    run = execute(case(), "multi-agent", "mock", DocStub(), checkpoint=lambda x: checkpoints.append(copy.deepcopy(x)))
     assert run["output"]
     assert all(x["output"] is None and x["status"] == "running" for x in checkpoints)
     assert agents(checkpoints[0])[0]["attempts"][0]["status"] == "running"
@@ -258,7 +258,7 @@ def test_checkpoint_saves_call_start_and_completed_messages_before_next_agent():
 
 
 def test_review_retains_v2_specialist_boundary():
-    run = execute(case(), "multi-agent-v2", "mock", DocStub())
+    run = execute(case(), "multi-agent", "mock", DocStub())
     run["v2_candidate_boundary"]["allowed_drugs"] = []
     with pytest.raises(ValueError):
         validate_review(run, run["output"])
@@ -275,7 +275,7 @@ def test_invalid_json_still_records_provider_usage(monkeypatch):
     monkeypatch.setattr(runtime.OpenAICompatibleProvider, "_request", lambda *a: ({
         "choices": [{"finish_reason": "length", "message": {"content": "{"}}],
         "usage": {"prompt_tokens": 4, "completion_tokens": 2, "total_tokens": 6}}, 0))
-    run = execute(case(), "multi-agent-v2", "live", DocStub())
+    run = execute(case(), "multi-agent", "live", DocStub())
     assert run["output"] is None and run["usage"]["total_tokens"] == 6
     assert agents(run)[0]["attempts"][0]["validation_status"] == "invalid"
 
@@ -288,7 +288,7 @@ def test_deadline_discards_a_late_success(monkeypatch):
         ticks[0] = 1000.0
         return {"output": runtime.mock_output(agent, data), "usage": None}
     monkeypatch.setattr(runtime.AgentProvider, "complete", late)
-    run = execute(case(), "multi-agent-v2", "mock", DocStub())
+    run = execute(case(), "multi-agent", "mock", DocStub())
     assert run["output"] is None and run["agent_execution"]["calls"] == 1
     assert run["errors"][-1]["code"] == "AGENT_BUDGET_EXCEEDED"
 
@@ -297,7 +297,7 @@ def test_nonretryable_failure_does_not_consume_second_call(monkeypatch):
     def fail(*a, **kw):
         raise ProviderError("PROVIDER_HTTP_ERROR", retryable=False)
     monkeypatch.setattr(runtime.AgentProvider, "complete", fail)
-    run = execute(case(), "multi-agent-v2", "mock", DocStub())
+    run = execute(case(), "multi-agent", "mock", DocStub())
     assert run["agent_execution"]["calls"] == 1
     assert agents(run)[0]["attempts"][0]["status"] == "failed"
 
@@ -306,7 +306,7 @@ def test_reported_mode_v2_preserves_source_avoid_and_population_gate(monkeypatch
     from tests.test_reported_cohort import case as source_case, Documents
     monkeypatch.delenv("PROTOTYPE_RULE_CONFIG", raising=False)
     monkeypatch.setenv("PROTOTYPE_CATALOG_PATH", "nonexistent-test-catalog.json")
-    run = execute(source_case(), "multi-agent-v2", "mock", Documents())
+    run = execute(source_case(), "multi-agent", "mock", Documents())
     assert run["output"], run["errors"]
     assert [x["drug_code"] for x in run["output"]["avoid"]] == ["ampicillin"]
     assert validate_review(run, run["output"])["valid"]
@@ -315,7 +315,7 @@ def test_reported_mode_v2_preserves_source_avoid_and_population_gate(monkeypatch
             result = super().search(*a, **kw)
             result["evidence"][0]["population"] = "pediatric"
             return result
-    withheld = execute(source_case(), "multi-agent-v2", "mock", Mismatch())
+    withheld = execute(source_case(), "multi-agent", "mock", Mismatch())
     assert withheld["output"] is None and withheld["agent_execution"]["calls"] == 0
 
 
@@ -340,7 +340,7 @@ def test_live_adapter_uses_separate_prompts_and_projected_payloads(monkeypatch):
             result = super().search(*args, **kwargs)
             result['evidence'][0]['is_synthetic'] = True
             return result
-    run = execute(data, "multi-agent-v2", "live", SyntheticDocuments())
+    run = execute(data, "multi-agent", "live", SyntheticDocuments())
     assert run["output"], run["errors"]
     assert len(payloads) == 5
     assert len({p["messages"][0]["content"] for p in payloads}) == 5
@@ -357,7 +357,7 @@ def test_source_external_permission_checked_before_every_agent(monkeypatch):
     def unexpected(*args, **kwargs):
         pytest.fail("source case sent without permission")
     monkeypatch.setattr(runtime.AgentProvider, "complete", unexpected)
-    run = execute(case(is_synthetic=False, data_origin="hybrid", external_model_allowed=False), "multi-agent-v2", "live", DocStub())
+    run = execute(case(is_synthetic=False, data_origin="hybrid", external_model_allowed=False), "multi-agent", "live", DocStub())
     assert run["output"] is None and run["agent_execution"]["calls"] == 0
     assert run["errors"][-1]["code"] == "NON_SYNTHETIC_INPUT"
 
@@ -372,19 +372,27 @@ def test_api_persists_v2_and_all_exports_quarantine_blocked_content(tmp_path, mo
     try:
         with TestClient(main.app) as client:
             assert client.post("/api/cases/import", json={"payload": data}).status_code == 200
-            body = {"case_id": data["case_id"], "mode": "multi-agent-v2", "provider_kind": "mock", "request_id": "once"}
+            body = {"case_id": data["case_id"], "mode": "multi-agent", "provider_kind": "mock", "request_id": "once"}
             run = client.post("/api/runs", json=body).json()
             assert run["output"], run.get("errors")
+            assert run["mode"] == "multi-agent" and run["agent_execution"]["calls"] == 5
+            retired = {**body, "mode": "multi-agent-v2", "request_id": "retired"}
+            assert client.post("/api/runs", json=retired).status_code == 422
             assert client.post("/api/runs", json=body).json()["run_id"] == run["run_id"]
             saved = db.get_run(run["run_id"])
             assert agents(saved)[-1]["input"]["clinical_assessment"]
             saved.update(output=None, gate_status="blocked", status="blocked")
             db.save_run(run["run_id"], saved)
-            for suffix in ("", "/trace", "/export"):
-                public = client.get("/api/runs/" + run["run_id"] + suffix).json()
-                assert all(n["input"] is None and n["output"] is None for n in agents(public))
-            benchmark = client.post("/api/benchmarks", json={"case_ids": [data["case_id"]], "modes": ["multi-agent", "multi-agent-v2"], "provider_kind": "mock"})
+            for stored_mode in ("multi-agent", "multi-agent-v2"):
+                saved['mode'] = stored_mode
+                db.save_run(run["run_id"], saved)
+                for suffix in ("", "/trace", "/export"):
+                    public = client.get("/api/runs/" + run["run_id"] + suffix).json()
+                    if suffix != '/trace':
+                        assert public['mode'] == stored_mode
+                    assert all(n["input"] is None and n["output"] is None for n in agents(public))
+            benchmark = client.post("/api/benchmarks", json={"case_ids": [data["case_id"]], "modes": ["rule-only", "rag-only", "single-agent", "multi-agent"], "provider_kind": "mock"})
             assert benchmark.status_code == 200
-            assert "multi-agent-v2" in benchmark.json()["summary"]["by_mode"]
+            assert "multi-agent" in benchmark.json()["summary"]["by_mode"]
     finally:
         db.close()

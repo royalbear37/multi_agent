@@ -93,8 +93,10 @@ export const modeNames: Record<string, string> = {
   "rule-only": "規則判斷",
   "rag-only": "文件檢索＋模型",
   "single-agent": "單次模型整合",
-  "multi-agent": "多節點工作流",
-  "multi-agent-v2": "獨立代理協作 v2（研究）",
+  "multi-agent": "獨立代理協作",
+  "multi-agent-v2": "獨立代理協作（歷史 v2）",
+  "multi-agent-legacy": "舊版多節點工作流（歷史）",
+  "multi-agent-mixed": "新舊流程混合（請依版本分開比較）",
 };
 export const statusNames: Record<string, string> = {
   completed: "步驟已執行",
@@ -176,6 +178,7 @@ const errorNames: Record<string, string> = {
   AGENT_SCHEMA_INVALID: "Agent 輸出格式、藥品或引用檢查未通過",
   AGENT_NEEDS_CONFIRMATION: "Agent 發現尚待確認的事項，請檢查資料後重新分析",
   AGENT_NO_SUPPORTED_CANDIDATES: "各 Agent 的結果尚未形成有依據的共同候選",
+  NO_VALID_CANDIDATES: "模型未提供通過核對的候選，請確認藥品、引用及相互矛盾的項目後重新分析",
   AGENT_BUDGET_EXCEEDED: "已達本次呼叫次數或時間上限",
   AGENT_INPUT_TOO_LARGE: "Agent 輸入超過大小上限，未發送模型",
   AGENT_EXECUTION_FAILED: "Agent 執行失敗，後續步驟已停止",
@@ -715,7 +718,7 @@ export function BenchmarkOverview({
       </div>
       <h3>按模式比較</h3>
       {!!Object.keys(s.by_agent || {}).length && <details>
-        <summary>v2 各 Agent 用量與執行統計</summary>
+        <summary>各 Agent 用量與執行統計</summary>
         <p>MOCK 沒有真實 Token 用量；失敗呼叫可能沒有回傳用量，已知合計不代表完整帳單。</p>
         <div className="tablewrap"><table>
           <thead><tr><th>Agent</th><th>呼叫次數</th><th>失敗／略過</th><th>已知 Token</th><th>耗時</th></tr></thead>
@@ -740,7 +743,7 @@ export function BenchmarkOverview({
             {Object.entries(byMode).map(([mode, value]: [string, any]) => (
               <tr key={mode}>
                 <th>
-                  {modeNames[mode] || mode}
+                  {modeNames[b.display_modes?.[mode] || mode] || mode}
                   <small className="block">{mode}</small>
                 </th>
                 <td>{value.total_cases}</td>
@@ -808,7 +811,7 @@ export function BenchmarkOverview({
               {results.map((r: any, i: number) => (
                 <tr key={r.run_id || i}>
                   <td>{r.case_id}</td>
-                  <td>{modeNames[r.mode] || r.mode}</td>
+                  <td>{modeNames[r.display_mode || r.mode] || r.mode}</td>
                   <td>{statusNames[r.status] || r.status}</td>
                   <td>
                     {statusNames[r.gate_status] || r.gate_status || "未記錄"}

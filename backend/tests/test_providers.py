@@ -121,7 +121,7 @@ def test_timeout_and_rate_limit_retry_with_bounded_count():
     assert len(rate_calls) == 2
 
 
-def test_multi_agent_nodes_are_bounded_and_secret_fields_dropped():
+def test_baseline_provider_ignores_retired_node_summary_context():
     captured = {}
     body = {"candidates": [], "avoid": [], "limitations": []}
 
@@ -130,14 +130,13 @@ def test_multi_agent_nodes_are_bounded_and_secret_fields_dropped():
         return {"choices": [{"message": {"content": json_module.dumps(body)}}]}
 
     context = _context()
-    context["mode"] = "multi-agent"
+    context["mode"] = "single-agent"
     context["node_summaries"] = [{"node_id": "case_completeness", "status": "completed", "output": {"summary": {"organism": "DEMO_ORGANISM_A", "trace_secret": "do-not-send"}, "missing_fields": [], "ignored": "drop"}}]
     OpenAICompatibleProvider("http://x", "m", "k", http_post=fake).generate(context)
     sent = json_module.loads(captured["messages"][1]["content"])
-    assert sent["node_summaries"][0]["output"]["summary"]["organism"] == "DEMO_ORGANISM_A"
     assert "trace_secret" not in repr(sent)
     assert "ignored" not in repr(sent)
-    assert "node_summaries" in sent
+    assert "node_summaries" not in sent
 
 
 def test_avoid_uses_same_strict_reference_schema():

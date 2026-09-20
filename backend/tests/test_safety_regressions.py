@@ -34,18 +34,17 @@ def test_baseline_input_does_not_receive_rule_derived_candidate_set(monkeypatch,
             calls.append(copy.deepcopy(context))
             return {'output':{'candidates':[{'drug_code':'DEMO_DRUG_A','reason':'synthetic evidence summary','rule_refs':context['rule_refs'],'evidence_refs':['demo_chunk']}],'avoid':[],'limitations':[]},'is_mock':kind=='mock','usage':None,'model':'fake'}
     monkeypatch.setattr(service,'get_provider',lambda _:Fake())
-    for mode in ['rag-only','single-agent','multi-agent']:
+    for mode in ['rag-only','single-agent']:
         run=execute(case(),mode,kind,DocStub())
         assert run['output'] is not None,run
         validate_review(run,run['output'])
     assert calls[0]['allowed_drugs']==RuleEngine().allowed_drugs()
     assert calls[0]['rule_refs']==[] and 'ast_results' not in calls[0]['case_summary']
     assert calls[1]['case_summary']['ast_results']==case()['ast_results']
-    assert calls[2]['allowed_drugs']==['DEMO_DRUG_A']
-    assert calls[2]['node_summaries']
 
 @pytest.mark.parametrize('bad_field,bad_value',[('drug_code','DEMO_DRUG_C'),('evidence_refs',['fabricated']),('rule_refs',['invented'])])
-def test_provider_cannot_escape_shared_final_gate(monkeypatch,bad_field,bad_value):
+@pytest.mark.parametrize('mode', ['rag-only', 'single-agent', 'multi-agent'])
+def test_provider_cannot_escape_shared_final_gate(monkeypatch,bad_field,bad_value,mode):
     from app.providers import service
     class Fake:
         def status(self): return {'configured':True}
@@ -54,9 +53,21 @@ def test_provider_cannot_escape_shared_final_gate(monkeypatch,bad_field,bad_valu
             item[bad_field]=bad_value
             return {'output':{'candidates':[item],'avoid':[],'limitations':[]}}
     monkeypatch.setattr(service,'get_provider',lambda _:Fake())
-    run=execute(case(),'multi-agent','live',DocStub())
-    assert run['gate_status']=='blocked' and run['output'] is None
-    assert run['raw_baseline']['payload']
+    from app.agents import runtime_v2
+    original = runtime_v2.mock_output
+    def changed(agent, data):
+        result = original(agent, data)
+        if agent.id == 'synthesis_agent':
+            result['candidates'][0][bad_field] = bad_value
+        return result
+    monkeypatch.setattr(runtime_v2, 'mock_output', changed)
+    run=execute(case(),mode,'mock',DocStub())
+    assert run['gate_status'] != 'ready_for_review' and run['output'] is None
+    assert run['errors']
+    if mode != 'multi-agent':
+        assert run['raw_baseline']['payload']
+        node = next(n for n in run['nodes'] if n['node_id'] == 'candidate_presentation')
+        assert 'INVALID_ITEM_OMITTED' in node['demo_adjustments']
 
 def test_later_rule_file_changes_cannot_change_review(monkeypatch):
     from app.rules import engine
@@ -73,7 +84,7 @@ def test_document_conflict_cannot_be_hidden_by_limit(tmp_path):
 
 
 @pytest.mark.parametrize('mode', ['rag-only', 'single-agent', 'multi-agent'])
-def test_overlapping_candidate_and_avoid_is_rejected_at_final_gate(monkeypatch, mode):
+def test_overlapping_candidate_is_removed_and_empty_result_withheld(monkeypatch, mode):
     from app.providers import service
     class Contradictory:
         def status(self): return {'configured': True}
@@ -82,10 +93,21 @@ def test_overlapping_candidate_and_avoid_is_rejected_at_final_gate(monkeypatch, 
                     'rule_refs': context['rule_refs'], 'evidence_refs': ['demo_chunk']}
             return {'output': {'candidates': [item], 'avoid': [copy.deepcopy(item)], 'limitations': []}}
     monkeypatch.setattr(service, 'get_provider', lambda _: Contradictory())
+    from app.agents import runtime_v2
+    original = runtime_v2.mock_output
+    def changed(agent, data):
+        result = original(agent, data)
+        if agent.id == 'synthesis_agent':
+            result['avoid'] = [copy.deepcopy(result['candidates'][0])]
+        return result
+    monkeypatch.setattr(runtime_v2, 'mock_output', changed)
     run = execute(case(), mode, 'mock', DocStub())
     assert run['output'] is None
-    assert run['gate_status'] == 'blocked'
-    assert 'candidate_avoid_overlap' in run['errors'][0]['validation_errors']
+    assert run['gate_status'] != 'ready_for_review'
+    assert run['errors']
+    if mode != 'multi-agent':
+        node = next(n for n in run['nodes'] if n['node_id'] == 'candidate_presentation')
+        assert 'OVERLAPPING_CANDIDATE_OMITTED' in node['demo_adjustments']
 
 
 def test_review_cannot_add_candidate_to_avoid_without_removing_candidate():

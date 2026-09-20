@@ -77,6 +77,18 @@ def test_four_modes_unconfigured_and_mock_are_separate(client):
         assert mock['gate_status'] == 'ready_for_review', mock
         assert mock['output']['candidates'], mock
 
+
+def test_new_multiagent_early_failure_is_never_labelled_legacy(client, monkeypatch):
+    c, _, _ = client
+    monkeypatch.setattr(main, '_engine', lambda: None)
+    run = run_case(c, mode='multi-agent')
+    assert run['agent_execution']['calls'] == 0
+    assert 'display_mode' not in run
+    benchmark = c.post('/api/benchmarks', json={'case_ids':['case-01-complete'],
+        'modes':['multi-agent'], 'provider_kind':'mock'}).json()
+    assert benchmark['display_modes']['multi-agent'] == 'multi-agent'
+    assert benchmark['results'][0]['agent_execution']['calls'] == 0
+
 def test_document_multipart_roundtrip_and_missing_source(client):
     c, _, _ = client
     r=c.post('/api/documents/import',data={'title':'正式文件保存測試','version':'2026.1','is_synthetic':'false'},files={'file':('reference.md',b'# REFERENCE\nDOCUMENT_TEST_TOKEN','text/markdown')})

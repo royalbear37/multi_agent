@@ -8,6 +8,7 @@ export default defineConfig({
   use: {
     baseURL: "http://127.0.0.1:5174",
     headless: true,
+    channel: process.env.PLAYWRIGHT_CHANNEL,
     screenshot: "only-on-failure",
   },
   reporter: "list",

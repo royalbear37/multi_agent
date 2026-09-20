@@ -12,7 +12,7 @@ class RuleOnlyRunner:
     def run(self, case: dict[str, Any], provider_kind: str, document_service: Any, run_id: str) -> dict[str, Any]:
         from app.workflow.engine import _execute_workflow
         # No model is used, while an available local retriever can still be
-        # traced; retrieved evidence never affects deterministic rule output.
+        # traced; missing evidence can still withhold publication at the gate.
         return _execute_workflow(case, self.mode, "unconfigured", document_service, run_id)
 
 
@@ -36,11 +36,11 @@ class SingleAgentRunner:
 
 class MultiAgentRunner:
     mode = "multi-agent"
-    information_scope = "eight_node_modular_workflow"
+    information_scope = "five_independent_agents"
 
     def run(self, case: dict[str, Any], provider_kind: str, document_service: Any, run_id: str) -> dict[str, Any]:
-        from app.workflow.engine import _execute_workflow
-        return _execute_workflow(case, self.mode, provider_kind, document_service, run_id)
+        from app.workflow.v2 import execute_v2
+        return execute_v2(case, provider_kind, document_service, run_id)
 
 
 RUNNERS = {x.mode: x for x in (RuleOnlyRunner(), RagOnlyRunner(), SingleAgentRunner(), MultiAgentRunner())}

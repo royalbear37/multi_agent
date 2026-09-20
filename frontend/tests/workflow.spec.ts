@@ -1,14 +1,14 @@
 import { expect, test } from "@playwright/test";
 
-test("v2 independent agents are persisted and visible in the workflow", async ({ page }) => {
+test("multi-agent independent agents are persisted and visible in the workflow", async ({ page }) => {
   await page.goto("/");
   await page.getByLabel("目前病例").selectOption("case-01-complete");
-  await page.getByLabel("比較模式").selectOption("multi-agent-v2");
+  await page.getByLabel("比較模式").selectOption("multi-agent");
   await page.getByLabel("模型執行方式").selectOption("mock");
   const response = page.waitForResponse(r => r.url().endsWith("/api/runs") && r.request().method() === "POST");
   await page.getByRole("button", { name: "執行分析", exact: true }).click();
   const run = await (await response).json();
-  expect(run.mode).toBe("multi-agent-v2");
+  expect(run.mode).toBe("multi-agent");
   expect(run.output).not.toBeNull();
   const agents = run.nodes.filter((n: any) => n.agent_id);
   expect(agents).toHaveLength(5);
@@ -17,7 +17,7 @@ test("v2 independent agents are persisted and visible in the workflow", async ({
   const synthesis = page.locator("details.node").filter({ hasText: "結果整合 Agent" });
   await synthesis.locator("summary").first().click();
   await expect(synthesis.getByText(/模型：synthetic-agent-mock-v2/)).toBeVisible();
-  await synthesis.getByText("Agent 輸入", { exact: true }).click();
+  await synthesis.getByText("技術資料：Agent 輸入（JSON）", { exact: true }).click();
   await expect(synthesis.getByText(/clinical_assessment/).first()).toBeVisible();
   const trace = await page.request.get(`/api/runs/${run.run_id}/trace`);
   expect((await trace.json()).nodes.filter((n: any) => n.agent_id)).toHaveLength(5);

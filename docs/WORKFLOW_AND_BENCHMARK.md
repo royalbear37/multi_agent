@@ -19,9 +19,13 @@ pending / running / completed / skipped / blocked / not_configured / failed 是�
 | rule-only | 確定性展示規則＋模板化候選；證據仍保留定位 | 可執行 |
 | rag-only | 病例摘要與檢索證據；原始基線只見全域虛構藥品詞彙，不見規則候選集合 | not_configured／partial |
 | single-agent | 病例摘要、來源 AST／證據的一次主要生成；不見規則候選集合 | not_configured／partial |
-| multi-agent | 模組化節點整理、確定性規則、安全與證據整合後生成 | not_configured／partial |
+| multi-agent | 前置規則與檢索後，五 Agent 依序核對病例、AST、證據、臨床限制與整合；通常五次模型呼叫 | 前置通過後 not_configured／partial |
 
 四種模式共用最終輸出檢核。raw baseline 與可發布內容分開，UI 不把隔離內容當成正常建議。模型呼叫次數不是工作流是否正確的替代指標。正式報告比較前應核對 run 記錄的資訊範圍、模型、版本與配置。
+
+2026-09-20：舊的一次生成 multi-agent 已移除，multi-agent-v2 改名為 multi-agent。歷史 run 不改寫；舊的一次生成紀錄顯示「舊版多節點工作流（歷史）」。跨日期研究比較須依 workflow 版本區分，不可把兩代 multi-agent 視為相同實驗條件。
+
+Demo 逐項移除無法核對的藥品、引用及候選／排除矛盾，保留其餘有效候選；不補造引用。模型沒有任何有效候選時不發布候選結果，標為需確認。人工審閱仍執行嚴格檢核。
 
 ## 指標解讀
 

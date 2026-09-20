@@ -1266,8 +1266,7 @@
                 "rule-only",
                 "rag-only",
                 "single-agent",
-                "multi-agent",
-                "multi-agent-v2"
+                "multi-agent"
               ]
             },
             "type": "array",
@@ -2105,8 +2104,7 @@
               "rule-only",
               "rag-only",
               "single-agent",
-              "multi-agent",
-              "multi-agent-v2"
+              "multi-agent"
             ],
             "title": "Mode"
           },

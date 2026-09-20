@@ -51,7 +51,7 @@ def test_hard_demo_restriction_blocks_candidates():
 
 
 def test_unconfigured_provider_is_partial_and_all_modes_are_distinct():
-    runs = [execute(case(), mode, "unconfigured") for mode in ("rule-only", "rag-only", "single-agent", "multi-agent")]
+    runs = [execute(case(), mode, "unconfigured", DocStub()) for mode in ("rule-only", "rag-only", "single-agent", "multi-agent")]
     assert runs[0]["status"] == "awaiting_review"
     assert all(run["status"] == "partial" for run in runs[1:])
     assert {run["mode"] for run in runs} == {"rule-only", "rag-only", "single-agent", "multi-agent"}
@@ -96,4 +96,3 @@ def test_benchmark_reports_real_denominators_and_na_zero_denominator():
     assert summary["expected_safety_block_recall"]["value"] is None
     assert summary["expected_safety_block_recall"]["denominator"] == 0
     assert summary["missing_recall"]["denominator"] == 1
-

@@ -148,7 +148,7 @@ test("embedding index failure remains visible to the user", async () => {
 
 test('review identifies the run and requires an explicit decision before submission', async () => {
   const record = {case_id:'case-ui',revision:1,case:{case_id:'case-ui',is_synthetic:true,policy_refs:[]}};
-  const run = {run_id:'run-ui',mode:'multi-agent-v2',created_at:'2026-09-20T01:00:00Z',gate_status:'ready_for_review',status:'awaiting_review',case_snapshot:{encounter:{severity:'stable'},provenance:{simulated_fields:['encounter']}},output:{candidates:[{drug_code:'demo-drug',reason:'模型待核對說明',evidence_refs:[]}],limitations:[]},nodes:[]};
+  const run = {run_id:'run-ui',mode:'multi-agent',created_at:'2026-09-20T01:00:00Z',gate_status:'ready_for_review',status:'awaiting_review',case_snapshot:{encounter:{severity:'stable'},provenance:{simulated_fields:['encounter']}},output:{candidates:[{drug_code:'demo-drug',reason:'模型待核對說明',evidence_refs:[]}],limitations:[]},nodes:[]};
   vi.stubGlobal('fetch',vi.fn(async (url:string) => ({ok:true,json:async () =>
     url === '/api/cases' ? [record] : url === '/api/cases/case-ui' ? record :
     url === '/api/runs?case_id=case-ui' ? [run] : url === '/api/runs/run-ui' ? run :

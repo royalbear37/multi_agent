@@ -195,7 +195,7 @@ def execute_v2(case, provider_kind, document_service, run_id, checkpoint=None):
     # Reuse the tested deterministic pipeline with generation disabled.
     run = _execute_workflow(copy.deepcopy(case), "rule-only", "unconfigured", document_service, run_id)
     preflight_output = run.get("output")
-    run.update(mode="multi-agent-v2", is_mock=provider_kind == "mock", output=None,
+    run.update(mode="multi-agent", is_mock=provider_kind == "mock", output=None,
                model=None, usage=None, cost=None,
                raw_baseline={"withheld": True, "available": False, "payload": None})
     run["versions"]["workflow"] = "multi-agent-v2.4-demo"
@@ -366,7 +366,7 @@ def execute_v2(case, provider_kind, document_service, run_id, checkpoint=None):
             run["errors"].append({"node_id": "candidate_presentation", "code": "V2_FINAL_VALIDATION_FAILED"})
     run["nodes"].extend(traces)
     run["nodes"].extend([
-        {"node_id": "candidate_presentation", "status": "completed" if candidate_valid else "blocked",
+        {"node_id": "candidate_presentation", "status": "completed" if candidate_valid else "blocked" if traces[-1]["attempts"] else "skipped",
          "output": {"attempted": bool(traces[-1]["attempts"]), "schema_valid": candidate_valid,
                     "published": candidate_valid, "withheld": not candidate_valid}, "version": "v2-final-gate-1"},
         {"node_id": "human_review", "status": "pending", "output": {"action_required": True}},

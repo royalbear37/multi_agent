@@ -76,7 +76,12 @@ def normalize_demo_output(value: Any, *, allowed_drugs: set[str], allowed_avoid:
             if set(item) - _CANDIDATE_KEYS:
                 notes.append('EXTRA_FIELDS_IGNORED')
             result[key].append({'drug_code': code, 'reason': reason, 'rule_refs': refs, 'evidence_refs': erefs})
+    # A contradictory candidate must not survive merely because the model's
+    # avoid entry was itself invalid and omitted above.
     avoid_codes = {x['drug_code'] for x in result['avoid']}
+    avoid_codes.update(x['drug_code'] for x in (value.get('avoid') or [])
+                       if isinstance(x, dict) and isinstance(x.get('drug_code'), str)
+                       and x['drug_code'] in allowed_drugs)
     if any(x['drug_code'] in avoid_codes for x in result['candidates']):
         result['candidates'] = [x for x in result['candidates'] if x['drug_code'] not in avoid_codes]
         notes.append('OVERLAPPING_CANDIDATE_OMITTED')

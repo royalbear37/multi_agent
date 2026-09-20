@@ -41,7 +41,7 @@ class DocumentPopulationBody(BaseModel):
 class RunBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
     case_id: str
-    mode: Literal["rule-only", "rag-only", "single-agent", "multi-agent", "multi-agent-v2"]
+    mode: Literal["rule-only", "rag-only", "single-agent", "multi-agent"]
     provider_kind: Literal["unconfigured", "mock", "live"] = "unconfigured"
     request_id: str | None = Field(default=None, max_length=200)
     previous_run_id: str | None = None
@@ -64,7 +64,7 @@ class ReviewBody(BaseModel):
 class BenchmarkBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
     case_ids: list[str] = Field(default_factory=list, max_length=100)
-    modes: list[Literal["rule-only", "rag-only", "single-agent", "multi-agent", "multi-agent-v2"]] = Field(default_factory=lambda: ["rule-only"])
+    modes: list[Literal["rule-only", "rag-only", "single-agent", "multi-agent"]] = Field(default_factory=lambda: ["rule-only"])
     provider_kind: Literal["unconfigured", "mock", "live"] = "unconfigured"
     request_id: str | None = None
 class CaseRecord(BaseModel):
@@ -100,7 +100,11 @@ def _provider_status(kind: str = "unconfigured"):
 def _public_run(run: dict[str, Any]) -> dict[str, Any]:
     """Remove quarantined baseline model text from normal API/UI responses."""
     public=copy.deepcopy(run)
-    if run.get("mode") == "multi-agent-v2":
+    # Preserve stored mode and reproducibility; label the retired workflow only
+    # for display, so old one-call runs cannot be mistaken for five agents.
+    if run.get("mode") == "multi-agent" and run.get("agent_execution") is None:
+        public["display_mode"] = "multi-agent-legacy"
+    if run.get("agent_execution") is not None or run.get("mode") == "multi-agent-v2":
         from app.workflow.v2 import public_agent_nodes
         public["nodes"] = public_agent_nodes(public.get("nodes", []), publish=bool(public.get("output")) and public.get("gate_status") == "ready_for_review")
     baseline=public.get("raw_baseline")
@@ -112,6 +116,10 @@ def _public_run(run: dict[str, Any]) -> dict[str, Any]:
 def _public_benchmark(obj: dict[str, Any]) -> dict[str, Any]:
     public=copy.deepcopy(obj)
     if isinstance(public.get("results"),list): public["results"]=[_public_run(x) if isinstance(x,dict) else x for x in public["results"]]
+    multi = [x for x in public.get("results", []) if isinstance(x, dict) and x.get("mode") == "multi-agent"]
+    if multi:
+        labels = {x.get("display_mode", "multi-agent") for x in multi}
+        public["display_modes"] = {"multi-agent": next(iter(labels)) if len(labels) == 1 else "multi-agent-mixed"}
     return public
 
 @app.on_event("startup")
@@ -208,6 +216,8 @@ def start_run(body: RunBody):
     if not item: raise HTTPException(404,"CASE_NOT_FOUND")
     rid=str(uuid4())
     initial={"run_id":rid,"case_id":body.case_id,"mode":body.mode,"provider_kind":body.provider_kind,"status":"running","created_at":datetime.now(timezone.utc).isoformat(),"demo_only":True}
+    if body.mode == "multi-agent":
+        initial["agent_execution"] = {"calls": 0}
     existing=repo.create_run(rid,body.case_id,body.mode,body.provider_kind,body.request_id,body.previous_run_id,initial)
     if existing.get("run_id") != rid: return _public_run(existing)
     engine=_engine(); docs=_documents()
@@ -375,6 +385,8 @@ def benchmark(body: BenchmarkBody):
                 try: result=engine.execute(item["case"],mode,body.provider_kind,FrozenDocuments(frozen_evidence[cid]),rid,rules_snapshot=pinned_rules)
                 except Exception: result={"run_id":rid,"case_id":cid,"mode":mode,"status":"failed","errors":[{"code":"BENCHMARK_FAILED","detail":"benchmark workflow failed"}]}
             else: result={"run_id":rid,"case_id":cid,"mode":mode,"status":"not_configured"}
+            if mode == "multi-agent":
+                result.setdefault("agent_execution", {"calls": 0})
             result={**result,"case_revision":item["revision"],"case_snapshot":item["case"],"provider_kind":body.provider_kind,"mode":mode,"demo_only":True,"disclaimer":DISCLAIMER,"is_mock":bool(result.get("is_mock", body.provider_kind=="mock"))}
             repo.create_run(rid,cid,mode,body.provider_kind,None,None,result); repo.save_run(rid,result); results.append(result)
     try:

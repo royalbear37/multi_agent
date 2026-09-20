@@ -24,7 +24,7 @@ test('blank pages and normal splitting stay in collapsed parsing details', () =>
   expect(screen.getByText(/長文字已正常切段/)).toBeVisible();
 });
 
-test.each(['rule-only', 'rag-only', 'single-agent', 'multi-agent', 'multi-agent-v2'])('failed %s displays a source demo table', (mode) => {
+test.each(['rule-only', 'rag-only', 'single-agent', 'multi-agent'])('failed %s displays a source demo table', (mode) => {
   render(<DemoSourceResult run={{ mode, output: null, nodes: [{node_id:'ast', output: {
     source_report: [{drug_code:'test_a'}, {drug_code:'test_b'}],
     system_evaluations: [{drug_code:'test_a', eligible:true}, {drug_code:'test_b', eligible:false}],

@@ -514,7 +514,7 @@ export interface components {
             /** Case Ids */
             case_ids?: string[];
             /** Modes */
-            modes?: ("rule-only" | "rag-only" | "single-agent" | "multi-agent" | "multi-agent-v2")[];
+            modes?: ("rule-only" | "rag-only" | "single-agent" | "multi-agent")[];
             /**
              * Provider Kind
              * @default unconfigured
@@ -780,7 +780,7 @@ export interface components {
              * Mode
              * @enum {string}
              */
-            mode: "rule-only" | "rag-only" | "single-agent" | "multi-agent" | "multi-agent-v2";
+            mode: "rule-only" | "rag-only" | "single-agent" | "multi-agent";
             /**
              * Provider Kind
              * @default unconfigured
