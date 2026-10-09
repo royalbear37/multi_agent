@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { api, pretty } from "./api";
 import type { components } from "./api.generated";
 import { ReviewEditor, reviewOutput } from "./ReviewEditor";
+import { PhysicianReview, physicianDecisionNames } from './PhysicianReview';
 import { CaseContext, CandidateEvidence, evidenceLocation } from './ClinicalContext';
+import {AllergyEditor, allergyStatuses} from './AllergyContext';
 import {
   BenchmarkOverview,
   DrugOverview,
@@ -11,6 +13,7 @@ import {
   SettingsOverview,
   WorkflowStep,
   RunIssues,
+  RunProvenance,
   TechnicalDetails,
   executionLabel,
   localTime,
@@ -59,6 +62,8 @@ function Empty({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const [agentTarget,setAgentTarget]=useState<string|null>(null);
+  function openAgent(id:string) { setSection(2); setAgentTarget(id); }
   const [section, setSection] = useState(0),
     [cases, setCases] = useState<CaseRecord[]>([]),
     [selected, setSelected] = useState<CaseRecord | null>(null);
@@ -66,6 +71,12 @@ export default function App() {
     [run, setRun] = useState<any>(null),
     [runs, setRuns] = useState<any[]>([]),
     [reviews, setReviews] = useState<any[]>([]);
+  useEffect(()=>{
+    if(section!==2 || !agentTarget) return;
+    const target=document.getElementById(`agent-step-${agentTarget}`) as HTMLDetailsElement|null;
+    if(target) { target.open=true; target.scrollIntoView?.({block:'center'}); target.querySelector('summary')?.focus(); }
+    setAgentTarget(null);
+  },[section,agentTarget]);
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
@@ -89,11 +100,17 @@ export default function App() {
     [docTitle, setDocTitle] = useState(""),
     [docVersion, setDocVersion] = useState("1"),
     [docPopulation, setDocPopulation] = useState("unspecified"),
+    [docKind, setDocKind] = useState('reference'),
+    [studyDesign, setStudyDesign] = useState('not_recorded'),
+    [docSource, setDocSource] = useState(''),
+    [docRegion, setDocRegion] = useState(''),
     [synthetic, setSynthetic] = useState(false);
   const [benchmark, setBenchmark] = useState<any>(null),
     [benchmarks, setBenchmarks] = useState<any[]>([]),
     [rules, setRules] = useState<any>(null);
   const [benchmarkProvider, setBenchmarkProvider] = useState("unconfigured");
+  const [benchmarkCaseIds, setBenchmarkCaseIds] = useState<string[]>([]);
+  const [benchmarkModes, setBenchmarkModes] = useState<string[]>(modes);
   async function work(fn: () => Promise<void>) {
     setBusy(true);
     setError("");
@@ -301,6 +318,20 @@ export default function App() {
                       {c.is_synthetic ? "全部合成" : "含去識別來源資料"}
                     </p>
                     <CaseContext value={c} />
+                    <button type="button" disabled={busy} onClick={()=>void work(async()=>{
+                      const status=c.medications?.length?'reviewed_list':'reviewed_none';
+                      await api('/cases/'+c.case_id+'/revisions',{payload:{...c,medication_history_status:status,
+                        provenance:{...c.provenance,notes:[...(c.provenance?.notes || []),`使用者於 ${new Date().toISOString()} 確認目前用藥紀錄：${status}`]}}});
+                      await chooseCase(c.case_id);
+                      setNotice('用藥清單核對狀態已保存為新版本，請重新分析。');
+                    })}>{c.medications?.length?'確認目前列出的用藥清單完整':'確認目前無用藥'}</button>
+                    <AllergyEditor key={`${c.case_id}:${selected?.revision}:allergies`} value={c.allergies} busy={busy} onSave={async allergies=>{
+                      await work(async()=>{
+                        await api('/cases/' + c.case_id + '/revisions', {payload:{...c,allergies}});
+                        await chooseCase(c.case_id);
+                        setNotice('過敏資料已保存為新版本；請重新分析，舊分析與審閱紀錄維持原樣。');
+                      });
+                    }}/>
                     <p>
                       證據範圍：
                       {c.evidence_scope === "reference"
@@ -361,7 +392,7 @@ export default function App() {
                       </div>
                       <div>
                         <small>過敏狀態</small>
-                        <strong>{c.allergies?.status || "unknown"}</strong>
+                        <strong>{allergyStatuses[c.allergies?.status || 'unknown']}</strong>
                       </div>
                       <div>
                         <small>菌種</small>
@@ -451,7 +482,7 @@ export default function App() {
               </section>
               <section className="panel">
                 <h2>執行分析</h2>
-                <p>規則限制通過後，結果仍需人工審閱。</p>
+                <p>分析完成後，結果仍需人工審閱；multi-agent 由各 Agent 評估與獨立引用複核。</p>
                 <label>
                   比較模式
                   <select
@@ -618,21 +649,23 @@ export default function App() {
                   匯出 JSON
                 </a>
               </div>
+              <RunProvenance run={run}/>
               <section className="panel"><CaseContext value={run.case_snapshot} snapshot /></section>
+              {run.decision_basis==='agent' && <DrugOverview run={run} />}
               <div className="grid two">
                 <section className="panel">
-                  <DrugOverview run={run} />
+                  {run.decision_basis!=='agent' && <DrugOverview run={run} />}
                   <DemoSourceResult run={run} />
-                  <h2>可供審閱的藥敏選項</h2>
+                  <h2>{run.decision_basis==='agent' ? '系統完成核對的候選' : '可供審閱的藥敏選項'}</h2>
                   {run.output?.candidates?.length ? (
                     run.output.candidates.map((x: any) => (
                       <article className="candidate" key={x.drug_code}>
                         <h3>
-                          {x.drug_code} <Status value="demo_only" />
+                          {x.drug_code} {run.decision_basis!=='agent' && <Status value="demo_only" />}
                         </h3>
                         <p><strong>模型理由（待核對）：</strong>{x.reason}</p>
-                        <CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots} />
-                        <TechnicalDetails value={{rule_refs:x.rule_refs,evidence_refs:x.evidence_refs}} label="技術資料：規則與引用代碼（JSON）" />
+                        <CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots} audited={run.decision_basis==='agent'} />
+                        <TechnicalDetails value={{rule_refs:x.rule_refs,evidence_refs:x.evidence_refs}} label={run.decision_basis==='agent' ? '技術資料：引用代碼（JSON）' : '技術資料：規則與引用代碼（JSON）'} />
                       </article>
                     ))
                   ) : (
@@ -640,7 +673,7 @@ export default function App() {
                   )}
                 </section>
                 <section className="panel">
-                  <h2>來源排除／待確認項目</h2>
+                  <h2>{run.decision_basis==='agent' ? '不建議與待確認事項' : '來源排除／待確認項目'}</h2>
                   {(run.safety_summary?.avoid ?? run.output?.avoid)?.map(
                     (x: any, i: number) => (
                       <article key={i}>
@@ -649,7 +682,7 @@ export default function App() {
                       </article>
                     ),
                   )}
-                  <RunIssues run={run} />
+                  <RunIssues run={run} onOpenAgent={openAgent} />
                 </section>
               </div>
               {run.raw_baseline?.withheld && (
@@ -668,6 +701,7 @@ export default function App() {
             <div className="grid two">
               <section className="panel">
                 <h2>分析步驟與結果</h2>
+                <RunProvenance run={run}/>
                 <DrugOverview run={run} />
                 <p>
                   展開步驟查看做了什麼與得到的結果；「步驟已執行」不代表資料或候選已通過檢核。
@@ -676,7 +710,7 @@ export default function App() {
                   <WorkflowStep key={i} node={n} index={i} run={run} />
                 ))}
                 <details>
-                  <summary>規則命中與版本</summary>
+                  <summary>{run.decision_basis==='agent' ? 'Agent 流程版本' : '規則命中與版本'}</summary>
                   <Json
                     value={{
                       versions: run.versions,
@@ -728,12 +762,22 @@ export default function App() {
             <div className="grid two">
               <section className="panel">
                 <h2>人工審閱</h2>
+                <RunProvenance run={run}/>
                 <p>分析：{run.run_id} · {modeNames[run.display_mode || run.mode] || run.mode} · {localTime(run.created_at || run.nodes?.[0]?.started_at)}</p>
                 <CaseContext value={run.case_snapshot} snapshot />
+                {run.decision_basis==='agent' && <PhysicianReview key={run.run_id} run={run} role={role} busy={busy} onSave={async decisions=>{
+                  setBusy(true);
+                  try {
+                    await api('/reviews',{run_id:run.run_id,action:'drug_review',reason:'逐藥醫師決策，理由與條件見各項紀錄',reviewer_id:'demo-user',role,drug_decisions:decisions});
+                    setReviews(await api('/reviews?run_id='+run.run_id));
+                    setNotice('逐藥決策已保存，原始系統警示與核對狀態保持不變。');
+                  } finally {setBusy(false);}
+                }}/>}
+                <details open={run.decision_basis!=='agent'}><summary>{run.decision_basis==='agent'?'整份 AI 結果審閱（原有流程）':'整份結果審閱'}</summary>
                 <h3>本次待審候選</h3>
-                {run.output?.candidates?.length ? run.output.candidates.map((x: any) => <article key={x.drug_code}><h4>{x.drug_code}</h4><p><strong>模型理由（待核對）：</strong>{x.reason}</p><CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots} /></article>) : <p>本次沒有可接受或修改的候選；可以拒絕並記錄原因。</p>}
+                {run.output?.candidates?.length ? run.output.candidates.map((x: any) => <article key={x.drug_code}><h4>{x.drug_code}</h4><p><strong>模型理由（待核對）：</strong>{x.reason}</p><CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots} /></article>) : <p>{run.decision_basis==='agent'?'本次沒有完成系統核對的候選；仍可使用上方逐藥醫師決策。':'本次沒有可接受或修改的候選；可以拒絕並記錄原因。'}</p>}
                 <button onClick={() => setSection(1)}>回看病例情境與待確認事項</button>
-                <RunIssues run={run} />
+                <RunIssues run={run} onOpenAgent={openAgent} />
                 <p>審閱者 demo-user · {role} · 僅展示角色</p>
                 <Status value={run.gate_status} />
                 <label>
@@ -801,6 +845,7 @@ export default function App() {
                 >
                   送出審閱
                 </button>
+                </details>
               </section>
               <section className="panel">
                 <h2>已保存的審閱歷史</h2>
@@ -818,9 +863,11 @@ export default function App() {
                   reviews.map((r: any, i: number) => (
                     <article className="review" key={i}>
                       <strong>
-                        {({accept:'接受',modify:'修改',reject:'拒絕'} as Record<string,string>)[r.action] || r.action} · {r.reviewer_id}
+                        {({accept:'接受',modify:'修改',reject:'拒絕',drug_review:'逐藥醫師決策'} as Record<string,string>)[r.action] || r.action} · {r.reviewer_id}
                       </strong>
                       <p>{r.reason}</p>
+                      {r.drug_decisions?.map((d:any)=><div key={d.drug_code}><strong>{d.drug_code}：{physicianDecisionNames[d.decision] || d.decision}</strong><p>理由：{d.reason}</p>{d.conditions && <p>使用條件：{d.conditions}</p>}<p>原系統狀態：{statusNames[d.system_assessment?.status] || d.system_assessment?.status}；警示與未完成項目仍保留。</p></div>)}
+                      {r.action==='drug_review' && <a href={'/api/reviews/'+r.review_id+'/export'} download>匯出醫師決策與原始警示</a>}
                       <small>{localTime(r.created_at)}</small>
                       <details>
                         <summary>原始／修改內容</summary>
@@ -879,6 +926,17 @@ export default function App() {
                   <option value="mixed">成人與兒童混合（待整理適用片段）</option>
                 </select>
               </label>
+              <label>證據類型<select value={docKind} onChange={e=>setDocKind(e.target.value)}>
+                <option value="reference">一般參考文件（待分類）</option><option value="guideline">感染指引</option>
+                <option value="drug_label">藥品標示</option><option value="research_article">研究文章（背景證據）</option>
+              </select></label>
+              {docKind==='research_article' && <label>研究設計<select value={studyDesign} onChange={e=>setStudyDesign(e.target.value)}>
+                <option value="not_recorded">未提供</option><option value="observational">觀察性研究</option>
+                <option value="randomized_trial">隨機試驗</option><option value="systematic_review">系統性回顧</option><option value="other">其他</option>
+              </select></label>}
+              <label>來源網址<input type="url" value={docSource} onChange={e=>setDocSource(e.target.value)}/></label>
+              <label>適用地區<input value={docRegion} onChange={e=>setDocRegion(e.target.value)}/></label>
+              {docKind==='research_article' && <p>本流程將研究文章用於背景；群體關聯不能直接推定個人風險、解除過敏標籤或支持本例選藥。</p>}
               <label className="check">
                 <input
                   type="checkbox"
@@ -903,6 +961,10 @@ export default function App() {
                     f.append("version", docVersion);
                     f.append("is_synthetic", String(synthetic));
                     f.append("population", docPopulation);
+                    f.append('document_kind',docKind);
+                    f.append('study_design',docKind==='research_article'?studyDesign:'not_recorded');
+                    f.append('source_url',docSource);
+                    f.append('jurisdiction',docRegion);
                     const d = await api("/documents/import", f);
                     setDocuments(await api("/documents"));
                     setConfig(await api("/config"));
@@ -921,9 +983,13 @@ export default function App() {
                     <Status value={d.processing_status} />
                   </summary>
                   <p>{evidenceOrigin(d)} · 已解析 {d.chunk_count ?? 0} 個片段</p>
+                  <p>證據類型：{({reference:'一般參考文件',guideline:'感染指引',drug_label:'藥品標示',research_article:'研究文章（背景證據）'} as Record<string,string>)[d.metadata?.document_kind || 'reference'] || '其他'} · 研究設計：{({observational:'觀察性研究',randomized_trial:'隨機試驗',systematic_review:'系統性回顧',other:'其他'} as Record<string,string>)[d.metadata?.study_design] || '未提供'}</p>
+                  {d.metadata?.source_url && <p>來源：{d.metadata.source_url}</p>}
+                  {d.metadata?.source_derivation && <p>節錄自：{d.metadata.source_derivation.original_title} · 版本 {d.metadata.source_derivation.original_version}。與全文屬同一原始文件，不能計為獨立證據。</p>}
+                  {d.metadata?.jurisdiction && <p>適用地區：{d.metadata.jurisdiction}</p>}
                   <RetrievalWarnings warnings={d.processing_warnings} />
                   <h4>目前族群標示與依據</h4>
-                  <p>{({all:'所有年齡',adult:'成人',pediatric:'兒童',mixed:'成人與兒童混合',unspecified:'尚未標示'} as Record<string,string>)[d.metadata?.population || 'unspecified']}</p>
+                  <p>{({all:'所有年齡',adult:'成人',pediatric:'兒童',mixed:'成人與兒童混合',unspecified:'尚未標示'} as Record<string,string>)[d.metadata?.population || 'unspecified']}{d.metadata?.population && d.metadata.population!=='unspecified' && !d.metadata?.population_history?.some((entry:any)=>entry.reason?.trim()) && '（標示依據未記錄；仍需核對原文適用範圍）'}</p>
                   {d.metadata?.population_history?.length ? d.metadata.population_history.map((entry: any, i: number) => <p key={i}>{localTime(entry.updated_at)} · 標示為 {({all:'所有年齡',adult:'成人',pediatric:'兒童',mixed:'混合',unspecified:'尚未標示'} as Record<string,string>)[entry.population] || entry.population} · 依據：{entry.reason || '未記錄'} · 操作者：{entry.updated_by || '未記錄'}</p>) : <p>未保存族群標示的變更紀錄或依據，請核對文件。</p>}
                   <TechnicalDetails value={d} label="技術資料：文件索引與中繼資料（JSON）" />
                   <form
@@ -983,7 +1049,7 @@ export default function App() {
               <p>
                 {config?.rag?.retrieval_method === "lexical"
                   ? "目前使用明確啟用的關鍵字檢索。"
-                  : "將問題與文件片段轉為 embedding 向量，以語意相似度檢索。首次搜尋會建立缺少的向量。"}
+                  : "將問題與文件片段轉為 embedding 向量，以語意相似度檢索。手動搜尋會建立缺少的向量；multi-agent 分析前請先重建向量索引，避免占用整合與複核時間。"}
               </p>
               <p className="muted">
                 Embedding 模型：{config?.rag?.model || "尚未設定"}
@@ -1110,15 +1176,17 @@ export default function App() {
               <section className="panel">
                 <h2>四模式比較（Benchmark）</h2>
                 <p>
-                  對全部已保存的 {cases.length} 個病例各執行四種模式，共{" "}
-                  {cases.length * 4} 筆結果。不是只比較上方選取的病例。
+                  已勾選 {benchmarkCaseIds.length} 個病例 × {benchmarkModes.length} 種模式，共 {benchmarkCaseIds.length * benchmarkModes.length} 筆結果。
                 </p>
                 <p className="muted">
-                  規則判斷／文件檢索＋模型／單次模型整合／獨立代理協作。獨立代理協作每病例通常有五次模型呼叫。這是軟體流程比較，臨床適當性尚未評估。
+                  獨立代理協作每病例正常六次模型呼叫（含引用複核）。各模式的檢索與呼叫量不同；這是軟體流程比較。
                 </p>
+                <fieldset><legend>選擇比較病例</legend>{cases.map(c=><label className="check-label" key={c.case_id}><input type="checkbox" checked={benchmarkCaseIds.includes(c.case_id)} onChange={e=>setBenchmarkCaseIds(e.target.checked ? [...benchmarkCaseIds,c.case_id] : benchmarkCaseIds.filter(id=>id!==c.case_id))}/>{c.case_id}</label>)}</fieldset>
+                <fieldset><legend>選擇比較模式</legend>{modes.map(m=><label className="check-label" key={m}><input type="checkbox" checked={benchmarkModes.includes(m)} onChange={e=>setBenchmarkModes(e.target.checked ? [...benchmarkModes,m] : benchmarkModes.filter(x=>x!==m))}/>{modeNames[m]}</label>)}</fieldset>
                 <label>
                   Benchmark 模型
                   <select
+                    aria-label="Benchmark 模型"
                     value={benchmarkProvider}
                     onChange={(e) => setBenchmarkProvider(e.target.value)}
                   >
@@ -1135,12 +1203,12 @@ export default function App() {
                 )}
                 <button
                   className="primary"
-                  disabled={busy || !cases.length}
+                  disabled={busy || !benchmarkCaseIds.length || !benchmarkModes.length}
                   onClick={() =>
                     void work(async () => {
                       const b = await api("/benchmarks", {
-                        case_ids: cases.map((c) => c.case_id),
-                        modes,
+                        case_ids: benchmarkCaseIds,
+                        modes: benchmarkModes,
                         provider_kind: benchmarkProvider,
                         request_id: crypto.randomUUID(),
                       });
@@ -1149,7 +1217,7 @@ export default function App() {
                     })
                   }
                 >
-                  執行四模式比較
+                  執行所選比較
                 </button>
                 <h3>比較歷史（時間依本機時區）</h3>
                 {benchmarks.map((b: any, i: number) => (

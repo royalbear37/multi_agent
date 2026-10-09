@@ -42,7 +42,8 @@ def ast_row(row):
     label = phenotype(row.get('CLSI_2022_pheno'))
     return {'drug_code': row['antibiotic'], 'reported_sir': label if label in {'S','I','R'} else None,
             'method': row.get('AST_panel'), 'standard': 'CLSI', 'standard_version': '2022',
-            'source': 'CSV:CLSI_2022_pheno (dataset-derived label; not recomputed)',
+            'source': ('CSV:CLSI_2022_pheno (dataset-derived label; not recomputed)' if label in {'S','I','R'} else
+                       'CSV:CLSI_2022_pheno selected but missing/unrecognized; AST_pheno preserved separately; do not infer from raw measurement'),
             'interpretation_basis': 'CLSI_2022_pheno',
             'source_phenotype': row.get('AST_pheno') or None,
             'clsi_2022_phenotype': row.get('CLSI_2022_pheno') or None,

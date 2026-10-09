@@ -45,7 +45,7 @@ def _core(results: list[dict[str, Any]], expectations: dict[str, Any]) -> dict[s
             block_tp += int(blocked and expected)
             block_actual += int(expected)
             unnecessary_block += int(blocked and not expected)
-        expected_rules = exp.get("rule_evaluations")
+        expected_rules = exp.get("rule_evaluations") if result.get('decision_basis') != 'agent' else None
         actual_rules = {str(x.get("rule_id")): x.get("status") for x in result.get("rule_evaluations", []) if isinstance(x, dict)}
         items = expected_rules.items() if isinstance(expected_rules, dict) else ((x.get("rule_id"), x.get("status")) for x in expected_rules if isinstance(x, dict) and "rule_id" in x and "status" in x) if isinstance(expected_rules, list) else ()
         for rule_id, expected_status in items:
@@ -84,6 +84,11 @@ def _core(results: list[dict[str, Any]], expectations: dict[str, Any]) -> dict[s
                 "usage_complete": bool(attempts) and len(tokens) == len(attempts),
                 "elapsed_ms": round(sum(n.get("elapsed_ms", 0) for n in nodes), 3)}
     return {
+        "retrieval": {"queries": sum(len(r.get('retrievals', [])) for r in results),
+            "returned_chunks": sum(q.get('count', 0) for r in results for q in r.get('retrievals', [])),
+            "failed_queries": sum(q.get('status') in {'failed', 'budget_exceeded'} for r in results for q in r.get('retrievals', [])),
+            "elapsed_ms": round(sum(q.get('elapsed_ms', 0) for r in results for q in r.get('retrievals', [])), 3)},
+        "agent_citation_audit": dict(Counter(d.get('audit', {}).get('verdict') if d.get('audit') else 'not_audited' for r in results for d in r.get('drug_assessments', []))),
         "agent_execution": agent_stats(agent_nodes),
         "by_agent": {agent_id: agent_stats([n for n in agent_nodes if n["agent_id"] == agent_id]) for agent_id in agent_ids},
         "total_cases": total, "status_counts": dict(statuses),
@@ -91,7 +96,7 @@ def _core(results: list[dict[str, Any]], expectations: dict[str, Any]) -> dict[s
         "failed_ratio": _metric(statuses.get("failed", 0), total), "blocked_ratio": _metric(statuses.get("blocked", 0), total),
         "not_configured_ratio": _metric(statuses.get("partial", 0) + statuses.get("not_configured", 0), total),
         "safety_withholding": _metric(sum(1 for r in results if r.get("gate_status") in {"needs_confirmation", "blocked"}), total),
-        "rule_test_pass_rate": _metric(expected_rule_pass, expected_rule_total), "missing_precision": _metric(missing_tp, missing_pred), "missing_recall": _metric(missing_tp, missing_actual),
+        "rule_test_pass_rate": _metric(expected_rule_pass, expected_rule_total, status='not_applicable' if results and all(r.get('decision_basis') == 'agent' for r in results) else None), "missing_precision": _metric(missing_tp, missing_pred), "missing_recall": _metric(missing_tp, missing_actual),
         "expected_safety_block_recall": _metric(block_tp, block_actual), "unnecessary_block_rate": _metric(unnecessary_block, labeled_nonblock),
         "citation_id_validity": _metric(citation_valid, citation_total), "citation_location_validity": _metric(location_valid, location_total),
         "citation_support_conclusion": _metric(0, 0, status="not_evaluated"), "schema_validity": _metric(schema_valid, schema_total),
@@ -108,4 +113,6 @@ def summarize(results: list[dict[str, Any]], expectations: dict[str, Any] | None
     summary["by_mode"] = {mode: _core([r for r in results if r.get("mode") == mode], expectations) for mode in modes}
     groups = sorted({f"{r.get('mode')}:{'mock' if r.get('is_mock') else 'live_or_none'}" for r in results})
     summary["by_execution"] = {key: _core([r for r in results if f"{r.get('mode')}:{'mock' if r.get('is_mock') else 'live_or_none'}" == key], expectations) for key in groups}
+    version_key = lambda r: f"{r.get('mode')}:{(r.get('versions') or {}).get('workflow', 'legacy')}"
+    summary['by_workflow_version'] = {key: _core([r for r in results if version_key(r) == key], expectations) for key in sorted({version_key(r) for r in results})}
     return summary

@@ -12,6 +12,14 @@ from app.workflow.v2 import public_agent_nodes
 from tests.test_workflow import case, DocStub
 
 
+@pytest.fixture(autouse=True)
+def historical_v2_contract(monkeypatch):
+    """Preserve regression coverage for stored v2 results; public defaults are tested in test_agent_led."""
+    import app.workflow.agent_led as current
+    from app.workflow.v2 import execute_v2
+    monkeypatch.setattr(current, 'execute', execute_v2)
+
+
 def agents(run):
     return [n for n in run["nodes"] if n.get("agent_id")]
 

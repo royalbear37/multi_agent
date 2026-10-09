@@ -43,6 +43,9 @@ class Renal(StrictModel):
     creatinine: float | None = Field(default=None, ge=0)
     creatinine_unit: str | None = None
     egfr: float | None = Field(default=None, ge=0)
+    crcl: float | None = Field(default=None, ge=0)
+    crcl_unit: str | None = None
+    crcl_calculation_method: str | None = None
     unit: str | None = None
     calculation_method: str | None = None
     dialysis_status: str | None = None
@@ -58,6 +61,22 @@ class AllergyItem(StrictModel):
     drug_code: str
     reaction: str | None = None
     severity: str | None = None
+    label_source: str | None = None
+    occurred_at: str | None = Field(default=None, max_length=200, description="Recorded event date or approximate time; never invent an exact date")
+    verification_status: Literal['not_recorded', 'unverified', 'confirmed', 'ruled_out', 'conflicting'] = 'not_recorded'
+    verification_note: str | None = None
+    verification_source: str | None = None
+    verified_by: str | None = None
+    verified_at: datetime | None = None
+
+    @model_validator(mode="after")
+    def verification_trace(self):
+        _aware(self.verified_at, 'allergies.items.verified_at')
+        if self.verification_status in {'confirmed', 'ruled_out'} and not all((
+            self.verification_note, self.verification_source, self.verified_by, self.verified_at
+        )):
+            raise ValueError('confirmed/ruled_out allergy assessment requires note, source, reviewer and timestamp')
+        return self
 
 
 class Allergies(StrictModel):
@@ -151,6 +170,10 @@ class Case(StrictModel):
     ast_results: list[ASTResult] = Field(default_factory=list)
     rapid_identification: RapidIdentification | None = None
     medications: list[Medication] = Field(default_factory=list)
+    medication_history_status: Literal['unknown', 'reviewed_none', 'reviewed_list'] = 'unknown'
+    clinical_history: dict[str, Any] = Field(default_factory=dict)
+    vitals: dict[str, Any] = Field(default_factory=dict)
+    resistance_context: list[dict[str, Any]] = Field(default_factory=list)
     resistance_context_ref: list[str] = Field(default_factory=list)
     policy_refs: list[str] = Field(default_factory=list)
     provenance: Provenance = Field(default_factory=Provenance)
@@ -164,6 +187,10 @@ class Case(StrictModel):
 
     @model_validator(mode="after")
     def synthetic_only(self):
+        if self.medication_history_status == 'reviewed_none' and self.medications:
+            raise ValueError('reviewed_none medication history must have no listed medications')
+        if self.medication_history_status == 'reviewed_list' and not self.medications:
+            raise ValueError('reviewed_list medication history requires a medication list')
         if not self.is_synthetic and self.data_origin == "synthetic":
             raise ValueError("non-synthetic cases must identify deidentified or hybrid data_origin")
         if self.is_synthetic and self.data_origin != "synthetic":

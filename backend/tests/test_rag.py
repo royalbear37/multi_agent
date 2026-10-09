@@ -46,6 +46,30 @@ class BrokenEmbeddings(FakeEmbeddings):
         raise EmbeddingError("embedding provider unavailable")
 
 
+def test_original_artifact_identity_links_verified_excerpt_without_rewriting_old_snapshot(tmp_path):
+    service=DocumentService(tmp_path, retrieval_mode='lexical')
+    original=service.import_document('full.txt', b'kidney original text', 'Original', '2022')
+    excerpt=service.import_document('part.txt', b'kidney excerpt', 'Chapter', '2022')
+    other=service.import_document('other.txt', b'kidney different text', 'Original', '2023')
+    before=service.search('kidney', policy_refs=[excerpt['doc_id']])['evidence'][0]
+    service.register_source_derivation(excerpt['doc_id'], original['content_hash'], excerpt['content_hash'], 'verified extraction')
+    after=service.search('kidney', policy_refs=[original['doc_id'],excerpt['doc_id']])['evidence']
+    assert len(after)==2
+    assert {e['source_document_id'] for e in after}=={'sha256:'+original['content_hash']}
+    assert before['source_derivation'] is None
+    assert before['source_document_id']=='sha256:'+excerpt['content_hash']
+    assert service.detail(excerpt['doc_id'])['chunks'][0]['text']=='kidney excerpt'
+    assert service.search('kidney',policy_refs=[other['doc_id']])['evidence'][0]['source_document_id']!='sha256:'+original['content_hash']
+    with pytest.raises(DocumentServiceError,match='已記錄不同原始來源'):
+        service.register_source_derivation(excerpt['doc_id'], other['content_hash'], excerpt['content_hash'], 'changed source')
+    with pytest.raises(DocumentServiceError,match='節錄內容已改變'):
+        service.register_source_derivation(excerpt['doc_id'], original['content_hash'], other['content_hash'], 'stale verification')
+    service.delete_document(original['doc_id'])
+    retained=service.search('kidney',policy_refs=[excerpt['doc_id']])['evidence'][0]
+    assert retained['source_derivation']['original_title']=='Original'
+    assert retained['source_document_id']=='sha256:'+original['content_hash']
+
+
 @pytest.mark.parametrize("operation", ["reindex", "search"])
 def test_embedding_computation_does_not_lock_out_index_readers(tmp_path, operation):
     class ReaderProbe(FakeEmbeddings):

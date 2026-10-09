@@ -133,25 +133,28 @@ class AgentProvider:
         payload = {
             "model": self.model,
             "messages": [
-                {"role": "system", "content": COMMON + " " + agent.instruction},
+                {"role": "system", "content": getattr(agent, 'common', COMMON) + " " + agent.instruction},
                 {"role": "user", "content": json.dumps({"input": data,
                     "output_schema": agent.output_type.model_json_schema()}, ensure_ascii=False)},
             ],
             "temperature": 0, "response_format": {"type": "json_object"},
-            "max_tokens": setting("LLM_V2_MAX_OUTPUT_TOKENS", 2000, 256, 8000),
+            "max_tokens": setting(getattr(agent, 'output_tokens_setting', 'LLM_V2_MAX_OUTPUT_TOKENS'), getattr(agent, 'max_output_tokens', 2000), 256, getattr(agent, 'output_token_ceiling', 8000)),
         }
         response, _ = provider._request(payload)
         usage = response.get("usage") if isinstance(response, dict) else None
         usage = {k: v for k, v in (usage or {}).items()
                  if k in {"prompt_tokens", "completion_tokens", "total_tokens"}
                  and type(v) is int and v >= 0} if isinstance(usage, dict) else None
+        finish_reason = None
         try:
             choice = response["choices"][0]
+            finish_reason = choice.get("finish_reason")
+            if finish_reason not in {"stop", "length", "content_filter", "tool_calls", "function_call"}: finish_reason = None
             # Incomplete JSON must never count as a validated assessment.
             output = json.loads(choice["message"]["content"]) if choice.get("finish_reason") == "stop" else None
         except (KeyError, IndexError, TypeError, ValueError):
             output = None
-        return {"output": output, "usage": usage or None,
+        return {"output": output, "usage": usage or None, "finish_reason": finish_reason, "output_token_limit": payload["max_tokens"],
                 "response_id": str(response.get("id", ""))[:200] if isinstance(response, dict) else None}
 
 

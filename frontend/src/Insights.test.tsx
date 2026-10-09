@@ -24,6 +24,14 @@ test('blank pages and normal splitting stay in collapsed parsing details', () =>
   expect(screen.getByText(/長文字已正常切段/)).toBeVisible();
 });
 
+test('table review warnings give a readable action and keep raw codes collapsed',()=>{
+  render(<RetrievalWarnings warnings={['page_7_table_needs_review']}/>);
+  expect(screen.getByText('第 7 頁表格需人工檢查，請對照原始文件的欄列與條件。')).toBeVisible();
+  expect(screen.getByText('page_7_table_needs_review')).not.toBeVisible();
+  fireEvent.click(screen.getByText('原始解析警告代碼'));
+  expect(screen.getByText('page_7_table_needs_review')).toBeVisible();
+});
+
 test.each(['rule-only', 'rag-only', 'single-agent', 'multi-agent'])('failed %s displays a source demo table', (mode) => {
   render(<DemoSourceResult run={{ mode, output: null, nodes: [{node_id:'ast', output: {
     source_report: [{drug_code:'test_a'}, {drug_code:'test_b'}],
@@ -192,7 +200,8 @@ test("configuration presence and demo index do not claim service health or WHO c
   ).toBeVisible();
   expect(screen.getByText(/此數字對應 WHO/)).toBeVisible();
   expect(screen.getByText(/匯入文件不代表已完成向量索引/)).toBeVisible();
-  expect(executionLabel({ provider_kind: "live" })).toBe("選用已設定模型");
+  expect(executionLabel({ provider_kind: "live" })).toBe("模型名稱未記錄");
+  expect(executionLabel({provider_kind:'live',model:'gpt-4.1-mini',nodes:[{model:'gpt-4.1-mini'}]})).toBe('模型：gpt-4.1-mini');
   expect(localTime(undefined)).toBe("時間未記錄");
 });
 

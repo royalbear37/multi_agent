@@ -67,9 +67,14 @@ def test_historical_benchmark_labels_aggregate_without_rewriting_modes():
     assert _public_benchmark({'results':[old]})['display_modes']['multi-agent'] == 'multi-agent-legacy'
     assert _public_benchmark({'results':[new]})['display_modes']['multi-agent'] == 'multi-agent'
     assert _public_benchmark({'results':[old, new]})['display_modes']['multi-agent'] == 'multi-agent-mixed'
+    v2 = {**new, 'agent_execution':{'calls':5,'workflow_version':'multi-agent-v2.4-demo'}}
+    assert _public_benchmark({'results':[v2]})['display_modes']['multi-agent'] == 'multi-agent-v2'
 
 
 def test_v2_synthesis_text_uses_same_demo_tolerance(monkeypatch):
+    import app.workflow.agent_led as current
+    from app.workflow.v2 import execute_v2
+    monkeypatch.setattr(current, 'execute', execute_v2)
     original = runtime_v2.mock_output
     def changed(agent, data):
         value = original(agent, data)

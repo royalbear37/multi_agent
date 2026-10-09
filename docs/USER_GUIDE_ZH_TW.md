@@ -98,6 +98,8 @@ EMBEDDING_TIMEOUT=120
 
 重啟一般後端。先對 synthetic 文件按「重建向量索引」，成功後測試完整病例。第一次 WHO 全書索引較久，請等待完成再搜尋；初次搜尋也可能觸發缺少向量的補建。
 
+在 Windows 使用 `backend/scripts/run.ps1` 啟動 embedding 模式時，腳本會先檢查 `EMBEDDING_BASE_URL`；若本機預設 `127.0.0.1:11434` 沒有回應，會嘗試以隱藏視窗啟動已安裝的 Ollama，然後用設定的 `EMBEDDING_MODEL` 做一筆無病例資料的向量測試。找不到程式或模型時會在啟動前給出明確錯誤。單獨啟動 Python／uvicorn 不會執行這項檢查；`demo.ps1` 則刻意使用 lexical 模式。
+
 `indexed`／`indexed_with_warnings` 是解析切段狀態，**不代表向量已建好**；向量數量與重建結果另查。embedding 失敗不會自動退回 lexical。mock 回答模型也不會修復 embedding 服務。若要免 Ollama 的展示，使用第 1 節明確選擇 lexical。
 
 ## 4. 上傳這次附的 WHO PDF

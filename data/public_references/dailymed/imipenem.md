@@ -1,0 +1,130 @@
+# RECARBRIO (IMIPENEM ANHYDROUS, CILASTATIN, AND RELEBACTAM ANHYDROUS) INJECTION, POWDER, FOR SOLUTION [MERCK SHARP & DOHME LLC]
+
+Drug identifier: imipenem
+Source: https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=be32f468-738b-40df-a425-591e12f65159
+Jurisdiction: United States labeling; not local hospital policy
+SPL version: 11; published: Dec 19, 2025
+
+## 1 INDICATIONS AND USAGE / 1.1 Hospital-acquired Bacterial Pneumonia and Ventilator-associated Bacterial Pneumonia (HABP/VABP)
+
+RECARBRIO ® is indicated in adult and pediatric patients weighing at least 2 kg for the treatment of hospital-acquired bacterial pneumonia and ventilator-associated bacterial pneumonia, caused by the following susceptible gram-negative microorganisms: Acinetobacter calcoaceticus-baumannii complex, Enterobacter cloacae , Escherichia coli , Haemophilus influenzae , Klebsiella aerogenes, Klebsiella oxytoca, Klebsiella pneumoniae, Pseudomonas aeruginosa, and Serratia marcescens.
+
+## 1 INDICATIONS AND USAGE / 1.2 Complicated Urinary Tract Infections (cUTI), including Pyelonephritis
+
+RECARBRIO is indicated in adult and pediatric patients weighing at least 2 kg who have limited or no alternative treatment options, for the treatment of complicated urinary tract infections (cUTI), including pyelonephritis, caused by the following susceptible gram-negative microorganisms: Enterobacter cloacae , Escherichia coli , Klebsiella aerogenes, Klebsiella pneumoniae, and Pseudomonas aeruginosa . Approval of this indication is based on limited clinical safety and efficacy data for RECARBRIO [see Clinical Studies (14.2) ] .
+
+## 1 INDICATIONS AND USAGE / 1.3 Complicated Intra-abdominal Infections (cIAI)
+
+RECARBRIO is indicated in adult and pediatric patients weighing at least 2 kg who have limited or no alternative treatment options for the treatment of complicated intra-abdominal infections (cIAI) caused by the following susceptible gram-negative microorganisms: Bacteroides caccae , Bacteroides fragilis , Bacteroides ovatus , Bacteroides stercoris , Bacteroides thetaiotaomicron , Bacteroides uniformis , Bacteroides vulgatus , Citrobacter freundii , Enterobacter cloacae , Escherichia coli , Fusobacterium nucleatum , Klebsiella aerogenes, Klebsiella oxytoca , Klebsiella pneumoniae , Parabacteroides distasonis , and Pseudomonas aeruginosa . Approval of this indication is based on limited clinical safety and efficacy data for RECARBRIO [see Clinical Studies (14.2) ] .
+
+## 1 INDICATIONS AND USAGE / 1.4 Limitations of Use
+
+RECARBRIO is not recommended in pediatric patients less than 37 weeks post-menstrual age (gestational age at birth plus post-natal age) [see Dosage and Administration (2.2) and Use in Specific Populations (8.4) ] . RECARBRIO is not recommended in pediatric patients weighing less than 30 kg with renal impairment [see Dosage and Administration (2.4) , Use in Specific Populations (8.4 , 8.6) and Clinical Pharmacology (12.3) ].
+
+## 1 INDICATIONS AND USAGE / 1.5 Usage to Reduce Development of Drug-Resistant Bacteria
+
+To reduce the development of drug-resistant bacteria and maintain the effectiveness of RECARBRIO and other antibacterial drugs, RECARBRIO should be used only to treat or prevent infections that are proven or strongly suspected to be caused by susceptible bacteria. When culture and susceptibility information are available, they should be considered in selecting or modifying antibacterial therapy. In the absence of such data, local epidemiology and susceptibility patterns may contribute to the empiric selection of therapy.
+
+## 4 CONTRAINDICATIONS
+
+RECARBRIO is contraindicated in patients with a history of known severe hypersensitivity (severe systemic allergic reaction such as anaphylaxis) to any component of RECARBRIO.
+
+## 5 WARNINGS AND PRECAUTIONS / 5.1 Hypersensitivity Reactions
+
+Serious and occasionally fatal hypersensitivity (anaphylactic) reactions have been reported in patients receiving therapy with beta lactams. Before initiating therapy with RECARBRIO, careful inquiry should be made concerning previous hypersensitivity reactions to carbapenems, penicillins, cephalosporins, other beta lactams, and other allergens. If a hypersensitivity reaction to RECARBRIO occurs, discontinue the therapy immediately. RECARBRIO is contraindicated in patients with a history of severe hypersensitivity to any component of RECARBRIO [see Contraindications (4) ].
+
+## 5 WARNINGS AND PRECAUTIONS / 5.2 Seizures and Other Central Nervous System (CNS) Adverse Reactions
+
+CNS adverse reactions, such as seizures, confusional states, and myoclonic activity, have been reported during treatment with imipenem/cilastatin, a component of RECARBRIO, especially when recommended dosages of imipenem were exceeded . These have been reported most commonly in patients with CNS disorders (e.g., brain lesions or history of seizures) and/or compromised renal function . Anticonvulsant therapy should be continued in patients with known seizure disorders. If CNS adverse reactions including seizures occur, patients should undergo a neurological evaluation to determine whether RECARBRIO should be discontinued.
+
+## 5 WARNINGS AND PRECAUTIONS / 5.3 Increased Seizure Potential Due to Interaction with Valproic Acid
+
+Concomitant use of RECARBRIO, with valproic acid or divalproex sodium may increase the risk of breakthrough seizures. Avoid concomitant use of RECARBRIO with valproic acid or divalproex sodium or consider alternative antibacterial drugs other than carbapenems [see Drug Interactions (7.2) ].
+
+## 5 WARNINGS AND PRECAUTIONS / 5.4 Clostridioides difficile -Associated Diarrhea (CDAD)
+
+Clostridioides difficile -associated diarrhea (CDAD) has been reported with use of nearly all antibacterial agents, including RECARBRIO, and may range in severity from mild diarrhea to fatal colitis. Treatment with antibacterial agents alters the normal flora of the colon leading to overgrowth of C. difficile . C. difficile produces toxins A and B which contribute to the development of CDAD. Hypertoxin producing strains of C. difficile cause increased morbidity and mortality, as these infections can be refractory to antimicrobial therapy and may require colectomy. CDAD must be considered in all patients who present with diarrhea following antibacterial drug use. Careful medical history is necessary since CDAD has been reported to occur over two months after the administration of antibacterial agents. If CDAD is suspected or confirmed, ongoing antibacterial drug use not directed against C. difficile may need to be discontinued. Appropriate fluid and electrolyte management, protein supplementation, antibacterial drug treatment of C. difficile, and surgical evaluation should be instituted as clinically indicated.
+
+## 5 WARNINGS AND PRECAUTIONS / 5.5 Development of Drug-resistant Bacteria
+
+Prescribing RECARBRIO in the absence of a proven or strongly suspected bacterial infection or prophylactic indication is unlikely to provide benefit to the patient and increases the risk of the development of drug-resistant bacteria.
+
+## 7 DRUG INTERACTIONS / 7.1 Ganciclovir
+
+Generalized seizures have been reported in patients who received ganciclovir concomitantly with imipenem/cilastatin, a component of RECARBRIO. Ganciclovir should not be used concomitantly with RECARBRIO unless the potential benefits outweigh the risks.
+
+## 7 DRUG INTERACTIONS / 7.2 Valproic Acid
+
+Based on case reports in the literature concomitant use of carbapenems, including imipenem/cilastatin, components of RECARBRIO, with valproic acid or divalproex sodium may decrease valproic acid concentrations which may increase the risk of breakthrough seizures [see Warnings and Precautions (5.3) ] . Although the mechanism of this interaction is unknown, data from in vitro and animal studies suggest that carbapenems may inhibit the hydrolysis of valproic acid's glucuronide metabolite (VPA-g) back to valproic acid, thus decreasing the serum concentrations of valproic acid . Avoid concomitant use of RECARBRIO with valproic acid or divalproex sodium. Consider alternative antibacterials other than carbapenems to treat infections in patients whose seizures are well controlled on valproic acid or divalproex sodium.
+
+## 8 USE IN SPECIFIC POPULATIONS / 8.1 Pregnancy
+
+Risk Summary Embryonic loss was observed in monkeys treated with imipenem/cilastatin, and fetal abnormalities were observed in relebactam-treated mice; therefore, advise pregnant women of the potential risks to pregnancy and the fetus. There are insufficient human data to establish whether there is a drug-associated risk for major birth defects, miscarriage, or adverse maternal or fetal outcomes with RECARBRIO, imipenem, cilastatin, or relebactam in pregnant women. Developmental toxicity studies with imipenem and cilastatin (alone or in combination) administered parenterally during organogenesis to mice, rats, rabbits, and monkeys at doses 1 to 5 times the maximum recommended human dose (MRHD of imipenem 500 mg/cilastatin 500 mg every 6 hours for total daily doses of imipenem 2000 mg/cilastatin 2000 mg) based on body surface area comparison, showed no drug-induced fetal malformations. Embryofetal development studies with imipenem/cilastatin administered to cynomolgus monkeys at doses similar to the MRHD (based on body surface area comparison) showed an increase in embryonic loss. In an embryofetal study, parental administration of relebactam to pregnant mice during the period of organogenesis was associated with a non-dose responsive increase in the litter incidence of cleft palate at a plasma relebactam exposure approximately equal to the human exposure at the MRHD (250 mg every 6 hours for a daily dose of 1000 mg) and an increased percent litter incidence of total skeletal malformations at a plasma exposure approximately 6 times the human exposure at the MRHD. Reproductive studies with relebactam administered parenterally to pregnant rats and rabbits during the period of organogenesis at plasma exposures up to 7 and 24 times, respectively, the plasma exposure in humans at the MRHD showed no adverse effects on pregnancy or embryofetal development. Relebactam administered to rats during gestation through lactation was not associated with fetal toxicity, developmental delays, or impaired reproduction in first generation offspring at plasma exposures equivalent to 8 times the human exposure at the MRHD (see Data ) . The background risk of major birth defects and miscarriage for the indicated populations is unknown. All pregnancies have a background risk of birth defect, loss, or other adverse outcomes. The estimated background risk of major birth defects is 2 to 4% and miscarriage is 15 to 20% of clinically recognized pregnancies within the U.S. general population.
+
+## 8 USE IN SPECIFIC POPULATIONS / 8.1 Pregnancy
+
+Data
+
+## 8 USE IN SPECIFIC POPULATIONS / 8.1 Pregnancy
+
+Animal Data
+
+## 8 USE IN SPECIFIC POPULATIONS / 8.1 Pregnancy
+
+Imipenem and Cilastatin Reproductive toxicity studies with imipenem and cilastatin (alone or in combination) administered parenterally to mice, rats, and rabbits showed no evidence of effects on embryofetal (mice, rats, and rabbits) or pre/postnatal (rats) development. In embryofetal development studies, imipenem was administered intravenously to rats (gestation days (GD) 7 to 17), and rabbits (GD 6 to 18), at doses up to 900 and 60 mg/kg/day, respectively, approximately 4 and 0.6 times the MRHD (based on body surface area comparison). Cilastatin was administered subcutaneously to rats (GD 6 to 17) and intravenously to rabbits (GD 6 to 18) at doses up to 1000 and 300 mg/kg/day, respectively, approximately 5 and 3 times the MRHD (based on body surface area comparison). Imipenem/cilastatin was administered intravenously to mice at doses up to 320 mg/kg/day (GD 6 to 15) which is approximately equivalent to the MRHD based on body surface area comparison, and to rats at intravenous doses up to 80 mg/kg/day and a subcutaneous dose of 320 mg/kg/day (GD 6 to 17). In a separate pre-postnatal development study, rats were administered subcutaneous imipenem/cilastatin at doses up to 320 mg/kg/day (GD 15 to day 21 postpartum). The subcutaneous dose of 320 mg/kg/day in rats is approximately double the MRHD based on body surface area comparison. Imipenem/cilastatin administered intravenously to pregnant cynomolgus monkeys during organogenesis (GD 21 to 50) at 100 mg/kg/day, a dose approximately equivalent to the MRHD (based on body surface area comparison), at an infusion rate mimicking human clinical use was not associated with fetal malformations, but there was an increase in embryonic loss relative to controls. Imipenem/cilastatin administered to pregnant cynomolgus monkeys during organogenesis at 40 mg/kg/day by bolus intravenous injection caused significant maternal toxicity including death and embryofetal loss.
+
+## 8 USE IN SPECIFIC POPULATIONS / 8.1 Pregnancy
+
+Relebactam In an embryofetal development study in pregnant mice, relebactam administered subcutaneously in doses of 80, 200, and 450 mg/kg/day during the period of organogenesis (GD 6 to 17) was not associated with maternal toxicity at doses up to 450 mg/kg/day. However, although individual skeletal malformations appeared only as single occurrences in the high dose group, the percent litter incidence of total skeletal malformations (skull and vertebral) was increased in the high-dose group (21% litter incidence) compared to the concurrent control value (5.3% litter incidence). The plasma relebactam exposure for the high dose associated with increased skeletal malformations was approximately 6 times greater than the human plasma exposure at the MRHD based on AUC comparison. Also, mice receiving the lowest administered dose of relebactam, 80 mg/kg/day, exhibited a higher percent litter incidence (15% litter incidence) of cleft palate (a rare malformation in mice) compared to the concurrent control value (0% litter incidence) and historical control values (up to 11% litter incidence). This finding did not increase in a dose-dependent manner with percent litter incidences of 0% and 5.3% in the mid- and high-dose groups respectively. The plasma AUC exposure for the low dose of relebactam associated with increased cleft palate was approximately equivalent to the human plasma AUC at the MRHD. In embryofetal development studies in rats and rabbits, intravenous relebactam was administered to rats in doses of 50, 150, and 450 mg/kg/day and rabbits in doses of 35, 275, and 450 mg/kg/day. In these studies, relebactam administered during the period of organogenesis to pregnant rats (GD 6 to 20) and rabbits (GD 7 to 20) was not associated with maternal or embryofetal toxicity at doses up to 450 mg/kg/day corresponding to plasma AUC exposures of approximately 7 and 24 times, respectively, the human plasma AUC at the MRHD. In a pre-postnatal development study, relebactam administered intravenously in doses of 65, 200, and 450 mg/kg/day to rats from GD 6 to lactation day (LD) 20 produced no maternal toxicity and did not impair the physical and behavioral development or reproduction in first generation offspring at doses up to 450 mg/kg/day corresponding to a plasma AUC exposure of approximately 8 times the plasma AUC exposure in humans at the MRHD. Studies in pregnant rats and rabbits showed that relebactam is transferred to the fetus through the placenta, with fetal plasma concentrations up to 5% to 6% of maternal concentrations observed on GD 20.
+
+## 8 USE IN SPECIFIC POPULATIONS / 8.2 Lactation
+
+Risk Summary There are insufficient data on the presence of imipenem/cilastatin and relebactam in human milk, and no data on the effects on the breastfed child, or the effects on milk production. Relebactam is present in the milk of lactating rats (see Data ) . The developmental and health benefits of breastfeeding should be considered along with the mother's clinical need for RECARBRIO and any potential adverse effects on the breastfed child from RECARBRIO or from the underlying maternal condition.
+
+## 8 USE IN SPECIFIC POPULATIONS / 8.2 Lactation
+
+Data Relebactam administered intravenously to lactating rats at a dose of 450 mg/kg/day (GD 6 to LD 14), was excreted into the milk with concentrations of approximately 5% that of maternal plasma concentrations.
+
+## 8 USE IN SPECIFIC POPULATIONS / 8.4 Pediatric Use
+
+The safety and effectiveness of RECARBRIO for the treatment of HABP/VABP, and for the treatment of cUTI and cIAI in patients who have limited or no alternative treatment options have been established in pediatric patients weighing at least 2 kg. Use of RECARBRIO in pediatric patients is supported by evidence from an adequate and well-controlled trial of RECARBRIO in adults with HABP/VABP, controlled trials in adults with cUTI and cIAI, and additional pharmacokinetic, safety, and efficacy data from pediatric trials [see Clinical Pharmacology (12.3) and Clinical Studies (14.1 , 14.2 and 14.3) ] . The safety profile of RECARBRIO in pediatric patients from the pediatric trials was comparable to that in adults treated with RECARBRIO [see Adverse Reactions (6.1) ] . RECARBRIO is not recommended in pediatric patients less than 37 weeks post-menstrual age (gestational age at birth plus post-natal age) or weighing less than 30 kg with renal impairment. The safety and effectiveness of RECARBRIO for the treatment of HABP/VABP, cUTI or cIAI have not been established in pediatric patients weighing less than 2 kg.
+
+## 8 USE IN SPECIFIC POPULATIONS / 8.5 Geriatric Use
+
+Of the 266 patients treated with RECARBRIO in Trial 1, 113 (42.5%) were 65 years of age or older, including 55 (20.7%) patients 75 years of age and older. Of the 216 patients treated with imipenem/cilastatin plus relebactam 250 mg in Trials 2 and 3, 67 (31.0%) were 65 years of age or older, including 25 (11.6%) patients 75 years of age and older. No overall differences in safety or effectiveness were observed between these patients and younger patients, and other reported clinical experience has not identified differences in responses between the elderly and younger patients, but greater sensitivity of some older individuals cannot be ruled out. RECARBRIO is known to be substantially excreted by the kidney, and the risk of adverse reactions to this drug may be greater in patients with impaired renal function. Because elderly patients are more likely to have decreased renal function, care should be taken in dose selection, and it may be useful to monitor renal function. No dosage adjustment is required based on age. Dosage adjustment for elderly patients should be based on renal function [see Dosage and Administration (2.2) and Clinical Pharmacology (12.3) ].
+
+## 8 USE IN SPECIFIC POPULATIONS / 8.6 Renal Impairment
+
+Reduce RECARBRIO dosage in adult patients with a CLcr less than 90 mL/min and in pediatric patients weighing at least 30 kg with an eGFR less than 90 mL/min/1.73 m 2 [see Dosage and Administration (2.3 , 2.4) and Clinical Pharmacology (12.3) ] . RECARBRIO is not recommended in pediatric patients weighing less than 30 kg with renal impairment.
+
+## 12 CLINICAL PHARMACOLOGY / 12.4 Microbiology
+
+Mechanism of Action RECARBRIO is a combination of imipenem/cilastatin and relebactam. Imipenem is a penem antibacterial drug, cilastatin sodium is a renal dehydropeptidase inhibitor, and relebactam is a beta-lactamase inhibitor. Cilastatin limits the renal metabolism of imipenem and does not have antibacterial activity. The bactericidal activity of imipenem results from binding to PBP 2 and PBP 1B in Enterobacterales and Pseudomonas aeruginosa and the subsequent inhibition of penicillin binding proteins (PBPs). Inhibition of PBPs leads to the disruption of bacterial cell wall synthesis. Imipenem is stable in the presence of some beta-lactamases. Relebactam has no intrinsic antibacterial activity. Relebactam protects imipenem from degradation by certain serine beta-lactamases such as Sulfhydryl Variable (SHV), Temoneira (TEM), Cefotaximase-Munich (CTX-M), Enterobacter cloacae P99 (P99), Pseudomonas -derived cephalosporinase (PDC, AmpC-type), and Klebsiella-pneumoniae carbapenemase (KPC).
+
+## 12 CLINICAL PHARMACOLOGY / 12.4 Microbiology
+
+Resistance Clinical isolates may produce multiple beta-lactamases, express varying levels of beta-lactamases, have amino acid sequence variations, or have other resistance mechanisms that have not yet been identified. Culture and susceptibility information and local epidemiology should be considered in selecting or modifying antibacterial therapy. Mechanisms of beta lactam resistance in gram-negative organisms include the production of beta-lactamases, up-regulation of efflux pumps, and loss of outer membrane porins. Imipenem/relebactam retains activity in the presence of the tested efflux pumps. Imipenem/relebactam has shown activity against some isolates of P. aeruginosa and Enterobacterales that produce relebactam-susceptible beta-lactamases concomitant with loss of entry porins. Imipenem/relebactam is not active against most isolates containing metallo-betalactamases- (MBLs), some oxacillinases with carbapenemase activity, as well as certain alleles of GES. Imipenem/relebactam demonstrated in vitro activity against some Enterobacterales isolates genotypically characterized for some beta-lactamases and extended-spectrum beta-lactamases (ESBLs) of the following groups: KPC, TEM, SHV, CTX-M, CMY, DHA, and ACT/MIR. Many of the Enterobacterales isolates that were not susceptible to imipenem-relebactam were genotypically characterized and the genes encoding MBLs or certain oxacillinases were present. Imipenem/relebactam demonstrated in vitro activity against genotypically characterized P. aeruginosa isolates containing certain known resistance factors: some chromosomal PDC alleles with ESBLs, and some with loss of outer membrane porin (OprD) with or without co-expression of up-regulated efflux pumps (MexAB, MexCD, MexJK, and MexXY). Genotypically characterized P. aeruginosa isolates that were not susceptible to imipenem/relebactam encoded some MBL, KPC, PER, GES, VEB, and PDC alleles. Methicillin-resistant staphylococci should be considered resistant to imipenem. Imipenem is inactive in vitro against Enterococcus faecium, Stenotrophomonas maltophilia, and some isolates of Burkholderia cepacia. No cross-resistance with other classes of antimicrobials has been identified. Some isolates resistant to carbapenems (including imipenem) and to cephalosporins may be susceptible to RECARBRIO.
+
+## 12 CLINICAL PHARMACOLOGY / 12.4 Microbiology
+
+Interaction with Other Antimicrobials In vitro studies have demonstrated no antagonism between imipenem/relebactam and amikacin, azithromycin, aztreonam, colistin, gentamicin, levofloxacin, linezolid, tigecycline, tobramycin, or vancomycin.
+
+## 12 CLINICAL PHARMACOLOGY / 12.4 Microbiology
+
+Activity against Imipenem-Nonsusceptible Bacteria in Animal Infection Models Relebactam restored activity of imipenem/cilastatin in animal models of infection (e.g., mouse disseminated infection, mouse thigh infection, and mouse pulmonary infection) caused by imipenem-nonsusceptible KPC-producing Enterobacterales and imipenem-nonsusceptible P. aeruginosa (imipenem-nonsusceptible due to production of chromosomal PDC and loss of OprD porin).
+
+## 12 CLINICAL PHARMACOLOGY / 12.4 Microbiology
+
+Antimicrobial Activity RECARBRIO has been shown to be active against most isolates of the following bacteria, both in vitro and in clinical infections [see Indications and Usage (1.1) and (1.2) ] .
+
+## 12 CLINICAL PHARMACOLOGY / 12.4 Microbiology
+
+Hospital-acquired Bacterial Pneumonia and Ventilator-associated Bacterial Pneumonia (HABP/VABP) Aerobic Bacteria Gram-negative Bacteria Acinetobacter calcoaceticus-baumannii complex Enterobacter cloacae Escherichia coli Haemophilus influenzae Klebsiella aerogenes Klebsiella oxytoca Klebsiella pneumoniae Pseudomonas aeruginosa Serratia marcescens Complicated Urinary Tract Infections (cUTI) Aerobic Bacteria Gram-negative Bacteria Klebsiella aerogenes Enterobacter cloacae Escherichia coli Klebsiella pneumoniae Pseudomonas aeruginosa
+
+## 12 CLINICAL PHARMACOLOGY / 12.4 Microbiology
+
+Complicated Intra-abdominal Infections (cIAI) Aerobic Bacteria Gram-negative Bacteria Citrobacter freundii Klebsiella aerogenes Enterobacter cloacae Escherichia coli Klebsiella oxytoca Klebsiella pneumoniae Pseudomonas aeruginosa Anaerobic Bacteria Gram-negative Bacteria Bacteroides caccae Bacteroides fragilis Bacteroides ovatus Bacteroides stercoris Bacteroides thetaiotaomicron Bacteroides uniformis Bacteroides vulgatus Fusobacterium nucleatum Parabacteroides distasonis The following in vitro data are available, but their clinical significance is unknown. At least 90% of the following bacteria exhibit an in vitro MIC less than or equal to the susceptible breakpoint for RECARBRIO against isolates of similar genus or organism group. However, the efficacy of RECARBRIO in treating clinical infections due to these bacteria has not been established in adequate and well-controlled clinical trials. Aerobic Bacteria Gram-positive Bacteria Enterococcus faecalis Methicillin-susceptible Staphylococcus aureus Streptococcus anginosus Streptococcus constellatus Streptococcus pneumoniae Gram-negative Bacteria Citrobacter koseri Enterobacter asburiae Anaerobic Bacteria Gram-positive Bacteria Eggerthella lenta Parvimonas micra Peptoniphilus harei Peptostreptococcus anaerobius Gram-negative Bacteria Fusobacterium necrophorum Fusobacterium varium Parabacteroides goldsteinii Parabacteroides merdae Prevotella bivia Veillonella parvula
+
+## 12 CLINICAL PHARMACOLOGY / 12.4 Microbiology
+
+Susceptibility Test Methods For specific information regarding susceptibility testing methods, interpretive criteria, and associated test methods and quality control standards recognized by FDA for RECARBRIO, please see: https://www.fda.gov/STIC .

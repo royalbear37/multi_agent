@@ -1,6 +1,7 @@
 """FastAPI HTTP boundary for the local synthetic research prototype."""
 from __future__ import annotations
 import copy, json, os
+from contextlib import nullcontext
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Literal
@@ -45,21 +46,36 @@ class RunBody(BaseModel):
     provider_kind: Literal["unconfigured", "mock", "live"] = "unconfigured"
     request_id: str | None = Field(default=None, max_length=200)
     previous_run_id: str | None = None
+class DrugDecisionBody(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    drug_code: str = Field(min_length=1, max_length=200)
+    decision: Literal['adopt', 'conditional', 'decline']
+    reason: str = Field(min_length=1, max_length=4000)
+    conditions: str = Field(default='', max_length=4000)
+    acknowledged_warnings: bool = Field(default=False, strict=True)
+
+    @field_validator('drug_code', 'reason')
+    @classmethod
+    def nonblank(cls, value):
+        if not value.strip(): raise ValueError('must not be blank')
+        return value.strip()
+
 class ReviewBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
     run_id: str
-    action: Literal["accept", "modify", "reject"]
+    action: Literal["accept", "modify", "reject", "drug_review"]
     reason: str = Field(min_length=1, max_length=4000)
     reviewer_id: str = Field(min_length=1, max_length=200)
     role: Literal["doctor", "physician", "pharmacist", "research", "researcher", "admin"]
     proposed_output: dict[str, Any] | None = None
+    drug_decisions: list[DrugDecisionBody] = Field(default_factory=list, max_length=100)
 
-    @field_validator("reason")
+    @field_validator("reason", "reviewer_id")
     @classmethod
     def reason_not_blank(cls, value: str):
         value=value.strip()
         if not value:
-            raise ValueError("reason must not be blank")
+            raise ValueError("value must not be blank")
         return value
 class BenchmarkBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -104,6 +120,8 @@ def _public_run(run: dict[str, Any]) -> dict[str, Any]:
     # for display, so old one-call runs cannot be mistaken for five agents.
     if run.get("mode") == "multi-agent" and run.get("agent_execution") is None:
         public["display_mode"] = "multi-agent-legacy"
+    elif run.get('mode') == 'multi-agent' and str((run.get('agent_execution') or {}).get('workflow_version','')).startswith('multi-agent-v2'):
+        public['display_mode'] = 'multi-agent-v2'
     if run.get("agent_execution") is not None or run.get("mode") == "multi-agent-v2":
         from app.workflow.v2 import public_agent_nodes
         public["nodes"] = public_agent_nodes(public.get("nodes", []), publish=bool(public.get("output")) and public.get("gate_status") == "ready_for_review")
@@ -145,6 +163,13 @@ def agent_contracts_v2():
          "system_prompt": COMMON + " " + agent.instruction,
          "input_schema": agent.input_type.model_json_schema(),
          "output_schema": agent.output_type.model_json_schema()} for agent in AGENTS]}
+@app.get('/api/agents/contracts')
+def agent_contracts():
+    from app.agents.runtime_led import AGENTS, VERSION
+    from app.agents.citation_spans import selection_schema
+    return {'version': VERSION, 'agents': [{'agent_id': a.id, 'depends_on': a.dependencies,
+        'system_prompt': a.common + a.instruction, 'input_schema': a.input_type.model_json_schema(),
+        'output_schema': a.output_type.model_json_schema(), 'wire_output_schema': selection_schema(a.output_type)} for a in AGENTS]}
 @app.get("/api/cases", response_model=list[CaseRecord])
 def list_cases(include_legacy: bool = False):
     records = repo.list_cases()
@@ -227,7 +252,8 @@ def start_run(body: RunBody):
         try:
             def checkpoint(snapshot):
                 repo.save_run(rid, {**initial, **snapshot, "case_revision": item["revision"]})
-            result=engine.execute(item["case"],body.mode,body.provider_kind,docs,rid,checkpoint=checkpoint)
+            with docs.snapshot() if body.mode == 'multi-agent' and hasattr(docs, 'snapshot') else nullcontext(docs) as pinned:
+                result=engine.execute(item["case"],body.mode,body.provider_kind,pinned,rid,checkpoint=checkpoint)
         except Exception:
             result={**(repo.get_run(rid) or initial),"status":"failed","gate_status":"blocked","output":None,"errors":[{"code":"WORKFLOW_FAILED","detail":"工作流執行失敗，請查看已保存的節點狀態"}]}
     # Every run is an immutable snapshot of the case revision used to produce it.
@@ -256,14 +282,19 @@ def documents():
     svc=_documents()
     return svc.list_documents() if svc else []
 @app.post("/api/documents/import")
-async def import_document(file: UploadFile = File(...), title: str = Form(""), version: str = Form(""), is_synthetic: bool = Form(True), population: Literal["unspecified", "all", "adult", "pediatric", "mixed"] = Form("unspecified")):
+async def import_document(file: UploadFile = File(...), title: str = Form(""), version: str = Form(""), is_synthetic: bool = Form(True), population: Literal["unspecified", "all", "adult", "pediatric", "mixed"] = Form("unspecified"),
+    document_kind: Literal['reference','guideline','drug_label','research_article'] = Form('reference'),
+    study_design: Literal['not_recorded','observational','randomized_trial','systematic_review','other'] = Form('not_recorded'),
+    source_url: str = Form(''), jurisdiction: str = Form('')):
     if not file.filename or Path(file.filename).name != file.filename: raise HTTPException(400,"unsafe filename")
     if Path(file.filename).suffix.lower() not in {".pdf",".md",".markdown",".txt"}: raise HTTPException(422,"unsupported file format")
+    if source_url and not source_url.startswith(('https://', 'http://')): raise HTTPException(422,'source_url must be an HTTP(S) URL')
     content=await file.read()
     if len(content)>10*1024*1024: raise HTTPException(413,"file too large")
     svc=_documents()
     if svc is None: raise HTTPException(503,"DOCUMENT_SERVICE_NOT_AVAILABLE")
-    try: return svc.import_document(file.filename,content,title or file.filename,version or "unversioned",is_synthetic,population=population)
+    try: return svc.import_document(file.filename,content,title or file.filename,version or "unversioned",is_synthetic,population=population,
+        document_kind=document_kind,study_design=study_design,source_url=source_url or None,jurisdiction=jurisdiction or None)
     except ValueError as exc: raise HTTPException(422,str(exc))
 @app.get("/api/documents/search")
 def document_search(q: str = Query(...,min_length=1), limit: int = Query(8,ge=1,le=50), scope: Literal["synthetic", "reference"] = Query("synthetic")):
@@ -326,6 +357,23 @@ def _reject_forbidden(value: Any):
 def create_review(body: ReviewBody):
     run=repo.get_run(body.run_id)
     if not run: raise HTTPException(404,"RUN_NOT_FOUND")
+    if body.action == 'drug_review':
+        from app.workflow.physician_review import validate_drug_decisions
+        try:
+            if body.proposed_output is not None: raise ValueError('醫師決策不可覆寫系統輸出')
+            decisions=validate_drug_decisions(run, [d.model_dump() for d in body.drug_decisions], body.role)
+        except ValueError as exc:
+            raise HTTPException(422, detail={'code':'PHYSICIAN_REVIEW_INVALID','message':str(exc)})
+        review={'review_id':str(uuid4()),'run_id':body.run_id,'action':body.action,
+            'reason':body.reason,'reviewer_id':body.reviewer_id,'role':body.role,
+            'drug_decisions':decisions,'system_status_unchanged':True,
+            'case_revision':run.get('case_revision'),'case_snapshot':copy.deepcopy(run.get('case_snapshot')),
+            'source_versions':copy.deepcopy(run.get('versions')),
+            'original_output':copy.deepcopy(run.get('output')),'new_output':None,
+            'created_at':datetime.now(timezone.utc).isoformat(),'disclaimer':DISCLAIMER}
+        return repo.add_review(review['review_id'],body.run_id,body.action,review)
+    if body.drug_decisions:
+        raise HTTPException(422,'drug_decisions requires drug_review action')
     # Accept always reviews the stored run output.  Only modify may provide a
     # replacement, and an explicit empty object must not silently fall back.
     proposed=run.get("output") if body.action == "accept" else body.proposed_output
@@ -343,6 +391,13 @@ def create_review(body: ReviewBody):
     return repo.add_review(review["review_id"],body.run_id,body.action,review)
 @app.get("/api/reviews")
 def reviews(run_id: str | None = None): return repo.list_reviews(run_id)
+
+@app.get('/api/reviews/{review_id}/export')
+def export_review(review_id: str):
+    review=repo.get_review(review_id)
+    if not review: raise HTTPException(404,'REVIEW_NOT_FOUND')
+    return Response(content=json.dumps(review,ensure_ascii=False), media_type='application/json',
+        headers={'Content-Disposition':f'attachment; filename="review-{review_id}.json"'})
 @app.get("/api/rules")
 def rules():
     try:
@@ -353,6 +408,11 @@ def rules():
 
 @app.post("/api/benchmarks")
 def benchmark(body: BenchmarkBody):
+    service = _documents()
+    with service.snapshot() if hasattr(service, 'snapshot') else nullcontext(copy.deepcopy(service)) as pinned:
+        return _benchmark(body, pinned)
+
+def _benchmark(body: BenchmarkBody, documents_service):
     cases=body.case_ids or [x["case_id"] for x in list_cases()]
     if body.request_id:
         for old in repo.list_benchmarks():
@@ -363,8 +423,7 @@ def benchmark(body: BenchmarkBody):
     if any(item is None for item in case_inputs.values()):
         raise HTTPException(404, 'CASE_NOT_FOUND')
     from app.rules.engine import RuleEngine
-    pinned_rules=RuleEngine().snapshot()
-    documents_service=_documents()
+    pinned_rules=RuleEngine().snapshot() if any(m != 'multi-agent' for m in body.modes) else None
     frozen_evidence={}
     for cid, item in case_inputs.items():
         case=item['case']
@@ -382,7 +441,7 @@ def benchmark(body: BenchmarkBody):
             if not item: continue
             rid=str(uuid4()); engine=_engine()
             if engine:
-                try: result=engine.execute(item["case"],mode,body.provider_kind,FrozenDocuments(frozen_evidence[cid]),rid,rules_snapshot=pinned_rules)
+                try: result=engine.execute(item["case"],mode,body.provider_kind,documents_service if mode == 'multi-agent' else FrozenDocuments(frozen_evidence[cid]),rid,rules_snapshot=pinned_rules)
                 except Exception: result={"run_id":rid,"case_id":cid,"mode":mode,"status":"failed","errors":[{"code":"BENCHMARK_FAILED","detail":"benchmark workflow failed"}]}
             else: result={"run_id":rid,"case_id":cid,"mode":mode,"status":"not_configured"}
             if mode == "multi-agent":

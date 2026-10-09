@@ -70,6 +70,22 @@
         }
       }
     },
+    "/api/agents/contracts": {
+      "get": {
+        "summary": "Agent Contracts",
+        "operationId": "agent_contracts_api_agents_contracts_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/cases": {
       "get": {
         "summary": "List Cases",
@@ -890,6 +906,43 @@
         }
       }
     },
+    "/api/reviews/{review_id}/export": {
+      "get": {
+        "summary": "Export Review",
+        "operationId": "export_review_api_reviews__review_id__export_get",
+        "parameters": [
+          {
+            "name": "review_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Review Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/rules": {
       "get": {
         "summary": "Rules",
@@ -1240,6 +1293,87 @@
               }
             ],
             "title": "Severity"
+          },
+          "label_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label Source"
+          },
+          "occurred_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Occurred At",
+            "description": "Recorded event date or approximate time; never invent an exact date"
+          },
+          "verification_status": {
+            "type": "string",
+            "enum": [
+              "not_recorded",
+              "unverified",
+              "confirmed",
+              "ruled_out",
+              "conflicting"
+            ],
+            "title": "Verification Status",
+            "default": "not_recorded"
+          },
+          "verification_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verification Note"
+          },
+          "verification_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verification Source"
+          },
+          "verified_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified By"
+          },
+          "verified_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified At"
           }
         },
         "additionalProperties": false,
@@ -1331,6 +1465,39 @@
             ],
             "title": "Population",
             "default": "unspecified"
+          },
+          "document_kind": {
+            "type": "string",
+            "enum": [
+              "reference",
+              "guideline",
+              "drug_label",
+              "research_article"
+            ],
+            "title": "Document Kind",
+            "default": "reference"
+          },
+          "study_design": {
+            "type": "string",
+            "enum": [
+              "not_recorded",
+              "observational",
+              "randomized_trial",
+              "systematic_review",
+              "other"
+            ],
+            "title": "Study Design",
+            "default": "not_recorded"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url",
+            "default": ""
+          },
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction",
+            "default": ""
           }
         },
         "type": "object",
@@ -1436,6 +1603,34 @@
             },
             "type": "array",
             "title": "Medications"
+          },
+          "medication_history_status": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "reviewed_none",
+              "reviewed_list"
+            ],
+            "title": "Medication History Status",
+            "default": "unknown"
+          },
+          "clinical_history": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Clinical History"
+          },
+          "vitals": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Vitals"
+          },
+          "resistance_context": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Resistance Context"
           },
           "resistance_context_ref": {
             "items": {
@@ -1634,6 +1829,50 @@
           "expected_revision"
         ],
         "title": "DocumentPopulationBody"
+      },
+      "DrugDecisionBody": {
+        "properties": {
+          "drug_code": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Drug Code"
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "adopt",
+              "conditional",
+              "decline"
+            ],
+            "title": "Decision"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Reason"
+          },
+          "conditions": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Conditions",
+            "default": ""
+          },
+          "acknowledged_warnings": {
+            "type": "boolean",
+            "title": "Acknowledged Warnings",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "drug_code",
+          "decision",
+          "reason"
+        ],
+        "title": "DrugDecisionBody"
       },
       "Encounter": {
         "properties": {
@@ -1979,6 +2218,40 @@
             ],
             "title": "Egfr"
           },
+          "crcl": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Crcl"
+          },
+          "crcl_unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Crcl Unit"
+          },
+          "crcl_calculation_method": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Crcl Calculation Method"
+          },
           "unit": {
             "anyOf": [
               {
@@ -2040,7 +2313,8 @@
             "enum": [
               "accept",
               "modify",
-              "reject"
+              "reject",
+              "drug_review"
             ],
             "title": "Action"
           },
@@ -2079,6 +2353,14 @@
               }
             ],
             "title": "Proposed Output"
+          },
+          "drug_decisions": {
+            "items": {
+              "$ref": "#/components/schemas/DrugDecisionBody"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Drug Decisions"
           }
         },
         "additionalProperties": false,

@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="https://www.accessdata.fda.gov/spl/stylesheet/spl.xsl" type="text/xsl"?>
+<document xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 https://www.accessdata.fda.gov/spl/schema/spl.xsd">
+   <id root="82bcf84a-7f49-423c-a1ec-17befb33993d"/>
+   <code code="34391-3" codeSystem="2.16.840.1.113883.6.1" displayName="HUMAN PRESCRIPTION DRUG LABEL"/>
+   <title>Fosfomycin Tromethamine Granules for Oral Solution<br/> Rx only</title>
+   <effectiveTime value="20231124"/>
+   <setId root="99becde1-fca5-4d82-8c3e-36ded62fc0d1"/>
+   <versionNumber value="5"/>
+   <author>
+      <assignedEntity>
+         <representedOrganization>
+            <id extension="830016429" root="1.3.6.1.4.1.519.1"/>
+            <name>A-S Medication Solutions</name>
+            <assignedEntity>
+               <assignedOrganization>
+                  <assignedEntity>
+                     <assignedOrganization>
+                        <id extension="830016429" root="1.3.6.1.4.1.519.1"/>
+                        <name>A-S Medication Solutions</name>
+                     </assignedOrganization>
+                     <performance>
+                        <actDefinition>
+                           <code code="C73607" displayName="RELABEL" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="50090-5826" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                  </assignedEntity>
+               </assignedOrganization>
+            </assignedEntity>
+         </representedOrganization>
+      </assignedEntity>
+   </author>
+   <component>
+      <structuredBody>
+         <component>
+            <section>
+               <id root="39b4a93d-9160-4e72-97f4-2774c42dc508"/>
+               <code code="48780-1" displayName="SPL PRODUCT DATA ELEMENTS SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <effectiveTime value="20201111"/>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code codeSystem="2.16.840.1.113883.6.69" code="50090-5826"/>
+                        <name>FOSFOMYCIN TROMETHAMINE</name>
+                        <formCode code="C42972" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="POWDER"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>Granules for Oral</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <asEquivalentEntity classCode="EQUIV">
+                           <code code="C64637" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <definingMaterialKind>
+                              <code code="70700-268" codeSystem="2.16.840.1.113883.6.69"/>
+                           </definingMaterialKind>
+                        </asEquivalentEntity>
+                        <ingredient classCode="ACTIM">
+                           <quantity>
+                              <numerator unit="g" value="3"/>
+                              <denominator unit="1" value="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="7FXW6U30GY" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>FOSFOMYCIN TROMETHAMINE</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="2N81MY12TE" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>FOSFOMYCIN</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="KH3E3096OO" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>TANGERINE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="5EVU04N5QU" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>ORANGE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="FST467XS7D" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>SACCHARIN</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="C151H8M554" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>SUCROSE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator value="1" unit="1"/>
+                              <denominator value="1" unit="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <formCode code="C43192" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="DOSE PACK"/>
+                              <asContent>
+                                 <quantity>
+                                    <numerator value="1" unit="1"/>
+                                    <denominator value="1"/>
+                                 </quantity>
+                                 <containerPackagedProduct>
+                                    <code code="50090-5826-0" codeSystem="2.16.840.1.113883.6.69"/>
+                                    <formCode code="C43182" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="CARTON"/>
+                                 </containerPackagedProduct>
+                                 <subjectOf>
+                                    <marketingAct>
+                                       <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                       <statusCode code="active"/>
+                                       <effectiveTime>
+                                          <low value="20211026"/>
+                                       </effectiveTime>
+                                    </marketingAct>
+                                 </subjectOf>
+                              </asContent>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <approval>
+                           <id extension="ANDA212548" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73584" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ANDA"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code codeSystem="1.0.3166.1.2.3" code="USA"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20201006"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38288" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ORAL"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+               <component>
+                  <section>
+                     <id root="ffc7da2a-f6e3-477d-a65f-d09d1aaea1ae"/>
+                     <code code="42229-5" displayName="SPL UNCLASSIFIED SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="_5106d5a7-c356-c514-4c85-f464ad634649">
+               <id root="1815ad8a-1ddd-48d9-8fa0-d70e624fb20e"/>
+               <code code="34089-3" displayName="DESCRIPTION SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">DESCRIPTION</content>
+               </title>
+               <text>
+                  <paragraph>Fosfomycin Tromethamine Granules for Oral Solution contains fosfomycin tromethamine, a synthetic, broad spectrum, bactericidal antibiotic for oral administration. It is available as a single-dose sachet which contains white granules consisting of 5.631 grams of fosfomycin tromethamine (equivalent to 3 grams of fosfomycin), and the following inactive ingredients: mandarin flavor, orange flavor, saccharin, and sucrose.The contents of the sachet must be dissolved in water. Fosfomycin tromethamine, a phosphonic acid derivative, is available as (1R,2S)-(1,2-epoxypropyl)phosphonic acid, compound with 2-amino-2-(hydroxymethyl)-1,3-propanediol (1:1). It is a white granular compound with a molecular weight of 259.2. Its empirical formula is C<sub>3</sub>H<sub>7</sub>O<sub>4</sub>P.C<sub>4</sub>H<sub>11</sub>NO<sub>3</sub>, and its chemical structure is as follows:</paragraph>
+                  <paragraph>
+                     <renderMultiMedia referencedObject="MM03000001"/>
+                  </paragraph>
+               </text>
+               <effectiveTime value="20201006"/>
+               <component>
+                  <observationMedia ID="MM03000001">
+                     <text> The chemical structure for Fosfomycin Tromethamine Granules for Oral Solution contains fosfomycin tromethamine, a synthetic, broad spectrum, bactericidal antibiotic for oral administration. It is available as a single-dose sachet which contains white granules consisting of 5.631 grams of fosfomycin tromethamine (equivalent to 3 grams of fosfomycin), and the following inactive ingredients: mandarin flavor, orange flavor, saccharin, and sucrose. The contents of the sachet must be dissolved in water. Fosfomycin tromethamine, a phosphonic acid derivative, is available as (1R,2S)-(1,2-epoxypropyl)phosphonic acid, compound with 2-amino-2-(hydroxymethyl)-1,3-propanediol (1:1). It is a white granular compound with a molecular weight of 259.2. </text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="fosfomycin-01.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="_7d428ef6-d0e5-2f67-c88a-905310a82eea">
+               <id root="861b131f-71a1-468d-a57e-453b52bd4f61"/>
+               <code code="34090-1" displayName="CLINICAL PHARMACOLOGY SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">CLINICAL PHARMACOLOGY</content>
+               </title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">Absorption: </content>Fosfomycin tromethamine is rapidly absorbed following oral administration and converted to the free acid, fosfomycin. Absolute oral bioavailability under fasting conditions is 37%. After a single 3-gram dose of Fosfomycin Tromethamine, the mean (± 1 SD) maximum serum concentration (C<sub>max</sub>) achieved was 26.1 (± 9.1) mcg/mL within 2 hours. The oral bioavailability of fosfomycin is reduced to 30% under fed conditions. Following a single 3-gram oral dose of Fosfomycin Tromethamine with a high-fat meal, the mean C<sub>max</sub> achieved was 17.6 (± 4.4) mcg/mL within 4 hours. </paragraph>
+                  <paragraph>Cimetidine does not affect the pharmacokinetics of fosfomycin when coadministered with Fosfomycin Tromethamine. Metoclopramide lowers the serum concentrations and urinary excretion of fosfomycin when coadministered with Fosfomycin Tromethamine. (See <content styleCode="bold">
+                        <linkHtml href="#_Drug_Interactions">PRECAUTIONS, Drug Interactions</linkHtml>
+                     </content>.)</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Distribution: </content>The mean apparent steady-state volume of distribution (V<sub>ss</sub>) is 136.1 (±44.1) L following oral administration of Fosfomycin Tromethamine. Fosfomycin is not bound to plasma proteins.</paragraph>
+                  <paragraph>Fosfomycin is distributed to the kidneys, bladder wall, prostate, and seminal vesicles. Following a 50 mg/kg dose of fosfomycin to patients undergoing urological surgery for bladder carcinoma, the mean concentration of fosfomycin in the bladder, taken at a distance from the neoplastic site, was 18.0 mcg per gram of tissue at 3 hours after dosing. Fosfomycin has been shown to cross the placental barrier in animals and man.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Excretion: </content>Fosfomycin is excreted unchanged in both urine and feces. Following oral administration of Fosfomycin Tromethamine, the mean total body clearance (CL<sub>TB</sub>) and mean renal clearance (CL<sub>R</sub>) of fosfomycin were 16.9 (± 3.5) L/hr and 6.3 (± 1.7) L/hr, respectively. Approximately 38% of a 3-gram dose of Fosfomycin Tromethamine is recovered from urine, and 18% is recovered from feces. Following intravenous administration, the mean CL<sub>TB</sub> and mean CL<sub>R</sub> of fosfomycin were 6.1 (±1.0) L/hr and 5.5 (± 1.2) L/hr, respectively.</paragraph>
+                  <paragraph>A mean urine fosfomycin concentration of 706 (± 466) mcg/mL was attained within 2-4 hours after a single oral 3-gm dose of Fosfomycin Tromethamine under fasting conditions. The mean urinary concentration of fosfomycin was 10 mcg/mL in samples collected 72-84 hours following a single oral dose of Fosfomycin Tromethamine.</paragraph>
+                  <paragraph>Following a 3-gram dose of Fosfomycin Tromethamine administered with a high fat meal, a mean urine fosfomycin concentration of 537 (± 252) mcg/mL was attained within 6-8 hours. Although the rate of urinary excretion of fosfomycin was reduced under fed conditions, the cumulative amount of fosfomycin excreted in the urine was the same, 1118 (± 201) mg (fed) vs. 1140 mg (± 238) (fasting). Further, urinary concentrations equal to or greater than 100 mcg/mL were maintained for the same duration, 26 hours, indicating that Fosfomycin Tromethamine can be taken without regard to food.</paragraph>
+                  <paragraph>Following oral administration of Fosfomycin Tromethamine, the mean half-life for elimination (t<sub>1/2</sub>) is 5.7 (± 2.8) hours.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Special Populations:</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Geriatric: </content>Based on limited data regarding 24-hour urinary drug concentrations, no differences in urinary excretion of fosfomycin have been observed in elderly subjects. No dosage adjustment is necessary in the elderly.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Gender: </content>There are no gender differences in the pharmacokinetics of fosfomycin.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Renal Insufficiency: </content>In 5 anuric patients undergoing hemodialysis, the t<sub>1/2</sub> of fosfomycin during hemodialysis was 40 hours. In patients with varying degrees of renal impairment (creatinine clearances varying from 54 mL/min to 7 mL/min), the t<sub>1/2</sub> of fosfomycin increased from 11 hours to 50 hours. The percent of fosfomycin recovered in urine decreased from 32% to 11% indicating that renal impairment significantly decreases the excretion of fosfomycin.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Microbiology</content>
+                  </paragraph>
+                  <paragraph>Fosfomycin (the active component of fosfomycin tromethamine) has <content styleCode="italics">in vitro </content>activity against a broad range of gram-positive and gram-negative aerobic microorganisms which are associated with uncomplicated urinary tract infections. Fosfomycin is bactericidal in urine at therapeutic doses. The bactericidal action of fosfomycin is due to its inactivation of the enzyme enolpyruvyl transferase, thereby irreversibly blocking the condensation of uridine diphosphate-N-acetylglucosamine with p-enolpyruvate, one of the first steps in bacterial cell wall synthesis. It also reduces adherence of bacteria to uroepithelial cells.</paragraph>
+                  <paragraph>There is generally no cross-resistance between fosfomycin and other classes of antibacterial agents such as beta-lactams and aminoglycosides.</paragraph>
+                  <paragraph>Fosfomycin has been shown to be active against most strains of the following microorganisms, both <content styleCode="italics">in vitro </content>and in clinical infections as described in the <content styleCode="bold">INDICATIONS AND USAGE </content>section:</paragraph>
+                  <paragraph>
+                     <content styleCode="bold underline">Aerobic gram-positive microorganisms</content>
+                     <br/>
+                     <content styleCode="italics">Enterococcus faecalis</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold underline">Aerobic gram-negative microorganisms</content>
+                     <br/>
+                     <content styleCode="italics">Escherichia coli</content>
+                  </paragraph>
+                  <paragraph>The following <content styleCode="italics">in vitro </content>data are available, <content styleCode="bold underline">but their</content>
+                     <content styleCode="bold underline"> </content>
+                     <content styleCode="bold underline">clinical significance is unknown.</content>
+                  </paragraph>
+                  <paragraph>Fosfomycin exhibits <content styleCode="italics">in vitro </content>minimum inhibitory concentrations (MIC’s) of 64 mcg/mL or less against most (≥ 90%) strains of the following microorganisms; however, the safety and effectiveness of fosfomycin in treating clinical infections due to these microorganisms has not been established in adequate and well-controlled clinical trials:</paragraph>
+                  <paragraph>
+                     <content styleCode="bold underline">Aerobic gram-positive microorganisms</content>
+                     <br/>
+                     <content styleCode="italics">Enterococcus faecium</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold underline">Aerobic gram-negative microorganisms</content>
+                     <br/>
+                     <content styleCode="italics">Citrobacter diversus</content>
+                     <br/>
+                     <content styleCode="italics">Citrobacter freundii</content>
+                     <br/>
+                     <content styleCode="italics">Enterobacter aerogenes</content>
+                     <br/>
+                     <content styleCode="italics">Klebsiella oxytoca</content>
+                     <br/>
+                     <content styleCode="italics">Klebsiella pneuomoniae</content>
+                     <br/>
+                     <content styleCode="italics">Proteus mirabilis</content>
+                     <br/>
+                     <content styleCode="italics">Proteus vulgaris</content>
+                     <br/>
+                     <content styleCode="italics">Serratia marcescens</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold underline">SUSCEPTIBILITY TESTING</content>
+                  </paragraph>
+                  <paragraph>For specific information regarding susceptibility test interpretive criteria and associated test methods and quality control standards recognized by FDA for this drug, please see: https://www.fda.gov/STIC.</paragraph>
+               </text>
+               <effectiveTime value="20201006"/>
+            </section>
+         </component>
+         <component>
+            <section ID="_7140538b-196e-f2dc-14d7-1ca079e27331">
+               <id root="47ae423e-3a76-4255-a893-eeb5a2552379"/>
+               <code code="34067-9" displayName="INDICATIONS &amp; USAGE SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">INDICATIONS AND USAGE</content>
+               </title>
+               <text>
+                  <paragraph>Fosfomycin Tromethamine is indicated only for the treatment of uncomplicated urinary tract infections (acute cystitis) in women due to susceptible strains of <content styleCode="italics">Escherichia coli and Enterococcus faecalis</content>. Fosfomycin Tromethamine is not indicated for the treatment of pyelonephritis or perinephric abscess.</paragraph>
+                  <paragraph>If persistence or reappearance of bacteriuria occurs after treatment with Fosfomycin Tromethamine, other therapeutic agents should be selected. (See <content styleCode="bold">
+                        <linkHtml href="#_PRECAUTIONS">PRECAUTIONS</linkHtml>
+                     </content>
+                     <content styleCode="bold"> </content>and <content styleCode="bold">
+                        <linkHtml href="#_CLINICAL_STUDIES">CLINICAL STUDIES</linkHtml>
+                     </content>
+                     <content styleCode="bold"> </content>sections.)</paragraph>
+               </text>
+               <effectiveTime value="20201006"/>
+            </section>
+         </component>
+         <component>
+            <section ID="_164611ad-69d5-c747-f639-ad89746788a7">
+               <id root="920e318d-fa0a-4203-81d9-57732a67ee5f"/>
+               <code code="34070-3" displayName="CONTRAINDICATIONS SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">CONTRAINDICATIONS</content>
+               </title>
+               <text>
+                  <paragraph>Fosfomycin Tromethamine is contraindicated in patients with known hypersensitivity to the drug.</paragraph>
+               </text>
+               <effectiveTime value="20201006"/>
+            </section>
+         </component>
+         <component>
+            <section ID="_a0fa9843-d840-97c5-0bfd-802f5e901c46">
+               <id root="321e4fe8-d31b-4483-a263-4bd9cf1b8c36"/>
+               <code code="34071-1" displayName="WARNINGS SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">WARNINGS</content>
+               </title>
+               <text>
+                  <paragraph>
+                     <content styleCode="italics">Clostridium difficile</content> associated diarrhea (CDAD) has been reported with use of nearly all antibacterial agents, including Fosfomycin Tromethamine, and may range in severity from mild diarrhea to fatal colitis. Treatment with antibacterial agents alters the normal flora of the colon leading to overgrowth of <content styleCode="italics">C. difficile</content>.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">C. difficile</content> produces toxins A and B which contribute to the development of CDAD. Hypertoxin producing strains of <content styleCode="italics">C. difficile</content> cause increased morbidity and mortality, as these infections can be refractory to antimicrobial therapy and may require colectomy. CDAD must be considered in all patients who present with diarrhea following antibiotic use. Careful medical history is necessary since CDAD has been reported to occur over two months after the administration of antibacterial agents.</paragraph>
+                  <paragraph>If CDAD is suspected or confirmed, ongoing antibiotic use not directed against <content styleCode="italics">C.</content> <content styleCode="italics">difficile</content> may need to be discontinued. Appropriate fluid and electrolyte management, protein supplementation, antibiotic treatment of <content styleCode="italics">C. difficile</content>, and surgical evaluation should be instituted as clinically indicated.</paragraph>
+               </text>
+               <effectiveTime value="20201006"/>
+            </section>
+         </component>
+         <component>
+            <section ID="_PRECAUTIONS">
+               <id root="11d2054a-bfff-4e9b-a12b-56a8330ad2ed"/>
+               <code code="42232-9" displayName="PRECAUTIONS SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">PRECAUTIONS</content>
+               </title>
+               <effectiveTime value="20201006"/>
+               <component>
+                  <section ID="_b968a89f-02f3-7d1f-2da4-4e4f4e63d1aa">
+                     <id root="d1a4a0f9-5eb7-481f-95ef-baf1d9b78bbc"/>
+                     <code code="34072-9" displayName="GENERAL PRECAUTIONS SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <title>
+                        <content styleCode="bold">General</content>
+                     </title>
+                     <text>
+                        <paragraph>Do not use more than one single dose of Fosfomycin Tromethamine to treat a single episode of acute cystitis. Repeated daily doses of Fosfomycin Tromethamine did not improve the clinical success or microbiological eradication rates compared to single dose therapy, but did increase the incidence of adverse events. Urine specimens for culture and susceptibility testing should be obtained before and after completion of therapy.</paragraph>
+                     </text>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_e7404e71-8d47-cd2d-64c4-b53673e4f621">
+                     <id root="bc5bd6d2-ada3-40a7-b356-5ae8e9b72198"/>
+                     <code code="34076-0" displayName="INFORMATION FOR PATIENTS SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <title>
+                        <content styleCode="bold">Information for Patients</content>
+                     </title>
+                     <text>
+                        <paragraph>Patients should be informed:</paragraph>
+                        <list listType="unordered" styleCode="Disc">
+                           <item>That Fosfomycin Tromethamine can be taken with or without food.<br/>
+                           </item>
+                           <item>That their symptoms should improve in two to three days after taking Fosfomycin Tromethamine; if not improved, the patient should contact her health care provider.<br/>
+                           </item>
+                           <item>Diarrhea is a common problem caused by antibiotics which usually ends when the antibiotic is discontinued. Sometimes after starting treatment with antibiotics, patients can develop watery and bloody stools (with or without stomach cramps and fever) even as late as two or more months after having taken the last dose of the antibiotic. If this occurs, patients should contact their physician as soon as possible.</item>
+                        </list>
+                     </text>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_Drug_Interactions">
+                     <id root="2f5114fd-2660-43f6-a68e-22e8a48b0ef1"/>
+                     <code code="34073-7" displayName="DRUG INTERACTIONS SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <title>
+                        <content styleCode="bold">Drug Interactions</content>
+                     </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="italics">Metoclopramide: </content>When coadministered with Fosfomycin Tromethamine, metoclopramide, a drug which increases gastrointestinal motility, lowers the serum concentration and urinary excretion of fosfomycin. Other drugs that increase gastrointestinal motility may produce similar effects.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Cimetidine: </content>Cimetidine does not affect the pharmacokinetics of fosfomycin when coadministered with Fosfomycin Tromethamine.</paragraph>
+                     </text>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_d46091d7-5454-5d39-27e3-9c761711067d">
+                     <id root="400a28c6-4bc6-4829-9e2b-07e7019348fe"/>
+                     <code code="34083-6" displayName="CARCINOGENESIS &amp; MUTAGENESIS &amp; IMPAIRMENT OF FERTILITY SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <title>
+                        <content styleCode="bold">Carcinogenesis, Mutagenesis, Impairment of Fertility</content>
+                     </title>
+                     <text>
+                        <paragraph>Long term carcinogenicity studies in rodents have not been conducted because Fosfomycin Tromethamine is intended for single dose treatment in humans. Fosfomycin Tromethamine was not mutagenic or genotoxic in the <content styleCode="italics">in vitro </content>Ames’ bacterial reversion test, in cultured human lymphocytes, in Chinese hamster V79 cells, and the <content styleCode="italics">in vivo</content>
+                           <content styleCode="italics"> </content>mouse micronucleus assay. Fosfomycin Tromethamine did not affect fertility or reproductive performance in male and female rats.</paragraph>
+                     </text>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_1da140ab-bad8-8f19-b17d-cd55593dd471">
+                     <id root="328691cc-2268-4591-878f-ce98938a2d73"/>
+                     <code code="42228-7" displayName="PREGNANCY SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <title>
+                        <content styleCode="bold">Pregnancy: </content>
+                     </title>
+                     <text>
+                        <paragraph>Teratogenic Effects</paragraph>
+                        <paragraph>When administered intramuscularly as the sodium salt at a dose of 1 gram to pregnant women, fosfomycin crosses the placental barrier. Fosfomycin Tromethamine crosses the placental barrier of rats; it does not produce teratogenic effects in pregnant rats at dosages as high as 1000 mg/kg/day (approximately 9 and 1.4 times the human dose based on body weight and mg/m<sup>2</sup>, respectively). When administered to pregnant female rabbits at dosages as high as 1000 mg/kg/day (approximately 9 and 2.7 times the human dose based on body weight and mg/m<sup>2</sup>, respectively), fetotoxicities were observed. However, these toxicities were seen at maternally toxic doses and were considered to be due to the sensitivity of the rabbit to changes in the intestinal microflora resulting from the antibiotic administration. There are, however, no adequate and well-controlled studies in pregnant women. Because animal reproduction studies are not always predictive of human response, this drug should be used during pregnancy only if clearly needed.</paragraph>
+                     </text>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_49053ae2-933d-2ddc-7344-2bc6075a1ab3">
+                     <id root="6132ad65-b476-484d-a23f-fbeb2c0e6bf0"/>
+                     <code code="34080-2" displayName="NURSING MOTHERS SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <title>
+                        <content styleCode="bold">Nursing Mothers</content>
+                     </title>
+                     <text>
+                        <paragraph>It is not known whether fosfomycin tromethamine is excreted in human milk. Because many drugs are excreted in human milk and because of the potential for serious adverse reactions in nursing infants from Fosfomycin Tromethamine, a decision should be made whether to discontinue nursing or to not administer the drug, taking into account the importance of the drug to the mother.</paragraph>
+                     </text>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_9246adf6-f04d-2056-6c2c-2b84c5420d05">
+                     <id root="c2a5e44a-8fdb-4f12-b1ea-3398fd0b797c"/>
+                     <code code="34081-0" displayName="PEDIATRIC USE SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <title>
+                        <content styleCode="bold">Pediatric Use</content>
+                     </title>
+                     <text>
+                        <paragraph>Safety and effectiveness in children age 12 years and under have not been established in adequate and well-controlled studies.</paragraph>
+                     </text>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_0195d5f3-ecc7-42ae-70f8-02b385d15241">
+                     <id root="b9ca234d-a060-4a3f-8310-f4685a8be50d"/>
+                     <code code="34082-8" displayName="GERIATRIC USE SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <title>
+                        <content styleCode="bold">Geriatric Use</content>
+                     </title>
+                     <text>
+                        <paragraph>Clinical studies of Fosfomycin Tromethamine did not include sufficient numbers of subjects aged 65 and over to determine whether they respond differently from younger subjects. Other reported clinical experience has not identified differences in responses between the elderly and younger patients. In general, dose selection for an elderly patient should be cautious, usually starting at the low end of the dosing range, reflecting the greater frequency of decreased hepatic, renal, or cardiac function, and of concomitant disease or other drug therapy.</paragraph>
+                     </text>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="_10ed6a49-ea49-fa96-e9cb-217cc2683f9c">
+               <id root="28378e98-0d42-4b58-bc00-dbcebc308ab6"/>
+               <code code="34084-4" displayName="ADVERSE REACTIONS SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">ADVERSE REACTIONS</content>
+               </title>
+               <effectiveTime value="20201006"/>
+               <component>
+                  <section ID="_4d38a17c-4ffa-cb08-43ae-4998cd08cc94">
+                     <id root="10589468-fc82-4095-8de0-e0338cf3965f"/>
+                     <code code="34092-7" displayName="CLINICAL STUDIES SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <title>
+                        <content styleCode="bold">Clinical Trials:</content>
+                     </title>
+                     <text>
+                        <paragraph>In clinical studies, drug related adverse events which were reported in greater than 1% of the fosfomycin-treated study population are listed below:</paragraph>
+                        <table>
+                           <col width="111"/>
+                           <col width="113"/>
+                           <col width="118"/>
+                           <col width="133"/>
+                           <col width="116"/>
+                           <tbody>
+                              <tr>
+                                 <td colspan="5" styleCode="Toprule Lrule Rrule">       <content styleCode="bold">Drug-Related Adverse Events (%) in Fosfomycin and Comparator Populations</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Toprule Lrule Rrule">
+                                    <content styleCode="bold">Adverse</content>
+                                    <br/>
+                                    <content styleCode="bold">Events</content>
+                                 </td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">
+                                    <content styleCode="bold">Fosfomycin</content>
+                                    <br/>
+                                    <content styleCode="bold">N=1233</content>
+                                 </td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">
+                                    <content styleCode="bold">Nitrofurantoin</content>
+                                    <br/>
+                                    <content styleCode="bold">N=374</content>
+                                 </td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">
+                                    <content styleCode="bold">Trimethoprim/</content>
+                                    <br/>
+                                    <content styleCode="bold">sulfamethoxazole</content>
+                                    <br/>
+                                    <content styleCode="bold">N=428</content>
+                                 </td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">
+                                    <content styleCode="bold">Ciprofoxacin</content>
+                                    <br/>
+                                    <content styleCode="bold">N=455</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Toprule Lrule Rrule">Diarrhea</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">9.0</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">6.4</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">2.3</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">3.1</td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Toprule Lrule Rrule">Vaginitis</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">5.5</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">5.3</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">4.7</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">6.3</td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Toprule Lrule Rrule">Nausea</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">4.1</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">7.2</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">8.6</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">3.4</td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Toprule Lrule Rrule">Headache</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">3.9</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">5.9</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">5.4</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">3.4</td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Toprule Lrule Rrule">Dizziness</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">1.3</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">1.9</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">2.3</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">2.2</td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Toprule Lrule Rrule">Asthenia</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">1.1</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">0.3</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">0.5</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">0.0</td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Toprule Lrule Rrule">Dyspepsia</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">1.1</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">2.1</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">0.7</td>
+                                 <td align="center" styleCode="Toprule Lrule Rrule">1.1</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>In clinical trials, the most frequently reported adverse events occurring in &gt; 1% of the study population regardless of drug relationship were: diarrhea 10.4%, headache 10.3%, vaginitis 7.6%, nausea 5.2%, rhinitis 4.5%, back pain 3.0%, dysmenorrheal 2.6%, pharyngitis 2.5%, dizziness 2.3%, abdominal pain 2.2%, pain 2.2%, dyspepsia 1.8%, asthenia 1.7%, and rash 1.4%.</paragraph>
+                        <paragraph>The following adverse events occurred in clinical trials at a rate of less than 1%, regardless of drug relationship: abnormal stools, anorexia, constipation, dry mouth, dysuria, ear disorder, fever, flatulence, flu syndrome, hematuria, infection, insomnia, lymphadenopathy, menstrual disorder, migraine, myalgia, nervousness, paresthesia, pruritus, SGPT increased, skin disorder, somnolence, and vomiting.</paragraph>
+                        <paragraph>One patient developed unilateral optic neuritis, an event considered possibly related to Fosfomycin Tromethamine therapy.</paragraph>
+                     </text>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_83b76ba0-446b-1b32-6f65-0c4e19ce51f8">
+                     <id root="675113b4-6c4c-4378-a4a7-9a9c48bcfb0e"/>
+                     <code code="42229-5" displayName="SPL UNCLASSIFIED SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <title>
+                        <content styleCode="bold">Post-marketing Experience:</content>
+                     </title>
+                     <text>
+                        <paragraph>Serious adverse events from the marketing experience with Fosfomycin Tromethamine outside of the United States have been rarely reported and include: angioedema, aplastic anemia, asthma (exacerbation), cholestatic jaundice, hepatic necrosis, and toxic megacolon.</paragraph>
+                        <paragraph>Although causality has not been established, during post marketing surveillance, the following events have occurred in patients prescribed Fosfomycin Tromethamine: anaphylaxis and hearing loss.</paragraph>
+                     </text>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_98a882a4-4b03-0887-19bc-07c23fb7c93e">
+                     <id root="6385220a-92a0-42d1-8631-cf58383f2b18"/>
+                     <code code="42229-5" displayName="SPL UNCLASSIFIED SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+                     <title>
+                        <content styleCode="bold">Laboratory Changes:</content>
+                     </title>
+                     <text>
+                        <paragraph>Significant laboratory changes reported in U.S. clinical trials of Fosfomycin Tromethamine without regard to drug relationship include: increased eosinophil count, increased or decreased WBC count, increased bilirubin, increased SGPT, increased SGOT, increased alkaline phosphatase, decreased hematocrit, decreased hemoglobin, increased and decreased platelet count. The changes were generally transient and were not clinically significant.</paragraph>
+                     </text>
+                     <effectiveTime value="20190206"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="_0aa6f17f-b571-5e57-61e3-11ae55993f21">
+               <id root="e9c43650-73ba-4998-be25-9a9dae9ddf3f"/>
+               <code code="34088-5" displayName="OVERDOSAGE SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">OVERDOSAGE</content>
+               </title>
+               <text>
+                  <paragraph>In acute toxicology studies, oral administration of high doses of Fosfomycin Tromethamine up to 5 g/kg were well-tolerated in mice and rats, produced transient and minor incidences of watery stools in rabbits, and produced diarrhea with anorexia in dogs occurring 2-3 days after single dose administration. These doses represent 50-125 times the human therapeutic dose.</paragraph>
+                  <paragraph>The following events have been observed in patients who have taken Fosfomycin Tromethamine in overdose: vestibular loss, impaired hearing, metallic taste, and general decline in taste perception. In the event of overdosage, treatment should be symptomatic and supportive.</paragraph>
+               </text>
+               <effectiveTime value="20201006"/>
+            </section>
+         </component>
+         <component>
+            <section ID="_02ea8160-fb70-62f6-32a2-4691d730a79b">
+               <id root="516d9542-7414-4c20-8758-fb3044a458be"/>
+               <code code="34068-7" displayName="DOSAGE &amp; ADMINISTRATION SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">DOSAGE AND ADMINISTRATION</content>
+               </title>
+               <text>
+                  <paragraph>The recommended dosage for women 18 years of age and older for uncomplicated urinary tract infection (acute cystitis) is one sachet of Fosfomycin Tromethamine. Fosfomycin Tromethamine may be taken with or without food.</paragraph>
+                  <paragraph>Fosfomycin Tromethamine should not be taken in its dry form. Always mix Fosfomycin Tromethamine with water before ingesting. (See <content styleCode="bold">
+                        <linkHtml href="#_PRECAUTIONS">PREPARATION</linkHtml>
+                     </content> section.)</paragraph>
+               </text>
+               <effectiveTime value="20201006"/>
+            </section>
+         </component>
+         <component>
+            <section ID="_6b930a73-1bfc-d236-328b-a7eabd23428b">
+               <id root="60203876-a273-474d-8c0e-e09d511f2857"/>
+               <code code="42229-5" displayName="SPL UNCLASSIFIED SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">PREPARATION</content>
+               </title>
+               <text>
+                  <paragraph>Fosfomycin Tromethamine should be taken orally. Pour the entire contents of a single-dose sachet of Fosfomycin Tromethamine into 3 to 4 ounces of water (1/2 cup) and stir to dissolve. Do not use hot water. Fosfomycin Tromethamine should be taken immediately after dissolving in water.</paragraph>
+               </text>
+               <effectiveTime value="20201006"/>
+            </section>
+         </component>
+         <component>
+            <section ID="_aa2bb9fe-d440-e02a-4ce7-f93e77780d5a">
+               <id root="434e3934-43ca-4d66-855e-7a6f3abed19d"/>
+               <code code="34069-5" displayName="HOW SUPPLIED SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">HOW SUPPLIED</content>
+               </title>
+               <text>
+                  <paragraph>Product:    50090-5826</paragraph>
+                  <paragraph>NDC:    50090-5826-0   1 POWDER in a DOSE PACK   /  1  in a  CARTON </paragraph>
+               </text>
+               <effectiveTime value="20231124"/>
+            </section>
+         </component>
+         <component>
+            <section ID="_CLINICAL_STUDIES">
+               <id root="58cc1235-65bf-4874-9428-365a0796c668"/>
+               <code code="34092-7" displayName="CLINICAL STUDIES SECTION" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>
+                  <content styleCode="bold">CLINICAL STUDIES</content>
+               </title>
+               <text>
+                  <paragraph>In controlled, double-blind studies of acute cystitis performed in the United States, a single-dose of Fosfomycin Tromethamine was compared to three other oral antibiotics (See table below). The study population consisted of patients with symptoms and signs of acute</paragraph>
+                  <paragraph>cystitis of less than 4 days duration, no manifestations of upper tract infection (e.g., flank pain, chills, fever), no history of recurrent urinary tract infections (20% of patients in the clinical studies had a prior episode of acute cystitis within the preceding year), no known structural abnormalities, no clinical or laboratory evidence of hepatic dysfunction, and no known or suspected CNS disorders, such as epilepsy, or other factors which would predispose to seizures. In these studies, the following clinical success (resolution of symptoms) and microbiologic eradication rates were obtained. </paragraph>
+                  <table>
+                     <col width="133"/>
+                     <col width="96"/>
+                     <col width="83"/>
+                     <col width="80"/>
+                     <col width="76"/>
+                     <col width="137"/>
+                     <tbody>
+                        <tr>
+                           <td align="center" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">Treatment Arm</content>
+                              <br/>
+                           </td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">Treatment</content>
+                              <br/>
+                              <content styleCode="bold">Duration</content>
+                              <br/>
+                              <content styleCode="bold">(days)</content>
+                              <br/>
+                           </td>
+                           <td align="center" colspan="2" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">Microbiologic Eradication Rate</content>
+                           </td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">Clinical Success</content>
+                              <br/>
+                              <content styleCode="bold">Rate</content>
+                              <br/>
+                           </td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">Outcome (based on difference in</content>
+                              <br/>
+                              <content styleCode="bold">microbiologic eradication rates 5-11 days post therapy)</content>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="center" styleCode="Lrule Rrule"/>
+                           <td align="center" styleCode="Lrule Rrule"/>
+                           <td align="center" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">5-11 days post therapy</content>
+                           </td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">Study day </content>
+                              <br/>
+                              <content styleCode="bold">12-21</content>
+                           </td>
+                           <td align="center" styleCode="Lrule Rrule"/>
+                           <td align="center" styleCode="Lrule Rrule"/>
+                        </tr>
+                        <tr>
+                           <td styleCode="Toprule Lrule Rrule">Fosfomycin</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">1</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">630/771<br/>(82%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">591/771<br/>(77%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">542/771<br/>(70%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule"/>
+                        </tr>
+                        <tr>
+                           <td styleCode="Toprule Lrule Rrule">Ciprofloxacin</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">7</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">219/222<br/>(98%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">219/222<br/>(98%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">213/222<br/>(96%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">Fosfomycin inferior to ciprofloxacin</td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Toprule Lrule Rrule">Trimethoprim/<br/>sulfamethoxazole</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">10</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">194/197<br/>(98%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">194/197<br/>(98%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">186/197<br/>(94%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">Fosfomycin inferior to trimethoprim/<br/>sulfamethoxazole</td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Toprule Lrule Rrule">Nitrofurantoin</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">7</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">180/238<br/>(76%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">180/238<br/>(76%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">183/238<br/>(77%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">Fosfomycin equivalent to<br/>nitrofurantoin</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <table>
+                     <col width="102"/>
+                     <col width="102"/>
+                     <col width="114"/>
+                     <col width="138"/>
+                     <col width="150"/>
+                     <tbody>
+                        <tr>
+                           <td align="center" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">Pathogen</content>
+                           </td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">Fosfomycin 3 gram single</content>
+                              <content styleCode="bold"> </content>
+                              <content styleCode="bold">dose</content>
+                           </td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">Ciprofloxacin 250 mg </content>
+                              <br/>
+                              <content styleCode="bold">bid x 7 days</content>
+                           </td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">Trimethoprim/</content>
+                              <br/>
+                              <content styleCode="bold">sulfamethoxazole 1</content>
+                              <content styleCode="bold">6</content>
+                              <content styleCode="bold">0 mg/800 mg bid x 10 days</content>
+                           </td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">
+                              <content styleCode="bold">Nitrofurantoin </content>
+                              <br/>
+                              <content styleCode="bold">100 mg </content>
+                              <br/>
+                              <content styleCode="bold">bid x 7 days</content>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Toprule Lrule Rrule">
+                              <content styleCode="italics">E. coli</content>
+                           </td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">509/644 (79%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">184/187 <br/>(98%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">171/174 <br/>(98%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">146/187 <br/>(78%)</td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Toprule Lrule Rrule">
+                              <content styleCode="italics">E. faecalis</content>
+                           </td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">10/10 (100%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">0/0</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">4/4 <br/>(100%)</td>
+                           <td align="center" styleCode="Toprule Lrule Rrule">1/2 <br/>(50%)</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </text>
+               <effectiveTime value="20201006"/>
+            </section>
+         </component>
+         <component>
+            <section>
+               <id root="9e9ff875-da48-4c8e-b792-07762009faf3"/>
+               <code code="51945-4" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL" codeSystem="2.16.840.1.113883.6.1"/>
+               <title>FOSFOMYCIN TROMETHAMINE</title>
+               <text>
+                  <renderMultiMedia referencedObject="lbl500905826"/>
+               </text>
+               <effectiveTime value="20231124"/>
+               <component>
+                  <observationMedia ID="lbl500905826">
+                     <text>Label Image</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="lbl500905826.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+      </structuredBody>
+   </component>
+</document>

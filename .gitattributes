@@ -1,0 +1,5 @@
+# Source snapshots retain byte-exact formatting for their SHA256 checks.
+data/public_references/dailymed/*.md -text -whitespace
+data/public_references/dailymed/*.xml -text -whitespace
+data/handoff/** -text whitespace=cr-at-eol
+data/handoff/references/** -text -whitespace

@@ -1,0 +1,1160 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="https://www.accessdata.fda.gov/spl/stylesheet/spl.xsl" type="text/xsl"?>
+<document xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 https://www.accessdata.fda.gov/spl/schema/spl.xsd">
+   <id root="9dc82071-76f4-47c2-b293-346b14b0c804"/>
+   <code code="34391-3" codeSystem="2.16.840.1.113883.6.1" displayName="HUMAN PRESCRIPTION DRUG LABEL"/>
+   <title>
+      <content styleCode="bold">Tetracycline Hydrochloride Capsules, USP<br/>For Oral Use<br/>Rx Only</content>
+   </title>
+   <effectiveTime value="20260811"/>
+   <setId root="02e88b4a-57ae-4ef6-ba48-97c657202b94"/>
+   <versionNumber value="1"/>
+   <author>
+      <time/>
+      <assignedEntity>
+         <representedOrganization>
+            <id extension="171714327" root="1.3.6.1.4.1.519.1"/>
+            <name>Bryant Ranch Prepack</name>
+            <assignedEntity>
+               <assignedOrganization>
+                  <id extension="171714327" root="1.3.6.1.4.1.519.1"/>
+                  <name>Bryant Ranch Prepack</name>
+                  <assignedEntity>
+                     <assignedOrganization>
+                        <id extension="171714327" root="1.3.6.1.4.1.519.1"/>
+                        <name>Bryant Ranch Prepack</name>
+                     </assignedOrganization>
+                     <performance>
+                        <actDefinition>
+                           <code code="C73606" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="REPACK"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code codeSystem="2.16.840.1.113883.6.69" code="71335-3170"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C73607" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="RELABEL"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code codeSystem="2.16.840.1.113883.6.69" code="71335-3170"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                  </assignedEntity>
+               </assignedOrganization>
+            </assignedEntity>
+         </representedOrganization>
+      </assignedEntity>
+   </author>
+   <component>
+      <structuredBody>
+         <component>
+            <section>
+               <id root="13e54a6c-9fd8-4f05-8e74-ca378a354237"/>
+               <code code="48780-1" codeSystem="2.16.840.1.113883.6.1" displayName="SPL product data elements section"/>
+               <title/>
+               <text/>
+               <effectiveTime value="20200331"/>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code code="71335-3170" codeSystem="2.16.840.1.113883.6.69"/>
+                        <name>Tetracycline Hydrochloride</name>
+                        <formCode code="C25158" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="CAPSULE"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>Tetracycline Hydrochloride</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <asEquivalentEntity classCode="EQUIV">
+                           <code code="C64637" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <definingMaterialKind>
+                              <code code="23155-766" codeSystem="2.16.840.1.113883.6.69"/>
+                           </definingMaterialKind>
+                        </asEquivalentEntity>
+                        <ingredient classCode="ACTIB">
+                           <quantity>
+                              <numerator value="250" unit="mg"/>
+                              <denominator value="1" unit="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="P6R62377KV" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>TETRACYCLINE HYDROCHLORIDE</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="F8VB5M810T" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>TETRACYCLINE</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="3SY5LH9PMK" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>ANHYDROUS LACTOSE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="70097M6I30" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>MAGNESIUM STEARATE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="35SW5USQ3G" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>D&amp;C YELLOW NO. 10</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="H77VEI93A8" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>FD&amp;C YELLOW NO. 6</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="2G86QN327L" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>GELATIN, UNSPECIFIED</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="368GB5141J" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>SODIUM LAURYL SULFATE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="15FIX9V2JP" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>TITANIUM DIOXIDE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="H3R47K3TBD" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>FD&amp;C BLUE NO. 1</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="L06K8R7DQK" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>FD&amp;C BLUE NO. 2</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="WZB9127XOA" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>FD&amp;C RED NO. 40</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="XM0M87F357" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>FERROSOFERRIC OXIDE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="46N107B71O" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>SHELLAC</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="6DC9Q167V3" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>PROPYLENE GLYCOL</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="8PJ61P6TS3" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>BUTYL ALCOHOL</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator value="20" unit="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="71335-3170-1" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20260811"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                        </asContent>
+                        <asContent>
+                           <quantity>
+                              <numerator value="40" unit="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="71335-3170-2" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20260811"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                        </asContent>
+                        <asContent>
+                           <quantity>
+                              <numerator value="60" unit="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="71335-3170-3" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20260811"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                        </asContent>
+                        <asContent>
+                           <quantity>
+                              <numerator value="30" unit="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="71335-3170-4" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20260811"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                        </asContent>
+                        <asContent>
+                           <quantity>
+                              <numerator value="28" unit="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="71335-3170-5" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20260811"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                        </asContent>
+                        <asContent>
+                           <quantity>
+                              <numerator value="112" unit="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="71335-3170-6" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20260811"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                        </asContent>
+                        <asContent>
+                           <quantity>
+                              <numerator value="6" unit="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="71335-3170-7" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20260811"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                        </asContent>
+                        <asContent>
+                           <quantity>
+                              <numerator value="10" unit="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="71335-3170-8" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20260811"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20200401"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <subjectOf>
+                        <approval>
+                           <id extension="ANDA062752" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73584" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ANDA"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic>
+                           <code code="SPLCOLOR" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value code="C48330" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="yellow" xsi:type="CE">
+                              <originalText>Yellow Opaque Cap</originalText>
+                           </value>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic>
+                           <code code="SPLCOLOR" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value code="C48330" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="yellow" xsi:type="CE">
+                              <originalText>Yellow Opaque Body</originalText>
+                           </value>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic>
+                           <code code="SPLSHAPE" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value code="C48336" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="capsule" xsi:type="CE"/>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic>
+                           <code code="SPLSIZE" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value unit="mm" value="19" xsi:type="PQ"/>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic>
+                           <code code="SPLSCORE" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value value="1" xsi:type="INT"/>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic>
+                           <code code="SPLIMPRINT" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value xsi:type="ST">5225</value>
+                        </characteristic>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38288" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ORAL"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+               <component>
+                  <observationMedia ID="L900b4b8e-dd9f-4b2a-b0b5-4e7fbd4f0577">
+                     <text>structural-formula</text>
+                     <value mediaType="image/jpeg" xsi:type="ED">
+                        <reference value="structural-formula.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+               <component>
+                  <observationMedia ID="L55e24a09-93e6-4f71-8951-b2ce05371d9b">
+                     <text>avet-logo</text>
+                     <value mediaType="image/jpeg" xsi:type="ED">
+                        <reference value="avet-logo.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="Lc75f79d6-a60b-4df0-879a-378f7f41125a">
+               <id root="f8652108-0f4c-4993-a788-c21a691e82eb"/>
+               <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+               <title/>
+               <text>
+                  <paragraph>To reduce the development of drug-resistant bacteria and maintain the effectiveness of tetracycline hydrochloride and other antibacterial drugs, tetracycline hydrochloride should be used only to treat or prevent infections that are proven or strongly suspected to be caused by bacteria.</paragraph>
+               </text>
+               <effectiveTime value="20200331"/>
+            </section>
+         </component>
+         <component>
+            <section ID="Lc409f6db-1b91-4205-8fec-ebad7f19172d">
+               <id root="90305efb-90f2-46b3-97dc-ce0dc5bc767b"/>
+               <code code="34089-3" codeSystem="2.16.840.1.113883.6.1" displayName="DESCRIPTION SECTION"/>
+               <title>
+                  <content styleCode="bold">DESCRIPTION</content>
+               </title>
+               <text>
+                  <paragraph>Tetracycline is a yellow, odorless, crystalline powder. Tetracycline is stable in air but exposure to strong sunlight causes it to darken. Its potency is affected in solutions of pH below 2 and is rapidly destroyed by alkali hydroxide solutions. Tetracycline is very slightly soluble in water, freely soluble in dilute acid and in alkali hydroxide solutions, sparingly soluble in alcohol, and practically insoluble in chloroform and in ether. The chemical name for tetracycline hydrochloride is 4-(Dimethylamino) -1,4,4a,5,5a,6,11,12a-octahydro-3,6,10,12,-12a-pentahydroxy-6-methyl-1,11-dioxo-2-naphthacenecar-boxamide monohydrochloride. Its structural formula is as follows:</paragraph>
+                  <paragraph>
+                     <renderMultiMedia referencedObject="L900b4b8e-dd9f-4b2a-b0b5-4e7fbd4f0577"/>
+                  </paragraph>
+                  <paragraph>Each capsule, for oral administration, contains 250 mg or 500 mg tetracycline hydrochloride.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Inactive Ingredients:</content> Lactose, and magnesium stearate.</paragraph>
+                  <paragraph>The 250 mg and 500 mg capsule shells contain D&amp;C Yellow No. 10, FD&amp;C Yellow No. 6, gelatin, sodium lauryl sulfate, and titanium dioxide.</paragraph>
+                  <paragraph>The imprinting ink for the 250 mg and 500 mg capsules contains D&amp;C Yellow No. 10, FD&amp;C Blue No. 1, FD&amp;C Blue No. 2, FD&amp;C Red No. 40, iron oxide black, pharmaceutical shellac glaze, propylene glycol, n-butyl alcohol, and ferrosoferric oxide.</paragraph>
+                  <paragraph>This product complies with USP dissolution Test 2.</paragraph>
+               </text>
+               <effectiveTime value="20200331"/>
+            </section>
+         </component>
+         <component>
+            <section ID="L9aa6ea32-989c-41d1-b93e-1966ecab2eb3">
+               <id root="7c00bd67-bb32-41d8-8822-d91788f9456f"/>
+               <code code="34090-1" codeSystem="2.16.840.1.113883.6.1" displayName="CLINICAL PHARMACOLOGY SECTION"/>
+               <title>
+                  <content styleCode="bold">CLINICAL PHARMACOLOGY</content>
+               </title>
+               <text>
+                  <paragraph>Tetracyclines are readily absorbed and are bound to plasma protein in varying degrees. They are concentrated by the liver in the bile and excreted in the urine and feces at high concentrations in a biologically active form.</paragraph>
+               </text>
+               <effectiveTime value="20200401"/>
+               <component>
+                  <section ID="Ld911f7a0-9e90-405e-96ea-f8a661107819">
+                     <id root="209415d6-5c89-49a5-9529-15a3b7294003"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Microbiology</content>
+                     </title>
+                     <text>
+                        <paragraph>Tetracyclines are primarily bacteriostatic and exert their antimicrobial effect by the inhibition of protein synthesis by binding to the 30S ribosomal subunit. Tetracycline is active against a broad range of gram-negative and gram-positive organisms. The drugs in the tetracycline class have closely similar antimicrobial spectra, and cross-resistance among them is common.</paragraph>
+                        <paragraph>Tetracycline has been shown to be active against most isolates of the following bacteria, both <content styleCode="italics">in vitro</content> and in clinical infections as described in the <content styleCode="bold">
+                              <linkHtml href="#L1da69993-731a-4512-91e7-a3d7eff5fb4e">INDICATIONS AND USAGE</linkHtml>
+                           </content> section of the package insert.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="L5099bddd-ffae-4c9d-903e-fe2ca8fab26a">
+                     <id root="5249e8f3-7c21-4dfb-a45e-0ce3c97c4848"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Gram-negative Bacteria</content>
+                     </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="italics">Acinetobacter</content> species<br/>
+                           <content styleCode="italics">Bartonella bacilliformis</content>
+                           <br/>
+                           <content styleCode="italics">Brucella</content> species<br/>
+                           <content styleCode="italics">Campylobacter fetus</content>
+                           <br/>
+                           <content styleCode="italics">Enterobacter aerogenes</content>
+                           <br/>
+                           <content styleCode="italics">Escherichia coli</content>
+                           <br/>
+                           <content styleCode="italics">Francisella tularensis</content>
+                           <br/>
+                           <content styleCode="italics">Haemophilus ducreyi</content>
+                           <br/>
+                           <content styleCode="italics">Haemophilus influenzae</content>
+                           <br/>
+                           <content styleCode="italics">Klebsiella</content> species<br/>
+                           <content styleCode="italics">Klebsiella granulomatis</content>
+                           <br/>
+                           <content styleCode="italics">Neisseria gonorrhoeae</content>
+                           <br/>
+                           <content styleCode="italics">Shigella</content> species<br/>
+                           <content styleCode="italics">Vibrio cholerae</content>
+                           <br/>
+                           <content styleCode="italics">Yersinia pestis</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Lc159ea00-50da-4937-82d7-f895515a9b44">
+                     <id root="7a54ff37-da51-4c9b-8a90-a8a5ba71d3c0"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Gram-positive Bacteria</content>
+                     </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="italics">Bacillus anthracis</content>
+                           <br/>
+                           <content styleCode="italics">Streptococcus pyogenes</content>
+                           <br/>
+                           <content styleCode="italics">Streptococcus pneumoniae</content>
+                           <br/>
+                           <content styleCode="italics">Staphylococcus aureus</content>
+                           <br/>
+                           <content styleCode="italics">Listeria monocytogenes</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Lb3544195-79a1-47a0-b9a2-1d6121cd1463">
+                     <id root="c5fbc1d2-a690-44f8-b4a1-ef46b7356668"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Anaerobes</content>
+                     </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="italics">Bacteroides</content> species<br/>
+                           <content styleCode="italics">Clostridium</content> species<br/>
+                           <content styleCode="italics">Fusobacterium fusiforme</content>
+                           <br/>
+                           <content styleCode="italics">Propionibacterium acnes</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Le7a948d8-5473-42d4-a0d7-4de1e608841b">
+                     <id root="4ce50051-8f29-4c78-a2db-11f6f7e3925f"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Other Bacteria</content>
+                     </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="italics">Actinomyces</content> species<br/>
+                           <content styleCode="italics">Borrelia recurrentis</content>
+                           <br/>
+                           <content styleCode="italics">Chlamydophila psittaci</content>
+                           <br/>
+                           <content styleCode="italics">Chlamydia trachomatis</content>
+                           <br/>
+                           <content styleCode="italics">Rickettsiae</content>
+                           <br/>
+                           <content styleCode="italics">Treponema pallidum</content>
+                           <br/>
+                           <content styleCode="italics">Treponema pallidum</content> subspecies <content styleCode="italics">pertenue</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Lbd2253be-f8cb-408b-b815-8953ac8813ed">
+                     <id root="2f8dda49-b94e-445b-8201-a7ee7f53dd74"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Parasites</content>
+                     </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="italics">Entamoeba </content>species<br/>
+                           <content styleCode="italics">Balantidium coli</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Lbf21986c-ff50-4c4c-9fc5-1b4ecc65f6c7">
+                     <id root="410d9f55-3be6-419d-9162-e17118bdb0b5"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Susceptibility Testing</content>
+                     </title>
+                     <text>
+                        <paragraph>For specific information regarding susceptibility test interpretive criteria and associated test methods and quality control standards recognized by FDA for this drug, please see: https://www.fda.gov/STIC</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="L1da69993-731a-4512-91e7-a3d7eff5fb4e">
+               <id root="2d06a769-4491-4c74-bc4a-2999a1acbfe7"/>
+               <code code="34067-9" codeSystem="2.16.840.1.113883.6.1" displayName="INDICATIONS &amp; USAGE SECTION"/>
+               <title>
+                  <content styleCode="bold">INDICATIONS AND USAGE</content>
+               </title>
+               <text>
+                  <paragraph>To reduce the development of drug-resistant bacteria and maintain the effectiveness of tetracycline hydrochloride and other antibacterial drugs, tetracycline hydrochloride should be used only to treat infections that are proven or strongly suspected to be caused by susceptible bacteria. When culture and susceptibility information are available, they should be considered in selecting or modifying antibacterial therapy. In the absence of such data, local epidemiology and susceptibility patterns may contribute to the empiric selection of therapy.</paragraph>
+                  <paragraph>Tetracycline is indicated in the treatment of infections caused by susceptible strains of the designated organisms in the conditions listed below:</paragraph>
+                  <list listType="unordered">
+                     <item>Upper respiratory tract infections caused by <content styleCode="italics">Streptococcus pyogenes, Streptococcus pneumoniae</content> and <content styleCode="italics">Hemophilus influenzae</content>. Note: Tetracycline should not be used for streptococcal disease unless the organism has been demonstrated to be susceptible.</item>
+                     <item>Lower respiratory tract infections caused by <content styleCode="italics">Streptococcus pyogenes</content>, <content styleCode="italics">Streptococcus pneumoniae</content>, <content styleCode="italics">Mycoplasma pneumoniae</content> (Eaton agent, and <content styleCode="italics">Klebsiella sp.</content>)</item>
+                     <item>Skin and soft tissue infections caused by <content styleCode="italics">Streptococcus pyogenes, Staphylococcus aureaus</content>. (Tetracyclines are not the drugs of choice in the treatment of any type of staphylococcal infections.)</item>
+                     <item>Infections caused by rickettsia including Rocky Mountain spotted fever, typhus group infections, Q fever, rickettsialpox.</item>
+                     <item>Psittacosis caused by <content styleCode="italics">Chlamydophila psittaci</content>.</item>
+                     <item>Infections caused by <content styleCode="italics">Chlamydia trachomatis</content> such as uncomplicated urethral, endocervical or rectal infections, inclusion conjunctivitis, trachoma, and lymphogranuloma venereum.</item>
+                     <item>Granuloma inquinale caused by <content styleCode="italics">Klebsiella granulomatis</content>.</item>
+                     <item>Relapsing fever caused by <content styleCode="italics">Borrelia sp</content>.</item>
+                     <item>Bartonellosis caused by <content styleCode="italics">Bartonella bacilliformis</content>.</item>
+                     <item>Chancroid caused by <content styleCode="italics">Hemophilus ducreyi</content>.</item>
+                     <item>Tularemia caused by <content styleCode="italics">Francisella tularensis</content>.</item>
+                     <item>Plaque caused by <content styleCode="italics">Yersinia pestis</content>.</item>
+                     <item>Cholera caused by <content styleCode="italics">Vibrio cholerae</content>.</item>
+                     <item>Brucellosis caused by <content styleCode="italics">Brucella</content> species (tetracycline may be used in conjunction with an aminoglycoside).</item>
+                     <item>Infections due to <content styleCode="italics">Campylobacter fetus</content>.</item>
+                     <item>As adjunctive therapy in intestinal amebiasis caused by <content styleCode="italics">Entamoeba histolytica</content>.</item>
+                     <item>Urinary tract infections caused by susceptible strains of <content styleCode="italics">Escherichia coli, Klebsiella</content>, etc.</item>
+                     <item>Other infections caused by susceptible gram-negative organisms such as <content styleCode="italics">E. coli, Enterobacter aerogenes, Shigella sp., Acinetobacter sp., Klebsiella sp., and Bacteroides sp</content>.</item>
+                     <item>In severe acne, adjunctive therapy with tetracycline may be useful.</item>
+                  </list>
+                  <paragraph>When penicillin is contraindicated, tetracyclines are alternative drugs in the treatment of the following infections:</paragraph>
+                  <list listType="unordered">
+                     <item>Syphilis and yaws caused by <content styleCode="italics">Treponema pallidum</content> and <content styleCode="italics">pertenue</content>, respectively,</item>
+                     <item>Vincent’s infection caused by <content styleCode="italics">Fusobacterium fusiforme</content>,</item>
+                     <item>Infections caused by <content styleCode="italics">Neisseria gonorrhoeae</content>,</item>
+                     <item>Anthrax caused by <content styleCode="italics">Bacillus anthracis</content>,</item>
+                     <item>Infections due to <content styleCode="italics">Listeria monocytogenes</content>,</item>
+                     <item>Actinomycosis caused by <content styleCode="italics">Actinomyces</content> species,</item>
+                     <item>Infections due to <content styleCode="italics">Clostridium</content> species.</item>
+                  </list>
+               </text>
+               <effectiveTime value="20200401"/>
+            </section>
+         </component>
+         <component>
+            <section ID="Ldc794e73-980f-4a0c-907d-6f1eff73e328">
+               <id root="4e162864-b165-439c-951e-67c637704522"/>
+               <code code="34070-3" codeSystem="2.16.840.1.113883.6.1" displayName="CONTRAINDICATIONS SECTION"/>
+               <title>
+                  <content styleCode="bold">CONTRAINDICATIONS</content>
+               </title>
+               <text>
+                  <paragraph>This drug is contraindicated in persons who have shown hypersensitivity to any of the tetracyclines.</paragraph>
+               </text>
+               <effectiveTime value="20200401"/>
+            </section>
+         </component>
+         <component>
+            <section ID="L525aa0a5-ee57-4393-b137-63b9f3dedb63">
+               <id root="ff7171df-fd76-4fb4-a852-7259f80d238e"/>
+               <code code="34071-1" codeSystem="2.16.840.1.113883.6.1" displayName="WARNINGS SECTION"/>
+               <title>
+                  <content styleCode="bold">WARNINGS</content>
+               </title>
+               <text/>
+               <effectiveTime value="20200401"/>
+               <component>
+                  <section ID="L0d67fed5-5140-439d-aab4-7065184a0c36">
+                     <id root="fc444a94-4b07-4257-91cf-5e0adf040783"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Tooth Development</content>
+                     </title>
+                     <text>
+                        <paragraph>The use of drugs of the tetracycline-class during tooth development (last half of pregnancy, infancy and childhood to the age of 8 years) may cause permanent discoloration of the teeth (yellow-gray-brown). This adverse reaction is more common during long-term use of the drugs but it has been observed following repeated short-term courses. Enamel hypoplasia has also been reported. Tetracycline drugs should not be used in this age group, except for anthrax, unless other drugs are not likely to be effective or are contraindicated.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="L1dc626ba-0104-4c2d-a447-224ea1b0352f">
+                     <id root="e794c13f-60ac-42f1-a748-77a9013d689e"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Clostridium difficile</content> Associated Diarrhea</content>
+                     </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="italics">Clostridium difficile</content> associated diarrhea (CDAD) has been reported with use of nearly all antibacterial agents, including tetracyclines, and may range in severity from mild diarrhea to fatal colitis. Treatment with antibacterial agents alters the normal flora of the colon leading to overgrowth of <content styleCode="italics">C. difficile</content>.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">C. difficile</content> produces toxins A and B which contribute to the development of CDAD. Hypertoxin producing strains of <content styleCode="italics">C. difficile</content> cause increased morbidity and mortality, as these infections can be refractory to antimicrobial therapy and may require colectomy. CDAD must be considered in all patients who present with diarrhea following antibacterial drugs. Careful medical history is necessary since CDAD has been reported to occur over two months after the administration of antibacterial agents.</paragraph>
+                        <paragraph>If CDAD is suspected or confirmed, ongoing use of antibacterial drugs not directed against <content styleCode="italics">C. difficile</content> need to be discontinued. Appropriate fluid and electrolyte management, protein supplementation, antibacterial treatment of <content styleCode="italics">C. difficile</content>, and institute surgical evaluation clinically indicated.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="L21530747-3b75-4f7e-bb3d-499e35f74737">
+                     <id root="82eb03b0-3586-48b3-84fc-a24960414a8c"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Photosensitivity</content>
+                     </title>
+                     <text>
+                        <paragraph>Photosensitivity manifested by an exaggerated sunburn reaction has been observed in some individuals taking tetracyclines. Advise patients apt to be exposed to direct sunlight or ultraviolet lights that this reaction can occur with tetracycline drugs. Discontinue treatment at the first evidence of skin erythema.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="L1f040088-238b-44d4-9663-344f7e1a55e1">
+                     <id root="5a9f5ed5-66a5-474e-8589-cd457cee3005"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Intracranial Hypertension</content>
+                     </title>
+                     <text>
+                        <paragraph>Intracranial hypertension (IH, pseudotumor cerebri) has been associated with the use of tetracyclines including Tetracycline. Clinical manifestations of IH include headache, blurred vision, diplopia, and vision loss; papilledema can be found on fundoscopy. Women of childbearing age who are overweight or have a history of IH are at greater risk for developing tetracycline associated IH. Concomitant use of isotretinoin and tetracycline should be avoided because isotretinoin, a systemic retinoid, is also known to cause pseudotumor cerebri.</paragraph>
+                        <paragraph>Although IH typically resolve after discontinuation of treatment, the possibility for permanent visual loss exists. If visual disturbance occurs during treatment, prompt ophthalmologic evaluation is warranted. Since intracranial pressure can remain elevated for weeks after drug cessation patients should be monitored until they stabilize.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Lb915c6a4-74e9-46a2-8d5c-753b744712af">
+                     <id root="2e65440b-8093-486b-974d-9e318efecae3"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Skeletal Development</content>
+                     </title>
+                     <text>
+                        <paragraph>All tetracyclines form a stable calcium complex in any bone forming tissue. A decrease in fibula growth rate has been observed in premature infants given oral tetracycline in doses of 25 mg/kg every six hours. This reaction was shown to be reversible when the drug was discontinued.</paragraph>
+                        <paragraph>Results of animal studies indicate that tetracyclines cross the placenta, are found in fetal tissues and can have toxic effects on the developing fetus (often related to retardation of skeletal development). Evidence of embryotoxicity has also been noted in animals treated early in pregnancy. If this drug is used during pregnancy or if the patient becomes pregnant while taking this drug, apprise the patient of the potential hazard to the fetus. Tetracycline drugs should not be used during pregnancy unless absolutely necessary.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Laa7bbcc7-f813-4665-b53b-875b1cd020ff">
+                     <id root="7428bc90-9c4f-4565-ab85-48a9289d51d9"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Antianabolic Action</content>
+                     </title>
+                     <text>
+                        <paragraph>The antianabolic action of the tetracyclines may cause an increase in BUN. While this is not a problem in those with normal renal function, in patients with significantly impaired renal function, higher serum levels of tetracycline may lead to azotemia, hyperphosphatemia and acidosis.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Leae8afbc-cf2e-4b97-bf33-40037c7f11c4">
+                     <id root="3dc762b5-7c4d-4b83-a014-156080b46d39"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Laboratory Monitoring for Long-Term Therapy</content>
+                     </title>
+                     <text>
+                        <paragraph>In long-term therapy, perform periodic laboratory evaluation of organ systems, including hematopoietic, renal and hepatic studies. If renal impairment exists, even usual oral or parenteral doses may lead to excessive systemic accumulation of the drug and possible liver toxicity. Under such conditions, lower than usual total doses are indicated, and, if therapy is prolonged, serum level determinations of the drug may be advisable.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="L2ce396dc-d181-4e4d-92b5-6d503b2ca2af">
+               <id root="73c97454-cdec-4bb2-be34-f401de87d5bb"/>
+               <code code="42232-9" codeSystem="2.16.840.1.113883.6.1" displayName="PRECAUTIONS SECTION"/>
+               <title>
+                  <content styleCode="bold">PRECAUTIONS</content>
+               </title>
+               <text/>
+               <effectiveTime value="20200401"/>
+               <component>
+                  <section ID="L403481b4-0850-437b-9115-bcce7102652a">
+                     <id root="a5a25ac4-a55a-40f8-9aa2-303a1b4b36f9"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">General</content>
+                     </title>
+                     <text>
+                        <paragraph>As with other antibacterials, use of this drug may result in overgrowth of nonsusceptible organisms, including fungi. If superinfection occurs, discontinue antibacterial and institute appropriate therapy.</paragraph>
+                        <paragraph>Treat all infections due to Group A beta-hemolytic streptococci for at least ten days.</paragraph>
+                        <paragraph>Perform incision and drainage or other surgical procedures in conjunction with antibacterial therapy, when indicated.</paragraph>
+                        <paragraph>Prescribing tetracycline in the absence of proven or strongly suspected bacterial infection or a prophylactic indication is unlikely to provide benefit to the patient and increases the risk of the development of drug-resistant bacteria.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Lb55f5800-79cf-409e-86ca-354ac2ae7231">
+                     <id root="19767033-a968-4a8b-902d-aa6e0e885fcd"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Information for Patients</content>
+                     </title>
+                     <text>
+                        <paragraph>Counsel patients that antibacterial drugs including tetracycline should only be used to treat bacterial infections. They do not treat viral infections (e.g., the common cold). When tetracycline is prescribed to treat a bacterial infection, tell patients that although it is common to feel better early in the course of therapy, the medication should be taken exactly as directed. Skipping doses or not completing the full course of therapy may (1) decrease the effectiveness of the immediate treatment and (2) increase the likelihood that bacteria will develop resistance and will not be treatable by tetracycline or other antibacterial drugs in the future.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="L049c8ed3-709e-4adf-b7ac-1ed92909a7f5">
+                     <id root="db1a0e1f-0eb5-457e-8ff9-f603e7a69f7e"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Laboratory Tests</content>
+                     </title>
+                     <text>
+                        <paragraph>In sexually transmitted infections, when coexistent syphilis is suspected, perform dark field examinations before treatment is started and the blood serology repeated monthly for at least four months.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="L4d9ded65-f60c-4295-b255-2e7cda21f36a">
+                     <id root="bb14369c-dae1-4c31-a036-ab876cc6ef41"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Drug Interactions</content>
+                     </title>
+                     <text>
+                        <paragraph>Since bacteriostatic drugs may interfere with the bactericidal action of penicillin, it is advisable to avoid giving tetracycline in conjunction with penicillin or other bactericidal antibacterials.</paragraph>
+                        <paragraph>Because the tetracyclines have been shown to depress plasma prothrombin activity, patients who are on anticoagulant therapy may require downward adjustment of their anticoagulant dosage.</paragraph>
+                        <paragraph>The concurrent use of tetracycline and methoxyflurane has been reported to result in fatal renal toxicity.</paragraph>
+                        <paragraph>Absorption of tetracyclines is impaired by antacids containing aluminum, calcium or magnesium and preparations containing iron, zinc, or sodium bicarbonate.</paragraph>
+                        <paragraph>Concurrent use of tetracycline may render oral contraceptives less effective.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="L48b04505-6d4a-4f28-ba80-f9db5e4d2858">
+                     <id root="8b4f63ba-2e4a-4253-8b96-4ff924db529d"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Carcinogenesis, Mutagenesis, Impairment of Fertility</content>
+                     </title>
+                     <text>
+                        <paragraph>Long-term animal studies are currently being conducted to determine whether tetracycline hydrochloride has carcinogenic potential. Some related antibacterials (oxytetracycline, minocycline) have shown evidence of oncogenic activity in rats.</paragraph>
+                        <paragraph>In two <content styleCode="italics">in vitro</content> mammalian cell assay systems (L 51784y mouse lymphoma and Chinese hamster lung cells), there was evidence of mutagenicity with tetracycline hydrochloride.</paragraph>
+                        <paragraph>Tetracycline hydrochloride had no effect on fertility when administered in the diet to male and female rats at a daily intake of approximately 400 mg/kg/day, roughly 8 times the highest recommended human dose based on body surface area.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Lf53f8df9-441f-4eb5-a340-01ef23647ea0">
+                     <id root="9d014521-7548-4635-ac47-f16d8a25f573"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Pregnancy</content>
+                     </title>
+                     <text>
+                        <paragraph>Teratogenic Effects</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Pregnancy Category D</content>
+                        </paragraph>
+                        <paragraph>(​see <content styleCode="bold">
+                              <linkHtml href="#L525aa0a5-ee57-4393-b137-63b9f3dedb63">WARNINGS</linkHtml>
+                           </content>)</paragraph>
+                        <paragraph>Nonteratogenic Effects</paragraph>
+                        <paragraph>(see <content styleCode="bold">
+                              <linkHtml href="#L525aa0a5-ee57-4393-b137-63b9f3dedb63">WARNINGS</linkHtml>
+                           </content>)</paragraph>
+                        <paragraph>Pregnant women with renal disease may be more prone to develop tetracycline-associated liver failure.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="L1117b319-38a5-47ae-9faa-5754c58f71e4">
+                     <id root="2dda6f94-196c-4c14-8618-e560d2bc3e62"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Labor and Delivery</content>
+                     </title>
+                     <text>
+                        <paragraph>The effect of tetracyclines on labor and delivery is unknown.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Lc7b3bad8-93b3-49a7-b75c-fdebb9c1e9a2">
+                     <id root="8c741459-f58b-4e3d-9c85-bc5296c7dc9b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Nursing Mothers</content>
+                     </title>
+                     <text>
+                        <paragraph>Because of potential for serious adverse reaction in nursing infants from tetracyclines, a decision should be made whether to discontinue the drug, taking into account the importance of the drug to the mother (see <content styleCode="bold">
+                              <linkHtml href="#L525aa0a5-ee57-4393-b137-63b9f3dedb63">WARNINGS</linkHtml>
+                           </content>).</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="Lcca01449-9e31-46a8-8c80-19d3f5431f1f">
+                     <id root="6d56b85a-87f5-42fa-9d8e-d3ba1f8ea368"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Pediatric Use</content>
+                     </title>
+                     <text>
+                        <paragraph>See <content styleCode="bold">
+                              <linkHtml href="#L525aa0a5-ee57-4393-b137-63b9f3dedb63">WARNINGS</linkHtml>
+                           </content> and <content styleCode="bold">
+                              <linkHtml href="#L071d0102-4cfd-474f-aa5e-db42ee033867">DOSAGE AND ADMINISTRATION</linkHtml>
+                           </content>.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="La93d59ff-f8a4-4072-a90e-ad352c16b709">
+               <id root="c880b95a-70c0-4777-8bcf-c7fb0f2954de"/>
+               <code code="34084-4" codeSystem="2.16.840.1.113883.6.1" displayName="ADVERSE REACTIONS SECTION"/>
+               <title>
+                  <content styleCode="bold">ADVERSE REACTIONS</content>
+               </title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">Gastrointestinal:</content> anorexia, nausea, epigastric distress, vomiting, diarrhea, glossitis, black hairy tongue, dysphagia, enterocolitis, and inflammatory lesions (with Candida overgrowth) in the anogenital region.</paragraph>
+                  <paragraph>Esophagitis and esophageal ulceration have been reported in patients receiving particularly the capsule and also the tablet forms of tetracyclines.</paragraph>
+                  <paragraph>Most of the patients were reported to have taken medication immediately before going to bed (see <content styleCode="bold">
+                        <linkHtml href="#L071d0102-4cfd-474f-aa5e-db42ee033867">DOSAGE AND ADMINISTRATION</linkHtml>
+                     </content>).</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Teeth:</content> permanent discoloration of teeth may be caused during tooth development. Enamel hypoplasia has been reported (see <content styleCode="bold">
+                        <linkHtml href="#L525aa0a5-ee57-4393-b137-63b9f3dedb63">WARNINGS</linkHtml>
+                     </content>).</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Skin:</content> maculopapular and erythrematous rashes. Exfoliative dermatitis has been reported. Onycholysis and discoloration of the nails have been reported. Photosensitivity is discussed in <content styleCode="bold">
+                        <linkHtml href="#L525aa0a5-ee57-4393-b137-63b9f3dedb63">WARNINGS</linkHtml>
+                     </content>.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Renal Toxicity:</content> an increase in BUN has been reported and is dose related.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Liver:</content> hepatotoxicity and liver failure have been observed in patients receiving tetracycline and in tetracycline-treated patients with renal impairment.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Hypersensitivity Reactions:</content> urticaria, angioneurotic edema, anaphylaxis, anaphylactoid purpura, pericarditis, exacerbation of systemic lupus erythematosus, and serum sickness-like reactions, as fever, rash, and arthralgia.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Blood:</content> hemolytic anemia, thrombocytopenia, thrombocytopenic purpura, neutropenia and eosinophilia have been reported.</paragraph>
+                  <paragraph>When given over prolonged periods, tetracyclines have been reported to produce brown-black microscopic discoloration of thyroid glands. No abnormalities of thyroid function studies are known to occur.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">To report SUSPECTED ADVERSE REACTIONS, contact Avet Pharmaceuticals Inc. at 1-866-901-DRUG (3784) or FDA at 1-800-FDA-1088 or www.fda.gov/medwatch.</content>
+                  </paragraph>
+               </text>
+               <effectiveTime value="20200401"/>
+            </section>
+         </component>
+         <component>
+            <section ID="L2d32d9b3-3264-4c6b-8f5c-83f48413f3c1">
+               <id root="b0e98c16-b985-45dc-a5db-92cb062f1fa1"/>
+               <code code="34088-5" codeSystem="2.16.840.1.113883.6.1" displayName="OVERDOSAGE SECTION"/>
+               <title>
+                  <content styleCode="bold">OVERDOSAGE</content>
+               </title>
+               <text>
+                  <paragraph>In case of overdosage, discontinue medication, treat symptomatically and institute supportive measures. Tetracycline is not dialyzable.</paragraph>
+               </text>
+               <effectiveTime value="20200401"/>
+            </section>
+         </component>
+         <component>
+            <section ID="L071d0102-4cfd-474f-aa5e-db42ee033867">
+               <id root="5d72449b-6c07-47cc-b238-5b3d34e0200c"/>
+               <code code="34068-7" codeSystem="2.16.840.1.113883.6.1" displayName="DOSAGE &amp; ADMINISTRATION SECTION"/>
+               <title>
+                  <content styleCode="bold">DOSAGE AND ADMINISTRATION</content>
+               </title>
+               <text>
+                  <paragraph>Adults: Usual daily dose, 1 gram as 500 mg twice a day or 250 mg four times a day. Higher doses such as 500 mg four times a day may be required for severe infections or for those infections which do not respond to the smaller doses.</paragraph>
+                  <paragraph>For pediatric patients above eight years of age: Usual daily dose, 10 mg/lb to 20 mg/lb (25 mg/kg to 50 mg/kg) body weight divided in four equal doses.</paragraph>
+                  <paragraph>Administration of adequate amounts of fluid with the capsule formulation of tetracycline is recommended to wash down the drug and reduce the risk of esophageal irritation and ulceration (see <content styleCode="bold">
+                        <linkHtml href="#La93d59ff-f8a4-4072-a90e-ad352c16b709">ADVERSE REACTIONS</linkHtml>
+                     </content>).</paragraph>
+                  <paragraph>Absorption of tetracycline is impaired by antacids containing aluminum, calcium or magnesium and preparations containing iron, zinc or sodium bicarbonate. Food and some dairy products also interfere with absorption.</paragraph>
+                  <paragraph>When used in streptococcal infections, therapy should be continued for 10 days.</paragraph>
+                  <paragraph>For treatment of brucellosis, 500 mg tetracycline four times a day for three weeks accompanied by streptomycin, 1 gram intramuscularly twice daily the first week and once daily the second week.</paragraph>
+                  <paragraph>For the treatment of syphilis in patients allergic to penicillin, the following dosage of tetracycline is recommended: early syphilis (less than one year’s duration), 500 mg four times a day for 15 days. Syphilis of more than one year’s duration (except neurosyphilis), 500 mg four times a day for 30 days.</paragraph>
+                  <paragraph>For treatment of gonorrhea, the recommended dose is 500 mg by mouth four times a day for seven days.</paragraph>
+                  <paragraph>Uncomplicated urethral, endocervical or rectal infections in adults caused by <content styleCode="italics">Chlamydia trachomatis</content>: 500 mg, by mouth, four times a day for at least seven days.</paragraph>
+                  <paragraph>In cases of moderate to severe acne which, in the judgement of the clinician, require long-term treatment, the recommended initial dosage is 1 gram daily in divided doses. When improvement is noted, reduce dosage gradually to maintenance levels ranging from 125 mg to 500 mg daily. In some patients it may be possible to maintain adequate remission of lesions with alternate day or intermittent therapy. Tetracycline therapy of acne should augment the other standard measures known to be of value. Duration of long-term treatment which can safely be recommended has not been established (see <content styleCode="bold">
+                        <linkHtml href="#L525aa0a5-ee57-4393-b137-63b9f3dedb63">WARNINGS</linkHtml>
+                     </content> and <content styleCode="bold">
+                        <linkHtml href="#L48b04505-6d4a-4f28-ba80-f9db5e4d2858">Carcinogenesis, Mutagenesis, Impairment of Fertility</linkHtml>
+                     </content>).</paragraph>
+               </text>
+               <effectiveTime value="20200401"/>
+               <component>
+                  <section ID="Lbfac42f9-f2be-4f6c-a120-ae2e4c8196da">
+                     <id root="18bf799f-018e-409e-af3f-4ae1ce6e5c2a"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Use in Specific Population</content>
+                     </title>
+                     <text>
+                        <paragraph>In patients with renal impairment (see <content styleCode="bold">
+                              <linkHtml href="#L525aa0a5-ee57-4393-b137-63b9f3dedb63">WARNINGS</linkHtml>
+                           </content>): decrease total dosage by reduction of recommended individual doses and/or by extending time intervals between doses.</paragraph>
+                     </text>
+                     <effectiveTime value="20200401"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="L7895c1c7-992f-48d6-8839-2b5f27fdb335">
+               <id root="1d68174e-cb85-4fbd-a530-36e1132576d3"/>
+               <code code="34069-5" codeSystem="2.16.840.1.113883.6.1" displayName="HOW SUPPLIED SECTION"/>
+               <title>
+                  <content styleCode="bold">HOW SUPPLIED</content>
+               </title>
+               <text>
+                  <paragraph>Tetracycline Hydrochloride Capsules, USP are available as:</paragraph>
+                  <paragraph>250 mg: Yellow Opaque Cap/Yellow Opaque Body, Cap and Body Imprinted 5225 in Black Ink.</paragraph>
+                  <list listType="unordered">
+                     <item>NDC 71335-3170-1: 20 CAPSULEs in a BOTTLE</item>
+                     <item>NDC 71335-3170-2: 40 CAPSULEs in a BOTTLE</item>
+                     <item>NDC 71335-3170-3: 60 CAPSULEs in a BOTTLE</item>
+                     <item>NDC 71335-3170-4: 30 CAPSULEs in a BOTTLE</item>
+                     <item>NDC 71335-3170-5: 28 CAPSULEs in a BOTTLE</item>
+                     <item>NDC 71335-3170-6: 112 CAPSULEs in a BOTTLE</item>
+                     <item>NDC 71335-3170-7: 6 CAPSULEs in a BOTTLE</item>
+                     <item>NDC 71335-3170-8: 10 CAPSULEs in a BOTTLE</item>
+                  </list>
+                  <paragraph>Dispense in a tight, light-resistant container as defined in the USP. Use child-resistant closure (as required).</paragraph>
+                  <paragraph>Store at 20° to 25°C (68° to 77°F) [See USP Controlled Room Temperature].</paragraph>
+                  <paragraph>Call your doctor for medical advice about side effects. You may report side effects to FDA at 1-800-FDA-1088.</paragraph>
+                  <paragraph>Repackaged/Relabeled by:<br/>Bryant Ranch Prepack<br/>Burbank, CA 91504</paragraph>
+               </text>
+               <effectiveTime value="20260811"/>
+            </section>
+         </component>
+         <component>
+            <section ID="Lb17041f1-1999-4f97-8fb4-7fd3010f8d09">
+               <id root="54493911-a4f7-4c39-8612-f213f261e1ae"/>
+               <code code="34091-9" codeSystem="2.16.840.1.113883.6.1" displayName="ANIMAL PHARMACOLOGY &amp; OR TOXICOLOGY SECTION"/>
+               <title>
+                  <content styleCode="bold">ANIMAL PHARMACOLOGY AND ANIMAL TOXICOLOGY</content>
+               </title>
+               <text>
+                  <paragraph>Hyperpigmentation of the thyroid has been produced by members of the tetracycline class in the following species: in rats by oxytetracycline, doxycycline, minocycline, tetracycline PO<sub>4</sub> and methacycline; in minipigs by doxycycline, minocycline, tetracycline PO<sub>4</sub> and methacycline; in dogs by doxycycline and minocycline; in monkeys by minocycline.</paragraph>
+                  <paragraph>Minocycline, tetracycline PO<sub>4</sub>, methacycline, doxycycline, tetracycline base, oxytetracycline HCl and tetracycline HCl were goitrogenic in rats fed a low iodine diet. This goitrogenic effect was accomplished by high radioactive iodine uptake. Administration of minocycline also produced a large goiter with high radioiodine uptake in rats fed a relatively high iodine diet.</paragraph>
+                  <paragraph>Treatment of various animal species with this class of drugs has also resulted in the induction of thyroid hyperplasia in the following: in rats and dogs (minocycline), in chickens (chlortetracycline) and in rats and mice (oxytetracycline). Adrenal gland hyperplasia has been observed in goats and rats treated with oxytetracycline.</paragraph>
+                  <paragraph>Distributed by:</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Avet Pharmaceuticals Inc.</content>
+                  </paragraph>
+                  <paragraph>East Brunswick, NJ 08816</paragraph>
+                  <paragraph>1-866-901-DRUG (3784)</paragraph>
+                  <paragraph>
+                     <renderMultiMedia referencedObject="L55e24a09-93e6-4f71-8951-b2ce05371d9b"/>
+                  </paragraph>
+                  <paragraph>51U000000351US01</paragraph>
+                  <paragraph>Revised: 03/2020</paragraph>
+               </text>
+               <effectiveTime value="20200401"/>
+            </section>
+         </component>
+         <component>
+            <section>
+               <id root="512edf83-1af2-4111-847d-83550de38308"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">Tetracycline Hydrochloride 250mg Capsules</content>
+                  </paragraph>
+                  <renderMultiMedia referencedObject="mm63629"/>
+               </text>
+               <effectiveTime value="20260811"/>
+               <component>
+                  <observationMedia ID="mm63629">
+                     <text>Label</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="lbl713353170.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+      </structuredBody>
+   </component>
+</document>

@@ -1,10 +1,34 @@
 # 多代理人抗生素用藥輔助決策 Prototype
 
-目前提供四模式：**rule-only、rag-only、single-agent、multi-agent**。2026-09-20 已移除舊的一次生成 multi-agent，原 multi-agent-v2 改名為 multi-agent：五個 Agent 各有輸入／輸出契約、獨立模型呼叫及 trace。架構見 [多代理說明](docs/MULTI_AGENT_V2.md)。Benchmark 固定比較這四模式；舊分析紀錄仍可查閱，並標示歷史流程。
+GitHub 交接：[目前病例包](data/handoff/README.md) 包含 28 個使用中的測試情境、95 筆修訂、95 藥／97 菌名稱字典及 24 份文件的安裝清單。[DailyMed 資料包](data/public_references/dailymed/README.md) 包含 20 份標示原件、檢索文字、來源及雜湊。原始 CSV、`.env` 與完整本機資料庫不隨 Git 交接。
 
-Windows 本機研究工作台，使用本機 CSV 的實際菌種、測試藥品與藥敏判讀，搭配明確標示的模擬臨床情境、WHO 文件檢索（RAG）、八節點分析、表單審閱與四模式研究比較。
+目前提供四模式：**rule-only、rag-only、single-agent、multi-agent**。目前 multi-agent 使用 `agent-led-1.5.1`：五角色、正常六次模型呼叫（含獨立引用複核），分析與審閱不呼叫 RuleEngine；支援分層選項及逐藥醫師決策。其他三種模式保留原行為；歷史結果保留原快照並按版本顯示。Benchmark 可勾選病例與模式。來源病例操作見 [Agent 主導 DEMO](docs/AGENT_LED_DEMO.md)，目前修正見 [1.5.1 驗收紀錄](docs/AGENT_LED_151_VALIDATION.md)。
+
+Windows 本機研究工作台，使用本機 CSV 的實際菌種、測試藥品與藥敏判讀，搭配明確標示的模擬臨床情境、WHO／DailyMed 文件檢索（RAG）、Agent 分析、表單審閱與四模式研究比較。
 
 **研究展示用／非臨床使用。** 預設流程不再使用虛構菌種／藥品。來源 S 判讀僅建立待審選項，不等於治療建議；不重新計算 CLSI/EUCAST 界值、不提供給藥方案。WHO 可進入病例 RAG，但檢索到片段不代表已驗證臨床適用性。
+
+## 接手者先照這裡做
+
+第一次接手、沒有原工作站的 CSV 或 API key 時，先驗證軟體可以執行：
+
+```powershell
+git clone https://github.com/royalbear37/multi_agent.git
+cd multi_agent
+powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1
+.\backend\.venv\Scripts\python.exe .\backend\scripts\check_handoff.py
+powershell -ExecutionPolicy Bypass -File .\scripts\handoff.ps1
+```
+
+保留此視窗，另開 PowerShell，切到同一個 `multi_agent` 資料夾：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\frontend.ps1
+```
+
+開啟 [操作畫面](http://127.0.0.1:5173)，選 `agent-complete` → 核對第 4 版及 18 筆 AST → 模式選 multi-agent、模型選 mock →「執行分析」。查看逐藥表、證據與流程、人工審閱、歷史及匯出；其他模式同樣可用 mock 操作。此入口匯入原工作站的測試病例與 WHO／DailyMed／論文文件，明確設定 lexical＋mock，不需 `.env`、Ollama、私人 CSV 或付費模型。mock 顯示待確認是預期行為，不是模型已完成臨床核對。
+
+此指令使用一般 DB（預設 `data/runtime/prototype.db`），保留既有病例、不覆寫。要用自己的模型及向量檢索，先 Ctrl+C 停止 handoff，再依第 2–4 節建立設定並啟動一般後端，於文件庫重建 reference 索引。病例已附，**不必再取得原 CSV**；只有重新產生資料集時才需第 6 節 CSV。外送授權已重設，需在接手環境重新確認。歷史 run、醫師審閱與付費診斷檔不隨 Git 移轉；完整差異見 [病例包說明](data/handoff/README.md)。
 
 ## 目錄
 
@@ -181,7 +205,11 @@ powershell -ExecutionPolicy Bypass -File .\scripts\frontend.ps1
 停止時在對應終端機按 **Ctrl+C**。修改 `.env` 後先停止舊後端，再執行後端命令；不要同時啟動兩份。前端沒有修改時，通常只需重新整理瀏覽器。
 
 <a id="demo"></a>
-## 5. 免 API 的完整展示
+## 5. 免 API 的軟體流程展示
+
+目前工作站的病例與文件用上方的 `scripts/handoff.ps1`，不需要 CSV。另保留獨立的虛構 A／B 軟體測試入口：`powershell -ExecutionPolicy Bypass -File .\scripts\demo.ps1 -Synthetic`。它載入 16 個歷史 fixture，替 case-15／case-16 各保存 rule-only 與 mock multi-agent，共四筆分析，DB 在 `data/runtime/handoff-demo/`；不用 WHO，也不是本次使用中的真實藥名情境。
+
+已有有權使用的來源 CSV 時，使用以下研究資料路徑：
 
 先完成第 10 節 WHO 匯入，再依第 6 節準備本機 CSV 病例。終端機 A 使用：
 
@@ -200,7 +228,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\demo.ps1
 
 ### 6.1 準備本機 CSV
 
-CSV 為結構化資料，請使用匯入腳本，不要放進 RAG 文件上傳框。先在文件庫找到 WHO 的 `doc_id`（文件詳細資料），由專案根目錄執行：
+已用 `scripts/handoff.ps1` 匯入目前病例包者可跳過本節。以下用於重新處理自己的來源 CSV。
+
+CSV 為結構化資料，請使用匯入腳本，不要放進 RAG 文件上傳框。以下檔案須另行取得，Git 不包含它；把路徑換成實際檔案，由專案根目錄執行：
 
 ```powershell
 .\backend\.venv\Scripts\python.exe .\backend\scripts\import_microbiology.py .\microbiology_cohort_deid_tj_updated.csv --install
@@ -216,7 +246,7 @@ CSV 為結構化資料，請使用匯入腳本，不要放進 RAG 文件上傳�
 
 這些檔案與根目錄 `microbiology*.csv` 已由 Git 忽略。腳本不送出網路請求、不呼叫 LLM。`--install` 將準備好的病例加入本機資料庫；同 ID 已存在時保留使用者修改。重啟後端、重新整理前端即可選取，或按「載入已準備的來源病例」。
 
-舊版虛構病例仍保留歷史資料，預設列表及新 benchmark 不納入；需要稽核舊資料可用 `GET /api/cases?include_legacy=true`。舊 `data/synthetic` 與 `configs/demo` 僅供歷史回歸測試，不是預設種子或規則。
+舊版虛構病例仍保留歷史資料，一般研究模式的列表及新 benchmark 不納入；需要稽核舊資料可用 `GET /api/cases?include_legacy=true`。`data/synthetic` 與 `configs/demo` 用於回歸測試及明確選用的 `-Synthetic` 交接展示，不是一般研究模式的預設種子或規則。
 
 ### 6.2 資料來源標示與病例 JSON
 
@@ -250,9 +280,9 @@ CSV 為結構化資料，請使用匯入腳本，不要放進 RAG 文件上傳�
 | rule-only | 來源判讀規則與模板選項，不呼叫回答模型 | 可執行 |
 | rag-only | 病例摘要與檢索證據的研究基線生成 | partial／not_configured |
 | single-agent | 病例、來源 AST 與證據的一次主要生成 | partial／not_configured |
-| multi-agent | 五個獨立 Agent 依序整理病例、AST、證據、臨床限制及整合 | partial／not_configured |
+| multi-agent | 病例、AST、證據、臨床風險、整合，再獨立複核引用；不先篩規則候選 | partial／needs_confirmation；有效專責報告仍保留 |
 
-模型執行方式可選未設定、mock、外部模型 live。mock 與 live 皆須通過輸出檢核。來源病例的基線模式取得已測試藥品名稱，multi-agent 取得規則篩選後集合；mock 基線只挑第一項，遇過敏等限制可能被最後檢查阻擋，這不是 API 連線失敗。multi-agent 先通過規則與檢索檢核，再執行五個獨立 Agent；通常有五次模型呼叫，失敗會提前停止。rule-only 仍可能執行檢索節點供 trace 使用，Ollama 故障時要查看該節點狀態。
+模型執行方式可選未設定、mock、外部模型 live。multi-agent 接收完整原始 AST、病例事實和文件，也可由證據 Agent 提出文件明確記載的未測 AST 選項。格式、來源、引用存在性、預算及跨角色一致性仍由程式檢查；不重新計算 MIC 界值。Mock 只驗證訊息流程，不宣稱文件支持或發布臨床候選。正常六次呼叫，共用最多八次（含補正），預設全程 780 秒，由 `LLM_AGENT_LED_TIMEOUT_SECONDS` 設定。一般角色輸出預設 6,000 tokens；整合及獨立複核分別為 16,000／24,000，設定名稱見 `backend/.env.example`。較長預算不保證一定完成。其餘模式的規則及輸出檢核維持原行為。
 
 結果包含候選、避免項目、原因、規則／證據引用及限制。來源 AST 的 S/I/R 和系統展示判讀分開，不代表已用正式 breakpoint 重新驗證。
 
@@ -272,17 +302,15 @@ CSV 為結構化資料，請使用匯入腳本，不要放進 RAG 文件上傳�
 <a id="evidence"></a>
 ## 8. 證據與流程
 
-2026-09-20：rag-only、single-agent、舊 multi-agent 與 v2 整合共用 demo 輸出容錯：整理額外欄位／空清單／重複項目，省略不適合展示的說明，逐項移除無法核對的藥品或引用。所有模式在沒有最終候選時，均以表格顯示「來源藥敏整理結果（demo）」。rule-only 不呼叫模型，來源判讀衝突、非 S、過敏等仍保留排除或待確認標示；不將未知結果補成敏感。JSON 無法解析、連線失敗或整體前置限制仍可能使模型結果未發布，但可查看來源整理表。
+歷史 V2 及其他模式保留既有 demo 輸出容錯。新 multi-agent 改用「逐藥決策表」顯示可供審閱、待確認、不建議、未選入及專責評估，不使用「通過規則／規則排除」描述；沒有候選時仍展示有效分析與缺漏。模型無法核對的引用不可視為支持。
 
-目前預設 v2.3 為寬鬆 demo：Agent 待確認與缺漏改為結果限制，不再直接停止整合；可修復的輸出格式自動容錯。前置檢查、藥品排除及引用邊界仍保留，無支持候選不補造。以下 v2.2 的重要待確認停止策略已由 v2.3 取代。
-
-Demo v2.2：病例整理現在可讀取培養檢體、報告狀態與 AST。額外病史／影像未知列為限制；重要待確認事項不再阻止其他專責 Agent 分析，但仍暫緩整合與候選發布。既有混合病例可由根目錄執行 `.\backend\.venv\Scripts\python.exe .\backend\scripts\update_demo_context.py` 加入固定 demo 範圍說明，保留來源資料與歷史版本。
+新版分開呈現「完整核對候選」「有證據的待審閱選項」「其他待確認」「不建議／未選入」。感染適用性通過而風險尚未完成，不等於完整候選；未知過敏不當成沒有過敏。每項可展開病例來源、文件片段、分項複核及具體缺口。v2.2／v2.3 為歷史流程版本，不是目前預設。
 
 「藥品數量與去向」區分來源筆數、規則排除、最終選入及其餘未選入；例如 17 項來源可以是 6 項規則排除、4 項選入、7 項通過規則但未選入，並不表示另外 13 項都不適用。rag-only 的 AST 節點為程式規則核對，生成模型只收到摘要、測試藥品名稱與引用，沒有完整逐筆 AST。文件旁會標示合成測試／真實參考／來源類型未記錄；合成測試文件只驗證流程，不代表指引支持。
 
 先選一筆結果，再按「查看證據與流程」：
 
-1. 查看八節點：病例完整性、AST、抗藥背景、快速鑑定、證據檢索、安全閘門、候選呈現、人工審閱。
+1. multi-agent 查看病例、AST、證據、風險、整合與獨立複核的專屬結果；其他模式沿用病例完整性、AST、抗藥背景、快速鑑定、證據檢索等節點。
 2. 在「工作流 Trace」展開節點，查狀態、耗時、規則／證據參照、輸出與錯誤。
 3. 在「版本固定的證據快照」閱讀實際片段，按「開啟原始文件」核對來源。
 
@@ -290,6 +318,10 @@ PDF page 是從 1 開始的實體頁序，不一定等於印刷頁碼；Markdown
 
 <a id="review"></a>
 ## 9. 人工審閱與角色
+
+**新版 multi-agent 優先使用逐藥醫師決策：**選 run →「前往人工審閱」→ 只處理本次要決定的藥品，選「採用／有條件採用／不採用」，填理由；有條件採用另填條件，依畫面確認保留警示後保存。不要求每個藥品都決定。原系統分層與警示不會被覆寫，醫師採用也不代表 AI 已完成核對；歷史可重新讀取並匯出該筆審閱。完整操作見 [逐藥醫師決策](docs/PHYSICIAN_DECISIONS_150_VALIDATION.md)。
+
+以下為其他模式及既有整份結果審閱：
 
 1. 左側角色可選醫師、藥師或研究／管理人員；這是展示角色，不是正式登入。
 2. 選 run，按「前往人工審閱」。目前使用者 ID 固定為 `demo-user`。
@@ -318,11 +350,11 @@ PDF page 是從 1 開始的實體頁序，不一定等於印刷頁碼；Markdown
 
 既有文件可展開紀錄，在「此文件適用族群」選擇範圍，填寫「標示依據」（例如來源頁碼），按「儲存族群標示」。更新保存歷史與修訂號，不需重新建立向量。若別人已更新，會提示重新載入；重複上傳相同內容且指定不同族群會回報衝突，請使用此表單修改。
 
-病例使用 reference 時必須有年齡；目前軟體以 18 歲區分成人與兒童，尚未細分新生兒等子族群。沒有相符且已標示的片段時不發布候選，也不呼叫生成模型。更新標示後請重新分析：舊 run 的快照不變；缺少族群標示的舊輸出不能直接通過新的審閱驗證。族群標示相符仍不表示片段支持某項藥物或臨床結論。
+病例的年齡與文件族群會影響檢索與適用性核對；目前以 18 歲區分成人與兒童，尚未細分所有子族群。新版 multi-agent 仍可保留缺乏支持的分析與待確認事項，不能把這些當成完整候選。更新標示後請重新分析，舊 run 的快照不變。族群標示相符仍不表示片段支持某項藥物或臨床結論。
 
 ### 10.2 WHO 抗生素書
 
-本機附件原位於專案上一層 `who_aware_antibiotic_book.pdf`。2026-09-15 已匯入當時本機 runtime；其他電腦 clone 不會帶入原檔，需自行上傳。
+`who_aware_antibiotic_book.pdf` 已由 Git 追蹤，clone 後就在專案根目錄。原工作站的 runtime 不會跟著移轉，接手者仍須在自己的文件資料庫上傳這份 PDF。
 
 - 標題：`The WHO AWaRe (Access, Watch, Reserve) antibiotic book`
 - 版本：`2022-user-supplied`
@@ -341,6 +373,21 @@ PDF page 是從 1 開始的實體頁序，不一定等於印刷頁碼；Markdown
 | reference | WHO 等參考文件 | 是，病例 evidence_scope 為 reference 且符合 policy_refs |
 
 選「文件範圍」→ 填「查詢」→ 按「檢索文件」。首次 embedding 搜尋會補建缺少向量。「重建向量索引」針對所選範圍；更換模型、服務位置或同名模型權重後，重啟並重建。WHO 全書首次索引可能較久。
+
+**multi-agent 1.5.1 分析期間不補建向量**，避免建索引耗盡 Agent 的時間；上傳文件後先在 reference 範圍重建完成，再分析。lexical 模式不需要向量。
+
+### 10.4 DailyMed 固定版本資料包
+
+`scripts/handoff.ps1` 已一次匯入 WHO 原書／章節、DailyMed、論文及負向控制文件，無須再手動上傳。本節只供想單獨安裝 DailyMed 者使用。
+
+在一般研究後端使用的同一組 DB 設定下，由根目錄執行：
+
+```powershell
+.\backend\.venv\Scripts\python.exe .\backend\scripts\install_reference_bundle.py --verify-only
+.\backend\.venv\Scripts\python.exe .\backend\scripts\install_reference_bundle.py
+```
+
+指令先核對 20 組 Markdown／原始 XML 的 SHA256，再匯入檢索文件；不下載新版本、不呼叫回答模型。來源網址、版本、地區及原產品名稱見 [資料包說明](data/public_references/dailymed/README.md)。DailyMed 補充逐藥風險，WHO 提供感染指引；兩者都不是院內政策。匯入後重新整理文件庫，embedding 模式須重建 reference 索引。不要在 `-Synthetic` 展示環境匯入後期待一般研究 DB 自動取得文件。
 
 向量保存在 SQLite，重啟可重用。相似度不是可信度機率。lexical 模式重建向量會顯示 skipped，但仍可文字檢索。
 
@@ -363,7 +410,7 @@ PDF page 是從 1 開始的實體頁序，不一定等於印刷頁碼；Markdown
 
 1. 先確認完整單病例能執行，文件與規則版本符合預期。
 2. 在「Benchmark 模型」選未設定、mock 或外部模型。
-3. 按「執行四模式比較」。UI 會跑**全部已保存病例×四模式**，不是只有目前病例；16 例即 64 筆模式結果，live 可能多次付費。
+3. 勾選病例及模式，先核對執行前的數量，再按比較按鈕。總數為所選病例數×模式數；全選 16 例及四模式即 64 筆，live 可能多次付費。
 4. 等待完成，查看 summary 並展開「逐案例結果」。
 5. 按「匯出逐案例結果與摘要」下載 JSON；點歷史 benchmark 可讀回。
 
@@ -395,7 +442,7 @@ null 表示 N/A、無分母或未評估，不是零分。token 只有 provider �
 
 - 單筆分析：選 run，在「分析結果」按「匯出 JSON」，包含公開結果、trace、規則與證據快照。
 - Benchmark：按「匯出逐案例結果與摘要」。
-- 審閱：在人工審閱區查閱，或用 `GET /api/reviews?run_id=...`；run 匯出不是完整審閱／資料庫備份。
+- 審閱：在人工審閱區查閱／匯出逐藥決策，或用 `GET /api/reviews?run_id=...` 與 `GET /api/reviews/{review_id}/export`；run 匯出不是完整審閱／資料庫備份。
 - 病例：工作台可查看／複製 JSON，API 可取得病例與 revision。UI 沒有整庫一鍵匯出或 CSV 功能。
 
 預設 DB 為 `data/runtime/prototype.db`，原始文件、chunks 與向量在同層 `documents/`。自訂 `PROTOTYPE_DB_PATH` 時文件跟隨 DB 目錄；相對路徑以 backend 解析。
@@ -420,7 +467,7 @@ powershell -ExecutionPolicy Bypass -File .\backend\scripts\seed.ps1
 .\backend\.venv\Scripts\python.exe .\backend\scripts\prepare_demo.py
 ```
 
-`scripts/generate_synthetic.py` 僅重建歷史回歸測試 fixture，不供新流程載入；新病例請使用第 6 節 CSV 匯入器。
+`prepare_demo.py --synthetic` 可單獨準備交接展示的四筆結果而不啟動服務；之後需用 `scripts/demo.ps1 -Synthetic` 啟動相同隔離環境。`scripts/generate_synthetic.py` 重建歷史測試 fixture，來源病例請使用第 6 節 CSV 匯入器。
 
 ### 測試
 
@@ -432,7 +479,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test.ps1
 powershell -ExecutionPolicy Bypass -File .\scripts\test.ps1 -E2E
 ```
 
-E2E 自動啟停測試服務，使用獨立 DB 及 8001／5174 埠，請保持這兩個埠可用。預設測試不呼叫付費 API。2026-09-15 驗證記錄：後端 81 項、coverage 86%、元件 4 項、E2E 4 項、build 通過；這是歷史結果，不代表真實 OpenAI／Ollama 已測通。
+E2E 自動啟停測試服務，使用獨立 DB 及 8001／5174 埠，請保持這兩個埠可用。預設測試不呼叫付費 API。本次交接的乾淨副本安裝、測試與展示結果見 [交接驗證](docs/HANDOFF_VALIDATION.md)；歷史 live 記錄不代表目前版已完成新的付費驗證。
 
 ### API 與契約
 
@@ -445,7 +492,7 @@ E2E 自動啟停測試服務，使用獨立 DB 及 8001／5174 埠，請保持�
 | 執行 | `POST /api/runs`、`GET /api/runs/{run_id}`、`GET /api/runs/{run_id}/trace`、`GET /api/runs/{run_id}/export` |
 | 文件 | `POST /api/documents/import`、`GET /api/documents`、`GET /api/documents/{doc_id}/source` |
 | 正式參考搜尋／索引 | `GET /api/documents/search?q=pneumonia&scope=reference`、`POST /api/documents/reindex?scope=reference` |
-| 審閱 | `POST /api/reviews`、`GET /api/reviews?run_id=...` |
+| 審閱 | `POST /api/reviews`、`GET /api/reviews?run_id=...`、`GET /api/reviews/{review_id}/export` |
 | 規則／比較 | `GET /api/rules`、`POST /api/benchmarks`、`GET /api/benchmarks/{benchmark_id}/export` |
 
 病例 import body 為 `{"payload": {...}, "format": "canonical"}`，文件使用 multipart。API benchmark 可指定 case_ids／modes 做小批比較，完整參數以互動文件為準。
@@ -507,7 +554,7 @@ Stop-Process -Id 12345
 <a id="limits"></a>
 ## 15. 限制與詳細文件
 
-目前可操作的是來源藥敏＋模擬臨床情境的研究 prototype。正式 AST breakpoint、腎功能調整、藥物交互作用、正式登入、院端整合及臨床驗證仍未完成；真實 OpenAI／Ollama 需在自己的環境驗證，WHO 切段與檢索品質尚未完整人工評估。本專案僅本機執行，不包含公開部署流程。
+目前可操作的是來源藥敏＋模擬臨床情境的研究 prototype。Agent 可依文件核對腎功能、過敏與交互作用，但不具備經臨床驗證的劑量調整／交互作用知識庫；正式 AST breakpoint、正式登入、院端整合及臨床驗證仍未完成。真實 OpenAI／Ollama 需在自己的環境驗證，WHO 切段與檢索品質尚未完整人工評估。本專案僅本機執行，不包含公開部署流程。
 
 - [需求核對與待辦](docs/REQUIREMENTS_AUDIT.md)
 - [實作狀態與測試證據](docs/IMPLEMENTATION_STATUS.md)

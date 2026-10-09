@@ -220,6 +220,93 @@
           ],
           "default": null,
           "title": "Severity"
+        },
+        "label_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label Source"
+        },
+        "occurred_at": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Recorded event date or approximate time; never invent an exact date",
+          "title": "Occurred At"
+        },
+        "verification_status": {
+          "default": "not_recorded",
+          "enum": [
+            "not_recorded",
+            "unverified",
+            "confirmed",
+            "ruled_out",
+            "conflicting"
+          ],
+          "title": "Verification Status",
+          "type": "string"
+        },
+        "verification_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verification Note"
+        },
+        "verification_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verification Source"
+        },
+        "verified_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified By"
+        },
+        "verified_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified At"
         }
       },
       "required": [
@@ -620,6 +707,43 @@
           "default": null,
           "title": "Egfr"
         },
+        "crcl": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crcl"
+        },
+        "crcl_unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crcl Unit"
+        },
+        "crcl_calculation_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crcl Calculation Method"
+        },
         "unit": {
           "anyOf": [
             {
@@ -772,6 +896,34 @@
         "$ref": "#/$defs/Medication"
       },
       "title": "Medications",
+      "type": "array"
+    },
+    "medication_history_status": {
+      "default": "unknown",
+      "enum": [
+        "unknown",
+        "reviewed_none",
+        "reviewed_list"
+      ],
+      "title": "Medication History Status",
+      "type": "string"
+    },
+    "clinical_history": {
+      "additionalProperties": true,
+      "title": "Clinical History",
+      "type": "object"
+    },
+    "vitals": {
+      "additionalProperties": true,
+      "title": "Vitals",
+      "type": "object"
+    },
+    "resistance_context": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Resistance Context",
       "type": "array"
     },
     "resistance_context_ref": {

@@ -1,0 +1,1578 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="https://www.accessdata.fda.gov/spl/stylesheet/spl.xsl" type="text/xsl"?>
+<document xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 https://www.accessdata.fda.gov/spl/schema/spl.xsd">
+   <id root="99754101-fa6f-46e9-8b2f-a8b4e9f2458b"/>
+   <code code="34391-3" codeSystem="2.16.840.1.113883.6.1" displayName="HUMAN PRESCRIPTION DRUG LABEL"/>
+   <title>
+      <br/>These highlights do not include all the information needed to use TIZANIDINE TABLETS safely and effectively. See full prescribing information for TIZANIDINE TABLETS. <br/>TIZANIDINE tablets, for oral use <br/>Initial U.S. Approval: 1996<br/>
+   </title>
+   <effectiveTime value="20261002"/>
+   <setId root="3c993e3c-ee52-45a7-be39-60eaac7a1092"/>
+   <versionNumber value="6"/>
+   <author>
+      <time/>
+      <assignedEntity>
+         <representedOrganization>
+            <id extension="791119022" root="1.3.6.1.4.1.519.1"/>
+            <name>Preferred Pharmaceuticals Inc.</name>
+            <assignedEntity>
+               <assignedOrganization>
+                  <id extension="791119022" root="1.3.6.1.4.1.519.1"/>
+                  <name>Preferred Pharmaceuticals Inc.</name>
+                  <assignedEntity>
+                     <assignedOrganization>
+                        <id extension="791119022" root="1.3.6.1.4.1.519.1"/>
+                        <name>Preferred Pharmaceuticals Inc.</name>
+                     </assignedOrganization>
+                     <performance>
+                        <actDefinition>
+                           <code code="C73606" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="REPACK"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="68788-7991" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                  </assignedEntity>
+               </assignedOrganization>
+            </assignedEntity>
+         </representedOrganization>
+      </assignedEntity>
+   </author>
+   <component>
+      <structuredBody>
+         <component>
+            <section>
+               <id root="52a98db7-91cc-4eb4-9d12-44b7c069ae82"/>
+               <code code="48780-1" codeSystem="2.16.840.1.113883.6.1" displayName="SPL product data elements section"/>
+               <effectiveTime value="20240831"/>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code code="68788-7991" codeSystem="2.16.840.1.113883.6.69"/>
+                        <name>Tizanidine</name>
+                        <formCode code="C42998" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="TABLET"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>Tizanidine</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <asEquivalentEntity classCode="EQUIV">
+                           <code code="C64637" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <definingMaterialKind>
+                              <code code="55111-179" codeSystem="2.16.840.1.113883.6.69"/>
+                           </definingMaterialKind>
+                        </asEquivalentEntity>
+                        <ingredient classCode="ACTIM">
+                           <quantity>
+                              <numerator unit="mg" value="2"/>
+                              <denominator unit="1" value="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="B53E3NMY5C" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>Tizanidine Hydrochloride</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="6AI06C00GW" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>Tizanidine</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="3SY5LH9PMK" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>anhydrous lactose</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="OP1R32D61U" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>MICROCRYSTALLINE CELLULOSE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="ETJ7Z6XBU4" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>silicon dioxide</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="4ELV7Z65AP" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>stearic acid</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator unit="1" value="30"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="68788-7991-3" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20210806"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                           <subjectOf>
+                              <characteristic classCode="OBS">
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="Type 0: Not a Combination Product" xsi:type="CE"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                        <asContent>
+                           <quantity>
+                              <numerator unit="1" value="60"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="68788-7991-6" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20210806"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                           <subjectOf>
+                              <characteristic classCode="OBS">
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="Type 0: Not a Combination Product" xsi:type="CE"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                        <asContent>
+                           <quantity>
+                              <numerator unit="1" value="90"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="68788-7991-9" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20210806"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                           <subjectOf>
+                              <characteristic classCode="OBS">
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="Type 0: Not a Combination Product" xsi:type="CE"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                        <asContent>
+                           <quantity>
+                              <numerator unit="1" value="120"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="68788-7991-8" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <marketingAct>
+                                 <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 <statusCode code="active"/>
+                                 <effectiveTime>
+                                    <low value="20210806"/>
+                                 </effectiveTime>
+                              </marketingAct>
+                           </subjectOf>
+                           <subjectOf>
+                              <characteristic classCode="OBS">
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="Type 0: Not a Combination Product" xsi:type="CE"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <approval>
+                           <id extension="ANDA076286" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73584" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ANDA"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20210806"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic classCode="OBS">
+                           <code code="SPLCOLOR" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value code="C48325" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="WHITE" xsi:type="CE">
+                              <originalText>white to off-white</originalText>
+                           </value>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic classCode="OBS">
+                           <code code="SPLSIZE" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value unit="mm" value="8" xsi:type="PQ"/>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic classCode="OBS">
+                           <code code="SPLSHAPE" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value code="C48345" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="OVAL" xsi:type="CE"/>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic classCode="OBS">
+                           <code code="SPLSCORE" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value value="2" xsi:type="INT"/>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic classCode="OBS">
+                           <code code="SPLIMPRINT" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value xsi:type="ST">R;179</value>
+                        </characteristic>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38288" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ORAL"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+            </section>
+         </component>
+         <component>
+            <section ID="_9ab3dda6-5c15-4fff-6a29-482c3c70ff5d">
+               <id root="dae90796-9349-4c4e-a802-ad82d0739efb"/>
+               <code code="43683-2" codeSystem="2.16.840.1.113883.6.1" displayName="RECENT MAJOR CHANGES SECTION"/>
+               <title>RECENT MAJOR CHANGES SECTION</title>
+               <effectiveTime value="20240831"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <paragraph>Indications and Usage (1) 11/2024</paragraph>
+                        <paragraph>Dosage and Administration (2.1, 2.2, 2.3, 2.4, 2.5, 2.6) 11/2024</paragraph>
+                        <paragraph>Contraindications (4) 11/2024</paragraph>
+                        <paragraph>Warnings and Precautions (5.1, 5.2, 5.4, 5.5) 11/2024</paragraph>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="INDICATIONS_AND_USAGE">
+               <id root="7fe2ba14-5ba9-4c57-b2b5-ec81516382db"/>
+               <code code="34067-9" codeSystem="2.16.840.1.113883.6.1" displayName="INDICATIONS &amp; USAGE SECTION"/>
+               <title>1 INDICATIONS AND USAGE</title>
+               <text>
+                  <paragraph>Tizanidine tablets are indicated for the treatment of spasticity in adults. </paragraph>
+               </text>
+               <effectiveTime value="20240831"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <paragraph>Tizanidine tablet is a central alpha-2-adrenergic agonist indicated for the  treatment of spasticity. (<linkHtml href="#INDICATIONS_AND_USAGE">1</linkHtml>) </paragraph>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="DOSAGE_AND_ADMINISTRATION">
+               <id root="2adef1fb-0672-4cc1-99fb-86e257d0d9fb"/>
+               <code code="34068-7" codeSystem="2.16.840.1.113883.6.1" displayName="DOSAGE &amp; ADMINISTRATION SECTION"/>
+               <title>2 DOSAGE AND ADMINISTRATION</title>
+               <effectiveTime value="20240831"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered">
+                           <item>
+                              <caption>•</caption>Monitoring of aminotransferase levels is recommended at baseline and 1month after maximum dose is achieved. <linkHtml href="#_5ada7a8d-bf34-d567-8d5e-60f829c503ce">(2.1)</linkHtml>
+                           </item>
+                           <item>
+                              <caption>•</caption>Recommended starting dose: 2 mg by mouth every 6 to 8 hours, as needed, up to a maximum of 3 doses in 24 hours <linkHtml href="#_ebf91764-c219-09da-aee5-e07127d23022">(2.2)</linkHtml> </item>
+                           <item>
+                              <caption>•</caption>Dosage can be increased by 2 mg to 4 mg per dose every1 to 4 days; maximum total daily dosage is 36 mg <linkHtml href="#_ebf91764-c219-09da-aee5-e07127d23022">(2.2)</linkHtml>
+                           </item>
+                           <item>
+                              <caption>•</caption>Tizanidine pharmacokinetics differs between tablets and capsules, and when taken with or without food. These differences could result in a change in tolerability and control of symptoms. Consistent administration with respect to food is recommended. If substitution between dosage forms is necessary, take into consideration these pharmacokinetic differences. (<linkHtml href="#_ebf91764-c219-09da-aee5-e07127d23022">2.2</linkHtml>, 2.6, <linkHtml href="#PHARMACOKINETICS">12.3)</linkHtml>
+                           </item>
+                           <item>
+                              <caption>•</caption>Patients with renal impairment (creatinine clearance &lt;25 mL/min) or hepatic impairment: use lower individual doses during titration. If higher doses are required, individual doses rather than dosing frequency should be increased. <linkHtml href="#_68c68f2c-43ad-4101-9927-3ea774518ed8">(2.3</linkHtml>, <linkHtml href="#_625b4dad-ef6e-92be-aa53-e34c1385b7dd">2.4</linkHtml>) </item>
+                           <item>
+                              <caption>•</caption>To discontinue tizanidine tablets, decrease dose slowly to minimize the risk of withdrawal adverse reactions (2.5)</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="_5ada7a8d-bf34-d567-8d5e-60f829c503ce">
+                     <id root="b4d06c00-bcbe-45fb-9994-eab73f6b398b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.1 Recommended Evaluation and Testing Before and After Initiating Tizanidine tablets </title>
+                     <text>
+                        <paragraph>Monitoring of aminotransferase levels is recommended at baseline and 1 month after maximum dose is achieved <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#_3c314f85-f5de-785c-5d76-1843309bfc80">5.2)</linkHtml>]</content>. </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_ebf91764-c219-09da-aee5-e07127d23022">
+                     <id root="f771cf86-7f72-4761-b926-241edf08939f"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.2 Recommended Dosage</title>
+                     <text>
+                        <paragraph>The recommended starting dose is 2 mg by mouth every 6 to 8 hours,as needed, to a maximum of three doses in 24 hours. </paragraph>
+                        <paragraph>Dosage can be gradually increased every 1 to 4 days by 2 mg to 4 mg at each dosebased on clinical response and tolerability. The maximum total daily dosage is 36 mg. Single doses greater than 16 mg have not been studied.</paragraph>
+                        <paragraph> There are pharmacokinetic differences when administering tizanidine tablets between the fed or fasted state <content styleCode="italics">[see Clinical Pharmacology <linkHtml href="#PHARMACOKINETICS">(12.3)</linkHtml>]</content>. Tizanidine tablets may be taken with or without food; however, consistent administration with respect to food is recommended to reduce variability in tizanidine plasma exposure. </paragraph>
+                        <paragraph>Because of the short duration of therapeutic effect, treatment with tizanidine tablets should be reserved for those daily activities and times when relief of spasticity is most important.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_68c68f2c-43ad-4101-9927-3ea774518ed8">
+                     <id root="1422d2b4-af7c-460c-950b-d44a959e8ced"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.3 Recommended Dosage in Patients with Renal Impairment</title>
+                     <text>
+                        <paragraph>In patients with creatinine clearance &lt; 25 mL/min, use lower individual doses during titration. If higher doses are required, the individual doses rather than dosing frequency should be increased <content styleCode="italics">[see Use in Specific Populations (<linkHtml href="#_7e13fd39-92d2-a08c-2864-080ff8afde4f">8.6</linkHtml>) and Clinical Pharmacology (<linkHtml href="#PHARMACOKINETICS">12.3)</linkHtml>].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_625b4dad-ef6e-92be-aa53-e34c1385b7dd">
+                     <id root="29a36dc7-b579-4f58-b5f1-e43d0fbe7dc0"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.4 Recommended Dosage in Patients with Hepatic Impairment</title>
+                     <text>
+                        <paragraph>In patients with hepatic impairment, use lowerindividual doses during titration. If higher doses are required, individual doses rather than dosing frequency should be increased <content styleCode="italics">[see Use in Specific Populations <linkHtml href="#_71356fb8-85a6-3394-e7c2-5bf111926aff">(8.7)</linkHtml> and Clinical Pharmacology <linkHtml href="#PHARMACOKINETICS">(12.3)</linkHtml>]. </content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_f101f5f7-130f-4df5-2943-b7f244a30599">
+                     <id root="40e89564-429d-4087-ab41-946f06e9cca0"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.5 Discontinuation of Tizanidine Tablets</title>
+                     <text>
+                        <paragraph>When discontinuing tizanidine tablets, particularly in patients who have been receiving high doses for long periods or who may be on concomitant treatment with narcotics, decreasethe dosage by 2 mg to 4 mg per day to minimize the risk of withdrawal adverse reactions <content styleCode="italics">[see Drug Abuse and Dependence <linkHtml href="#DEPENDENCE">(9.3)</linkHtml>].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_ccf47331-35b7-6190-1284-4752b74c72b8">
+                     <id root="6e041dbe-3bea-4642-b274-e6029df571b2"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.6  Switching Between With/Without Food and Different Tizanidine Dosage Forms</title>
+                     <text>
+                        <paragraph>There are pharmacokinetic differences when:</paragraph>
+                        <paragraph>1) switching between administration of Tizanidine with or without food </paragraph>
+                        <paragraph>2) switching between dosage forms if being administered with food.</paragraph>
+                        <paragraph> If these situations occur, monitor patients for therapeutic effect or adverse reactions<content styleCode="italics"> [see Dosage and Administration (<linkHtml href="#_ebf91764-c219-09da-aee5-e07127d23022">2.2</linkHtml>) and Clinical Pharmacology (<linkHtml href="#PHARMACOKINETICS">12.3</linkHtml>)].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="DOSAGE_FORMS_AND_STRENGTHS">
+               <id root="cbd8d7f6-4860-43fb-8010-a0bdafdabb82"/>
+               <code code="43678-2" codeSystem="2.16.840.1.113883.6.1" displayName="DOSAGE FORMS &amp; STRENGTHS SECTION"/>
+               <title>3 DOSAGE FORMS AND STRENGTHS</title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">Tablets</content>
+                  </paragraph>
+                  <paragraph>Tizanidine Tablets USP, 2 mg<content styleCode="bold"> </content>are white to off white, oval, flat, beveled edged tablets debossed with “R179” on one side and “bisecting score” on other side. </paragraph>
+                  <paragraph>Tizanidine Tablets USP, 4 mg are white to off white, oval, flat, beveled edged tablets debossed with “R180” on one side and “quadrisecting score” on other side.</paragraph>
+               </text>
+               <effectiveTime value="20240831"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered">
+                           <item>
+                              <caption>•</caption>Tablets 2 mg and 4 mg <linkHtml href="#DOSAGE_FORMS_AND_STRENGTHS">(3)</linkHtml>
+                           </item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="CONTRAINDICATIONS">
+               <id root="8035568e-4048-49af-bc7e-a0aff8c8c1bc"/>
+               <code code="34070-3" codeSystem="2.16.840.1.113883.6.1" displayName="CONTRAINDICATIONS SECTION"/>
+               <title>4 CONTRAINDICATIONS</title>
+               <text>
+                  <paragraph>Tizanidine hydrochloride is contraindicated in patients: </paragraph>
+                  <list listType="unordered">
+                     <item>
+                        <caption>•</caption>taking strong CYP1A2 inhibitors <content styleCode="italics">[see Drug Interactions <linkHtml href="#_62bfb5d3-95f3-ad4f-9e50-9f2c1059516e">(7.1)</linkHtml>].</content>
+                     </item>
+                     <item>
+                        <caption>•</caption>with a history of hypersensitivity to tizanidine or the ingredients in tizanidine tablets. Symptoms have included anaphylaxis and angioedema <content styleCode="italics">[see Warnings and Precautions <linkHtml href="#_311ca6ab-7d1d-0ec5-86bf-4817ca4b08d6">(5.5)</linkHtml>]. </content>
+                     </item>
+                  </list>
+               </text>
+               <effectiveTime value="20240831"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered">
+                           <item>
+                              <caption>•</caption>Concomitant use with strong CYP1A2 inhibitors (<linkHtml href="#CONTRAINDICATIONS">4</linkHtml>, 7.1)</item>
+                           <item>
+                              <caption>•</caption>Patients with a history of hypersensitivity to tizanidine or the ingredientsin tizanidine tablets (4, 5.5)</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="WARNINGS_AND_PRECAUTIONS">
+               <id root="a4b0d2b9-f358-4a9c-a21e-f29a86c768af"/>
+               <code code="43685-7" codeSystem="2.16.840.1.113883.6.1" displayName="WARNINGS AND PRECAUTIONS SECTION"/>
+               <title>5 WARNINGS AND PRECAUTIONS</title>
+               <effectiveTime value="20240831"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered">
+                           <item>
+                              <caption>•</caption>Hypotension: monitor for signs and symptoms of hypotension, in particular in patients receiving concurrent antihypertensives; tizanidine hydrochloride should not be used with other α<sub>2</sub>-adrenergic agonists (<linkHtml href="#_b11b0fdb-a969-01f6-8321-d2f54132c933">5.1</linkHtml>, <linkHtml href="#_fcafe334-2a90-47b5-8ee5-578a62e9e679">7.7</linkHtml>)</item>
+                           <item>
+                              <caption>•</caption>Risk of liver injury: monitor ALTs; discontinue tizanidine hydrochloride if liver injury occurs (<linkHtml href="#_3c314f85-f5de-785c-5d76-1843309bfc80">5.2</linkHtml>) </item>
+                           <item>
+                              <caption>•</caption>Sedation: tizanidine hydrochloride may interfere with everyday activities; sedative effects of tizanidine hydrochloride, alcohol, and other central nervous system (CNS) depressants are additive (<linkHtml href="#_81e93585-0727-41b2-8e63-d1c9a36426b2">5.3</linkHtml>, <linkHtml href="#_c06c203a-2b39-4091-84de-f127b0ac4f96">7.4</linkHtml>) </item>
+                           <item>
+                              <caption>•</caption>Hallucinations: consider discontinuation of tizanidine hydrochloride <linkHtml href="#_d22c14a4-1a73-308f-ac66-8991f83a64f4">(5.4)</linkHtml>
+                           </item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="_b11b0fdb-a969-01f6-8321-d2f54132c933">
+                     <id root="1c576f13-f2a0-4a40-a852-b7bdf40c20ba"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>5.1 Hypotension</title>
+                     <text>
+                        <paragraph>Tizanidine is an α<sub>2</sub>-adrenergic agonist that can produce hypotension <content styleCode="italics">[see Adverse Reactions (<linkHtml href="#_25fea7e8-e77b-53e3-9709-73bd6c27c775">6.1</linkHtml>) and Drug Interactions (<linkHtml href="#_944873d0-1b0d-6c1f-1d1a-322ce37c0e21">7.5</linkHtml>)]</content>. Syncope has been reported in patients treated with tizanidine in the postmarketing setting. The risk of hypotension may be minimized by dose titration; monitoring for  signs and symptoms of hypotension prior to dosage increase may minimize the risks associated with hypotension.. In addition, patients moving from a supine to fixed upright position may be at increased risk for hypotension and orthostatic effects.</paragraph>
+                        <paragraph>Monitor for hypotension when tizanidine hydrochloride is used in patients receiving concurrent antihypertensive therapy. It is not recommended that tizanidine hydrochloride be used with other α<sub>2</sub>-adrenergic agonists. Clinically significant hypotension (decreases in both systolic and diastolic pressure) has been reported with concomitant administration of tizanidine and strong CYP1A2 inhibitors<content styleCode="italics"> [see Clinical Pharmacology (<linkHtml href="#PHARMACOKINETICS">12.3</linkHtml>)]</content>. Therefore, concomitant use of tizanidine hydrochloride with strong  CYP1A2 inhibitors is contraindicated <content styleCode="italics">[see Contraindications <linkHtml href="#CONTRAINDICATIONS">(4</linkHtml>) and Drug Interactions <linkHtml href="#_62bfb5d3-95f3-ad4f-9e50-9f2c1059516e">(7.1)</linkHtml>].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_3c314f85-f5de-785c-5d76-1843309bfc80">
+                     <id root="471c4988-1de9-4c45-b0b4-cc0113038e4b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>5.2 Liver Injury</title>
+                     <text>
+                        <paragraph>Tizanidine hydrochloride may cause hepatocellular liver injury. Liver function test abnormality and hepatotoxicity have been observed with tizanidine hydrochloride <content styleCode="italics">[see Adverse Reactions (<linkHtml href="#_25fea7e8-e77b-53e3-9709-73bd6c27c775">6.1</linkHtml>, <linkHtml href="#_e3d8e688-9796-0e34-09ad-29a43855ffe5">6.2</linkHtml>)]</content>. Monitoring of aminotransferase levels is recommended at baseline and 1 month after maximum dose is achieved, or if hepatic injury is suspected<content styleCode="italics">[see Dosage and Administration (<linkHtml href="#_5ada7a8d-bf34-d567-8d5e-60f829c503ce">2.1</linkHtml>) and Use in Specific Populations (<linkHtml href="#_71356fb8-85a6-3394-e7c2-5bf111926aff">8.7</linkHtml>)]. </content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_81e93585-0727-41b2-8e63-d1c9a36426b2">
+                     <id root="85200e3e-144f-494a-9ac9-6a20d9182ab2"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>5.3 Sedation</title>
+                     <text>
+                        <paragraph>Tizanidine hydrochloride can cause sedation, which may interfere with everyday activity. In the multiple dose studies of tizanidine hydrochloride, the prevalence of patients with sedation peaked following the first week of titration and then remained stable for the duration of the maintenance phase of the study <content styleCode="italics">[see Adverse Reactions (<linkHtml href="#_25fea7e8-e77b-53e3-9709-73bd6c27c775">6.1</linkHtml>)].</content> The CNS depressant effects of tizanidine hydrochloride with alcohol and other CNS depressants (e.g., benzodiazepines, opioids, tricyclic antidepressants) may be additive<content styleCode="italics"> [see Drug Interactions (<linkHtml href="#_c06c203a-2b39-4091-84de-f127b0ac4f96">7.4</linkHtml>)]</content>. Monitor patients who take tizanidine hydrochloride with another CNS depressant for symptoms of excess sedation. </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_d22c14a4-1a73-308f-ac66-8991f83a64f4">
+                     <id root="8abba494-4bf6-445c-bccb-fc6980354c63"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>5.4 Hallucinosis/Psychotic-Like Symptoms</title>
+                     <text>
+                        <paragraph>Tizanidine hydrochloride use has been associated with hallucinations. Formed, visual hallucinations or delusions were reported in 5 of 170 patients (3%) in two North American controlled clinical studies. Most of the patients were aware that the events were unreal. One patient developed psychosis in association with the hallucinations. One patient among these 5 continued to have problems for at least 2 weeks following discontinuation of tizanidine. Hallucinations have also been reported with tizanidine use in the postmarketing setting. Consider discontinuing tizanidine hydrochloride in patients who develop hallucinations.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_311ca6ab-7d1d-0ec5-86bf-4817ca4b08d6">
+                     <id root="b54c2cb1-61f6-4690-835a-c4fe0beb2f23"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>5.5 Hypersensitivity Reactions</title>
+                     <text>
+                        <paragraph>Tizanidine hydrochloride can cause anaphylaxis. Signs and symptoms of hypersensitivity, including respiratory compromise, urticaria, and angioedema of the throat and tongue, have been reported. Tizanidine hydrochloride is contraindicated in patients with a history of hypersensitivity reactions to tizanidine <content styleCode="italics">[see Contraindications <linkHtml href="#CONTRAINDICATIONS">(4)</linkHtml>]</content>. </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_f2ecdedf-aa48-387e-bf6f-25213bbd4546">
+                     <id root="e502ae70-cdd6-4e0c-9fd6-415351bf5ba6"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>5.6 Withdrawal Adverse Reactions</title>
+                     <text>
+                        <paragraph> Tizanidine hydrochloride can cause withdrawal adverse reactions, which include rebound hypertension, tachycardia, and hypertonia. To minimize the risk of these reactions, particularly in patients who have been receiving high doses of tizanidine hydrochloride (20 to 28 mg daily) for long periods of time (9 weeks or more) or who may be on concomitant treatment with narcotics, the tizanidine hydrochloride dosage should be decreased slowly  <content styleCode="italics">[see Dosage and Administration <linkHtml href="#_f101f5f7-130f-4df5-2943-b7f244a30599">(2.5)</linkHtml>].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="ADVERSE_REACTIONS">
+               <id root="ba009d22-491e-418f-9926-97bb553d016d"/>
+               <code code="34084-4" codeSystem="2.16.840.1.113883.6.1" displayName="ADVERSE REACTIONS SECTION"/>
+               <title>6 ADVERSE REACTIONS</title>
+               <text>
+                  <paragraph>The following clinically significant adverse reactions are described elsewhere in other sections of the prescribing information:</paragraph>
+                  <list listType="unordered">
+                     <item>
+                        <caption>•</caption>Hypotension <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#_b11b0fdb-a969-01f6-8321-d2f54132c933">5.1</linkHtml>)] </content>
+                     </item>
+                     <item>
+                        <caption>•</caption>Liver Injury <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#_3c314f85-f5de-785c-5d76-1843309bfc80">5.2</linkHtml>)] </content>
+                     </item>
+                     <item>
+                        <caption>•</caption>Sedation <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#_81e93585-0727-41b2-8e63-d1c9a36426b2">5.3</linkHtml>)] </content>
+                     </item>
+                     <item>
+                        <caption>•</caption>Hallucinosis/Psychotic-Like Symptoms <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#_d22c14a4-1a73-308f-ac66-8991f83a64f4">5.4</linkHtml>)]</content>
+                     </item>
+                     <item>
+                        <caption>•</caption>Hypersensitivity Reactions <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#_311ca6ab-7d1d-0ec5-86bf-4817ca4b08d6">5.5</linkHtml>)]</content>
+                     </item>
+                     <item>
+                        <caption>•</caption> Withdrawal Adverse Reactions <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#_f2ecdedf-aa48-387e-bf6f-25213bbd4546">5.6</linkHtml>)]</content>
+                     </item>
+                  </list>
+               </text>
+               <effectiveTime value="20240831"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <paragraph>The most common adverse reactions (greater than 10% of patients taking tizanidine and greater than in patients taking placebo) were dry mouth, somnolence, asthenia,   and dizziness. (<linkHtml href="#_25fea7e8-e77b-53e3-9709-73bd6c27c775">6.1</linkHtml>)</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">To report SUSPECTED ADVERSE REACTIONS, contact Dr. Reddy’s Laboratories Inc., at 1-888-375-3784 or FDA at 1-800-FDA-1088 or www.fda.gov/medwatch. </content>
+                        </paragraph>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="_25fea7e8-e77b-53e3-9709-73bd6c27c775">
+                     <id root="de234306-bbf2-4b87-bd3a-e0904a70f5ef"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>6.1 Clinical Trials Experience</title>
+                     <text>
+                        <paragraph>Because clinical studies are conducted under widely varying conditions, adverse reaction rates observed in the clinical studies of a drug cannot be directly compared to rates in the clinical studies of another drug and may not reflect the rates observed in clinical practice.</paragraph>
+                        <paragraph>The safety of tizanidine has been evaluated in three double-blind, randomized, placebo-controlled clinical studies [see Clinical Studies (14)]. Two studies were conducted in patients with multiple sclerosis and one in patients with spinal cord injury. Each study had a 13-week active treatment period which included a 3-week titration phase to the maximum tolerated dose up to  36 mg/day in three divided doses, a 9-week plateau phase where the dose of tizanidine was held constant and a 1-week dose tapering period. In all, 264 patients received tizanidine and 261 patients received placebo. Across the three studies approximately  51% of patientswere women, and the median dose during the plateau phase ranged from 20 to 28 mg/day. </paragraph>
+                        <paragraph>The most common adverse reactions (&gt;10% of patients treated with tizanidine) reported in multiple dose, placebo-controlled clinical studies involving 264 patients with spasticity were dry mouth, somnolence/sedation, asthenia (weakness, fatigue and/or tiredness), and dizziness. Three-quarters of the patients rated the reactions as mild to moderate and one-quarter of the patients rated the reactions as being severe. These adverse reactions appeared to be dose related.</paragraph>
+                        <paragraph>Table 1 lists adverse reactions that were reported in greater than 2% of patients in three multiple dose, placebo-controlled studies who received tizanidine hydrochloride where the frequency in the tizanidine hydrochloride group was greater than the placebo group. </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Table 1: Multiple Dose, Placebo-Controlled Studies—Adverse Reactions Reported in &gt;2% of Patients Treated with Tizanidine Tablets and Incidence Greater than Placebo</content>
+                        </paragraph>
+                        <table width="100%">
+                           <col width="33%"/>
+                           <col width="33%"/>
+                           <col width="33%"/>
+                           <tbody>
+                              <tr>
+                                 <td align="center" styleCode="Botrule Lrule Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Adverse Reaction</content>
+                                    </paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">PlaceboN = 261 %</content>
+                                    </paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Tizanidine TabletN = 264 %</content>
+                                    </paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Dry mouth</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>10</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="middle">
+                                    <paragraph>49</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Somnolence</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>10</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>48</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Asthenia*</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>16</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>41</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Dizziness</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>4</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>16</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>UTI</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>7</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>10</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Infection</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>5</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>6</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Liver test abnormality</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>2</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>6</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Constipation</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>1</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>4</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Vomiting</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>0</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>3</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Speech disorder</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>0</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>3</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Amblyopia (blurred vision)</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>&lt;1</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>3</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Urinary frequency</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>2</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>3</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Flu syndrome</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>2</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>3</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Dyskinesia</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>0</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>3</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Nervousness</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>&lt;1</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>3</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Lrule Botrule " valign="top">
+                                    <paragraph>Pharyngitis</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>1</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>3</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" styleCode="Botrule Lrule " valign="top">
+                                    <paragraph>Rhinitis</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Botrule " valign="top">
+                                    <paragraph>2</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule " valign="top">
+                                    <paragraph>3</paragraph>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>*includes weakness, fatigue, and/or tiredness</paragraph>
+                        <paragraph>In the single dose, placebo-controlled study involving 142 patients with spasticity due to multiple sclerosis (Study 1) <content styleCode="italics">[see Clinical Studies (<linkHtml href="#CLINICAL_STUDIES">14</linkHtml>)]</content>, the patients were specifically asked if they had experienced any of the four most common adverse reactions: dry mouth, somnolence (drowsiness), asthenia (weakness, fatigue and/or tiredness) and dizziness. In addition, hypotension and bradycardia were observed. The occurrence of these reactions is summarized in Table 2. Other events were, in general, reported at a rate of 2% or less.</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Table 2: Single Dose, Placebo-Controlled Study—Common Adverse Reactions Reported</content>
+                        </paragraph>
+                        <table cellpadding="0.3pt" width="85%">
+                           <col width="24%"/>
+                           <col width="24%"/>
+                           <col width="24%"/>
+                           <col width="24%"/>
+                           <tbody>
+                              <tr>
+                                 <td styleCode="Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Adverse Reaction</content>
+                                    </paragraph>
+                                 </td>
+                                 <td styleCode="Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Placebo</content>
+                                       <br/>
+                                       <content styleCode="bold">N = 48 %</content>
+                                    </paragraph>
+                                 </td>
+                                 <td styleCode="Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Tizanidine Tablet, 8mg</content>, <br/>
+                                       <content styleCode="bold">N = 45 %</content>
+                                    </paragraph>
+                                 </td>
+                                 <td styleCode="Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Tizanidine Tablet,16 mg,</content>
+                                       <br/>
+                                       <content styleCode="bold">N = 49 %</content>
+                                    </paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top">
+                                    <paragraph>Somnolence</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>31</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>78</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>92</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top">
+                                    <paragraph>Dry mouth</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>35</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>76</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>88</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top">
+                                    <paragraph>Asthenia*</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>40</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>67</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>78</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top">
+                                    <paragraph>Dizziness</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>4</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>22</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>45</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top">
+                                    <paragraph>Hypotension</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>0</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>16</paragraph>
+                                 </td>
+                                 <td valign="top">
+                                    <paragraph>33</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Botrule " valign="top">
+                                    <paragraph>Bradycardia</paragraph>
+                                 </td>
+                                 <td styleCode="Botrule " valign="top">
+                                    <paragraph>0</paragraph>
+                                 </td>
+                                 <td styleCode="Botrule " valign="top">
+                                    <paragraph>2</paragraph>
+                                 </td>
+                                 <td styleCode="Botrule " valign="top">
+                                    <paragraph>10</paragraph>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>*includes weakness, fatigue, and/or tiredness</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_e3d8e688-9796-0e34-09ad-29a43855ffe5">
+                     <id root="c30a2d13-369b-4c8a-adad-11f33b512b00"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>6.2 Postmarketing Experience</title>
+                     <text>
+                        <paragraph>The following adverse reactions have been identified during post approval use of tizanidine hydrochloride. Because these reactions are reported voluntarily from a population of uncertain size, it is not always possible to reliably estimate their frequency or establish a causal relationship to drug exposure.</paragraph>
+                        <paragraph>Cardiac Disorders: Ventricular tachycardia, decreased blood pressure </paragraph>
+                        <paragraph>Hepatobiliary Disorders: Hepatotoxicity [see Warnings and Precautions (5.2)] hepatitis </paragraph>
+                        <paragraph>Musculoskeletal and Connective Tissue Disorders: arthralgia </paragraph>
+                        <paragraph>Nervous System Disorders: Convulsion, paresthesia, tremor, muscle spasms </paragraph>
+                        <paragraph>Psychiatric Disorders: Hallucinations [see Warnings and Precautions (5.4)], depression </paragraph>
+                        <paragraph>Skin and Subcutaneous Tissue Disorders: Stevens Johnson Syndrome, anaphylactic reaction [seeWarnings and Precautions (5.5)], exfoliative dermatitis, rash  </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="DRUG_INTERACTIONS">
+               <id root="711fc52e-d728-4def-a826-358a47b5f77e"/>
+               <code code="34073-7" codeSystem="2.16.840.1.113883.6.1" displayName="DRUG INTERACTIONS SECTION"/>
+               <title>7 DRUG INTERACTIONS</title>
+               <effectiveTime value="20240831"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <paragraph>Moderate or weak CYP1A2 inhibitors: avoid concomitant use; may cause hypotension, bradycardia, or excessive drowsiness; if concomitant use is necessary and adverse reactions occur, reduce tizanidine hydrochloride dosage or discontinue. (, <linkHtml href="#PHARMACOKINETICS">12.3</linkHtml>)</paragraph>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="_62bfb5d3-95f3-ad4f-9e50-9f2c1059516e">
+                     <id root="d06b6e73-8a06-4e6b-aae6-78ad2e289f8d"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>7.1 Strong CYP1A2 Inhibitors</title>
+                     <text>
+                        <paragraph>Concomitant use of tizanidine hydrochloride with strong cytochrome P450 1A2 (CYP1A2) inhibitors (e.g., fluvoxamine, ciprofloxacin) is contraindicated. Changes in pharmacokinetics of tizanidine when administered with a strong CYP1A2 inhibitor resulted in significantly decreased blood pressure, increased drowsiness, and increased psychomotor impairment<content styleCode="italics">[see Contraindications (4) and Clinical Pharmacology (12.3)].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_d6349614-2765-242a-e63f-a3f656c68a1a">
+                     <id root="a904887e-4740-49f2-a54c-c3a881794598"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>7.2 Moderate or Weak CYP1A2 Inhibitors </title>
+                     <text>
+                        <paragraph>Concomitant use of tizanidine hydrochloride with moderate or weak CYP1A2 inhibitors (e.g., zileuton, antiarrhythmics [amiodarone, mexiletine, propafenone, and verapamil], cimetidine, famotidine, oral contraceptives, acyclovir, and ticlopidine) should be avoided. If concomitant use is clinically necessary, and adverse reactions such as hypotension, bradycardia, or excessive drowsiness occur, reduce tizanidine hydrochloride dosage or discontinue tizanidine hydrochloride therapy. <content styleCode="italics">[see Clinical Pharmacology <linkHtml href="#PHARMACOKINETICS">(12.3)</linkHtml>].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_c06c203a-2b39-4091-84de-f127b0ac4f96">
+                     <id root="dffd859e-1411-4e95-b555-ac5a1b01649b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>7.3 Oral Contraceptives</title>
+                     <text>
+                        <paragraph>Concomitant use of tizanidine hydrochloride with oral contraceptives is not recommended. However, if concomitant use is clinically necessary and adverse reactions such as hypotension, bradycardia, or excessive drowsiness occur, reduce or discontinue tizanidine hydrochloride therapy<content styleCode="italics"> [see Clinical Pharmacology <linkHtml href="#PHARMACOKINETICS">(12.3)</linkHtml>].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_944873d0-1b0d-6c1f-1d1a-322ce37c0e21">
+                     <id root="f3b546e6-32dd-401c-9c71-ea36da1b2812"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>7.4 Alcohol and Other CNS Depressants</title>
+                     <text>
+                        <paragraph>Alcohol increases the exposure of tizanidine after administration of tizanidine hydrochloride. This was associated with an increase in adverse reactions of tizanidine hydrochloride. </paragraph>
+                        <paragraph>Concomitant use of tizanidine hydrochloride with CNS depressants (e.g., alcohol, benzodiazepines, opioids, tricyclic antidepressants) may cause additive CNS depressant effects, including sedation. Monitor patients who take tizanidine hydrochloride with another CNS depressant for symptoms of excess sedation <content styleCode="italics">[see Clinical Pharmacology <linkHtml href="#PHARMACOKINETICS">(12.3)</linkHtml>].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_9af50f1a-20c4-4721-2a92-00636f2c7cc4">
+                     <id root="f67ba560-5675-4df6-af38-5828e8b657bc"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>7.5 α<sub>2</sub>-Adrenergic Agonists</title>
+                     <text>
+                        <paragraph>Concomitant use of Tizanidine with other α2-adrenergic agonists is not recommended because hypotensive effects may be cumulative <content styleCode="italics">[see Warnings and Precautions <linkHtml href="#_b11b0fdb-a969-01f6-8321-d2f54132c933">(5.1)</linkHtml>].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_fcafe334-2a90-47b5-8ee5-578a62e9e679">
+                     <id root="1583b27c-96ff-4766-84db-10595c5c0d7b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>7.6 Antihypertensive Medications</title>
+                     <text>
+                        <paragraph>Concomitant use of Tizanidine with antihypertensive medications may cause additive hypotensive effects <content styleCode="italics">[see Warnings and Precautions <linkHtml href="#_b11b0fdb-a969-01f6-8321-d2f54132c933">(5.1)</linkHtml>]</content>. Monitor patients who take Tizanidine with antihypertensive medications for hypotension.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="USE_IN_SPECIFIC_POPULATIONS">
+               <id root="735ec517-60f4-476f-8929-557f67075ca2"/>
+               <code code="43684-0" codeSystem="2.16.840.1.113883.6.1" displayName="USE IN SPECIFIC POPULATIONS SECTION"/>
+               <title>8 USE IN SPECIFIC POPULATIONS</title>
+               <effectiveTime value="20240831"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered">
+                           <item>
+                              <caption>•</caption>Pregnancy: Based on animal data, may cause fetal harm <linkHtml href="#PREGNANCY">(8.1)</linkHtml>
+                           </item>
+                           <item>
+                              <caption>•</caption>Geriatric use: tizanidine hydrochloride should be used with caution in elderly patients because clearance is decreased four-fold <linkHtml href="#GERIATRIC_USE">(8.5)</linkHtml>
+                           </item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="PREGNANCY">
+                     <id root="e8cd3069-6059-4af4-8c7c-c1a6f83d5235"/>
+                     <code code="42228-7" codeSystem="2.16.840.1.113883.6.1" displayName="PREGNANCY SECTION"/>
+                     <title>8.1 Pregnancy</title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="underline">Risk Summary</content>
+                        </paragraph>
+                        <paragraph> There are no adequate data on the developmental risk associated with use of Tizanidine hydrochloride in pregnant women. In animal studies, administration of tizanidine during pregnancy resulted in developmental toxicity (embryofetal and postnatal offspring mortality and growth deficits) at doses less than those used clinically, which were not associated with maternal toxicity<content styleCode="italics"> (see Animal Data).</content>
+                        </paragraph>
+                        <paragraph>In the U.S. general population, the estimated background risk of major birth defects and miscarriage in clinically recognized pregnancies is 2% - 4% and 15% - 20%, respectively. The background risk of major birth defects and miscarriage for the indicated population is unknown.</paragraph>
+                        <paragraph>Data</paragraph>
+                        <paragraph>
+                           <content styleCode="italics"> Animal Data</content>
+                        </paragraph>
+                        <paragraph>Oral administration of tizanidine (0.3 to 100 mg/kg/day) to pregnant rats during the period of organogenesis resulted in embryofetal and postnatal offspring mortality and reductions in body weight at doses of 30 mg/kg/day and above. Maternal toxicity was observed at the highest dose tested. The no-effect dose for embryofetal developmental toxicity in rats (3 mg/kg/day) is similar to the maximum recommended human dose (MRHD) of 36 mg/day on a body surface area (mg/m2) basis. </paragraph>
+                        <paragraph>Oral administration of tizanidine (1 to 100 mg/kg/day) to pregnant rabbits during the period of organogenesis resulted in embryofetal and postnatal offspring mortality at all doses. Maternal toxicity was observed at the highest dose tested. Oral administration of tizanidine (10 and 30 mg/kg/day) during the perinatal period of pregnancy (2-6 days prior to delivery) resulted in increased postnatal offspring mortality at both doses. A no-effect dose for embryofetal developmental toxicity in rabbit was not identified. The lowest dose tested (1 mg/kg/day) is less than the MRHD on a mg/m2 basis.</paragraph>
+                        <paragraph>In a pre- and postnatal development study in rats, oral administration of tizanidine (3 to 30 mg/kg/day) resulted in increased postnatal offspring mortality. A no-effect dose for pre- and postnatal developmental toxicity was not identified. The lowest dose tested (3 mg/kg/day) is similar to the MRHD on a mg/m2 basis, respectively. </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_ec2b6a43-34f7-f7be-98fa-b54ceab9f329">
+                     <id root="ae5c55b9-9458-472f-a685-5b926fec518e"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>8.2 Lactation</title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="underline">Risk Summary</content>
+                        </paragraph>
+                        <paragraph> There are no data on the presence of tizanidine in human milk, the effects on the breastfed infant, or the effects on human milk production. Animal studies have reported the presence of tizanidine in the milk of lactating animals.</paragraph>
+                        <paragraph>The developmental and health benefits of breastfeeding should be considered along with the mother’s clinical need for tizanidine hydrochloride and any potential adverse effects on the breastfed infant from Tizanidine hydrochloride or from the underlying maternal condition.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="NURSING_MOTHERS">
+                     <id root="416d3623-6b15-4968-9336-cc9777889cf4"/>
+                     <code code="34080-2" codeSystem="2.16.840.1.113883.6.1" displayName="NURSING MOTHERS SECTION"/>
+                     <title>8.3 Females and Males of Reproductive Potential</title>
+                     <text>
+                        <paragraph>There are no adequate and well-controlled studies in humans on the effect of tizanidine hydrochloride on female or male reproductive potential. Oral administration of tizanidine to male and female rats resulted in adverse effects on fertility <content styleCode="italics">[see Nonclinical Toxicology (13.1)].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="PEDIATRIC_USE">
+                     <id root="634858e8-92bb-47d1-9fe9-0ec87253beeb"/>
+                     <code code="34081-0" codeSystem="2.16.840.1.113883.6.1" displayName="PEDIATRIC USE SECTION"/>
+                     <title>8.4 Pediatric Use</title>
+                     <text>
+                        <paragraph>Safety and effectiveness in pediatric patients have not been established.</paragraph>
+                        <paragraph>
+                           <content styleCode="underline">Juvenile Animal Toxicity Data</content>
+                        </paragraph>
+                        <paragraph>Oral administration of tizanidine (0, 1, 3, and 10 mg/kg/day) to juvenile rats from postnatal day (PND) 7 through PND 70 resulted in delayed sexual maturation in males at all doses, reduced body weight gain, delayed sexual maturation in females, and bilateral corneal crystals at the mid and high doses. Corneal crystals were still observed at the mid and high doses after a three-week recovery period. Neurobehavioral deficits were observed on a learning and memory task at the high dose. A no-effect dose for adverse effects on postnatal development not identified.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="GERIATRIC_USE">
+                     <id root="fd06cd50-3885-44c9-9b8d-73efbf5bb30d"/>
+                     <code code="34082-8" codeSystem="2.16.840.1.113883.6.1" displayName="GERIATRIC USE SECTION"/>
+                     <title>8.5 Geriatric Use</title>
+                     <text>
+                        <paragraph>Tizanidine hydrochloride is known to be substantially excreted by the kidney, and the risk of adverse reactions to this drug may be greater in patients with impaired renal function. Because elderly patients are more likely to have decreased renal function, care should be taken in dose selection, and it may be useful to monitor renal function. </paragraph>
+                        <paragraph>Clinical studies of tizanidine hydrochloride did not include sufficient numbers of subjects aged 65 and over to determine whether they respond differently than younger subjects. Pharmacokinetic data showed that younger subjects cleared tizanidine faster than the elderly subjects <content styleCode="italics">[see Clinical Pharmacology <linkHtml href="#PHARMACOKINETICS">(12.3)</linkHtml>]</content>. In elderly patients with renal insufficiency (creatinine clearance &lt; 25 mL/min), tizanidine clearance is reduced compared to healthy elderly subjects; this would be expected to lead to a longer duration of clinical effect. During titration, the individual doses should be reduced. If higher doses are required, individual doses rather than dosing frequency should be increased. Monitor elderly patients because they may have an increased risk for adverse reactions associated with tizanidine hydrochloride.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_7e13fd39-92d2-a08c-2864-080ff8afde4f">
+                     <id root="8d6b90ba-21a3-4b4b-b48a-c4aa9720bffa"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>8.6 Renal Impairment</title>
+                     <text>
+                        <paragraph>In patients with renal insufficiency (creatinine clearance &lt; 25 mL/min), clearance of tizanidine was reduced <content styleCode="italics">[see Clinical Pharmacology <linkHtml href="#PHARMACOKINETICS">(12.3)</linkHtml>]</content>.In these patients, dosage reduction is recommended <content styleCode="italics">[see Dosage and Administration <linkHtml href="#_68c68f2c-43ad-4101-9927-3ea774518ed8">(2.3)</linkHtml>
+                           </content>]. Because the risk of adverse reactions to tizanidine hydrochloride may be greater in patients with impaired renal function, monitor these patients closely for the onset or increase in severity of common adverse reactions <content styleCode="italics">[see Adverse Reactions <linkHtml href="#_25fea7e8-e77b-53e3-9709-73bd6c27c775">(6.1)</linkHtml>]. </content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_71356fb8-85a6-3394-e7c2-5bf111926aff">
+                     <id root="c8c3711e-c1c2-433b-aa9d-1f98859ab45f"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>8.7 Hepatic Impairment </title>
+                     <text>
+                        <paragraph>Tizanidine hydrochloride should be used with caution in patients with hepatic impairment. The influence of hepatic impairment on the pharmacokinetics of tizanidine has not been evaluated. Because tizanidine is extensively metabolized in the liver, hepatic impairment would be expected to have significant effects on pharmacokinetics of tizanidine <content styleCode="italics">[see Warnings and Precautions <linkHtml href="#_3c314f85-f5de-785c-5d76-1843309bfc80">(5.2</linkHtml>), and Clinical Pharmacology (<linkHtml href="#PHARMACOKINETICS">12.3</linkHtml>)]</content>. In patients with hepatic impairment, dosage reduction is recommended <content styleCode="italics">[see Dosage and Administration <linkHtml href="#_625b4dad-ef6e-92be-aa53-e34c1385b7dd">(2.4)</linkHtml>].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="DRUG_ABUSE_AND_DEPENDENCE">
+               <id root="68cb18bf-8e77-46db-95dd-175ba97ac24f"/>
+               <code code="42227-9" codeSystem="2.16.840.1.113883.6.1" displayName="DRUG ABUSE AND DEPENDENCE SECTION"/>
+               <title>9 DRUG ABUSE AND DEPENDENCE</title>
+               <effectiveTime value="20240831"/>
+               <component>
+                  <section ID="_14779bb1-f607-63ea-fb47-b688ea3f0b1e">
+                     <id root="95df33b3-f5eb-4398-95df-13e94f84266f"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>9.1 Controlled Substance</title>
+                     <text>
+                        <paragraph>Tizanidine hydrochloride contains tizanidine, which is not a controlled substance.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ABUSE">
+                     <id root="bb8c6101-eab6-4997-9f99-ed60c26bd754"/>
+                     <code code="34086-9" codeSystem="2.16.840.1.113883.6.1" displayName="ABUSE SECTION"/>
+                     <title>9.2 Abuse</title>
+                     <text>
+                        <paragraph>Abuse is the intentional, non-therapeutic use of a drug, even once, for its desirable psychological or physiological effects. Abuse potential was not evaluated in human studies. Rats were able to distinguish tizanidine from saline in a standard discrimination paradigm, after training, but failed to generalize the effects of morphine, cocaine, diazepam, or phenobarbital to tizanidine.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="DEPENDENCE">
+                     <id root="0407dfd9-2291-4ce9-b72e-1ef7d887d302"/>
+                     <code code="34087-7" codeSystem="2.16.840.1.113883.6.1" displayName="DEPENDENCE SECTION"/>
+                     <title>9.3 Dependence</title>
+                     <text>
+                        <paragraph>Physical dependence is a state that develops as a result of physiological adaptation in response torepeated drug use, manifested by withdrawal signs and symptoms after abrupt discontinuation or a significant dose reduction of a drug. Tizanidine is closely related to clonidine, which is often abused in combination with narcotics and is known to cause symptoms of rebound upon abrupt withdrawal. Cases of rebound symptoms on sudden withdrawal of tizanidine have been reported. The case reports suggest that these patients were also misusing narcotics. Withdrawal symptoms included hypertension, tachycardia, hypertonia, tremor, and anxiety. Withdrawal symptoms are more likely to occur in cases where high doses are used, especially for prolonged periods, or with concomitant use of narcotics. If therapy needs to be discontinued, the dose should be decreased slowly to minimize the risk of withdrawal symptoms<content styleCode="italics"> [see Dosage and Administration <linkHtml href="#_f101f5f7-130f-4df5-2943-b7f244a30599">(2.5)</linkHtml>]. </content>
+                        </paragraph>
+                        <paragraph>Monkeys were shown to self-administer tizanidine in a dose-dependent manner, and abrupt cessation of tizanidine produced transient signs of withdrawal at doses &gt; 35 times the maximum recommended human dose on a mg/m<sup>2</sup> basis. These transient withdrawal signs (increased locomotion, body twitching, and aversive behavior toward the observer) were not reversed by naloxone administration.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="OVERDOSAGE">
+               <id root="c066fa90-75fa-4404-b3e7-f0f42ddd8d6a"/>
+               <code code="34088-5" codeSystem="2.16.840.1.113883.6.1" displayName="OVERDOSAGE SECTION"/>
+               <title>10 OVERDOSAGE</title>
+               <text>
+                  <paragraph>A review of the safety surveillance database revealed cases of intentional and accidental tizanidine hydrochloride overdose. Some of the cases resulted in fatality and many of the intentional overdoses were with multiple drugs including CNS depressants. The clinical manifestations of tizanidine overdose were consistent with its known pharmacology. In the majority of cases a decrease in sensorium was observed including lethargy, somnolence, confusion and coma. Depressed cardiac function is also observed including most often bradycardia and hypotension. Respiratory depression is another common feature of tizanidine overdose. </paragraph>
+                  <paragraph>Should overdose occur ensure the adequacy of an airway and monitorcardiovascular and respiratory function. Dialysis is not likely to be an efficient method of removing tizanidine from the body<content styleCode="italics"> [see Description<linkHtml href="#DESCRIPTION"> (11)</linkHtml>]</content>. In general, symptoms resolve within one to three days following discontinuation of tizanidine and administration of appropriate therapy. Because of the similar mechanism of action, symptoms and management of tizanidine overdose are similar to that following clonidine overdose. For the most recent information concerning the management of overdose, contact a poison control center.</paragraph>
+               </text>
+               <effectiveTime value="20240831"/>
+            </section>
+         </component>
+         <component>
+            <section ID="DESCRIPTION">
+               <id root="34d892de-21f7-441d-bbb2-181e2a15303e"/>
+               <code code="34089-3" codeSystem="2.16.840.1.113883.6.1" displayName="DESCRIPTION SECTION"/>
+               <title>11 DESCRIPTION</title>
+               <text>
+                  <paragraph>Tizanidine hydrochloride USP, is a central α<sub>2</sub>-adrenergic agonist. Tizanidine hydrochloride USP is almost white to slightly yellow crystalline powder, which is slightly soluble in water and methanol. Its chemical name is 5-chloro-4-(2-imidazolin-2-ylamino)-2,1,3-benzothiodiazole monohydrochloride. Tizanidine’s molecular formula is C<sub>9</sub>H<sub>8</sub>ClN<sub>5</sub>S.HCl, its molecular weight is 290.2 and its structural formula is:</paragraph>
+                  <renderMultiMedia ID="id1307" referencedObject="MM549093583409"/>
+                  <paragraph>Tizanidine tablets USP, are supplied as 2 mg and 4 mg tablets for oral administration. Tizanidine tablets USP, contain the active ingredient, tizanidine hydrochloride USP (2.288 mg equivalent to 2 mg tizanidine base and 4.576 mg equivalent to 4 mg tizanidine base), and the inactive ingredients, anhydrous lactose, microcrystalline cellulose, colloidal silicon dioxide and stearic acid.</paragraph>
+               </text>
+               <effectiveTime value="20240831"/>
+               <component>
+                  <observationMedia ID="MM549093583409">
+                     <text>structure</text>
+                     <value mediaType="image/jpeg" xsi:type="ED">
+                        <reference value="structure.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="CLINICAL_PHARMACOLOGY">
+               <id root="99033747-a194-4fbd-bc11-06b8fc7438af"/>
+               <code code="34090-1" codeSystem="2.16.840.1.113883.6.1" displayName="CLINICAL PHARMACOLOGY SECTION"/>
+               <title>12 CLINICAL PHARMACOLOGY</title>
+               <effectiveTime value="20240831"/>
+               <component>
+                  <section ID="MECHANISM_OF_ACTION">
+                     <id root="4ca07067-66c5-4efa-8c3d-d2420ef2bd2c"/>
+                     <code code="43679-0" codeSystem="2.16.840.1.113883.6.1" displayName="MECHANISM OF ACTION SECTION"/>
+                     <title>12.1 Mechanism of Action</title>
+                     <text>
+                        <paragraph>Tizanidine is a central alpha-2-adrenergic receptor agonist and presumably reduces spasticity by increasing presynaptic inhibition of motor neurons. The effects of tizanidine are greatest on polysynaptic pathways. The overall effect of these actions is thought to reduce facilitation of spinal motor neurons.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_7d1beecd-143f-f72d-43b4-314f64801811">
+                     <id root="e677b55e-160f-4e7c-a363-1f2e28c1cb16"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>12.2 Pharmacodynamics</title>
+                     <text>
+                        <paragraph>The CNS depressant effects of tizanidine and alcohol are additive<content styleCode="italics"> [see Warnings and Precautions <linkHtml href="#_81e93585-0727-41b2-8e63-d1c9a36426b2">(5.3</linkHtml>) and Drug Interactions <linkHtml href="#_944873d0-1b0d-6c1f-1d1a-322ce37c0e21">(7.4)</linkHtml>].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="PHARMACOKINETICS">
+                     <id root="74187461-e60e-4499-834f-7db8b24a998e"/>
+                     <code code="43682-4" codeSystem="2.16.840.1.113883.6.1" displayName="PHARMACOKINETICS SECTION"/>
+                     <title>12.3 Pharmacokinetics</title>
+                     <text>
+                        <paragraph>Tizanidine has linear pharmacokinetics over the doses studied in clinical development [1 mg (half the recommended dosage) to 20 mg]. </paragraph>
+                        <paragraph>Tizanidine capsules and tablets are bioequivalent to each other under fasting conditions, but notunder fed conditions (see Absorption, Effect of Food).</paragraph>
+                        <paragraph>
+                           <content styleCode="underline">Absorption </content>
+                        </paragraph>
+                        <paragraph>Following oral administration, tizanidine is essentially completely absorbed. The absolute oral bioavailability of tizanidine is approximately 40% (CV = 24%), due to extensive first-pass hepatic metabolism. </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Effect of Food </content>
+                        </paragraph>
+                        <paragraph>There are pharmacokinetic differences between Tizanidine capsules and Tizanidine tablets withrespect to administration with food.</paragraph>
+                        <paragraph> A single dose of either two 4 mg tablets or two 4 mg capsules was administered under fed and fasting conditions in an open-label, four-period, randomized crossover study in 96 volunteers, of whom 81 were eligible for the statistical analysis. Pharmacokinetics under fed conditions were different than under fasting conditions and vary by dosage form. </paragraph>
+                        <paragraph>Tablets or Capsules - Fasting</paragraph>
+                        <list listType="unordered">
+                           <item>
+                              <caption>•</caption>Tmax was 1.0 hours after dosing</item>
+                           <item>
+                              <caption>•</caption>T ½ was approximately 2 hours. </item>
+                        </list>
+                        <paragraph>Tablets - Fed</paragraph>
+                        <list listType="unordered">
+                           <item>
+                              <caption>•</caption>Mean Cmax was increased by approximately 30%</item>
+                           <item>
+                              <caption>•</caption>Median Tmax was increased by 25 minutes, to 1 hour and 25 minutes.</item>
+                           <item>
+                              <caption>•</caption>Extent of absorption was increased approximately 30%</item>
+                        </list>
+                        <paragraph>
+                           <content styleCode="bold">Figure 1: Mean Tizanidine Concentration vs. Time Profiles For Tizanidine Tablets and Capsules (2 × 4 mg) Under Fasted and Fed Conditions</content>
+                        </paragraph>
+                        <renderMultiMedia ID="id1368" referencedObject="MM353308108201"/>
+                        <paragraph>
+                           <content styleCode="underline">Distribution </content>
+                        </paragraph>
+                        <paragraph>Tizanidine is extensively distributed throughout the body with a mean steady state volume of distribution of 2.4 L/kg (CV = 21%) following intravenous administration in healthy adult volunteers. Tizanidine is approximately 30% bound to plasma proteins. </paragraph>
+                        <paragraph>Elimination</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Metabolism </content>
+                        </paragraph>
+                        <paragraph> Tizanidine has a half-life of approximately 2.5 hours (CV=33%). Approximately 95% of an administered dose is metabolized. The primary cytochrome P450 isoenzyme involved in tizanidine metabolism is CYP1A2. Tizanidine metabolites are not known to be active; their half-lives range from 20 to 40 hours. </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Excretion </content>
+                        </paragraph>
+                        <paragraph>Following single and multiple oral dosing of <sup>14</sup>C-tizanidine, an average of 60% and 20% of total radioactivity was recovered in the urine and feces, respectively. </paragraph>
+                        <paragraph>Specific Populations </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Geriatric Patients </content>
+                        </paragraph>
+                        <paragraph>No specific pharmacokinetic study was conducted to investigate age effects. Cross study comparison of pharmacokinetic data following single dose administration of 6 mg tizanidine hydrochloride showed that younger subjects cleared the drug four times faster than the elderly subjects. <content styleCode="italics">[see Use in Specific Populations <linkHtml href="#GERIATRIC_USE">(8.5</linkHtml>].</content>
+                        </paragraph>
+                        <paragraph> Patients with Hepatic Impairment</paragraph>
+                        <paragraph>The influence of hepatic impairment on the pharmacokinetics of tizanidine has not been evaluated. Because tizanidine is extensively metabolized in the liver, hepatic impairment would be expected to have significant effects on pharmacokinetics of tizanidine<content styleCode="italics"> [see Use in Specific Populations <linkHtml href="#_71356fb8-85a6-3394-e7c2-5bf111926aff">(8.7)</linkHtml>]. </content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Patients with Renal Impairment</content>
+                        </paragraph>
+                        <paragraph> Tizanidine clearance is reduced by more than 50% in elderly patients with renal insufficiency (creatinine clearance &lt; 25 mL/min) compared to healthy elderly subjects; this would be expected to lead to a longer duration of clinical effect <content styleCode="italics">[see Use in Specific Populations <linkHtml href="#_7e13fd39-92d2-a08c-2864-080ff8afde4f">(8.6)]</linkHtml>.</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Gender Effects </content>
+                        </paragraph>
+                        <paragraph>No specific pharmacokinetic study was conducted to investigate gender effects. Retrospective analysis of pharmacokinetic data following single and multiple dose administration of 4 mg tizanidine hydrochloride,however showed that gender had no effect on the pharmacokinetics of tizanidine. </paragraph>
+                        <paragraph>Drug Interactions </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">CYP1A2 Inhibitors </content>
+                        </paragraph>
+                        <paragraph>The effects of coadministration of fluvoxamine or ciprofloxacin, both strong CYP1A2 inhibitors, on the pharmacokinetics of a single 4 mg dose of tizanidine hydrochloride was studied in 10 healthy subjects. The C<sub>max</sub>, AUC, and half-life of tizanidine increased by 12-fold, 33-fold, and 3-fold, respectively, with coadministration of fluvoxamine. The C<sub>max</sub> and AUC of tizanidine increased by 7-fold and 10-fold, respectively, with coadministration of ciprofloxacin <content styleCode="italics">[see Contraindications <linkHtml href="#CONTRAINDICATIONS">(4)</linkHtml>].</content>
+                        </paragraph>
+                        <paragraph>There have been no clinical studies evaluating the effects of other CYP1A2 inhibitors on tizanidine<content styleCode="italics"> [see Drug Interactions <linkHtml href="#_d6349614-2765-242a-e63f-a3f656c68a1a">(7.2)]</linkHtml>.</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">  In vitro </content>studies of cytochrome P450 isoenzymes using human liver microsomes indicate that neither tizanidine nor the major metabolites are likely to affect the metabolism of other drugs metabolized by cytochrome P450 isoenzymes. </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Oral Contraceptives </content>
+                        </paragraph>
+                        <paragraph>No specific pharmacokinetic study was conducted to investigate interaction between oral contraceptives and tizanidine hydrochloride. Retrospective analysis of population pharmacokinetic data following single and multiple dose administration of 4 mg tizanidine hydrochloride, however, showed that women concurrently taking oral contraceptives had 50% lower clearance of tizanidine compared to women not on oral contraceptives <content styleCode="italics">[see Drug Interactions<linkHtml href="#_c06c203a-2b39-4091-84de-f127b0ac4f96"> (7.3)].</linkHtml>
+                           </content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Acetaminophen </content>
+                        </paragraph>
+                        <paragraph>Tizanidine delayed the T<sub>max</sub> of acetaminophen by 16 minutes. Acetaminophen did not affect the pharmacokinetics of tizanidine.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Alcohol </content>
+                        </paragraph>
+                        <paragraph>Alcohol increased the AUC and C<sub>max</sub> of tizanidine by approximately 20%and 15%, respectively<content styleCode="italics">[see Drug Interactions (<linkHtml href="#_944873d0-1b0d-6c1f-1d1a-322ce37c0e21">7.4</linkHtml>)]. </content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                     <component>
+                        <observationMedia ID="MM353308108201">
+                           <text>fig1</text>
+                           <value mediaType="image/jpeg" xsi:type="ED">
+                              <reference value="fig1.jpg"/>
+                           </value>
+                        </observationMedia>
+                     </component>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="NONCLINICAL_TOXICOLOGY">
+               <id root="bdee64c4-649c-4011-9b82-c29f0d071cf0"/>
+               <code code="43680-8" codeSystem="2.16.840.1.113883.6.1" displayName="NONCLINICAL TOXICOLOGY SECTION"/>
+               <title>13 NONCLINICAL TOXICOLOGY</title>
+               <effectiveTime value="20240831"/>
+               <component>
+                  <section ID="CARCINOGENESIS_AND_MUTAGENESIS_AND_IMPAIRMENT_OF_FERTILITY">
+                     <id root="8d34077d-c90f-4ed3-9161-b135dc1faf3f"/>
+                     <code code="34083-6" codeSystem="2.16.840.1.113883.6.1" displayName="CARCINOGENESIS &amp; MUTAGENESIS &amp; IMPAIRMENT OF FERTILITY SECTION"/>
+                     <title>13.1 Carcinogenesis, Mutagenesis, Impairment of Fertility</title>
+                     <text>
+                        <paragraph>Carcinogenesis</paragraph>
+                        <paragraph>Tizanidine was administered to mice for 78 weeks at oral doses up to 16 mg/kg/day, which is 2 times the maximum recommended human dose (MRHD) of 36 mg/day on a body surface area (mg/m<sup>2</sup>) basis. Tizanidine was administered to rats for 104 weeks at oral doses up to 9 mg/kg/day, which is 2.5 times the MRHD on a mg/m<sup>2</sup> basis. There was no increase in tumors in either species. </paragraph>
+                        <paragraph>Mutagenesis</paragraph>
+                        <paragraph>Tizanidine was negative in in vitro (bacterial reverse mutation [Ames] , mammalian gene mutation, and chromosomal aberration test in mammalian cells) and in vivo (bone marrow micronucleus, and cytogenetics) assay.</paragraph>
+                        <paragraph> Impairment of Fertility</paragraph>
+                        <paragraph>Oral administration of tizanidine to rats prior to and during mating and continuing during early pregnancy in females resulted in reduced fertility in male and female rats at doses of 30 and 10 mg/kg/day, respectively. No effect on fertility was observed at doses of 10 (male) and 3 (female) mg/kg/day, which are approximately 3 times and similar to the MRHD, respectively, on a mg/m<sup>2</sup> basis.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="CLINICAL_STUDIES">
+               <id root="8814b966-2bea-4b17-8a1d-2c94377ec690"/>
+               <code code="34092-7" codeSystem="2.16.840.1.113883.6.1" displayName="CLINICAL STUDIES SECTION"/>
+               <title>14 CLINICAL STUDIES</title>
+               <text>
+                  <paragraph>The efficacy of tizanidine hydrochloride for the treatment of spasticity was demonstrated in two adequate and well-controlled studies in patients with multiple sclerosis or spinal cord injury (Studies 1 and 2).</paragraph>
+                  <paragraph>
+                     <content styleCode="underline">Single-Dose Study in Patients with Multiple Sclerosis with Spasticity</content>
+                  </paragraph>
+                  <paragraph> In Study 1, 140 patients with spasticity caused by multiple sclerosis were randomized to receive single oral doses of 8 mg or 16 mg of tizanidine hydrochloride, or placebo. Patients and assessors were blinded to treatment assignment and efforts were made to reduce the likelihood that assessors would become aware indirectly of treatment assignment (e.g., they did not provide direct care to patients and were prohibited from asking questions about side effects).</paragraph>
+                  <paragraph> Response was assessed by physical examination; muscle tone was rated on a 5 point scale (Ashworth score) as follows:</paragraph>
+                  <list listType="unordered">
+                     <item>
+                        <caption>•</caption> 0 = normal muscle tone</item>
+                     <item>
+                        <caption>•</caption>1 = slight spastic catch</item>
+                     <item>
+                        <caption>•</caption>2 = more marked muscle resistance</item>
+                     <item>
+                        <caption>•</caption>3 = considerable increase in tone, making passive movement difficult</item>
+                     <item>
+                        <caption>•</caption>4 = a muscle immobilized by spasticity</item>
+                  </list>
+                  <paragraph> Spasm counts were also collected. Assessments were made at 1, 2, 3 and 6 hours after treatment. A statistically significant reduction of the Ashworth score for tizanidine hydrochloride compared to placebo was detected at 1, 2 and 3 hours after treatment. Figure 2 below shows a comparison of the mean change in muscle tone from baseline as measured by the Ashworth scale. The greatest reduction in muscle tone was 1 to 2 hours after treatment. By 6 hours after treatment, muscle tone in the 8 mg and 16 mg tizanidine hydrochloride groups was indistinguishable from muscle tone in patients who received placebo. Within a given patient, improvement in muscle tone was correlated with plasma concentration. Plasma concentrations were variable from patient to patient at a given dose. Although 16 mg produced a larger effect, adverse reactions including hypotension were more common and more severe than in the 8 mg group. There were no differences in the number of spasms occurring in each group.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Figure 2: Single Dose Study—Mean Change in Muscle Tone from Baseline as Measured by the Ashworth Scale ± 95% Confidence Interval (A Negative Ashworth Score Signifies an Improvement in Muscle Tone from Baseline)</content>
+                  </paragraph>
+                  <renderMultiMedia ID="id1480" referencedObject="MM205694761071"/>
+                  <paragraph>
+                     <content styleCode="underline">Seven-Week Study in Patients with Spinal Cord Injury with Spasticity</content>
+                  </paragraph>
+                  <paragraph>In a 7-week study (Study 2), 118 patients with spasticity secondary to spinal cord injury were randomized to either placebo or tizanidine hydrochloride. Steps similar to those taken in the first study were employed to ensure the integrity of blinding.</paragraph>
+                  <paragraph>Patients were titrated over 3 weeks up to a maximum tolerated dose or 36 mg daily given in three unequal doses (e.g., 10 mg given in the morning and afternoon and 16 mg given at night). Patients were then maintained on their maximally tolerated dose for 4 additional weeks (i.e., maintenance phase). Throughout the maintenance phase, muscle tone was assessed on the Ashworth scale within a period of 2.5 hours following either the morning or afternoon dose. The number of daytime spasms was recorded daily by patients.</paragraph>
+                  <paragraph>At endpoint (the protocol-specified time of outcome assessment), there was a statistically significant reduction in muscle tone and frequency of spasms in the tizanidine hydrochloride treated group compared to placebo. The reduction in muscle tone was not associated with a reduction in muscle strength (a desirable outcome) but also did not lead to any consistent advantage of tizanidine hydrochloride treated patients on measures of activities of daily living. Figure 3 below shows a comparison of the mean change in muscle tone from baseline as measured by the Ashworth scale.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Figure 3: Seven Week Study—Mean Change in Muscle Tone 0.5 to 2.5 Hours After Dosing as Measured by the Ashworth Scale ± 95% Confidence Interval (A Negative Ashworth Score Signifies an Improvement in Muscle Tone from Baseline)</content>
+                  </paragraph>
+                  <renderMultiMedia ID="id1489" referencedObject="MM926818141104"/>
+               </text>
+               <effectiveTime value="20240831"/>
+               <component>
+                  <observationMedia ID="MM205694761071">
+                     <text>fig2</text>
+                     <value mediaType="image/jpeg" xsi:type="ED">
+                        <reference value="fig2.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+               <component>
+                  <observationMedia ID="MM926818141104">
+                     <text>fig3</text>
+                     <value mediaType="image/jpeg" xsi:type="ED">
+                        <reference value="fig3.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="HOW_SUPPLIED">
+               <id root="2123667a-e75c-40e2-8579-8e25037a441e"/>
+               <code code="34069-5" codeSystem="2.16.840.1.113883.6.1" displayName="HOW SUPPLIED SECTION"/>
+               <title>16 HOW SUPPLIED/STORAGE AND HANDLING</title>
+               <effectiveTime value="20240831"/>
+               <component>
+                  <section ID="_1e3ace06-93ee-f99a-5734-b51916cf5e68">
+                     <id root="79db5557-2742-4137-a62c-b67ac57e20c2"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>16.1 How Supplied</title>
+                     <text>
+                        <paragraph>Tizanidine Tablets USP, 2 mg<content styleCode="bold"> </content>are white to off white, oval, flat, beveled edged tablets debossed with “R179” on one side and “bisecting score” on other side. The tablets are available in bottles of 30, 150, 300 and 1000. </paragraph>
+                        <paragraph>Bottles of 30 NDC 68788-7991-3</paragraph>
+                        <paragraph>Bottles of 60 NDC 68788-7991-6</paragraph>
+                        <paragraph>Bottles of 90 NDC 68788-7991-9</paragraph>
+                        <paragraph>Bottles of 120 NDC 68788-7991-8</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="_b9d4a3ea-820e-4dd3-21d8-dcaa3d73f1f8">
+                     <id root="bcb6c43c-3e94-4716-951f-41d037c03594"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>16.2 Storage and Handling</title>
+                     <text>
+                        <paragraph>Store at 25°C (77°F); excursions permitted to 15°C to 30°C (59°F to 86°F) [see USP Controlled Room Temperature]. Dispense in containers with child resistant closure.</paragraph>
+                     </text>
+                     <effectiveTime value="20240831"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="INFORMATION_FOR_PATIENTS">
+               <id root="0587d423-07d8-4f41-805b-bbd351812bbe"/>
+               <code code="34076-0" codeSystem="2.16.840.1.113883.6.1" displayName="INFORMATION FOR PATIENTS SECTION"/>
+               <title>17 PATIENT COUNSELING INFORMATION</title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">Serious Drug Interactions</content>
+                  </paragraph>
+                  <paragraph>Advise patients they should not take tizanidine hydrochloride if they are taking fluvoxamine or ciprofloxacin because of the increased risk of serious adverse reactions including severe lowering of blood pressure and sedation. Instruct patients to inform their healthcare providers when they start or stop taking any medication because of the risks associated with interaction between tizanidine hydrochloride and other medicines<content styleCode="italics"> [see Contraindications (<linkHtml href="#CONTRAINDICATIONS">4</linkHtml>) and Drug Interactions (<linkHtml href="#DRUG_INTERACTIONS">7</linkHtml>)]. </content>
+                  </paragraph>
+                  <paragraph>Tizanidine hydrochloride Dosing and Administration </paragraph>
+                  <paragraph>Tell patients to take tizanidine hydrochloride exactly as prescribed (consistently either with or without food) and not to switch between tablets and capsules <content styleCode="italics">[see Dosage and Administration (<linkHtml href="#DOSAGE_AND_ADMINISTRATION">2)</linkHtml>].</content> Inform patients that they should not take more tizanidine hydrochloride than prescribed because of the risk of adverse events at single doses greater than 8 mg or total daily doses greater than 36 mg. Tell patients that they should not suddenly discontinue tizanidine hydrochloride, because rebound hypertension and tachycardia may occur <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#_f2ecdedf-aa48-387e-bf6f-25213bbd4546">5.6</linkHtml>)].</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Hypotension </content>
+                  </paragraph>
+                  <paragraph>Warn patients that they may experience hypotension and to be careful when changing from a lying or sitting to a standing position.<content styleCode="italics"> [see Warnings and Precautions<linkHtml href="#_b11b0fdb-a969-01f6-8321-d2f54132c933"> (5.1)</linkHtml>]</content>. </paragraph>
+                  <paragraph>Sedation </paragraph>
+                  <paragraph>Tell patients that tizanidine hydrochloride may cause them to become sedated or somnolent and they should be careful when performing activities that require alertness, such as driving a vehicle or operating machinery<content styleCode="italics"> [see Warnings and Precautions (<linkHtml href="#_81e93585-0727-41b2-8e63-d1c9a36426b2">5.3</linkHtml>)]</content>. Tell patients that the sedation may be additive when tizanidine hydrochloride is taken in conjunction with drugs (baclofen, benzodiazepines) or substances (e.g., alcohol) that act as CNS depressants.</paragraph>
+                  <paragraph> Remind patients that if they depend on their spasticity to sustain posture and balance in locomotion, or whenever spasticity is utilized to obtain increased function, that Tizanidine hydrochloride decreases spasticity and caution should be used.</paragraph>
+                  <paragraph> Hypersensitivity Reactions</paragraph>
+                  <paragraph> Inform patients of the signs and symptoms of severe allergic reactions and instruct them to discontinue Tizanidine and seek immediate medical care should these signs and symptoms occur <content styleCode="italics">[see Warnings and Precautions <linkHtml href="#_311ca6ab-7d1d-0ec5-86bf-4817ca4b08d6">(5.5)</linkHtml>].</content>
+                  </paragraph>
+                  <paragraph>Rx Only </paragraph>
+                  <paragraph>Distributor:</paragraph>
+                  <paragraph>Dr. Reddy's Laboratories, Inc.,</paragraph>
+                  <paragraph> Princeton, NJ 08540. </paragraph>
+                  <paragraph>Made in India </paragraph>
+                  <paragraph>Revised: 12/24</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Repackaged By: Preferred Pharmaceuticals Inc.</content>
+                  </paragraph>
+               </text>
+               <effectiveTime value="20240831"/>
+            </section>
+         </component>
+         <component>
+            <section ID="_7f1d71ff-617e-9497-a44d-70b26aa84be0">
+               <id root="d3f79e71-0842-46a2-ac2f-9f0759dbeaeb"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <title>PACKAGE LABEL PRINCIPAL DISPLAY PANEL SECTION</title>
+               <text>
+                  <paragraph>Unvarnished Area Consists of: 2D Barcode, Lot Number, Expiry Date and Serial Number</paragraph>
+                  <paragraph>Tizanidine Tablets USP, 2 mg - Container Label</paragraph>
+                  <renderMultiMedia ID="id1582" referencedObject="MM220928310800"/>
+               </text>
+               <effectiveTime value="20240831"/>
+               <component>
+                  <observationMedia ID="MM220928310800">
+                     <text>Tizanidine Hydrochloride Tablet 2mg </text>
+                     <value mediaType="image/jpeg" xsi:type="ED">
+                        <reference value="container1.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+      </structuredBody>
+   </component>
+</document>

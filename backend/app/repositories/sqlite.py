@@ -115,14 +115,23 @@ class SQLiteRepository:
                 self._conn.execute("UPDATE runs SET status='failed',run_json=?,updated_at=? WHERE run_id=?", (_dump(obj), _now(), row["run_id"]))
             return len(rows)
 
-    def upsert_case(self, case: dict[str, Any], raw_payload: dict[str, Any], warnings: list[str]) -> dict[str, Any]:
+    def upsert_case(self, case: dict[str, Any], raw_payload: dict[str, Any], warnings: list[str], *, expected_revision: int | None = None) -> dict[str, Any]:
         cid = case["case_id"]
         with self._lock, self._conn:
             old = self._conn.execute("SELECT current_revision FROM cases WHERE case_id=?", (cid,)).fetchone()
+            if expected_revision is not None and (not old or old[0] != expected_revision):
+                raise ValueError('CASE_REVISION_CONFLICT')
             revision = (old[0] + 1) if old else 1
             now = _now()
             if old:
-                self._conn.execute("UPDATE cases SET current_revision=?,case_json=?,raw_payload=?,warnings_json=?,updated_at=? WHERE case_id=?", (revision,_dump(case),_dump(raw_payload),_dump(warnings),now,cid))
+                args=(revision,_dump(case),_dump(raw_payload),_dump(warnings),now,cid)
+                sql="UPDATE cases SET current_revision=?,case_json=?,raw_payload=?,warnings_json=?,updated_at=? WHERE case_id=?"
+                if expected_revision is not None:
+                    sql+=' AND current_revision=?'
+                    args+= (expected_revision,)
+                changed=self._conn.execute(sql,args)
+                if expected_revision is not None and changed.rowcount!=1:
+                    raise ValueError('CASE_REVISION_CONFLICT')
             else:
                 self._conn.execute("INSERT INTO cases VALUES (?,?,?,?,?,?,?)", (cid,revision,_dump(case),_dump(raw_payload),_dump(warnings),now,now))
             self._conn.execute("INSERT INTO case_revisions VALUES (?,?,?,?,?,?)", (cid,revision,_dump(case),_dump(raw_payload),_dump(warnings),now))
@@ -178,6 +187,10 @@ class SQLiteRepository:
             self._conn.execute("INSERT INTO reviews VALUES (?,?,?,?,?)", (review_id,run_id,action,_dump(review),_now()))
             self._audit("review.created", review_id, {"run_id":run_id,"action":action})
         return review
+
+    def get_review(self, review_id: str):
+        row=self._conn.execute('SELECT review_json FROM reviews WHERE review_id=?',(review_id,)).fetchone()
+        return _load(row[0], {}) if row else None
 
     def list_reviews(self, run_id: str | None = None) -> list[dict[str, Any]]:
         rows = self._conn.execute("SELECT review_json FROM reviews WHERE (? IS NULL OR run_id=?) ORDER BY created_at", (run_id,run_id)).fetchall()

@@ -72,6 +72,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/agents/contracts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Agent Contracts */
+        get: operations["agent_contracts_api_agents_contracts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/cases": {
         parameters: {
             query?: never;
@@ -382,6 +399,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/reviews/{review_id}/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export Review */
+        get: operations["export_review_api_reviews__review_id__export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/rules": {
         parameters: {
             query?: never;
@@ -508,6 +542,27 @@ export interface components {
             reaction?: string | null;
             /** Severity */
             severity?: string | null;
+            /** Label Source */
+            label_source?: string | null;
+            /**
+             * Occurred At
+             * @description Recorded event date or approximate time; never invent an exact date
+             */
+            occurred_at?: string | null;
+            /**
+             * Verification Status
+             * @default not_recorded
+             * @enum {string}
+             */
+            verification_status: "not_recorded" | "unverified" | "confirmed" | "ruled_out" | "conflicting";
+            /** Verification Note */
+            verification_note?: string | null;
+            /** Verification Source */
+            verification_source?: string | null;
+            /** Verified By */
+            verified_by?: string | null;
+            /** Verified At */
+            verified_at?: string | null;
         };
         /** BenchmarkBody */
         BenchmarkBody: {
@@ -549,6 +604,28 @@ export interface components {
              * @enum {string}
              */
             population: "unspecified" | "all" | "adult" | "pediatric" | "mixed";
+            /**
+             * Document Kind
+             * @default reference
+             * @enum {string}
+             */
+            document_kind: "reference" | "guideline" | "drug_label" | "research_article";
+            /**
+             * Study Design
+             * @default not_recorded
+             * @enum {string}
+             */
+            study_design: "not_recorded" | "observational" | "randomized_trial" | "systematic_review" | "other";
+            /**
+             * Source Url
+             * @default
+             */
+            source_url: string;
+            /**
+             * Jurisdiction
+             * @default
+             */
+            jurisdiction: string;
         };
         /** Case */
         Case: {
@@ -596,6 +673,24 @@ export interface components {
             rapid_identification?: components["schemas"]["RapidIdentification"] | null;
             /** Medications */
             medications?: components["schemas"]["Medication"][];
+            /**
+             * Medication History Status
+             * @default unknown
+             * @enum {string}
+             */
+            medication_history_status: "unknown" | "reviewed_none" | "reviewed_list";
+            /** Clinical History */
+            clinical_history?: {
+                [key: string]: unknown;
+            };
+            /** Vitals */
+            vitals?: {
+                [key: string]: unknown;
+            };
+            /** Resistance Context */
+            resistance_context?: {
+                [key: string]: unknown;
+            }[];
             /** Resistance Context Ref */
             resistance_context_ref?: string[];
             /** Policy Refs */
@@ -654,6 +749,28 @@ export interface components {
             reason: string;
             /** Expected Revision */
             expected_revision: number;
+        };
+        /** DrugDecisionBody */
+        DrugDecisionBody: {
+            /** Drug Code */
+            drug_code: string;
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "adopt" | "conditional" | "decline";
+            /** Reason */
+            reason: string;
+            /**
+             * Conditions
+             * @default
+             */
+            conditions: string;
+            /**
+             * Acknowledged Warnings
+             * @default false
+             */
+            acknowledged_warnings: boolean;
         };
         /** Encounter */
         Encounter: {
@@ -740,6 +857,12 @@ export interface components {
             creatinine_unit?: string | null;
             /** Egfr */
             egfr?: number | null;
+            /** Crcl */
+            crcl?: number | null;
+            /** Crcl Unit */
+            crcl_unit?: string | null;
+            /** Crcl Calculation Method */
+            crcl_calculation_method?: string | null;
             /** Unit */
             unit?: string | null;
             /** Calculation Method */
@@ -757,7 +880,7 @@ export interface components {
              * Action
              * @enum {string}
              */
-            action: "accept" | "modify" | "reject";
+            action: "accept" | "modify" | "reject" | "drug_review";
             /** Reason */
             reason: string;
             /** Reviewer Id */
@@ -771,6 +894,8 @@ export interface components {
             proposed_output?: {
                 [key: string]: unknown;
             } | null;
+            /** Drug Decisions */
+            drug_decisions?: components["schemas"]["DrugDecisionBody"][];
         };
         /** RunBody */
         RunBody: {
@@ -875,6 +1000,26 @@ export interface operations {
         };
     };
     agent_contracts_v2_api_agents_v2_contracts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    agent_contracts_api_agents_contracts_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -1540,6 +1685,37 @@ export interface operations {
                 "application/json": components["schemas"]["ReviewBody"];
             };
         };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_review_api_reviews__review_id__export_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                review_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {

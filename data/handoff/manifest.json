@@ -1,0 +1,520 @@
+{
+  "version": "handoff-2026-10-10",
+  "cases": [
+    {
+      "case_id": "agent-allergy",
+      "revision": 4,
+      "path": "data/handoff/cases/agent-allergy.json",
+      "sha256": "ab576c706e11208e463f3cc54b95180ed570c1d8ef10ddf88596e85dfa97318b"
+    },
+    {
+      "case_id": "agent-allergy-pair-conflicting",
+      "revision": 2,
+      "path": "data/handoff/cases/agent-allergy-pair-conflicting.json",
+      "sha256": "e7a185f6b500d66f12859aca8d07b6f548e694e830c4f50ed6b5ebab9616d87b"
+    },
+    {
+      "case_id": "agent-allergy-pair-intolerance",
+      "revision": 2,
+      "path": "data/handoff/cases/agent-allergy-pair-intolerance.json",
+      "sha256": "88401ac1f6a07ce169e53847e60b2f2303dc33fa056f7f6aa4a9643aa151730f"
+    },
+    {
+      "case_id": "agent-allergy-pair-severe",
+      "revision": 2,
+      "path": "data/handoff/cases/agent-allergy-pair-severe.json",
+      "sha256": "b87227973765629557888647c2dc2d7622fa1ad16586cd6ffcdd0b321950b726"
+    },
+    {
+      "case_id": "agent-allergy-pair-unverified",
+      "revision": 2,
+      "path": "data/handoff/cases/agent-allergy-pair-unverified.json",
+      "sha256": "636e69f4c0924582ea424b2773bc3800b5bbb9aec5ff69889ae0ca85c6cb63bb"
+    },
+    {
+      "case_id": "agent-ast-conflict",
+      "revision": 4,
+      "path": "data/handoff/cases/agent-ast-conflict.json",
+      "sha256": "db264825d02832ac6fac25575e56b0f4935da764a651571c37a60cfdcc4288b6"
+    },
+    {
+      "case_id": "agent-complete",
+      "revision": 4,
+      "path": "data/handoff/cases/agent-complete.json",
+      "sha256": "2b0e6074d7e14a537018966d585f072b46f75f323d751d6b76cd2560f0108fe3"
+    },
+    {
+      "case_id": "agent-evidence-mismatch",
+      "revision": 4,
+      "path": "data/handoff/cases/agent-evidence-mismatch.json",
+      "sha256": "6abe300ff7ec1586ffdd027bbf690baff7d98d6d93ebbf70b737df5c27b44e90"
+    },
+    {
+      "case_id": "agent-interaction",
+      "revision": 4,
+      "path": "data/handoff/cases/agent-interaction.json",
+      "sha256": "b30b5aeb87d654bd06d6d305c7470a3df64b6b061bac57967917cfe55b01c446"
+    },
+    {
+      "case_id": "agent-missing",
+      "revision": 4,
+      "path": "data/handoff/cases/agent-missing.json",
+      "sha256": "d1938051f59bebf14075fa70ed6fdee7e9716b273e09fb89c592c571b6c8673b"
+    },
+    {
+      "case_id": "agent-rapid-only",
+      "revision": 3,
+      "path": "data/handoff/cases/agent-rapid-only.json",
+      "sha256": "34b702c9d1679d22ab193199c3a538a52be12101dbb062a224ae686a57299bb1"
+    },
+    {
+      "case_id": "agent-renal",
+      "revision": 4,
+      "path": "data/handoff/cases/agent-renal.json",
+      "sha256": "ca44dce39d5f249a32ed658d8fdf03764df2ce189ccbd87d6c75aa3d24c4d5ab"
+    },
+    {
+      "case_id": "api-demo-source-ast-001",
+      "revision": 5,
+      "path": "data/handoff/cases/api-demo-source-ast-001.json",
+      "sha256": "8fba6e925a61dead59ba8ed4f0e94f2a0042d59728faa79eaf273fddc8a70b86"
+    },
+    {
+      "case_id": "cohort-76099ebb-001",
+      "revision": 4,
+      "path": "data/handoff/cases/cohort-76099ebb-001.json",
+      "sha256": "8c3520f75bce0c1f9cc477d5987caf7b09b52e4e7c5af1dd3059936e866c446f"
+    },
+    {
+      "case_id": "cohort-76099ebb-001-allergy",
+      "revision": 4,
+      "path": "data/handoff/cases/cohort-76099ebb-001-allergy.json",
+      "sha256": "ad8d2804425ccd07ccf0d07f70447e8917b9fe0340bb04ed1c38936183b7c047"
+    },
+    {
+      "case_id": "cohort-76099ebb-002",
+      "revision": 3,
+      "path": "data/handoff/cases/cohort-76099ebb-002.json",
+      "sha256": "e7ad685f88043d6be58e654cdb987354612caf17c6c1239770b93c1811738951"
+    },
+    {
+      "case_id": "cohort-76099ebb-002-allergy",
+      "revision": 3,
+      "path": "data/handoff/cases/cohort-76099ebb-002-allergy.json",
+      "sha256": "9afd6672acb51357dd9f698d937d0825ac12af70a75f842111f5207ce12c4ba9"
+    },
+    {
+      "case_id": "cohort-76099ebb-003",
+      "revision": 3,
+      "path": "data/handoff/cases/cohort-76099ebb-003.json",
+      "sha256": "8cbd9e8d21a6ad3365f7b211a266e83b5d8bcd0ef5b91f16629b008ba4d582fd"
+    },
+    {
+      "case_id": "cohort-76099ebb-003-allergy",
+      "revision": 4,
+      "path": "data/handoff/cases/cohort-76099ebb-003-allergy.json",
+      "sha256": "eb81b92eb7e2be7a0f8b450597a1a3fbcece90423252ad5f8fc1e7d39d54033b"
+    },
+    {
+      "case_id": "cohort-76099ebb-004",
+      "revision": 3,
+      "path": "data/handoff/cases/cohort-76099ebb-004.json",
+      "sha256": "f1ff3f5a1fb331bd5310e9a54ae8c584188160f2fc9ee99b3beff5517e5c8438"
+    },
+    {
+      "case_id": "cohort-76099ebb-005",
+      "revision": 3,
+      "path": "data/handoff/cases/cohort-76099ebb-005.json",
+      "sha256": "1a493bf4420d50c7b1704035f0a92a2e6f87d67f1517958412896f8c28568d16"
+    },
+    {
+      "case_id": "cohort-76099ebb-006",
+      "revision": 4,
+      "path": "data/handoff/cases/cohort-76099ebb-006.json",
+      "sha256": "238a803e1f46f401db9ab1082deaa0ca96116005e9baf0bc491665fd401c1406"
+    },
+    {
+      "case_id": "cohort-76099ebb-007",
+      "revision": 3,
+      "path": "data/handoff/cases/cohort-76099ebb-007.json",
+      "sha256": "99c3d825a3a5c1d1e2a92f0c7124a705b33eb7fdaeb57fe362db8846cf8b261a"
+    },
+    {
+      "case_id": "cohort-76099ebb-008",
+      "revision": 3,
+      "path": "data/handoff/cases/cohort-76099ebb-008.json",
+      "sha256": "215ebe1cd4797053416e3b5f4d302fab73deb7f596e0bcb84164a3c8ead75d85"
+    },
+    {
+      "case_id": "cohort-76099ebb-009",
+      "revision": 3,
+      "path": "data/handoff/cases/cohort-76099ebb-009.json",
+      "sha256": "6fb9a3169b3b4a904477ac5ef826e82e06d46c6d077d4082e530e3cd4712defd"
+    },
+    {
+      "case_id": "cohort-76099ebb-010",
+      "revision": 3,
+      "path": "data/handoff/cases/cohort-76099ebb-010.json",
+      "sha256": "bf698d91e807ff55834c6bb4c83805f5cf8898ebb9f8c3a0ba187014e684c2d0"
+    },
+    {
+      "case_id": "cohort-76099ebb-011",
+      "revision": 4,
+      "path": "data/handoff/cases/cohort-76099ebb-011.json",
+      "sha256": "fa4a38aa9678c18a6a75b0aee06541b0a8b344726deadd1e92b9db074e8721c4"
+    },
+    {
+      "case_id": "cohort-76099ebb-012",
+      "revision": 4,
+      "path": "data/handoff/cases/cohort-76099ebb-012.json",
+      "sha256": "a918dcf654e4a48b5ef3018dccd7506c6a8f82c9f701fd7518d6b98701e36fe2"
+    }
+  ],
+  "documents": [
+    {
+      "original_doc_id": "doc_eb8313e05c138e10cb0e",
+      "path": "data/handoff/references/allergy-study.pdf",
+      "sha256": "9ead2b5ad15075a3479709a3a44e648661335cf70bcaf610634d343efc50517a",
+      "filename": "1.pdf",
+      "title": "Characteristics, risk factors and clinical impact of penicillin and other antibiotic allergies in adults in the UK General Practice: A population-based cohort study",
+      "version": "Journal of Infection 90 (2025) 106367",
+      "is_synthetic": false,
+      "population": "adult",
+      "policy_refs": [],
+      "source_url": "https://doi.org/10.1016/j.jinf.2024.106367",
+      "jurisdiction": "UK",
+      "document_kind": "research_article",
+      "study_design": "observational"
+    },
+    {
+      "original_doc_id": "doc_5232fea78033d27130fe",
+      "path": "data/public_references/dailymed/amikacin.md",
+      "sha256": "f85771858186029b506cfc62799bf07203d9937aafc7a54eca892f0071bcc47a",
+      "filename": "amikacin.md",
+      "title": "DailyMed amikacin",
+      "version": "SPL-10-Aug 03, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f260ff2a-76a0-4672-9516-91c344b67890",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_6a7f507935c3e7ab519d",
+      "path": "data/public_references/dailymed/amoxicillin_clavulanate.md",
+      "sha256": "701224d822b3939ead220320acf45cc3ba1e2f4dfd6119093d34a87a61322f55",
+      "filename": "amoxicillin_clavulanate.md",
+      "title": "DailyMed amoxicillin_clavulanate",
+      "version": "SPL-26-Oct 05, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a1d6bf78-4bb7-469e-ba39-318e14aaee29",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_6c687dc322f9778e445f",
+      "path": "data/public_references/dailymed/ampicillin.md",
+      "sha256": "78cf2354058e48b84bd8c3f28f5ff65951eb4d0d0274d652f8fbccd24e8c4e09",
+      "filename": "ampicillin.md",
+      "title": "DailyMed ampicillin",
+      "version": "SPL-14-Jul 28, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4134cd79-c895-4e6e-b1d5-8e01c38bf2d1",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_02b50f9b6472281fa8f0",
+      "path": "data/public_references/dailymed/ampicillin_sulbactam.md",
+      "sha256": "0718f78010f75908af009a80694d2620cfcc110bf8724b184d14e13f670f0878",
+      "filename": "ampicillin_sulbactam.md",
+      "title": "DailyMed ampicillin_sulbactam",
+      "version": "SPL-4-Aug 05, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=139b4b2e-46f7-44a8-9cc1-774afa463b80",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_e1ab20e851d11e00c428",
+      "path": "data/public_references/dailymed/aztreonam.md",
+      "sha256": "68bf8a359856be9d022e67f6d2d7d5e19a8eda6f7023e7d32f5b5d31c2a44e3a",
+      "filename": "aztreonam.md",
+      "title": "DailyMed aztreonam",
+      "version": "SPL-15-Dec 23, 2025",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=9a105eaf-ee77-4016-beeb-d425a5565db2",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_a687927b263311da5576",
+      "path": "data/public_references/dailymed/cefazolin.md",
+      "sha256": "840d0a4cd3a34c2cdea2f52cc65fdb2cccd9c43521d058d2c5ed0697c8d0c029",
+      "filename": "cefazolin.md",
+      "title": "DailyMed cefazolin",
+      "version": "SPL-7-Sep 29, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=922fb1a1-ad4c-4a12-8d5d-00fe13af18e8",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_83a45ffa07b17bb99e64",
+      "path": "data/public_references/dailymed/cefepime.md",
+      "sha256": "fbe49f0a38ce75d57c6f2ad0046275630f6740d247bfcfaccdb88d8d8736d03e",
+      "filename": "cefepime.md",
+      "title": "DailyMed cefepime",
+      "version": "SPL-24-Sep 24, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=de477f37-40f6-4295-ae72-a2ee36a8922e",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_eb62ef54251289f72401",
+      "path": "data/public_references/dailymed/ceftriaxone.md",
+      "sha256": "65029f0f49c842141d54700c1d414cda489674d5dbf421450ab05f9829d28603",
+      "filename": "ceftriaxone.md",
+      "title": "DailyMed ceftriaxone",
+      "version": "SPL-18-Oct 02, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8351aa37-552d-471d-b293-c564dcb6ec29",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_aed31a80506dead25b15",
+      "path": "data/public_references/dailymed/ciprofloxacin.md",
+      "sha256": "2606c97785eae2805e7083e2855b6b1447d9e15c9e9339ee40e7d3e8ac8ac649",
+      "filename": "ciprofloxacin.md",
+      "title": "DailyMed ciprofloxacin",
+      "version": "SPL-3-Sep 28, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c47250c2-bece-46b5-8b3b-b7c97d9005d8",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_395624bbf9c6b441592f",
+      "path": "data/public_references/dailymed/ertapenem.md",
+      "sha256": "c1a1bf3ebee2737191d33372d7c9f0d903eeef44f4ee7ad82b916ffa9112f1ff",
+      "filename": "ertapenem.md",
+      "title": "DailyMed ertapenem",
+      "version": "SPL-1-Oct 01, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5b050245-aa03-4e28-e063-6394a90aeabc",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_3d4fdd737fa4dcea075f",
+      "path": "data/public_references/dailymed/fosfomycin.md",
+      "sha256": "02f0cfc9ed276ae2dbdb13975fa78460d9af83782767884c2b31e21ee783fc49",
+      "filename": "fosfomycin.md",
+      "title": "DailyMed fosfomycin",
+      "version": "SPL-5-Nov 27, 2023",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=99becde1-fca5-4d82-8c3e-36ded62fc0d1",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_b96a9a1d8f382e3d4e1d",
+      "path": "data/public_references/dailymed/gentamicin.md",
+      "sha256": "10817d422b2bf497359c2033bd95c1045ba074b03c5adf7ae71ae9aee21edb72",
+      "filename": "gentamicin.md",
+      "title": "DailyMed gentamicin",
+      "version": "SPL-1-Sep 23, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1c5514c2-40ef-4817-8f43-edb3ea3c34b5",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_2dab15a0a139f788d037",
+      "path": "data/public_references/dailymed/imipenem.md",
+      "sha256": "c288662610ea35531875726b2f54a31df0c57a0c08574e3e1f08bc9224f59856",
+      "filename": "imipenem.md",
+      "title": "DailyMed imipenem",
+      "version": "SPL-11-Dec 19, 2025",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=be32f468-738b-40df-a425-591e12f65159",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_d797ce24ae2a7c7f5d23",
+      "path": "data/public_references/dailymed/levofloxacin.md",
+      "sha256": "048c43614d3ddbd0009b5f8dab3d6c65f23fae33cfd2f8b61b81dbe4c237f091",
+      "filename": "levofloxacin.md",
+      "title": "DailyMed levofloxacin",
+      "version": "SPL-1-Sep 02, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5a65b2bc-9edc-f193-e063-6394a90a0104",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_ce61df1efa1ab1de7c3a",
+      "path": "data/public_references/dailymed/meropenem.md",
+      "sha256": "1452a5be379f503524f01764924ce2547a5f3a93249c418713f65292bcb75ac7",
+      "filename": "meropenem.md",
+      "title": "DailyMed meropenem",
+      "version": "SPL-6-Sep 24, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=74ff19b5-6156-4a27-affb-744b0ce1aeec",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_f594720a34acb4f779eb",
+      "path": "data/public_references/dailymed/nitrofurantoin.md",
+      "sha256": "1ed047d25fca6c34126d4c84ddb2be50add9f98fdd9a28293608027c7b2a7f53",
+      "filename": "nitrofurantoin.md",
+      "title": "DailyMed nitrofurantoin",
+      "version": "SPL-7-Oct 01, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=35c0a6d8-ff85-4d9b-9ad3-ae20808119dd",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_be834cece0eb8175714d",
+      "path": "data/public_references/dailymed/piperacillin_tazobactam.md",
+      "sha256": "57c6c271121e6aea53f9f39db0e528769747e5842df8606db360705237df87b0",
+      "filename": "piperacillin_tazobactam.md",
+      "title": "DailyMed piperacillin_tazobactam",
+      "version": "SPL-5-Sep 29, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a798faf5-cd97-4e35-a700-94c372978c46",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_116bd6df43cda151daa9",
+      "path": "data/public_references/dailymed/tetracycline.md",
+      "sha256": "96eeeb69d0a59a7c16b8eac16e8ebd918b025e8a5f57904bac988bc13e1c0bcb",
+      "filename": "tetracycline.md",
+      "title": "DailyMed tetracycline",
+      "version": "SPL-1-Aug 13, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=02e88b4a-57ae-4ef6-ba48-97c657202b94",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_6a45e31fa628cf31ee95",
+      "path": "data/public_references/dailymed/tizanidine.md",
+      "sha256": "aa6b552f52f1846f3a9729073a6796a11a738815f78ed8cd43d65fb942832081",
+      "filename": "tizanidine.md",
+      "title": "DailyMed tizanidine",
+      "version": "SPL-6-Oct 05, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3c993e3c-ee52-45a7-be39-60eaac7a1092",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_9d36c7fdbb6fa587c1ce",
+      "path": "data/public_references/dailymed/trimethoprim_sulfamethoxazole.md",
+      "sha256": "61be5fe1abdb73c5b46fa9bbf5ebf4be6e51b092b2b1816aa3c24a2d3761859d",
+      "filename": "trimethoprim_sulfamethoxazole.md",
+      "title": "DailyMed trimethoprim_sulfamethoxazole",
+      "version": "SPL-7-Sep 04, 2026",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d60c218c-6529-4944-af0b-a9dc720f32e9",
+      "jurisdiction": "US",
+      "document_kind": "drug_label"
+    },
+    {
+      "original_doc_id": "doc_168e5a29f8a2d1b275cf",
+      "path": "data/handoff/references/unrelated.md",
+      "sha256": "e36ef4f12a5e14d31a352eaa907dc57c1b786f589714d890517f7e6842022d4d",
+      "filename": "unrelated.md",
+      "title": "Unrelated evidence test",
+      "version": "1",
+      "is_synthetic": false,
+      "population": "all",
+      "policy_refs": [
+        "agent-unrelated-evidence"
+      ],
+      "document_kind": "test_negative_control"
+    },
+    {
+      "original_doc_id": "doc_71edc13aec9a7ba7c621",
+      "path": "data/handoff/references/who-lower-uti.md",
+      "sha256": "4baaf3e2662c6ce93faa88233a6e3330511cab8a756873575561e0d920c51bcf",
+      "filename": "who-lower-uti.md",
+      "title": "WHO AWaRe lower UTI chapter",
+      "version": "2022",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": [],
+      "source_url": "https://www.who.int/publications/i/item/9789240062382",
+      "jurisdiction": "WHO global guidance",
+      "document_kind": "guideline",
+      "source_derivation": {
+        "original_hash": "4960ecc4fa5bab8281feda656a0da3176dafa1fd21971d87e3b2092d7dac562f",
+        "original_title": "who",
+        "original_version": "1",
+        "reason": "Verified lower-UTI extraction of original PDF pages 294–307. Normalized only CRLF/LF, 1–2 spaces after initial bullet/initial capital, and one space between closing parenthesis and period. Original excerpt unchanged; does not validate clinical meaning or table layout.",
+        "recorded_at": "2026-10-06T17:37:06.171898+00:00"
+      }
+    },
+    {
+      "original_doc_id": "doc_877abfd30f72ab114bcf",
+      "path": "who_aware_antibiotic_book.pdf",
+      "sha256": "4960ecc4fa5bab8281feda656a0da3176dafa1fd21971d87e3b2092d7dac562f",
+      "filename": "who_aware_antibiotic_book.pdf",
+      "title": "who",
+      "version": "1",
+      "is_synthetic": false,
+      "population": "mixed",
+      "policy_refs": []
+    }
+  ],
+  "catalog": {
+    "path": "data/handoff/catalog.json",
+    "sha256": "25f7db8b8b9dcab9a54c36789f449856ca20f17d41f713dcdef43ce085029e4b"
+  }
+}

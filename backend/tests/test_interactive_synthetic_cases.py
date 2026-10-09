@@ -45,22 +45,24 @@ def test_complete_interactive_cases_run_with_mock_embedding_and_llm(tmp_path):
         policy_refs=["demo-policy-v1"],
     )
 
+    assert documents.reindex()['status'] == 'ok'
     for case_id in CASE_IDS:
         case = _fixture(case_id)
         Case.model_validate(case)
         run = execute(case, "multi-agent", "mock", documents, run_id=f"run-{case_id}")
 
-        assert run["gate_status"] == "ready_for_review", (case_id, run)
+        assert run["gate_status"] == "needs_confirmation", (case_id, run)
         assert run["missing_fields"] == []
         assert run["errors"] == []
         assert run["evidence_snapshots"]
-        assert run["output"]["candidates"]
-        assert run["output"]["candidates"][0]["drug_code"] == "DEMO_DRUG_A"
+        assert not run["output"]["candidates"]
+        assert run['output']['pending']
         assert run["output"]["avoid"] == []
         assert run["nodes"][-2]["node_id"] == "candidate_presentation"
-        assert run["nodes"][-2]["output"]["published"] is True
+        assert run["nodes"][-2]["output"]["published"] is False
         assert run["nodes"][-2]["output"]["schema_valid"] is True
-        assert run["nodes"][3]["status"] == "completed"  # rapid identification
-        assert all(node["status"] in {"completed", "pending"} for node in run["nodes"])
+        ast_node = next(n for n in run['nodes'] if n['node_id']=='ast_agent')
+        assert ast_node['input']['facts']['rapid_identification'] == case['rapid_identification']
+        assert all(node["status"] in {"completed", "pending", "needs_confirmation"} for node in run["nodes"])
 
     assert embeddings.calls  # both document and query vectors used

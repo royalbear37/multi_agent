@@ -1,0 +1,1648 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="https://www.accessdata.fda.gov/spl/stylesheet/spl.xsl" type="text/xsl"?>
+<document xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 https://www.accessdata.fda.gov/spl/schema/spl.xsd">
+   <id root="1308cf65-8900-4fc3-8a41-47b766adbd3a"/>
+   <code code="34391-3" codeSystem="2.16.840.1.113883.6.1" displayName="HUMAN PRESCRIPTION DRUG LABEL"/>
+   <effectiveTime value="20251215"/>
+   <setId root="9a105eaf-ee77-4016-beeb-d425a5565db2"/>
+   <versionNumber value="15"/>
+   <author>
+      <time/>
+      <assignedEntity>
+         <representedOrganization>
+            <id extension="011550092" root="1.3.6.1.4.1.519.1"/>
+            <name>E.R. Squibb &amp; Sons, L.L.C.</name>
+            <assignedEntity>
+               <assignedOrganization/>
+            </assignedEntity>
+         </representedOrganization>
+      </assignedEntity>
+   </author>
+   <component>
+      <structuredBody>
+         <component>
+            <section>
+               <id root="aaef497e-e69e-4631-bfe7-39c0ad5e548b"/>
+               <code code="48780-1" codeSystem="2.16.840.1.113883.6.1" displayName="SPL product data elements section"/>
+               <effectiveTime value="20251215"/>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code code="0003-2560" codeSystem="2.16.840.1.113883.6.69"/>
+                        <name>AZACTAM</name>
+                        <formCode code="C42974" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INJECTION, POWDER, FOR SOLUTION"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>AZTREONAM</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <ingredient classCode="ACTIB">
+                           <quantity>
+                              <numerator unit="g" value="1"/>
+                              <denominator unit="1" value="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="G2B4VE5GH8" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>aztreonam</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="G2B4VE5GH8" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>aztreonam</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <quantity>
+                              <numerator unit="g" value="0.78"/>
+                              <denominator unit="1" value="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="94ZLA3W45F" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>arginine</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator unit="1" value="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code/>
+                              <formCode code="C43215" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="VIAL, SINGLE-DOSE"/>
+                              <asContent>
+                                 <quantity>
+                                    <numerator unit="1" value="10"/>
+                                    <denominator value="1"/>
+                                 </quantity>
+                                 <containerPackagedProduct>
+                                    <code code="0003-2560-16" codeSystem="2.16.840.1.113883.6.69"/>
+                                    <formCode code="C43182" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="CARTON"/>
+                                 </containerPackagedProduct>
+                                 <subjectOf>
+                                    <marketingAct>
+                                       <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                       <statusCode code="active"/>
+                                       <effectiveTime>
+                                          <low value="20100401"/>
+                                       </effectiveTime>
+                                    </marketingAct>
+                                 </subjectOf>
+                              </asContent>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic classCode="OBS">
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="Type 0: Not a Combination Product" xsi:type="CE"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <approval>
+                           <id extension="NDA050580" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73594" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="NDA"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20100401"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C28161" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INTRAMUSCULAR"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38276" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INTRAVENOUS"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code code="0003-2570" codeSystem="2.16.840.1.113883.6.69"/>
+                        <name>AZACTAM</name>
+                        <formCode code="C42974" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INJECTION, POWDER, FOR SOLUTION"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>AZTREONAM</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <ingredient classCode="ACTIB">
+                           <quantity>
+                              <numerator unit="g" value="2"/>
+                              <denominator unit="1" value="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="G2B4VE5GH8" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>aztreonam</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="G2B4VE5GH8" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>aztreonam</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <quantity>
+                              <numerator unit="g" value="1.54"/>
+                              <denominator unit="1" value="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="94ZLA3W45F" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>arginine</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator unit="1" value="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code/>
+                              <formCode code="C43215" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="VIAL, SINGLE-DOSE"/>
+                              <asContent>
+                                 <quantity>
+                                    <numerator unit="1" value="10"/>
+                                    <denominator value="1"/>
+                                 </quantity>
+                                 <containerPackagedProduct>
+                                    <code code="0003-2570-16" codeSystem="2.16.840.1.113883.6.69"/>
+                                    <formCode code="C43182" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="CARTON"/>
+                                 </containerPackagedProduct>
+                                 <subjectOf>
+                                    <marketingAct>
+                                       <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                       <statusCode code="active"/>
+                                       <effectiveTime>
+                                          <low value="20100401"/>
+                                       </effectiveTime>
+                                    </marketingAct>
+                                 </subjectOf>
+                              </asContent>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic classCode="OBS">
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="Type 0: Not a Combination Product" xsi:type="CE"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <approval>
+                           <id extension="NDA050580" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73594" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="NDA"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20100401"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C28161" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INTRAMUSCULAR"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38276" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INTRAVENOUS"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_a15aeb0a-3a8f-436b-9a52-c158f8b4c2ac">
+               <id root="2e8b2a80-f033-4792-b655-560d4f8f3161"/>
+               <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+               <title>AZACTAM<sup>®</sup>
+               </title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">(aztreonam for injection, USP)</content>
+                  </paragraph>
+                  <paragraph>To reduce the development of drug-resistant bacteria and maintain the effectiveness of AZACTAM<sup>®</sup> and other antibacterial drugs, AZACTAM should be used only to treat or prevent infections that are proven or strongly suspected to be caused by bacteria.</paragraph>
+               </text>
+               <effectiveTime value="20251215"/>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_f1acdfd5-ca22-4167-ad00-7e58fe834406">
+               <id root="f889c6ed-f4a1-4f63-a055-c85b5d9a442a"/>
+               <code code="34089-3" codeSystem="2.16.840.1.113883.6.1" displayName="DESCRIPTION SECTION"/>
+               <title>DESCRIPTION<content styleCode="italics"/>
+               </title>
+               <text>
+                  <paragraph>AZACTAM<sup>®</sup> (aztreonam for injection, USP) contains the active ingredient aztreonam, a monobactam. It was originally isolated from <content styleCode="italics">Chromobacterium violaceum</content>. It is a synthetic bactericidal antibiotic.</paragraph>
+                  <paragraph>The monobactams, having a unique monocyclic beta-lactam nucleus, are structurally different from other beta-lactam antibiotics (eg, penicillins, cephalosporins, cephamycins). The sulfonic acid substituent in the 1-position of the ring activates the beta-lactam moiety; an aminothiazolyl oxime side chain in the 3-position and a methyl group in the 4-position confer the specific antibacterial spectrum and beta-lactamase stability.</paragraph>
+                  <paragraph>Aztreonam is designated chemically as (Z)-2-[[[(2-amino-4-thiazolyl)[[(2S,3S)-2-methyl-4-oxo-1-sulfo-3-azetidinyl]carbamoyl]methylene]amino]oxy]-2-methylpropionic acid.</paragraph>
+                  <paragraph>Structural formula:</paragraph>
+                  <renderMultiMedia ID="id1221706165" referencedObject="C4918E78-E812-4DA9-A578-F0BD1D54CC95"/>
+                  <paragraph>C<sub>13</sub>H<sub>17</sub>N<sub>5</sub>O<sub>8</sub>S<sub>2</sub>     MW 435.44</paragraph>
+                  <paragraph>AZACTAM is a sterile, nonpyrogenic, sodium-free, white powder containing 0.78 grams arginine per 1 gram of aztreonam and 1.54 grams arginine per 2 grams of aztreonam. Following constitution, the product is for intramuscular or intravenous use. Aqueous solutions of the product have a pH in the range of 4.5 to 7.5.</paragraph>
+               </text>
+               <effectiveTime value="20251215"/>
+               <component>
+                  <observationMedia ID="C4918E78-E812-4DA9-A578-F0BD1D54CC95">
+                     <text>Sructural Formula Aztreonam.jpg</text>
+                     <value mediaType="image/jpeg" xsi:type="ED">
+                        <reference value="chem-structure.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_6b3822d1-4a01-4ca4-9d53-1ba38ebd0358">
+               <id root="ed2bfe9c-3ebe-4f93-999e-9dd3bbbe08ff"/>
+               <code code="34090-1" codeSystem="2.16.840.1.113883.6.1" displayName="CLINICAL PHARMACOLOGY SECTION"/>
+               <title>CLINICAL PHARMACOLOGY </title>
+               <text>
+                  <paragraph>Single 30-minute intravenous infusions of 500 mg, 1 g, and 2 g doses of AZACTAM in healthy subjects produced aztreonam peak serum levels of 54 mcg/mL, 90 mcg/mL, and 204 mcg/mL, respectively, immediately after administration; at 8 hours, serum levels were 1 mcg/mL, 3 mcg/mL, and 6 mcg/mL, respectively (Figure 1). Single 3-minute intravenous injections of the same doses resulted in serum levels of 58 mcg/mL, 125 mcg/mL, and 242 mcg/mL at 5 minutes following completion of injection.</paragraph>
+                  <paragraph>Serum concentrations of aztreonam in healthy subjects following completion of single intramuscular injections of 500 mg and 1 g doses are depicted in Figure 1; maximum serum concentrations occur at about 1 hour. After identical single intravenous or intramuscular doses of AZACTAM, the serum concentrations of aztreonam are comparable at 1 hour (1.5 hours from start of intravenous infusion) with similar slopes of serum concentrations thereafter.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">FIGURE 1</content>
+                  </paragraph>
+                  <renderMultiMedia ID="id-2122914095" referencedObject="E066150B-9D03-4A4A-9372-D56AADE6E825"/>
+                  <paragraph>The serum levels of aztreonam following single 500 mg or 1 g (intramuscular or intravenous) or 2 g (intravenous) doses of AZACTAM exceed the MIC<sub>90</sub> for <content styleCode="italics">Neisseria </content>sp., <content styleCode="italics">Haemophilus influenzae</content>, and most genera of the Enterobacteriaceae for 8 hours (for <content styleCode="italics">Enterobacter</content> sp., the 8-hour serum levels exceed the MIC for 80% of strains). For <content styleCode="italics">Pseudomonas aeruginosa</content>, a single 2 g intravenous dose produces serum levels that exceed the MIC<sub>90</sub> for approximately 4 to 6 hours. All of the above doses of AZACTAM result in average urine levels of aztreonam that exceed the MIC<sub>90</sub> for the same pathogens for up to 12 hours.</paragraph>
+                  <paragraph>When aztreonam pharmacokinetics were assessed for adult and pediatric patients, they were found to be comparable (down to 9 months old). The serum half-life of aztreonam averaged 1.7 hours (1.5-2.0) in subjects with normal renal function, independent of the dose and route of administration. In healthy subjects, based on a 70 kg person, the serum clearance was 91 mL/min and renal clearance was 56 mL/min; the apparent mean volume of distribution at steady-state averaged 12.6 liters, approximately equivalent to extracellular fluid volume.</paragraph>
+                  <paragraph>In elderly patients, the mean serum half-life of aztreonam increased and the renal clearance decreased, consistent with the age-related decrease in creatinine clearance. The dosage of AZACTAM should be adjusted accordingly (see <content styleCode="bold">
+                        <linkHtml href="#ID_e83d87c6-91a1-4a3c-b531-60213a33b983">DOSAGE AND ADMINISTRATION: Renal Impairment in Adult Patients</linkHtml>
+                     </content>).</paragraph>
+                  <paragraph>In patients with impaired renal function, the serum half-life of aztreonam is prolonged. (See <content styleCode="bold">
+                        <linkHtml href="#ID_e83d87c6-91a1-4a3c-b531-60213a33b983">DOSAGE AND ADMINISTRATION: Renal Impairment in Adult Patients</linkHtml>
+                     </content>.) The serum half-life of aztreonam is only slightly prolonged in patients with hepatic impairment since the liver is a minor pathway of excretion.</paragraph>
+                  <paragraph>Average urine concentrations of aztreonam were approximately 1100 mcg/mL, 3500 mcg/mL, and 6600 mcg/mL within the first 2 hours following single 500 mg, 1 g, and 2 g intravenous doses of AZACTAM (30-minute infusions), respectively. The range of average concentrations for aztreonam in the 8- to 12-hour urine specimens in these studies was 25 to 120 mcg/mL. After intramuscular injection of single 500 mg and 1 g doses of AZACTAM, urinary levels were approximately 500 mcg/mL and 1200 mcg/mL, respectively, within the first 2 hours, declining to 180 mcg/mL and 470 mcg/mL in the 6- to 8-hour specimens. In healthy subjects, aztreonam is excreted in the urine about equally by active tubular secretion and glomerular filtration. Approximately 60% to 70% of an intravenous or intramuscular dose was recovered in the urine by 8 hours. Urinary excretion of a single parenteral dose was essentially complete by 12 hours after injection. About 12% of a single intravenous radiolabeled dose was recovered in the feces. Unchanged aztreonam and the inactive beta-lactam ring hydrolysis product of aztreonam were present in feces and urine.</paragraph>
+                  <paragraph>Intravenous or intramuscular administration of a single 500 mg or 1 g dose of AZACTAM every 8 hours for 7 days to healthy subjects produced no apparent accumulation of aztreonam or modification of its disposition characteristics; serum protein binding averaged 56% and was independent of dose. An average of about 6% of a 1 g intramuscular dose was excreted as a microbiologically inactive open beta-lactam ring hydrolysis product (serum half-life approximately 26 hours) of aztreonam in the 0‑ to 8-hour urine collection on the last day of multiple dosing.</paragraph>
+                  <paragraph>Renal function was monitored in healthy subjects given aztreonam; standard tests (serum creatinine, creatinine clearance, BUN, urinalysis, and total urinary protein excretion) as well as special tests (excretion of N-acetyl-β-glucosaminidase, alanine aminopeptidase, and β<sub>2</sub>-microglobulin) were used. No abnormal results were obtained.</paragraph>
+                  <paragraph>Aztreonam achieves measurable concentrations in the following body fluids and tissues:</paragraph>
+                  <table width="100%">
+                     <caption>Table 1: Extravascular Concentrations of Aztreonam After a Single Parenteral Dose<sup>a</sup>
+                     </caption>
+                     <col width="27%"/>
+                     <col width="10%"/>
+                     <col width="10%"/>
+                     <col width="16%"/>
+                     <col width="13%"/>
+                     <col width="22%"/>
+                     <tfoot>
+                        <tr>
+                           <td align="left" colspan="6" valign="top">
+                              <sup>a   </sup>Tissue penetration is regarded as essential to therapeutic efficacy, but specific tissue levels have not been correlated with specific therapeutic effects.</td>
+                        </tr>
+                     </tfoot>
+                     <tbody>
+                        <tr>
+                           <td styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>
+                                 <content styleCode="bold">Fluid or Tissue</content>
+                              </paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>
+                                 <content styleCode="bold">Dose<br/>(g)</content>
+                              </paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>
+                                 <content styleCode="bold">Route</content>
+                              </paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>
+                                 <content styleCode="bold">Hours<br/>Post-injection</content>
+                              </paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>
+                                 <content styleCode="bold">Number <br/>of<br/>Patients</content>
+                              </paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>
+                                 <content styleCode="bold">Mean<br/>Concentration<br/>(mcg/mL or mcg/g)</content>
+                              </paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td colspan="6" styleCode="Rrule Lrule Botrule " valign="top">
+                              <paragraph>Fluids</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     bile</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>1</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>10</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>39</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     blister fluid</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>1</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>1</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>6</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>20</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     bronchial secretion</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>4</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>7</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>5</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     cerebrospinal fluid<br/>      (inflamed meninges)</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.9-4.3</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>16</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>3</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     pericardial fluid</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>1</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>6</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>33</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     pleural fluid</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>1.1-3.0</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>3</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>51</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     synovial fluid</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.8-1.9</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>11</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>83</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td colspan="6" styleCode="Rrule Lrule Botrule " valign="top">
+                              <paragraph>Tissues</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     atrial appendage</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.9-1.6</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>12</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>22</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     endometrium</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.7-1.9</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>4</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>9</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     fallopian tube</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.7-1.9</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>8</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>12</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     fat</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>1.3-2.0</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>10</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>5</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     femur</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>1.0-2.1</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>15</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>16</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     gallbladder</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.8-1.3</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>4</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>23</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     kidney</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2.4-5.6</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>5</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>67</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     large intestine</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.8-1.9</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>9</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>12</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     liver</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.9-2.0</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>6</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>47</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     lung</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>1.2-2.1</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>6</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>22</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     myometrium</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.7-1.9</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>9</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>11</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     ovary</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.7-1.9</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>7</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>13</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     prostate</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>1</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IM</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.8-3.0</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>8</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>8</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     skeletal muscle</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.3-0.7</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>6</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>16</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Lrule Botrule " valign="middle">
+                              <paragraph>     skin</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>0.0-1.0</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>8</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                              <paragraph>25</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Botrule Lrule Toprule " valign="middle">
+                              <paragraph>     sternum</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>2</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>IV</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>1</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>6</paragraph>
+                           </td>
+                           <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>6</paragraph>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>The concentration of aztreonam in saliva at 30 minutes after a single 1 g intravenous dose (9 patients) was 0.2 mcg/mL; in human milk at 2 hours after a single 1 g intravenous dose (6 patients), 0.2 mcg/mL, and at 6 hours after a single 1 g intramuscular dose (6 patients), 0.3 mcg/mL; in amniotic fluid at 6 to 8 hours after a single 1 g intravenous dose (5 patients), 2 mcg/mL. The concentration of aztreonam in peritoneal fluid obtained 1 to 6 hours after multiple 2 g intravenous doses ranged between 12 mcg/mL and 90 mcg/mL in 7 of 8 patients studied.</paragraph>
+                  <paragraph>Aztreonam given intravenously rapidly reaches therapeutic concentrations in peritoneal dialysis fluid; conversely, aztreonam given intraperitoneally in dialysis fluid rapidly produces therapeutic serum levels.</paragraph>
+                  <paragraph>Concomitant administration of probenecid or furosemide and aztreonam causes clinically insignificant increases in the serum levels of aztreonam. Single-dose intravenous pharmacokinetic studies have not shown any significant interaction between aztreonam and concomitantly administered gentamicin, nafcillin sodium, cephradine, clindamycin, or metronidazole. No reports of disulfiram-like reactions with alcohol ingestion have been noted; this is not unexpected since aztreonam does not contain a methyl-tetrazole side chain.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Microbiology</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Mechanism of Action</content>
+                  </paragraph>
+                  <paragraph>Aztreonam is a bactericidal agent that acts by inhibition of bacterial cell wall synthesis. Aztreonam has activity in the presence of some beta-lactamases, both penicillinases and cephalosporinases, of Gram-negative and Gram-positive bacteria.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Mechanism of Resistance</content>
+                  </paragraph>
+                  <paragraph>Resistance to aztreonam is primarily through hydrolysis by beta-lactamase, alteration of penicillin-binding proteins (PBPs), and decreased permeability.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Interaction with Other Antimicrobials</content>
+                  </paragraph>
+                  <paragraph>Aztreonam and aminoglycosides have been shown to be synergistic <content styleCode="italics">in vitro </content>against most strains of <content styleCode="italics">P. aeruginosa</content>, many strains of Enterobacteriaceae, and other Gram-negative aerobic bacilli.</paragraph>
+                  <paragraph>Aztreonam has been shown to be active against most strains of the following microorganisms, both <content styleCode="italics">in vitro</content> and in clinical infections as described in the <content styleCode="bold">
+                        <linkHtml href="#ID_79f8be6e-f0ed-43fc-98d2-8894a08dd901">INDICATIONS AND USAGE</linkHtml>
+                     </content> section.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Aerobic Gram-negative microorganisms:</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Citrobacter </content>species</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Enterobacter </content>species</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Escherichia coli</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Haemophilus influenzae </content>(including ampicillin-resistant and other penicillinase-producing strains)</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Klebsiella oxytoca</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Klebsiella pneumoniae</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Proteus mirabilis</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Pseudomonas aeruginosa</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Serratia </content>species</paragraph>
+                  <paragraph>The following <content styleCode="italics">in vitro</content> data are available, but their clinical significance is unknown. At least 90% of the following microorganisms exhibit an <content styleCode="italics">in vitro</content> minimum inhibitory concentration (MIC) less than or equal to the susceptible breakpoint for aztreonam. However, the efficacy of aztreonam in treating clinical infections due to these microorganisms has not been established in adequate and well-controlled clinical trials.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Aerobic Gram-negative microorganisms:</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Aeromonas hydrophila</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Morganella morganii</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Neisseria gonorrhoeae</content> (including penicillinase-producing strains)</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Pasteurella multocida 	Proteus vulgaris</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Providencia stuartii</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Providencia rettgeri</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Yersinia enterocolitica</content>
+                  </paragraph>
+                  <paragraph>Aztreonam and aminoglycosides have been shown to be synergistic <content styleCode="italics">in vitro</content> against most strains of <content styleCode="italics">P. aeruginosa</content>, many strains of Enterobacteriaceae, and other Gram-negative aerobic bacilli.</paragraph>
+                  <paragraph>Alterations of the anaerobic intestinal flora by broad-spectrum antibiotics may decrease colonization resistance, thus permitting overgrowth of potential pathogens, eg, <content styleCode="italics">Candida</content> and <content styleCode="italics">Clostridium</content> species. Aztreonam has little effect on the anaerobic intestinal microflora in <content styleCode="italics">in vitro</content> studies. <content styleCode="italics">Clostridium difficile</content> and its cytotoxin were not found in animal models following administration of aztreonam. (See <content styleCode="bold">
+                        <linkHtml href="#ID_27823345-b69f-48ca-91cf-66dced65d28e">ADVERSE REACTIONS:</linkHtml>
+                     </content>
+                     <content styleCode="italics">
+                        <linkHtml href="#ID_27823345-b69f-48ca-91cf-66dced65d28e">Gastrointestinal</linkHtml>
+                     </content>.)</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Susceptibility Testing</content>
+                  </paragraph>
+                  <paragraph>For specific information regarding susceptibility test interpretive criteria and associated test methods and quality control standards recognized by FDA for this drug, please see: https://www.fda.gov/STIC.</paragraph>
+               </text>
+               <effectiveTime value="20251215"/>
+               <component>
+                  <observationMedia ID="E066150B-9D03-4A4A-9372-D56AADE6E825">
+                     <text>Serum concentrations of aztreonam in healthy subjects following completion of single intramuscular injections of 500 mg and 1 g doses</text>
+                     <value mediaType="image/jpeg" xsi:type="ED">
+                        <reference value="serum-concentration.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_79f8be6e-f0ed-43fc-98d2-8894a08dd901">
+               <id root="58fbd17f-5e02-4c30-aaf2-99f6cb39d3ef"/>
+               <code code="34067-9" codeSystem="2.16.840.1.113883.6.1" displayName="INDICATIONS &amp; USAGE SECTION"/>
+               <title>INDICATIONS AND USAGE </title>
+               <text>
+                  <paragraph>To reduce the development of drug-resistant bacteria and maintain the effectiveness of AZACTAM (aztreonam for injection, USP) and other antibacterial drugs, AZACTAM should be used only to treat or prevent infections that are proven or strongly suspected to be caused by susceptible bacteria. When culture and susceptibility information are available, they should be considered in selecting or modifying antibacterial therapy. In the absence of such data, local epidemiology and susceptibility patterns may contribute to the empiric selection of therapy.</paragraph>
+                  <paragraph>AZACTAM is indicated for the treatment of the following infections caused by susceptible Gram-negative microorganisms:</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Urinary Tract Infections</content> (complicated and uncomplicated), including pyelonephritis and cystitis (initial and recurrent) caused by <content styleCode="italics">Escherichia coli</content>, <content styleCode="italics">Klebsiella pneumoniae</content>, <content styleCode="italics">Proteus mirabilis</content>, <content styleCode="italics">Pseudomonas aeruginosa</content>, <content styleCode="italics">Enterobacter cloacae</content>, <content styleCode="italics">Klebsiella oxytoca</content>*, <content styleCode="italics">Citrobacter</content> species*, and <content styleCode="italics">Serratia marcescens</content>*.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Lower Respiratory Tract Infections</content>, including pneumonia and bronchitis caused by <content styleCode="italics">Escherichia coli</content>, <content styleCode="italics">Klebsiella pneumoniae</content>, <content styleCode="italics">Pseudomonas aeruginosa</content>, <content styleCode="italics">Haemophilus influenzae</content>, <content styleCode="italics">Proteus mirabilis</content>, <content styleCode="italics">Enterobacter</content> species, and <content styleCode="italics">Serratia marcescens</content>*.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Septicemia</content> caused by <content styleCode="italics">Escherichia coli</content>, <content styleCode="italics">Klebsiella pneumoniae</content>, <content styleCode="italics">Pseudomonas aeruginosa</content>, <content styleCode="italics">Proteus mirabilis</content>*, <content styleCode="italics">Serratia marcescens</content>*, and <content styleCode="italics">Enterobacter</content> species.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Skin and Skin-Structure Infections</content>, including those associated with postoperative wounds, ulcers, and burns, caused by <content styleCode="italics">Escherichia coli</content>, <content styleCode="italics">Proteus mirabilis</content>, <content styleCode="italics">Serratia marcescens</content>, <content styleCode="italics">Enterobacter</content> species, <content styleCode="italics">Pseudomonas aeruginosa</content>, <content styleCode="italics">Klebsiella pneumoniae</content>, and <content styleCode="italics">Citrobacter</content> species*.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Intra-abdominal Infections</content>, including peritonitis caused by <content styleCode="italics">Escherichia coli</content>, <content styleCode="italics">Klebsiella</content> species including <content styleCode="italics">K. pneumoniae</content>, <content styleCode="italics">Enterobacter</content> species including <content styleCode="italics">E. cloacae</content>*, <content styleCode="italics">Pseudomonas aeruginosa</content>, <content styleCode="italics">Citrobacter</content> species* including <content styleCode="italics">C. freundii</content>*, and <content styleCode="italics">Serratia</content> species* including <content styleCode="italics">S. marcescens</content>*.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Gynecologic Infections</content>, including endometritis and pelvic cellulitis caused by <content styleCode="italics">Escherichia coli</content>, <content styleCode="italics">Klebsiella pneumoniae</content>*, <content styleCode="italics">Enterobacter</content> species* including <content styleCode="italics">E. cloacae</content>*, and <content styleCode="italics">Proteus mirabilis</content>*.</paragraph>
+                  <paragraph>AZACTAM is indicated for adjunctive therapy to surgery in the management of infections caused by susceptible organisms, including abscesses, infections complicating hollow viscus perforations, cutaneous infections, and infections of serous surfaces. AZACTAM is effective against most of the commonly encountered Gram-negative aerobic pathogens seen in general surgery.</paragraph>
+                  <paragraph>-------------------------------</paragraph>
+                  <paragraph>* Efficacy for this organism in this organ system was studied in fewer than 10 infections.</paragraph>
+               </text>
+               <effectiveTime value="20251215"/>
+               <component>
+                  <section ID="ID_01a4694b-ee67-41ac-8c54-3c93eda2a889">
+                     <id root="58bbede6-c8f2-4234-bf4c-a83c810283cd"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Concurrent Therapy</content>
+                     </title>
+                     <text>
+                        <paragraph>Concurrent initial therapy with other antimicrobial agents and AZACTAM is recommended before the causative organism(s) is known in seriously ill patients who are also at risk of having an infection due to Gram-positive aerobic pathogens. If anaerobic organisms are also suspected as etiologic agents, therapy should be initiated using an anti-anaerobic agent concurrently with AZACTAM (see <content styleCode="bold">
+                              <linkHtml href="#ID_3a514f40-6a4a-4f81-bc99-65fdec38186a">DOSAGE AND ADMINISTRATION</linkHtml>
+                           </content>). Certain antibiotics (eg, cefoxitin, imipenem) may induce high levels of beta-lactamase <content styleCode="italics">in vitro</content> in some Gram-negative aerobes such as <content styleCode="italics">Enterobacter</content> and <content styleCode="italics">Pseudomonas</content> species, resulting in antagonism to many beta-lactam antibiotics including aztreonam. These <content styleCode="italics">in vitro</content> findings suggest that such beta-lactamase-inducing antibiotics not be used concurrently with aztreonam. Following identification and susceptibility testing of the causative organism(s), appropriate antibiotic therapy should be continued.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_cfcabea7-8f2e-4b02-b961-7f36cf2ce36f">
+               <id root="6826fa99-d605-44be-8662-88f129f0b541"/>
+               <code code="34070-3" codeSystem="2.16.840.1.113883.6.1" displayName="CONTRAINDICATIONS SECTION"/>
+               <title>CONTRAINDICATIONS </title>
+               <text>
+                  <paragraph>This preparation is contraindicated in patients with known hypersensitivity to aztreonam or any other component in the formulation.</paragraph>
+               </text>
+               <effectiveTime value="20251215"/>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_67a5e680-a932-4ca5-87cf-14118fa19c09">
+               <id root="e3d6491e-2c1e-4c75-8074-0708b2109859"/>
+               <code code="34071-1" codeSystem="2.16.840.1.113883.6.1" displayName="WARNINGS SECTION"/>
+               <title>WARNINGS </title>
+               <text>
+                  <paragraph>Both animal and human data suggest that AZACTAM (aztreonam for injection, USP) is rarely cross-reactive with other beta-lactam antibiotics and weakly immunogenic. Treatment with aztreonam can result in hypersensitivity reactions in patients with or without prior exposure. (See <content styleCode="bold">
+                        <linkHtml href="#ID_cfcabea7-8f2e-4b02-b961-7f36cf2ce36f">CONTRAINDICATIONS</linkHtml>
+                     </content>.)</paragraph>
+                  <paragraph>Careful inquiry should be made to determine whether the patient has any history of hypersensitivity reactions to any allergens.</paragraph>
+                  <paragraph>While cross-reactivity of aztreonam with other beta-lactam antibiotics is rare, this drug should be administered with caution to any patient with a history of hypersensitivity to beta-lactams (eg, penicillins, cephalosporins, and/or carbapenems). Treatment with aztreonam can result in hypersensitivity reactions in patients with or without prior exposure to aztreonam. If an allergic reaction to aztreonam occurs, discontinue the drug and institute supportive treatment as appropriate (eg, maintenance of ventilation, pressor amines, antihistamines, corticosteroids). Serious hypersensitivity reactions may require epinephrine and other emergency measures. (See <content styleCode="bold">
+                        <linkHtml href="#ID_27823345-b69f-48ca-91cf-66dced65d28e">ADVERSE REACTIONS</linkHtml>
+                     </content>.)</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Clostridium difficile</content>–associated diarrhea (CDAD) has been reported with use of nearly all antibacterial agents, including AZACTAM, and may range in severity from mild diarrhea to fatal colitis. Treatment with antibacterial agents alters the normal flora of the colon leading to overgrowth of <content styleCode="italics">C. difficile</content>.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">C. difficile</content> produces toxins A and B which contribute to the development of CDAD. Hypertoxin-producing strains of <content styleCode="italics">C. difficile</content> cause increased morbidity and mortality, as these infections can be refractory to antimicrobial therapy and may require colectomy. CDAD must be considered in all patients who present with diarrhea following antibiotic use. Careful medical history is necessary since CDAD has been reported to occur over 2 months after the administration of antibacterial agents.</paragraph>
+                  <paragraph>If CDAD is suspected or confirmed, ongoing antibiotic use not directed against <content styleCode="italics">C. difficile</content> may need to be discontinued. Appropriate fluid and electrolyte management, protein supplementation, antibiotic treatment of <content styleCode="italics">C. difficile</content>, and surgical evaluation should be instituted as clinically indicated.</paragraph>
+                  <paragraph>Rare cases of toxic epidermal necrolysis have been reported in association with aztreonam in patients undergoing bone marrow transplant with multiple risk factors including sepsis, radiation therapy, and other concomitantly administered drugs associated with toxic epidermal necrolysis.</paragraph>
+               </text>
+               <effectiveTime value="20251215"/>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_9c633c50-7255-4be9-aec8-07de46b56023">
+               <id root="29ff8742-4039-45ae-93ed-f1fbf18f4b1f"/>
+               <code code="42232-9" codeSystem="2.16.840.1.113883.6.1" displayName="PRECAUTIONS SECTION"/>
+               <title>PRECAUTIONS </title>
+               <effectiveTime value="20251215"/>
+               <component>
+                  <section ID="ID_88df04aa-68ad-49a1-a31d-6c55e0460da2">
+                     <id root="ac401654-00e6-4419-92c8-f1c4183c100e"/>
+                     <code code="34072-9" codeSystem="2.16.840.1.113883.6.1" displayName="GENERAL PRECAUTIONS SECTION"/>
+                     <title>General </title>
+                     <text>
+                        <paragraph>Prescribing AZACTAM in the absence of a proven or strongly suspected bacterial infection or a prophylactic indication is unlikely to provide benefit to the patient and increases the risk of the development of drug-resistant bacteria.</paragraph>
+                        <paragraph>In patients with impaired hepatic or renal function, appropriate monitoring is recommended during therapy.</paragraph>
+                        <paragraph>If an aminoglycoside is used concurrently with aztreonam, especially if high dosages of the former are used or if therapy is prolonged, renal function should be monitored because of the potential nephrotoxicity and ototoxicity of aminoglycoside antibiotics.</paragraph>
+                        <paragraph>The use of antibiotics may promote the overgrowth of nonsusceptible organisms, including Gram-positive organisms (<content styleCode="italics">Staphylococcus aureus</content> and <content styleCode="italics">Streptococcus faecalis</content>) and fungi. Should superinfection occur during therapy, appropriate measures should be taken.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ID_cafad730-847b-4c18-90ab-36cc6b79cd03">
+                     <id root="7c61a53d-e8ba-403f-aa09-650c54edb06c"/>
+                     <code code="34076-0" codeSystem="2.16.840.1.113883.6.1" displayName="INFORMATION FOR PATIENTS SECTION"/>
+                     <title>Information for Patients </title>
+                     <text>
+                        <paragraph>Patients should be counseled that antibacterial drugs including AZACTAM should only be used to treat bacterial infections. They do not treat viral infections (eg, the common cold). When AZACTAM is prescribed to treat a bacterial infection, patients should be told that although it is common to feel better early in the course of therapy, the medication should be taken exactly as directed. Skipping doses or not completing the full course of therapy may (1) decrease the effectiveness of the immediate treatment and (2) increase the likelihood that bacteria will develop resistance and will not be treatable by AZACTAM or other antibacterial drugs in the future.</paragraph>
+                        <paragraph>Diarrhea is a common problem caused by antibiotics which usually ends when the antibiotic is discontinued. Sometimes after starting treatment with antibiotics, patients can develop watery and bloody stools (with or without stomach cramps and fever) even as late as 2 or more months after having taken the last dose of the antibiotic. If this occurs, patients should contact their physician as soon as possible.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ID_697f5c66-789e-4916-a893-ec60b26436df">
+                     <id root="88000fec-3d19-453f-b732-b2332ceec9dd"/>
+                     <code code="34083-6" codeSystem="2.16.840.1.113883.6.1" displayName="CARCINOGENESIS &amp; MUTAGENESIS &amp; IMPAIRMENT OF FERTILITY SECTION"/>
+                     <title>Carcinogenesis, Mutagenesis, Impairment of Fertility </title>
+                     <text>
+                        <paragraph>Carcinogenicity studies with aztreonam have not been conducted using an intravenous route of administration. A 104-week rat inhalation toxicology study to assess the carcinogenic potential of aztreonam demonstrated no drug-related increase in the incidence of tumors. Rats were exposed to aerosolized aztreonam for up to 4 hours per day. Peak plasma levels of aztreonam averaging approximately 6.8 mcg/mL were measured in rats at the highest dose level.</paragraph>
+                        <paragraph>Genetic toxicology studies performed with aztreonam <content styleCode="italics">in vitro</content> (Ames test, mouse lymphoma forward mutation assay, gene conversion assay, chromosome aberration assay in human lymphocytes) and <content styleCode="italics">in vivo</content> (mouse bone marrow cytogenetic assay) did not reveal evidence of mutagenic or clastogenic potential.</paragraph>
+                        <paragraph>A two-generation reproduction study in rats at daily doses of 150, 600, or 2400 mg/kg given prior to and during gestation and lactation, revealed no evidence of impaired fertility. Based on body surface area, the high dose is 2.9-fold greater than the maximum recommended human dose (MRHD) for adults of 8 g per day. There was a slightly reduced survival rate during the lactation period in the offspring of rats that received the highest dose, but not in offspring of rats that received lower doses of aztreonam.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ID_7be80c63-23d6-4438-9a65-5d7df7106750">
+                     <id root="1e12a641-e316-451d-b9c8-eb923265b55a"/>
+                     <code code="42228-7" codeSystem="2.16.840.1.113883.6.1" displayName="PREGNANCY SECTION"/>
+                     <title>Pregnancy</title>
+                     <text>
+                        <paragraph>In pregnant women, aztreonam crosses the placenta and enters the fetal circulation.</paragraph>
+                        <paragraph>Developmental toxicity studies in pregnant rats and rabbits with daily doses of aztreonam up to 1800 and 1200 mg/kg, respectively, revealed no evidence of embryotoxicity or fetotoxicity or teratogenicity. These doses, based on body surface area, are 2.2- and 2.9-fold greater than the MRHD for adults of 8 g per day. A peri/postnatal study in rats revealed no drug-induced changes in any maternal, fetal, or neonatal parameters. The highest dose used in this study, 1800 mg/kg/day, is 2.2 times the MRHD based on body surface area.</paragraph>
+                        <paragraph>There are no adequate and well-controlled studies of aztreonam on human pregnancy outcomes. Because animal reproduction studies are not always predictive of human response, aztreonam should be used during pregnancy only if clearly needed.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ID_e0a981f9-6609-4db9-8863-9c1427790a74">
+                     <id root="2ea184ba-faa3-41a2-9e35-b39c7431c446"/>
+                     <code code="34080-2" codeSystem="2.16.840.1.113883.6.1" displayName="NURSING MOTHERS SECTION"/>
+                     <title>Nursing Mothers</title>
+                     <text>
+                        <paragraph>Aztreonam is excreted in human milk in concentrations that are less than 1% of concentrations determined in simultaneously obtained maternal serum; consideration should be given to temporary discontinuation of nursing and use of formula feedings.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ID_30436dcc-c080-4794-98ab-fda32ad1a565">
+                     <id root="8e90260c-e65a-4214-8a5e-0841a5a2e677"/>
+                     <code code="34081-0" codeSystem="2.16.840.1.113883.6.1" displayName="PEDIATRIC USE SECTION"/>
+                     <title>Pediatric Use </title>
+                     <text>
+                        <paragraph>The safety and effectiveness of intravenous AZACTAM have been established in the age groups 9 months to 16 years. Use of AZACTAM in these age groups is supported by evidence from adequate and well-controlled studies of AZACTAM in adults with additional efficacy, safety, and pharmacokinetic data from noncomparative clinical studies in pediatric patients. Sufficient data are not available for pediatric patients under 9 months of age or for the following treatment indications/pathogens: septicemia and skin and skin-structure infections (where the skin infection is believed or known to be due to <content styleCode="italics">H. influenzae</content> type b). In pediatric patients with cystic fibrosis, higher doses of AZACTAM may be warranted. (See <content styleCode="bold">
+                              <linkHtml href="#ID_6b3822d1-4a01-4ca4-9d53-1ba38ebd0358">CLINICAL PHARMACOLOGY</linkHtml>
+                           </content>, <content styleCode="bold">
+                              <linkHtml href="#ID_3a514f40-6a4a-4f81-bc99-65fdec38186a">DOSAGE AND ADMINISTRATION</linkHtml>
+                           </content>, and <content styleCode="bold">
+                              <linkHtml href="#ID_c59ddc0d-62de-4217-9fc5-bf78045e85be">CLINICAL STUDIES</linkHtml>
+                           </content>.)</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ID_022fa569-9d57-4faa-bc41-eebb537928b7">
+                     <id root="b8c51ac5-5927-4ca4-99d3-2fec8c2194f4"/>
+                     <code code="34082-8" codeSystem="2.16.840.1.113883.6.1" displayName="GERIATRIC USE SECTION"/>
+                     <title>Geriatric Use </title>
+                     <text>
+                        <paragraph>Clinical studies of AZACTAM did not include sufficient numbers of subjects aged 65 years and over to determine whether they respond differently from younger subjects. Other reported clinical experience has not identified differences in responses between the elderly and younger patients. In general, dose selection for an elderly patient should be cautious, reflecting the greater frequency of decreased hepatic, renal, or cardiac function, and of concomitant disease or other drug therapy.</paragraph>
+                        <paragraph>In elderly patients, the mean serum half-life of aztreonam increased and the renal clearance decreased, consistent with the age-related decrease in creatinine clearance. Since aztreonam is known to be substantially excreted by the kidney, the risk of toxic reactions to this drug may be greater in patients with impaired renal function. Because elderly patients are more likely to have decreased renal function, renal function should be monitored and dosage adjustments made accordingly (see <content styleCode="bold">
+                              <linkHtml href="#ID_3a514f40-6a4a-4f81-bc99-65fdec38186a">DOSAGE AND ADMINISTRATION: Renal Impairment in Adult Patients</linkHtml>
+                           </content> and <content styleCode="bold">
+                              <linkHtml href="#ID_4fbba41d-a2b7-4bfa-802e-6d38897b4e41">Dosage in the Elderly</linkHtml>
+                           </content>).</paragraph>
+                        <paragraph>AZACTAM contains no sodium.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_27823345-b69f-48ca-91cf-66dced65d28e">
+               <id root="90a9bc10-7c97-4fe1-b245-9e13f9427837"/>
+               <code code="34084-4" codeSystem="2.16.840.1.113883.6.1" displayName="ADVERSE REACTIONS SECTION"/>
+               <title>ADVERSE REACTIONS </title>
+               <text>
+                  <paragraph>Local reactions such as phlebitis/thrombophlebitis following intravenous administration, and discomfort/swelling at the injection site following intramuscular administration occurred at rates of approximately 1.9% and 2.4%, respectively.</paragraph>
+                  <paragraph>Systemic reactions (considered to be related to therapy or of uncertain etiology) occurring at an incidence of 1% to 1.3% include diarrhea, nausea and/or vomiting, and rash. Reactions occurring at an incidence of less than 1% are listed within each body system in order of decreasing severity:</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Hypersensitivity</content>—anaphylaxis, angioedema, bronchospasm</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Hematologic</content>—pancytopenia, neutropenia, thrombocytopenia, anemia, eosinophilia, leukocytosis, thrombocytosis</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Gastrointestinal</content>—abdominal cramps; rare cases of <content styleCode="italics">C. difficile</content>–associated diarrhea, including pseudomembranous colitis, or gastrointestinal bleeding have been reported. Onset of pseudomembranous colitis symptoms may occur during or after antibiotic treatment. (See <content styleCode="bold">
+                        <linkHtml href="#ID_67a5e680-a932-4ca5-87cf-14118fa19c09">WARNINGS</linkHtml>
+                     </content>.)</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Dermatologic</content>—toxic epidermal necrolysis (see <content styleCode="bold">
+                        <linkHtml href="#ID_67a5e680-a932-4ca5-87cf-14118fa19c09">WARNINGS</linkHtml>
+                     </content>), purpura, erythema multiforme, exfoliative dermatitis, urticaria, petechiae, pruritus, diaphoresis</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Cardiovascular</content>—hypotension, transient ECG changes (ventricular bigeminy and PVC), flushing </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Respiratory</content>—wheezing, dyspnea, chest pain</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Hepatobiliary</content>—hepatitis, jaundice</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Nervous System</content>—seizure, confusion, encephalopathy, vertigo, paresthesia, insomnia, dizziness </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Musculoskeletal</content>—muscular aches</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Special Senses</content>—tinnitus, diplopia, mouth ulcer, altered taste, numb tongue, sneezing, nasal congestion, halitosis</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Other</content>—vaginal candidiasis, vaginitis, breast tenderness</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Body as a Whole</content>—weakness, headache, fever, malaise</paragraph>
+               </text>
+               <effectiveTime value="20251215"/>
+               <component>
+                  <section ID="ID_cff94480-2b99-43ec-bfaf-1a81b0e37216">
+                     <id root="89a21db4-f64e-4892-ae3d-9544a2cb1670"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Pediatric Adverse Reactions </title>
+                     <text>
+                        <paragraph>Of the 612 pediatric patients who were treated with AZACTAM in clinical trials, less than 1% required discontinuation of therapy due to adverse events. The following systemic adverse events, regardless of drug relationship, occurred in at least 1% of treated patients in domestic clinical trials: rash (4.3%), diarrhea (1.4%), and fever (1.0%). These adverse events were comparable to those observed in adult clinical trials.</paragraph>
+                        <paragraph>In 343 pediatric patients receiving intravenous therapy, the following local reactions were noted: pain (12%), erythema (2.9%), induration (0.9%), and phlebitis (2.1%). In the US patient population, pain occurred in 1.5% of patients, while each of the remaining 3 local reactions had an incidence of 0.5%.</paragraph>
+                        <paragraph>The following laboratory adverse events, regardless of drug relationship, occurred in at least 1% of treated patients: increased eosinophils (6.3%), increased platelets (3.6%), neutropenia (3.2%), increased AST (3.8%), increased ALT (6.5%), and increased serum creatinine (5.8%).</paragraph>
+                        <paragraph>In US pediatric clinical trials, neutropenia (absolute neutrophil count less than 1000/mm<sup>3</sup>) occurred in 11.3% of patients (8/71) younger than 2 years receiving 30 mg/kg every 6 hours. AST and ALT elevations to greater than 3 times the upper limit of normal were noted in 15% to 20% of patients aged 2 years or above receiving 50 mg/kg every 6 hours. The increased frequency of these reported laboratory adverse events may be due to either increased severity of illness treated or higher doses of AZACTAM administered.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ID_59b6b567-1548-46e5-80e0-e3380b932112">
+                     <id root="181a3a79-b7b6-4d6d-95c7-fd653f6484e2"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Adverse Laboratory Changes </title>
+                     <text>
+                        <paragraph>Adverse laboratory changes without regard to drug relationship that were reported during clinical trials were:</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Hepatic</content>—elevations of AST (SGOT), ALT (SGPT), and alkaline phosphatase; signs or symptoms of hepatobiliary dysfunction occurred in less than 1% of recipients (see above).</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Hematologic</content>—increases in prothrombin and partial thromboplastin times, positive Coombs’ test.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Renal</content>—increases in serum creatinine.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_1f2c6c20-c2b3-4757-9272-13e06f5cf8c7">
+               <id root="0964513f-a268-48f6-aa57-a9b2c687429f"/>
+               <code code="34088-5" codeSystem="2.16.840.1.113883.6.1" displayName="OVERDOSAGE SECTION"/>
+               <title>OVERDOSAGE </title>
+               <text>
+                  <paragraph>If necessary, aztreonam may be cleared from the serum by hemodialysis and/or peritoneal dialysis.</paragraph>
+               </text>
+               <effectiveTime value="20251215"/>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_3a514f40-6a4a-4f81-bc99-65fdec38186a">
+               <id root="e23bcf5c-fde8-4910-ad3e-7e6514df65bf"/>
+               <code code="34068-7" codeSystem="2.16.840.1.113883.6.1" displayName="DOSAGE &amp; ADMINISTRATION SECTION"/>
+               <title>DOSAGE AND ADMINISTRATION </title>
+               <effectiveTime value="20251215"/>
+               <component>
+                  <section ID="ID_e83d87c6-91a1-4a3c-b531-60213a33b983">
+                     <id root="240c78a0-2fc0-4176-90fa-fce10dd2171b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Dosage in Adult Patients </title>
+                     <text>
+                        <paragraph>AZACTAM may be administered intravenously or by intramuscular injection. Dosage and route of administration should be determined by susceptibility of the causative organisms, severity and site of infection, and the condition of the patient.</paragraph>
+                        <table width="100%">
+                           <caption>Table 2: AZACTAM Dosage Guidelines for Adults*</caption>
+                           <col width="39%"/>
+                           <col width="26%"/>
+                           <col width="33%"/>
+                           <tfoot>
+                              <tr>
+                                 <td align="left" colspan="3" valign="top">*<sup>   </sup>Maximum recommended dose is 8 g per day.</td>
+                              </tr>
+                           </tfoot>
+                           <tbody>
+                              <tr>
+                                 <td styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Type of Infection</content>
+                                    </paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Dose</content>
+                                    </paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Frequency</content>
+                                    </paragraph>
+                                    <paragraph>
+                                       <content styleCode="bold">(hours)</content>
+                                    </paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Rrule Lrule Botrule " valign="top">
+                                    <paragraph>Urinary tract infections</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                                    <paragraph>500 mg or 1 g</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                                    <paragraph>8 or 12</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Rrule Lrule Botrule " valign="top">
+                                    <paragraph>Moderately severe systemic infections</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                                    <paragraph>1 g or 2 g</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                                    <paragraph>8 or 12</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>Severe systemic or life-threatening infections </paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>2 g</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>6 or 8</paragraph>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>Because of the serious nature of infections due to <content styleCode="italics">Pseudomonas aeruginosa</content>, dosage of 2 g every six or eight hours is recommended, at least upon initiation of therapy, in systemic infections caused by this organism.</paragraph>
+                        <paragraph>The intravenous route is recommended for patients requiring single doses greater than 1 g or those with bacterial septicemia, localized parenchymal abscess (eg, intra-abdominal abscess), peritonitis, or other severe systemic or life-threatening infections.</paragraph>
+                        <paragraph>The duration of therapy depends on the severity of infection. Generally, AZACTAM should be continued for at least 48 hours after the patient becomes asymptomatic or evidence of bacterial eradication has been obtained. Persistent infections may require treatment for several weeks. Doses smaller than those indicated should not be used.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ID_01e12088-e011-4b89-8b57-cb8dfd71a9c2">
+                     <id root="215067b8-a59d-46d6-8aa3-ec5f9b347887"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Renal Impairment in Adult Patients </title>
+                     <text>
+                        <paragraph>Prolonged serum levels of aztreonam may occur in patients with transient or persistent renal insufficiency. Therefore, the dosage of AZACTAM should be halved in patients with estimated creatinine clearances between 10 and 30 mL/min/1.73 m<sup>2 </sup>after an initial loading dose of 1g or 2 g.</paragraph>
+                        <paragraph>When only the serum creatinine concentration is available, the following formula (based on sex, weight, and age of the patient) may be used to approximate the creatinine clearance (ClCr). The serum creatinine should represent a steady state of renal function.</paragraph>
+                        <renderMultiMedia ID="id-1837452142" referencedObject="C89AF15D-733A-43BD-BCDE-FA8A12180385"/>
+                        <paragraph>In patients with severe renal failure (creatinine clearance less than 10 mL/min/1.73 m<sup>2</sup>), such as those supported by hemodialysis, the usual dose of 500 mg, 1 g, or 2 g should be given initially. The maintenance dose should be one-fourth of the usual initial dose given at the usual fixed interval of 6, 8, or 12 hours. For serious or life-threatening infections, in addition to the maintenance doses, one-eighth of the initial dose should be given after each hemodialysis session.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                     <component>
+                        <observationMedia ID="C89AF15D-733A-43BD-BCDE-FA8A12180385">
+                           <text>clcr-equation</text>
+                           <value mediaType="image/jpeg" xsi:type="ED">
+                              <reference value="clcr-equation.jpg"/>
+                           </value>
+                        </observationMedia>
+                     </component>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ID_4fbba41d-a2b7-4bfa-802e-6d38897b4e41">
+                     <id root="b4cd2fe1-a441-4af4-955a-d26157fab964"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Dosage in the Elderly </title>
+                     <text>
+                        <paragraph>Renal status is a major determinant of dosage in the elderly; these patients in particular may have diminished renal function. Serum creatinine may not be an accurate determinant of renal status. Therefore, as with all antibiotics eliminated by the kidneys, estimates of creatinine clearance should be obtained and appropriate dosage modifications made if necessary.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ID_d1f3e031-ea0f-4908-bc4e-c2be3c599d00">
+                     <id root="b224a75d-dc12-4676-8309-9572190e33a2"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Dosage in Pediatric Patients </title>
+                     <text>
+                        <paragraph>AZACTAM should be administered intravenously to pediatric patients with normal renal function. There are insufficient data regarding intramuscular administration to pediatric patients or dosing in pediatric patients with renal impairment. (See <content styleCode="bold">
+                              <linkHtml href="#ID_30436dcc-c080-4794-98ab-fda32ad1a565">PRECAUTIONS: Pediatric Use</linkHtml>
+                           </content>.)</paragraph>
+                        <table width="100%">
+                           <caption>Table 3: AZACTAM Dosage Guidelines for Pediatric Patients*</caption>
+                           <col width="39%"/>
+                           <col width="26%"/>
+                           <col width="33%"/>
+                           <tfoot>
+                              <tr>
+                                 <td align="left" colspan="3" valign="top">*   Maximum recommended dose is 120 mg/kg/day.</td>
+                              </tr>
+                           </tfoot>
+                           <tbody>
+                              <tr>
+                                 <td styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Type of Infection</content>
+                                    </paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Dose</content>
+                                    </paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>
+                                       <content styleCode="bold">Frequency</content>
+                                    </paragraph>
+                                    <paragraph>
+                                       <content styleCode="bold">(hours)</content>
+                                    </paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Rrule Lrule Botrule " valign="top">
+                                    <paragraph>Mild to moderate infections</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                                    <paragraph>30 mg/kg</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Lrule Toprule Botrule " valign="top">
+                                    <paragraph>8</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>Moderate to severe infections</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>30 mg/kg</paragraph>
+                                 </td>
+                                 <td align="center" styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                                    <paragraph>6 or 8</paragraph>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_c59ddc0d-62de-4217-9fc5-bf78045e85be">
+               <id root="1445c5de-28dc-4e57-83c9-38205b744a27"/>
+               <code code="34092-7" codeSystem="2.16.840.1.113883.6.1" displayName="CLINICAL STUDIES SECTION"/>
+               <title>CLINICAL STUDIES </title>
+               <text>
+                  <paragraph>A total of 612 pediatric patients aged 1 month to 12 years were enrolled in uncontrolled clinical trials of aztreonam in the treatment of serious Gram-negative infections, including urinary tract, lower respiratory tract, skin and skin-structure, and intra-abdominal infections.</paragraph>
+               </text>
+               <effectiveTime value="20251215"/>
+               <component>
+                  <section ID="ID_53055a76-7af7-4c70-817d-d353882f96b9">
+                     <id root="f796d2cd-2290-46c8-aa54-b1483fbc055c"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Preparation of Parenteral Solutions </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="bold">General</content>
+                        </paragraph>
+                        <paragraph>Upon the addition of the diluent to the container, contents should be shaken <content styleCode="bold">immediately</content> and <content styleCode="bold">vigorously</content>. Use constituted solution immediately. Discard any remaining unused constituted solution.</paragraph>
+                        <paragraph>Depending upon the concentration of aztreonam and diluent used, constituted AZACTAM yields a colorless to light straw yellow solution which may develop a slight pink tint on standing (potency is not affected). Parenteral drug products should be inspected visually for particulate matter and discoloration whenever solution and container permit.</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                     <component>
+                        <section ID="ID_13787a90-d07a-4bda-a0c9-de4c656d4326">
+                           <id root="3f205b99-2822-48c7-871c-8a4ec0193146"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>
+                              <content styleCode="bold">Admixtures with Other Antibiotics</content>
+                              <content styleCode="bold"/>
+                           </title>
+                           <text>
+                              <paragraph>Intravenous infusion solutions of AZACTAM not exceeding 2% w/v prepared with Sodium Chloride Injection, USP 0.9% or Dextrose Injection, USP 5%, to which clindamycin phosphate, gentamicin sulfate, tobramycin sulfate, or cefazolin sodium have been added at concentrations usually used clinically, are stable for up to 48 hours at controlled room temperature 15°C to 30°C (59°F to 86°F) or 7 days under refrigeration 2°C to 8°C (36°F to 46°F). Ampicillin sodium admixtures with aztreonam in Sodium Chloride Injection, USP 0.9% are stable for 24 hours at controlled room temperature 15°C to 30°C (59°F to 86°F) and 48 hours under refrigeration 2°C to 8°C (36°F to 46°F); stability in Dextrose Injection, USP 5% is 2 hours at controlled room temperature 15°C to 30°C (59°F to 86°F) and 8 hours under refrigeration 2°C to 8°C (36°F to 46°F).</paragraph>
+                              <paragraph>Aztreonam-cloxacillin sodium and aztreonam-vancomycin hydrochloride admixtures are stable in Dianeal 137 (Peritoneal Dialysis Solution) with 4.25% Dextrose for up to 24 hours at controlled room temperature 15°C to 30°C (59°F to 86°F).</paragraph>
+                              <paragraph>Aztreonam is incompatible with nafcillin sodium, cephradine, and metronidazole.</paragraph>
+                              <paragraph>Other admixtures are not recommended since compatibility data are not available.</paragraph>
+                           </text>
+                           <effectiveTime value="20251215"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="ID_1d8c6ac7-3169-4843-b138-d3d489eb250c">
+                           <id root="a4783361-2d3c-4007-8ba9-66d406bc3367"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>
+                              <content styleCode="bold">Intravenous Solutions</content>
+                              <content styleCode="bold"/>
+                           </title>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="italics">For Bolus Injection:</content> The vial contents should be constituted with 6 mL to 10 mL Sterile Water for Injection, USP.</paragraph>
+                              <paragraph>
+                                 <content styleCode="italics">For Infusion:</content> If the vial contents are to be transferred to an appropriate infusion solution, each gram of aztreonam should be initially constituted with at least 3 mL Sterile Water for Injection, USP. Further dilution may be obtained with one of the following intravenous infusion solutions:</paragraph>
+                              <paragraph>Sodium Chloride Injection, USP, 0.9%</paragraph>
+                              <paragraph>Ringer’s Injection, USP</paragraph>
+                              <paragraph>Lactated Ringer’s Injection, USP</paragraph>
+                              <paragraph>Dextrose Injection, USP, 5% or 10%</paragraph>
+                              <paragraph>Dextrose and Sodium Chloride Injection, USP, 5%:0.9%, 5%:0.45%, or 5%:0.2%</paragraph>
+                              <paragraph>Sodium Lactate Injection, USP (M/6 Sodium Lactate)</paragraph>
+                              <paragraph>Ionosol<sup>®</sup> B and 5% Dextrose</paragraph>
+                              <paragraph>Isolyte<sup>®</sup> E</paragraph>
+                              <paragraph>Isolyte<sup>®</sup> E with 5% Dextrose</paragraph>
+                              <paragraph>Isolyte<sup>®</sup> M with 5% Dextrose</paragraph>
+                              <paragraph>Normosol<sup>®</sup>-R</paragraph>
+                              <paragraph>Normosol<sup>®</sup>-R and 5% Dextrose</paragraph>
+                              <paragraph>Normosol<sup>®</sup>-M and 5% Dextrose</paragraph>
+                              <paragraph>Mannitol Injection, USP, 5% or 10%</paragraph>
+                              <paragraph>Lactated Ringer’s and 5% Dextrose Injection</paragraph>
+                              <paragraph>Plasma-Lyte M and 5% Dextrose</paragraph>
+                           </text>
+                           <effectiveTime value="20251215"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="ID_543e3e9f-c1cf-4da1-a78e-ec641039dcdb">
+                           <id root="d9dea87e-69a4-442d-9819-ea4ecb37f548"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>
+                              <content styleCode="bold">Intramuscular Solutions</content>
+                              <content styleCode="bold"/>
+                           </title>
+                           <text>
+                              <paragraph>The vial contents should be constituted with at least 3 mL of an appropriate diluent per gram aztreonam. The following diluents may be used:</paragraph>
+                              <paragraph>Sterile Water for Injection, USP</paragraph>
+                              <paragraph>Sterile Bacteriostatic Water for Injection, USP (with benzyl alcohol or with methyl- and propylparabens)</paragraph>
+                              <paragraph>Sodium Chloride Injection, USP, 0.9%</paragraph>
+                              <paragraph>Bacteriostatic Sodium Chloride Injection, USP (with benzyl alcohol)</paragraph>
+                           </text>
+                           <effectiveTime value="20251215"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+               <component>
+                  <section ID="ID_96578694-cec4-4fec-8e97-c887c5bd32e7">
+                     <id root="b53505dc-0d6e-45be-8cf8-496102dfeb7b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Stability of Intravenous and Intramuscular Solutions </title>
+                     <text>
+                        <paragraph>AZACTAM solutions for intravenous infusion at concentrations not exceeding 2% w/v must be used within 48 hours following constitution if kept at controlled room temperature 15°C to 30°C (59°F to 86°F) or within 7 days if refrigerated 2°C to 8°C (36°F to 46°F).</paragraph>
+                        <paragraph>AZACTAM solutions at concentrations exceeding 2% w/v, except those prepared with Sterile Water for Injection, USP or Sodium Chloride Injection, USP, should be used promptly after preparation; the 2 excepted solutions must be used within 48 hours if stored at controlled room temperature 15°C to 30°C (59°F to 86°F) or within 7 days if refrigerated 2°C to 8°C (36°F to 46°F).</paragraph>
+                     </text>
+                     <effectiveTime value="20251215"/>
+                     <component>
+                        <section ID="ID_15c82b40-42ff-4990-abb5-e0302ea94e24">
+                           <id root="9b90a83c-f125-44d3-9aef-1ba00f3921a5"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>
+                              <content styleCode="bold">Intravenous Administration</content>
+                              <content styleCode="bold"/>
+                           </title>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="italics">Bolus Injection:</content> A bolus injection may be used to initiate therapy. The dose should be <content styleCode="bold">slowly</content> injected directly into a vein, or the tubing of a suitable administration set, over a period of 3 to 5 minutes (see next paragraph regarding flushing of tubing).</paragraph>
+                              <paragraph>
+                                 <content styleCode="italics">Infusion:</content> With any intermittent infusion of aztreonam and another drug with which it is not pharmaceutically compatible, the common delivery tube should be flushed before and after delivery of aztreonam with any appropriate infusion solution compatible with both drug solutions; the drugs should not be delivered simultaneously. Any AZACTAM infusion should be completed within a 20- to 60-minute period. With use of a <content styleCode="italics">Y-type administration set</content>, careful attention should be given to the calculated volume of aztreonam solution required so that the entire dose will be infused. A volume control administration set may be used to deliver an initial dilution of AZACTAM (see <content styleCode="bold">
+                                    <linkHtml href="#ID_1d8c6ac7-3169-4843-b138-d3d489eb250c">Preparation of Parenteral Solutions: Intravenous Solutions:</linkHtml>
+                                 </content>
+                                 <content styleCode="italics">
+                                    <linkHtml href="#ID_1d8c6ac7-3169-4843-b138-d3d489eb250c">For Infusion</linkHtml>
+                                 </content>) into a compatible infusion solution during administration; in this case, the final dilution of aztreonam should provide a concentration not exceeding 2% w/v.</paragraph>
+                           </text>
+                           <effectiveTime value="20251215"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="ID_b9cc293e-f2b4-49cf-940f-facdda5b3456">
+                           <id root="c6ade81f-6c96-4c0c-b7ba-8e06e35ddc81"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>
+                              <content styleCode="bold">Intramuscular Administration</content>
+                              <content styleCode="bold"/>
+                           </title>
+                           <text>
+                              <paragraph>The dose should be given by deep injection into a large muscle mass (such as the upper outer quadrant of the gluteus maximus or lateral part of the thigh). Aztreonam is well tolerated and should not be admixed with any local anesthetic agent.</paragraph>
+                           </text>
+                           <effectiveTime value="20251215"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_9aa67db5-26be-488a-a160-c77acfee717a">
+               <id root="a0594fd1-ec4a-4283-8542-aeb36d629e43"/>
+               <code code="34069-5" codeSystem="2.16.840.1.113883.6.1" displayName="HOW SUPPLIED SECTION"/>
+               <title>HOW SUPPLIED </title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">AZACTAM<sup>®</sup> (aztreonam for injection, USP)</content>
+                  </paragraph>
+                  <paragraph>Single-dose vials:</paragraph>
+                  <table styleCode="Noautorules" width="100%">
+                     <col width="37%"/>
+                     <col width="33%"/>
+                     <col width="29%"/>
+                     <tbody>
+                        <tr>
+                           <td styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <list listType="unordered">
+                                 <item>
+                                    <caption>•</caption>
+                                    <content styleCode="bold">1 gram/vial:</content>
+                                 </item>
+                              </list>
+                           </td>
+                           <td styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>Packages of 10</paragraph>
+                           </td>
+                           <td styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>NDC 0003-2560-16</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <list listType="unordered">
+                                 <item>
+                                    <caption>•</caption>
+                                    <content styleCode="bold">2 grams/vial:</content>
+                                 </item>
+                              </list>
+                           </td>
+                           <td styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>Packages of 10</paragraph>
+                           </td>
+                           <td styleCode="Rrule Botrule Lrule Toprule " valign="top">
+                              <paragraph>NDC 0003-2570-16</paragraph>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </text>
+               <effectiveTime value="20251215"/>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_80b21f67-45d2-4756-bceb-8ae636805741">
+               <id root="0e71c82f-0978-43db-93f6-416e3bca03b2"/>
+               <code code="44425-7" codeSystem="2.16.840.1.113883.6.1" displayName="STORAGE AND HANDLING SECTION"/>
+               <title>Storage </title>
+               <text>
+                  <paragraph>Store in original package at 20°C to 25°C (68°F to 77°F) [see USP controlled room temperature]; avoid excessive heat. </paragraph>
+               </text>
+               <effectiveTime value="20251215"/>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_50ecb86c-0dcb-4ff7-b263-6cf71661ee7f">
+               <id root="6bd8241c-834f-4303-91b7-c2e11d61b96f"/>
+               <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+               <title>   </title>
+               <text>
+                  <paragraph>AZACTAM and the Bristol-Myers Squibb logo are registered trademarks of Bristol-Myers Squibb Company.</paragraph>
+                  <paragraph>All other trademarks are the property of their respective owners.</paragraph>
+                  <paragraph>Manufactured by:<br/>Bristol-Myers Squibb Company<br/>Princeton, NJ 08543 USA</paragraph>
+                  <paragraph>Revised: March 2023</paragraph>
+               </text>
+               <effectiveTime value="20251215"/>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_92270d85-f110-4156-9225-838d43cbc984">
+               <id root="72c4b43d-d1e1-4798-9f3e-afc050e33240"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <title>PACKAGE/LABEL PRINCIPAL DISPLAY PANEL </title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">REPRESENTATIVE PACKAGING</content>
+                  </paragraph>
+                  <paragraph>See <linkHtml href="#ID_9aa67db5-26be-488a-a160-c77acfee717a">HOW SUPPLIED</linkHtml> section for a complete list of available packages of AZACTAM.</paragraph>
+                  <paragraph>NDC 0003-2560-16<br/>1 gram<br/>AZACTAM<sup>®</sup>
+                     <br/>(aztreonam for injection, USP)</paragraph>
+                  <paragraph>FOR INTRAVENOUS<br/>OR<br/>INTRAMUSCULAR USE</paragraph>
+                  <paragraph>Single-Dose vial - Discard Unused Portion</paragraph>
+                  <paragraph>Rx only<br/>Bristol-Myers Squibb</paragraph>
+                  <renderMultiMedia ID="id-1611661367" referencedObject="CD083F3A-C102-4CF4-8281-CCAAEE2646C3"/>
+               </text>
+               <effectiveTime value="20251215"/>
+               <component>
+                  <observationMedia ID="CD083F3A-C102-4CF4-8281-CCAAEE2646C3">
+                     <text>Vial Label 1g.jpg</text>
+                     <value mediaType="image/jpeg" xsi:type="ED">
+                        <reference value="vial-label-1g.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="ID_38f25bc1-be38-4ca2-81bb-17ac6f01df7c">
+               <id root="20e3e9d2-eb48-4358-8e48-6539aaf60182"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <title>PACKAGE/LABEL PRINCIPAL DISPLAY PANEL </title>
+               <text>
+                  <paragraph>NDC 0003-2570-16<br/>2 grams<br/>AZACTAM<sup>®</sup>
+                     <br/>(aztreonam for injection, USP)</paragraph>
+                  <paragraph>FOR INTRAVENOUS<br/>OR<br/>INTRAMUSCULAR USE</paragraph>
+                  <paragraph>Single-Dose vial - Discard Unused Portion</paragraph>
+                  <paragraph>Rx only<br/>Bristol-Myers Squibb</paragraph>
+                  <renderMultiMedia ID="id887843156" referencedObject="ID_44716409-2772-46f9-baff-4e09b90359d0"/>
+               </text>
+               <effectiveTime value="20251215"/>
+               <component>
+                  <observationMedia ID="ID_44716409-2772-46f9-baff-4e09b90359d0">
+                     <text>vial-label-2g.jpg</text>
+                     <value mediaType="image/jpeg" xsi:type="ED">
+                        <reference value="vial-label-2g.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+      </structuredBody>
+   </component>
+</document>

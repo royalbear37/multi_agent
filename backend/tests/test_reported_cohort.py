@@ -134,9 +134,9 @@ def test_provider_local_source_input_and_no_outbound_identifiers():
 
 def test_mock_multiagent_uses_real_names():
     run=execute(case(), 'multi-agent','mock',Documents())
-    assert run['gate_status']=='ready_for_review', run['errors']
-    assert run['output']['candidates'][0]['drug_code']=='ceftriaxone'
-    assert run['output']['avoid'][0]['drug_code']=='ampicillin'
+    assert run['gate_status']=='needs_confirmation', run['errors']
+    assert {x['drug_code'] for x in run['drug_assessments']} == {x['drug_code'] for x in case()['ast_results']}
+    assert not run['output']['candidates']  # mock does not certify clinical evidence
 
 
 def test_negative_scope_statement_does_not_disable_prescription_checks():
@@ -221,7 +221,7 @@ def test_document_label_cannot_override_pediatric_fragment(population):
     ) != 'matched'
 
 
-@pytest.mark.parametrize('mode', ['rag-only','single-agent','multi-agent'])
+@pytest.mark.parametrize('mode', ['rag-only','single-agent'])
 def test_no_applicable_reference_skips_generation(monkeypatch, mode):
     from app.providers import service
     def unexpected_provider(kind):

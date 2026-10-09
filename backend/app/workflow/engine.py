@@ -390,8 +390,8 @@ def execute(case: dict[str, Any], mode: str, provider_kind: str = "unconfigured"
     token = _PINNED_RULES.set(copy.deepcopy(rules_snapshot))
     try:
         if mode == "multi-agent":
-            from .v2 import execute_v2
-            return execute_v2(case, provider_kind, document_service, run_id, checkpoint=checkpoint)
+            from .agent_led import execute as execute_agents
+            return execute_agents(case, provider_kind, document_service, run_id, checkpoint=checkpoint)
         return RUNNERS[mode].run(case, provider_kind, document_service, run_id)
     finally:
         _PINNED_RULES.reset(token)
@@ -399,6 +399,9 @@ def execute(case: dict[str, Any], mode: str, provider_kind: str = "unconfigured"
 
 def validate_review(run: dict[str, Any], proposed: dict[str, Any] | None = None) -> dict[str, Any]:
     """Validate a review edit against the same hard candidate boundary."""
+    if run.get('decision_basis') == 'agent':
+        from .agent_led import validate_review as agent_review
+        return agent_review(run, proposed)
     if proposed is None:
         proposed = copy.deepcopy(run.get("output") or {"candidates": [], "avoid": [], "limitations": []})
     else:

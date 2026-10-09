@@ -11,10 +11,13 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import time
 import re
 import secrets
 import sqlite3
-from contextlib import contextmanager
+from contextlib import contextmanager, closing
+import copy
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol, Sequence
@@ -22,6 +25,10 @@ from typing import Any, Protocol, Sequence
 
 class EmbeddingError(RuntimeError):
     """An embedding provider failed or returned an unsafe result."""
+
+
+class RetrievalBudgetExceeded(EmbeddingError):
+    """The agent's retrieval time was reserved for remaining model calls."""
 
 
 class EmbeddingProvider(Protocol):
@@ -261,6 +268,70 @@ class DocumentService:
                 db.execute("CREATE TABLE IF NOT EXISTS chunks_fts (chunk_id TEXT, doc_id TEXT, text TEXT)")
                 self._fts_available = False
 
+    @contextmanager
+    def snapshot(self):
+        """Pin the complete corpus/index, allowing distinct queries during a run."""
+        with tempfile.TemporaryDirectory(prefix='antibiotic-corpus-') as folder:
+            frozen = copy.copy(self)
+            frozen.storage_dir = Path(folder)
+            frozen.db_path = frozen.storage_dir / 'rag.sqlite3'
+            with self._connect() as source, closing(sqlite3.connect(frozen.db_path)) as destination:
+                source.backup(destination)
+            yield frozen
+
+    def search_with_context(self, query, limit=8, policy_refs=None, *, scope='reference'):
+        result = self.search(query, limit, policy_refs, scope=scope)
+        evidence = list(result.get('evidence', []))
+        seen = {x['chunk_id'] for x in evidence}
+        with self._connect() as db:
+            for hit in list(evidence):
+                number = int(hit['chunk_id'].rsplit('_', 1)[1])
+                nearby = [f"{hit['doc_id']}_chunk_{n:04d}" for n in (number-1, number+1) if n > 0]
+                for cid in nearby:
+                    if cid in seen: continue
+                    row = db.execute('SELECT c.*, d.title, d.is_synthetic, d.content_hash, d.source_type, d.metadata FROM chunks c JOIN documents d ON d.doc_id=c.doc_id WHERE c.chunk_id=?', (cid,)).fetchone()
+                    if row:
+                        item = self._evidence_row(row)
+                        item['context_for'] = hit['chunk_id']
+                        evidence.append(item); seen.add(cid)
+        return {**result, 'evidence': evidence}
+
+    def search_agent_context(self, query, limit=3, policy_refs=None, *, scope='reference', stage='infection', drug_code=None, deadline=None):
+        """Document routing narrows genre/identity, never drug suitability."""
+        def key(value): return re.sub('[^a-z0-9]', '', str(value).lower())
+        with self._connect() as db:
+            docs, permitted = self._permitted_doc_ids(db, policy_refs, scope)
+            selected = []
+            for doc in docs:
+                if doc['doc_id'] not in permitted: continue
+                meta = json.loads(doc['metadata'] or '{}')
+                kind = meta.get('document_kind', 'reference')
+                if stage == 'background':
+                    if kind != 'research_article': continue
+                elif kind == 'research_article':
+                    continue
+                if stage == 'guideline_options' and kind == 'drug_label': continue
+                if kind == 'drug_label':
+                    if not drug_code or key(drug_code) not in key(doc['title']): continue
+                elif stage == 'clinical' and kind == 'guideline':
+                    continue
+                selected.append(doc['doc_id'])
+        if not selected:
+            return {'status': 'no_results', 'evidence': [], 'warnings': ['no_documents_for_requested_genre'], 'retrieval_method': self.retrieval_mode}
+        worker = self
+        if deadline is not None:
+            # Per-request copy: never mutate a shared provider's timeout or the
+            # behavior of rule-only/rag-only/single-agent retrieval.
+            worker = copy.copy(self)
+            worker._agent_retrieval_deadline = deadline
+            worker.embedding_provider = copy.copy(self.embedding_provider)
+            if time.perf_counter() >= deadline:
+                return {'status':'budget_reserved','evidence':[],'warnings':['time_reserved_for_remaining_agents']}
+        result = worker.search_with_context(query, limit, selected, scope=scope)
+        if deadline is not None and time.perf_counter() >= deadline:
+            return {'status':'budget_reserved','evidence':[],'warnings':['time_reserved_for_remaining_agents']}
+        return result
+
     def import_document(
         self,
         filename: str,
@@ -271,6 +342,10 @@ class DocumentService:
         *,
         policy_refs: list[str] | None = None,
         population: str = "unspecified",
+        source_url: str | None = None,
+        jurisdiction: str | None = None,
+        document_kind: str = 'reference',
+        study_design: str = 'not_recorded',
     ) -> dict[str, Any]:
         filename = _safe_filename(filename)
         if not isinstance(content, (bytes, bytearray)):
@@ -286,6 +361,8 @@ class DocumentService:
             raise DocumentServiceError("INVALID_SYNTHETIC_FLAG", "is_synthetic 必須是布林值")
         if population not in {"unspecified", "all", "adult", "pediatric", "mixed"}:
             raise DocumentServiceError("INVALID_POPULATION", "文件適用族群設定無效")
+        if study_design not in {'not_recorded','observational','randomized_trial','systematic_review','other'}:
+            raise DocumentServiceError('INVALID_STUDY_DESIGN', '研究設計設定無效')
 
         digest = hashlib.sha256(content).hexdigest()
         with self._connect() as db:
@@ -293,7 +370,10 @@ class DocumentService:
                 "SELECT * FROM documents WHERE content_hash = ?", (digest,)
             ).fetchone()
             if existing:
-                stored_population = json.loads(existing["metadata"] or "{}").get("population", "unspecified")
+                stored_metadata = json.loads(existing['metadata'] or '{}')
+                stored_population = stored_metadata.get("population", "unspecified")
+                if (document_kind != 'reference' and document_kind != stored_metadata.get('document_kind', 'reference')) or (study_design != 'not_recorded' and study_design != stored_metadata.get('study_design', 'not_recorded')):
+                    raise DocumentServiceError('DOCUMENT_CLASSIFICATION_CONFLICT', '相同內容已存在且證據分類不同；不能靜默沿用舊分類')
                 if population != "unspecified" and population != stored_population:
                     raise DocumentServiceError("POPULATION_LABEL_CONFLICT", "相同內容已存在且族群標示不同；請在原文件的族群標示表單更新並填寫理由")
                 return self._document_row(existing, deduplicated=True)
@@ -310,6 +390,10 @@ class DocumentService:
             raise DocumentServiceError("STORAGE_BOUNDARY", "無法建立安全的文件儲存位置")
         source_path.write_bytes(content)
         metadata = {"policy_refs": list(policy_refs or []), "population": population, "population_revision": 0}
+        if source_url: metadata['source_url'] = source_url
+        if jurisdiction: metadata['jurisdiction'] = jurisdiction
+        if document_kind != 'reference': metadata['document_kind'] = document_kind
+        if study_design != 'not_recorded': metadata['study_design'] = study_design
         imported_at = _utc_now()
         try:
             with self._connect() as db:
@@ -477,6 +561,34 @@ class DocumentService:
         with self._connect() as db:
             rows = db.execute("SELECT * FROM documents ORDER BY imported_at, doc_id").fetchall()
         return [self._document_row(row) for row in rows]
+
+    def register_source_derivation(self, doc_id: str, original_hash: str, expected_hash: str, reason: str) -> dict[str, Any]:
+        """Record a verified package extraction; never infer lineage from titles/URLs.
+
+        The caller must verify the extraction against the original bytes. Both
+        stored artifacts must still match those verified hashes at commit time.
+        Existing run snapshots and retrieval content are not modified.
+        """
+        if not all(isinstance(h, str) and re.fullmatch(r'[0-9a-f]{64}', h) for h in (original_hash, expected_hash)) or not reason.strip():
+            raise DocumentServiceError('INVALID_DERIVATION', '缺少原始檔案雜湊或核對依據')
+        with self._connect() as db:
+            db.execute('BEGIN IMMEDIATE')
+            row = db.execute('SELECT * FROM documents WHERE doc_id=?', (doc_id,)).fetchone()
+            original = db.execute('SELECT * FROM documents WHERE content_hash=?', (original_hash,)).fetchone()
+            if row is None or original is None:
+                raise DocumentServiceError('DOCUMENT_NOT_FOUND', '原始文件或節錄不存在')
+            if row['content_hash'] != expected_hash or original_hash == expected_hash:
+                raise DocumentServiceError('DERIVATION_CONFLICT', '節錄內容已改變或與原始文件相同')
+            metadata = json.loads(row['metadata'] or '{}')
+            prior = metadata.get('source_derivation')
+            if prior and prior.get('original_hash') != original_hash:
+                raise DocumentServiceError('DERIVATION_CONFLICT', '已記錄不同原始來源，未覆寫')
+            if not prior:
+                metadata['source_derivation'] = dict(original_hash=original_hash,
+                    original_title=original['title'], original_version=original['document_version'],
+                    reason=reason.strip(), recorded_at=_utc_now())
+                db.execute('UPDATE documents SET metadata=? WHERE doc_id=?', (_json(metadata), doc_id))
+        return self.detail(doc_id)
 
     def delete_document(self, doc_id: str) -> dict[str, Any]:
         """Remove this document and its retrieval data, leaving run snapshots intact."""
@@ -780,15 +892,28 @@ class DocumentService:
             if not rows:
                 return {"status": "no_results", "evidence": [], "warnings": ["no_eligible_chunks"], "retrieval_method": "ollama_embeddings", "scope": scope}
             try:
-                query_vectors = self._embed_query(query)
-                checked_query, query_dimensions = self._validate_vectors(query_vectors, 1)
-                query_vector = checked_query[0]
+                deadline = getattr(self, '_agent_retrieval_deadline', None)
+                def check_deadline():
+                    if deadline is not None and time.perf_counter() >= deadline:
+                        raise RetrievalBudgetExceeded()
+                check_deadline()
                 indexed = db.execute(
                     f"SELECT e.*, c.*, d.title, d.is_synthetic, d.content_hash, d.source_type, d.metadata FROM chunk_embeddings e JOIN chunks c ON c.chunk_id=e.chunk_id JOIN documents d ON d.doc_id=c.doc_id WHERE e.fingerprint=? AND c.doc_id IN ({','.join('?' for _ in permitted)})",
                     (identity["fingerprint"], *permitted),
                 ).fetchall()
                 indexed_ids = {row["chunk_id"] for row in indexed}
                 missing_rows = [row for row in rows if row["chunk_id"] not in indexed_ids]
+                if deadline is not None and missing_rows:
+                    return {'status':'index_required','evidence':[],
+                        'warnings':['agent_index_not_ready'],'retrieval_method':'ollama_embeddings','scope':scope}
+                check_deadline()
+                if deadline is not None and isinstance(self.embedding_provider,OllamaEmbeddingProvider):
+                    self.embedding_provider.timeout = min(self.embedding_provider.timeout,deadline-time.perf_counter())
+                    if self.embedding_provider.timeout <= 0: raise RetrievalBudgetExceeded()
+                query_vectors = self._embed_query(query)
+                check_deadline()
+                checked_query, query_dimensions = self._validate_vectors(query_vectors, 1)
+                query_vector = checked_query[0]
                 if missing_rows:
                     prepared = []
                     for start in range(0, len(missing_rows), _EMBEDDING_BATCH_SIZE):
@@ -806,6 +931,7 @@ class DocumentService:
                     ).fetchall()
                 scored: list[tuple[float, sqlite3.Row]] = []
                 for row in indexed:
+                    check_deadline()
                     vector, dimensions = self._validate_vectors([json.loads(row["vector_json"])], 1)
                     if dimensions != query_dimensions:
                         raise EmbeddingError("embedding dimensions do not match")
@@ -814,6 +940,10 @@ class DocumentService:
                         scored.append((score, row))
                 scored.sort(key=lambda item: (-item[0], item[1]["chunk_id"]))
                 evidence = [self._evidence_row(row, score) for score, row in scored[:limit]]
+            except RetrievalBudgetExceeded:
+                db.rollback()
+                return {'status':'budget_reserved','evidence':[],
+                    'warnings':['time_reserved_for_remaining_agents'],'retrieval_method':'ollama_embeddings','scope':scope}
             except EmbeddingError as exc:
                 db.rollback()
                 return {"status": "failed", "evidence": [], "warnings": [self._embedding_warning(exc)], "retrieval_method": "ollama_embeddings", "scope": scope}
@@ -839,12 +969,19 @@ class DocumentService:
     def _evidence_row(row: sqlite3.Row, score: float | None = None) -> dict[str, Any]:
         location = json.loads(row["location"])
         metadata = json.loads(row["metadata"] or "{}")
+        derivation = metadata.get('source_derivation') or {}
         result = {
             "chunk_id": row["chunk_id"], "doc_id": row["doc_id"], "document_version": row["document_version"], "document_title": row["title"],
             "text": row["text"], "location": location, "parse_warnings": json.loads(row["parse_warnings"] or "[]"),
             "content_hash": row["content_hash"], "is_synthetic": bool(row["is_synthetic"]), "source_type": row["source_type"], "source_location": location,
             "population": metadata.get("population", "unspecified"),
             "population_revision": metadata.get("population_revision", 0),
+            "source_url": metadata.get('source_url'), "jurisdiction": metadata.get('jurisdiction'),
+            "document_kind": metadata.get('document_kind', 'reference'),
+            "study_design": metadata.get('study_design', 'not_recorded'),
+            # Equal IDs mean the same original artifact, not independent support.
+            "source_document_id": 'sha256:' + derivation.get('original_hash', row['content_hash']),
+            "source_derivation": derivation or None,
         }
         if score is not None:
             result["score"] = round(float(score), 8)
@@ -931,17 +1068,7 @@ class DocumentService:
                 rows = [c for score, c in sorted(scored, key=lambda x: (-x[0], x[1]["chunk_id"])) if score > 0][:limit]
             evidence = []
             for row in rows:
-                evidence.append({
-                    "chunk_id": row["chunk_id"], "doc_id": row["doc_id"],
-                    "document_version": row["document_version"], "document_title": row["title"],
-                    "text": row["text"], "location": json.loads(row["location"]),
-                    "parse_warnings": json.loads(row["parse_warnings"] or "[]"),
-                    "content_hash": row["content_hash"], "is_synthetic": bool(row["is_synthetic"]),
-                    "source_type": row["source_type"],
-                    "population": json.loads(row["metadata"] or "{}").get("population", "unspecified"),
-                    "population_revision": json.loads(row["metadata"] or "{}").get("population_revision", 0),
-                    "source_location": json.loads(row["location"]),
-                })
+                evidence.append(self._evidence_row(row))
                 warnings.extend(json.loads(row["parse_warnings"] or "[]"))
         version_groups: dict[str, set[str]] = {}
         # Conflicts must not disappear when a small result limit happens to

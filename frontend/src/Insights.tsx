@@ -1,4 +1,5 @@
 import { pretty } from "./api";
+import { AgentDrugTable, AgentStep, AgentIssues, agentTitle } from './AgentLed';
 
 export function evidenceOrigin(e: any): string {
   if (e.is_synthetic === true) return "合成測試文件（僅供流程展示）";
@@ -13,11 +14,14 @@ export function RetrievalWarnings({ warnings = [] }: { warnings?: string[] }) {
     if (w === 'long_text_split') return '長文字已正常切段供檢索，不是錯誤。';
     const page = w.match(/^page_(\d+)_(blank|requires_ocr)$/);
     if (page) return page[2] === 'blank' ? `第 ${page[1]} 頁為空白頁，已略過。` : `第 ${page[1]} 頁未擷取到文字（舊紀錄可能包含空白頁；有影像內容才需 OCR）。`;
+    const table = w.match(/^page_(\d+)_table_needs_review$/);
+    if (table) return `第 ${table[1]} 頁表格需人工檢查，請對照原始文件的欄列與條件。`;
     return errorNames[w] || w;
   };
   return <>
     {!!important.length && <ul>{important.map(w => <li key={w}>{label(w)}</li>)}</ul>}
     {!!technical.length && <details><summary>文件解析細節（{technical.length} 項，不代表本次分析失敗）</summary><ul>{technical.map(w => <li key={w}>{label(w)}</li>)}</ul></details>}
+    {warnings.some(w=>/^page_\d+_table_needs_review$/.test(w)) && <details><summary>原始解析警告代碼</summary><p>{warnings.filter(w=>/^page_\d+_table_needs_review$/.test(w)).join('、')}</p></details>}
   </>;
 }
 
@@ -52,6 +56,7 @@ export function drugDisposition(run: any) {
 }
 
 export function DrugOverview({ run }: { run: any }) {
+  if (run.decision_basis === 'agent') return <AgentDrugTable run={run}/>;
   const { sourceCount, rows } = drugDisposition(run);
   const count = (group: string) => rows.filter((r) => r.group === group).length;
   const docs = (run.evidence_snapshots ?? []).filter((e: any, i: number, all: any[]) => all.findIndex((x) => x.doc_id === e.doc_id && x.document_version === e.document_version) === i);
@@ -72,6 +77,7 @@ export function DrugOverview({ run }: { run: any }) {
 }
 
 export function DemoSourceResult({ run }: { run: any }) {
+  if (run.decision_basis === 'agent') return null;
   if (run.output?.candidates?.length) return null;
   const ast = run.nodes?.find((n: any) => n.node_id === 'ast')?.output;
   if (!ast?.system_evaluations?.length) return null;
@@ -138,7 +144,10 @@ export function executionLabel(value: any): string {
   )
     return "規則執行（不使用 LLM）";
   if (value.is_mock || value.provider_kind === "mock") return "MOCK 模擬";
-  if (value.provider_kind === "live") return "選用已設定模型";
+  if (value.provider_kind === "live") {
+    const models=[...new Set([value.model,...(value.nodes || []).map((n:any)=>n.model)].filter(Boolean))];
+    return models.length ? `模型：${models.join('、')}` : "模型名稱未記錄";
+  }
   if (value.provider_kind === "unconfigured") return "未啟用生成模型";
   return "模型方式未記錄";
 }
@@ -175,10 +184,14 @@ const fields: Record<string, string> = {
 const errorNames: Record<string, string> = {
   PREFLIGHT_WITHHELD: "前置資料或證據檢查未通過，未呼叫 Agent",
   AGENT_INPUT_INVALID: "Agent 輸入資料不符合契約",
+  AGENT_OUTPUT_TRUNCATED: "模型回覆達輸出長度上限，需調整輸出預算後重新分析",
   AGENT_SCHEMA_INVALID: "Agent 輸出格式、藥品或引用檢查未通過",
+  AGENT_PARTIAL_INVALID: "部分藥品的回覆未通過檢查，其他有效結果已保留",
   AGENT_NEEDS_CONFIRMATION: "Agent 發現尚待確認的事項，請檢查資料後重新分析",
   AGENT_NO_SUPPORTED_CANDIDATES: "各 Agent 的結果尚未形成有依據的共同候選",
   NO_VALID_CANDIDATES: "模型未提供通過核對的候選，請確認藥品、引用及相互矛盾的項目後重新分析",
+  AGENT_TIME_RESERVED: "本步驟時間不足，保留後續 Agent 執行時間",
+  AGENT_STAGE_TIMEOUT: "本步驟回覆超過分配時間，未納入判斷",
   AGENT_BUDGET_EXCEEDED: "已達本次呼叫次數或時間上限",
   AGENT_INPUT_TOO_LARGE: "Agent 輸入超過大小上限，未發送模型",
   AGENT_EXECUTION_FAILED: "Agent 執行失敗，後續步驟已停止",
@@ -227,7 +240,27 @@ function items(values: any[] | undefined, labels: Record<string, string> = {}) {
     <p className="muted">沒有記錄</p>
   );
 }
-export function RunIssues({ run }: { run: any }) {
+export function RunProvenance({run}:{run:any}) {
+  return <p>分析當時病例：{run.case_id || '未記錄'} · 病例版本 {run.case_revision ?? '未記錄'} · {executionLabel(run)} · {localTime(run.created_at)}{run.versions?.workflow && ` · 流程 ${run.versions.workflow}`}</p>;
+}
+export function RunIssues({ run, onOpenAgent }: { run: any, onOpenAgent?:(id:string)=>void }) {
+  if (run.decision_basis === 'agent') {
+    const precautions:any[]=[], evidenceGaps:any[]=[], confirmations:any[]=[];
+    for(const issue of run.confirmation_items || []) {
+      const risk=issue.agent_id==='clinical_agent' && run.drug_assessments?.find((r:any)=>r.drug_code===issue.drug_code)?.clinical?.risk_details?.[issue.field];
+      if(risk?.status==='caution' && !risk.missing_fields?.length && !risk.validation_issues?.length) precautions.push(issue);
+      else if(issue.field==='evidence_context' || (risk?.status==='unknown' && !risk.missing_fields?.length && risk.validation_issues?.length)) evidenceGaps.push(issue);
+      else confirmations.push(issue);
+    }
+    const availableAgents=(run.nodes || []).filter((n:any)=>n.agent_id).map((n:any)=>n.node_id);
+    return <section><h3>病例待確認與用藥限制</h3><p>一般注意事項不等於必填病例缺漏；可由醫師保留警示並記錄逐藥決策。</p>
+      {!!confirmations.length && <details open><summary>病例或判斷待確認事項（{confirmations.length}）</summary><AgentIssues items={confirmations} onOpenAgent={onOpenAgent} availableAgents={availableAgents}/></details>}
+      {!!precautions.length && <details><summary>用藥注意與限制（{precautions.length}）</summary><AgentIssues items={precautions} onOpenAgent={onOpenAgent} availableAgents={availableAgents}/></details>}
+      {!!evidenceGaps.length && <details><summary>系統證據核對缺口（{evidenceGaps.length}）</summary><AgentIssues items={evidenceGaps} onOpenAgent={onOpenAgent} availableAgents={availableAgents}/></details>}
+      {!confirmations.length && !precautions.length && !evidenceGaps.length && <p>本次沒有額外列出的確認事項。</p>}
+      {run.errors?.map((e:any,i:number)=><p key={i}>{agentTitle(e.node_id)}：{errorNames[e.code] || e.code}{onOpenAgent && availableAgents.includes(e.node_id) && <button onClick={()=>onOpenAgent(e.node_id)}>查看錯誤步驟</button>}</p>)}
+    </section>;
+  }
   const limitations =
     run.safety_summary?.limitations ?? run.output?.limitations ?? [];
   const confirmations = (run.nodes ?? []).filter((n: any) => n.agent_id && n.status === 'needs_confirmation');
@@ -319,6 +352,7 @@ export function WorkflowStep({
   index: number;
   run: any;
 }) {
+  if (run.decision_basis === 'agent' && n.agent_id) return <AgentStep node={n} index={index} run={run}/>;
   const o = n.output || {},
     [title, description] = steps[n.node_id] || [
       n.node_id || "未知步驟",
@@ -717,6 +751,8 @@ export function BenchmarkOverview({
         )}
       </div>
       <h3>按模式比較</h3>
+      {s.retrieval && <p>檢索 {s.retrieval.queries} 次，取得 {s.retrieval.returned_chunks} 個片段（含重複），失敗 {s.retrieval.failed_queries} 次。Agent 引用複核：支持 {s.agent_citation_audit?.supported || 0}、未支持 {s.agent_citation_audit?.unsupported || 0}、待確認 {s.agent_citation_audit?.uncertain || 0}；此統計不是專家正確率。</p>}
+      {s.by_workflow_version && <p>流程版本：{Object.keys(s.by_workflow_version).join('、')}。不同版本分組保存；新 multi-agent 不適用規則通過率。</p>}
       {!!Object.keys(s.by_agent || {}).length && <details>
         <summary>各 Agent 用量與執行統計</summary>
         <p>MOCK 沒有真實 Token 用量；失敗呼叫可能沒有回傳用量，已知合計不代表完整帳單。</p>

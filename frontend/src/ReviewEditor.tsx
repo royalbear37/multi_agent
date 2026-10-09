@@ -28,7 +28,7 @@ export function ReviewEditor({
   const ast =
     run.nodes?.find((n: any) => n.node_id === "ast")?.output
       ?.system_evaluations ?? [];
-  const options: string[] = [
+  const options: string[] = run.decision_basis === 'agent' ? run.agent_candidate_boundary?.allowed_drugs ?? [] : [
     ...new Set<string>([
       ...ast
         .filter((x: any) => x.eligible === true)
@@ -45,8 +45,9 @@ export function ReviewEditor({
     });
   return (
     <div className="review-editor">
+      {!!run.output?.review_options?.length && <p>有證據的待審閱選項仍有未完成核對項目，不能在此直接加入完成候選；請補齊並重新分析。</p>}
       <p>
-        修改待審藥物與理由，並勾選支持該理由的證據。來源排除條件由系統保留。
+        {run.decision_basis === 'agent' ? '修改已評估的候選與理由；新增未評估藥品需重新分析。引用須來自該藥已複核的片段。' : '修改待審藥物與理由，並勾選支持該理由的證據。來源排除條件由系統保留。'}
       </p>
       {value.candidates.map((item, index) => (
         <fieldset key={index}>
@@ -80,7 +81,7 @@ export function ReviewEditor({
             />
           </label>
           <h4>引用證據</h4>
-          {(run.evidence_snapshots ?? []).map((e: any) => (
+          {(run.evidence_snapshots ?? []).filter((e:any)=>run.decision_basis !== 'agent' || run.agent_candidate_boundary?.evidence_by_drug?.[item.drug_code]?.includes(e.chunk_id)).map((e: any) => (
             <label className="check-label" key={e.chunk_id}>
               <input
                 type="checkbox"
@@ -148,7 +149,7 @@ export function ReviewEditor({
       </button>
       {!!value.avoid.length && (
         <div>
-          <h4>來源排除／待確認項目（系統保留）</h4>
+          <h4>{run.decision_basis === 'agent' ? 'Agent 不建議項目（保留分析紀錄）' : '來源排除／待確認項目（系統保留）'}</h4>
           <ul>
             {value.avoid.map((item, i) => (
               <li key={i}>

@@ -1,0 +1,1259 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://www.accessdata.fda.gov/spl/stylesheet/spl.xsl"?>
+<document xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 https://www.accessdata.fda.gov/spl/schema/spl.xsd">
+   <id root="199988b6-2417-4072-803d-fa6acab5703f"/>
+   <code code="34391-3" codeSystem="2.16.840.1.113883.6.1" displayName="HUMAN PRESCRIPTION DRUG LABEL"/>
+   <title>Amikacin Sulfate Injection, USP<br/>(For Intramuscular or Intravenous Use)
+</title>
+   <effectiveTime value="20260727"/>
+   <setId root="f260ff2a-76a0-4672-9516-91c344b67890"/>
+   <versionNumber value="10"/>
+   <author>
+      <time/>
+      <assignedEntity>
+         <representedOrganization>
+            <id extension="080579617" root="1.3.6.1.4.1.519.1"/>
+            <name>Sagent Pharmaceuticals</name>
+            <assignedEntity>
+               <assignedOrganization/>
+            </assignedEntity>
+         </representedOrganization>
+      </assignedEntity>
+   </author>
+   <component>
+      <structuredBody>
+         <component>
+            <section ID="dcl-dpl">
+               <id root="697e4dbe-668e-4ff6-9c4c-4daaca5be87d"/>
+               <code code="48780-1" codeSystem="2.16.840.1.113883.6.1" displayName="SPL PRODUCT DATA ELEMENTS SECTION"/>
+               <effectiveTime value="20180329"/>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code code="25021-173" codeSystem="2.16.840.1.113883.6.69"/>
+                        <name>amikacin sulfate</name>
+                        <formCode code="C42945" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INJECTION, SOLUTION"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>amikacin sulfate</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <ingredient classCode="ACTIM">
+                           <quantity>
+                              <numerator value="250" unit="mg"/>
+                              <denominator value="1" unit="mL"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="N6M33094FD" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>amikacin sulfate</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="84319SGC3C" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>amikacin</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="4VON5FNS3C" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>sodium metabisulfite</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="B22547B95K" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>trisodium citrate dihydrate</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="O40UQP6WCF" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>sulfuric acid</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator value="2" unit="mL"/>
+                              <denominator value="1" unit="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43226" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="VIAL"/>
+                              <asContent>
+                                 <quantity>
+                                    <numerator value="10" unit="1"/>
+                                    <denominator value="1" unit="1"/>
+                                 </quantity>
+                                 <containerPackagedProduct>
+                                    <code code="25021-173-02" codeSystem="2.16.840.1.113883.6.69"/>
+                                    <formCode code="C43182" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="CARTON"/>
+                                 </containerPackagedProduct>
+                                 <subjectOf>
+                                    <marketingAct>
+                                       <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                       <statusCode code="active"/>
+                                       <effectiveTime>
+                                          <low value="20160615"/>
+                                       </effectiveTime>
+                                    </marketingAct>
+                                 </subjectOf>
+                              </asContent>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV" displayName="Type 0: Not a Combination Product"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                        <asContent>
+                           <quantity>
+                              <numerator value="4" unit="mL"/>
+                              <denominator value="1" unit="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43226" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="VIAL"/>
+                              <asContent>
+                                 <quantity>
+                                    <numerator value="10" unit="1"/>
+                                    <denominator value="1" unit="1"/>
+                                 </quantity>
+                                 <containerPackagedProduct>
+                                    <code code="25021-173-04" codeSystem="2.16.840.1.113883.6.69"/>
+                                    <formCode code="C43182" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="CARTON"/>
+                                 </containerPackagedProduct>
+                                 <subjectOf>
+                                    <marketingAct>
+                                       <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                       <statusCode code="active"/>
+                                       <effectiveTime>
+                                          <low value="20160615"/>
+                                       </effectiveTime>
+                                    </marketingAct>
+                                 </subjectOf>
+                              </asContent>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV" displayName="Type 0: Not a Combination Product"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20160615"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <subjectOf>
+                        <approval>
+                           <id extension="ANDA203323" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73584" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ANDA"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38276" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INTRAVENOUS"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C28161" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INTRAMUSCULAR"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+            </section>
+         </component>
+         <component>
+            <section ID="s1">
+               <id root="0b704f84-a27c-46ce-a799-e1b2fee6029f"/>
+               <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">sagent</content>
+                     <sup>®</sup>
+                     <br/>Rx only
+</paragraph>
+                  <paragraph>To reduce the development of drug-resistant bacteria and maintain the effectiveness of the amikacin and other antibacterial drugs, amikacin should be used only to treat or prevent infections that are proven or strongly suspected to be caused by bacteria.
+</paragraph>
+               </text>
+               <effectiveTime value="20260727"/>
+            </section>
+         </component>
+         <component>
+            <section ID="s2">
+               <id root="de4f3d68-ef23-45b5-b765-f3541e4f4232"/>
+               <code code="34066-1" codeSystem="2.16.840.1.113883.6.1" displayName="BOXED WARNING SECTION"/>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">WARNINGS</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Patients treated with parenteral aminoglycosides should be under close clinical observation because of the potential ototoxicity and nephrotoxicity associated with their use. Safety for treatment periods which are longer than 14 days has not been established.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Neurotoxicity, manifested as vestibular and permanent bilateral auditory ototoxicity, can occur in patients with preexisting renal damage and in patients with normal renal function treated at higher doses and/or for periods longer than those recommended. The risk of aminoglycoside-induced ototoxicity is greater in patients with renal damage. High frequency deafness usually occurs first and can be detected only by audiometric testing. Vertigo may occur and may be evidence of vestibular injury. Other manifestations of neurotoxicity may include numbness, skin tingling, muscle twitching and convulsions. The risk of hearing loss due to aminoglycosides increases with the degree of exposure to either high peak or high trough serum concentrations. Patients developing cochlear damage may not have symptoms during therapy to warn them of developing eighth-nerve toxicity, and total or partial irreversible bilateral deafness may occur after the drug has been discontinued. Aminoglycoside-induced ototoxicity is usually irreversible.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Aminoglycosides are potentially nephrotoxic. The risk of nephrotoxicity is greater in patients with impaired renal function and in those who receive high doses or prolonged therapy.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Neuromuscular blockade and respiratory paralysis have been reported following parenteral injection, topical instillation (as in orthopedic and abdominal irrigation or in local treatment of empyema), and following oral use of aminoglycosides. The possibility of these phenomena should be considered if aminoglycosides are administered by any route, especially in patients receiving anesthetics, neuromuscular blocking agents such as tubocurarine, succinylcholine, decamethonium, or in patients receiving massive transfusions of citrate-anticoagulated blood. If blockage occurs, calcium salts may reverse these phenomena, but mechanical respiratory assistance may be necessary.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Renal and eighth-nerve function should be closely monitored especially in patients with known or suspected renal impairment at the onset of therapy and also in those whose renal function is initially normal but who develop signs of renal dysfunction during therapy. Serum concentrations of amikacin should be monitored when feasible to assure adequate levels and to avoid potentially toxic levels and prolonged peak concentrations above 35 micrograms per mL. Urine should be examined for decreased specific gravity, increased excretion of proteins, and the presence of cells or casts. Blood urea nitrogen, serum creatinine, or creatinine clearance should be measured periodically. Serial audiograms should be obtained where feasible in patients old enough to be tested, particularly high risk patients. Evidence of ototoxicity (dizziness, vertigo, tinnitus, roaring in the ears, and hearing loss) or nephrotoxicity requires discontinuation of the drug or dosage adjustment.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Concurrent and/or sequential systemic, oral or topical use of other neurotoxic or nephrotoxic products, particularly bacitracin, cisplatin, amphotericin B, cephaloridine, paromomycin, viomycin, polymyxin B, colistin, vancomycin, or other aminoglycosides should be avoided. Other factors that may increase risk of toxicity are advanced age and dehydration.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">The concurrent use of amikacin with potent diuretics (ethacrynic acid, or furosemide) should be avoided since diuretics by themselves may cause ototoxicity. In addition, when administered intravenously, diuretics may enhance aminoglycoside toxicity by altering antibiotic concentrations in serum and tissue.</content>
+                  </paragraph>
+               </text>
+               <effectiveTime value="20140527"/>
+            </section>
+         </component>
+         <component>
+            <section ID="s3">
+               <id root="73f8c5d7-2cad-4fe3-bd87-3c9b484d2183"/>
+               <code code="34089-3" codeSystem="2.16.840.1.113883.6.1" displayName="DESCRIPTION SECTION"/>
+               <title>DESCRIPTION
+</title>
+               <text>
+                  <paragraph>Amikacin sulfate is semi-synthetic aminoglycoside antibiotic derived from kanamycin. It is C<sub>22</sub>H<sub>43</sub>N<sub>5</sub>O<sub>13</sub>•2H<sub>2</sub>SO<sub>4</sub>•<content styleCode="italics">0</content>-3-amino-3-deoxy-α-D-glucopyranosyl-(1→4)-<content styleCode="italics">O</content>-[6-amino-6-deoxy-α-D-glucopyranosyl -(1→6)]-<content styleCode="italics">N</content>
+                     <sup>3</sup>-(4-amino-L-2-hydroxybutyryl)-2-deoxy-L-streptamine sulfate (1:2)
+</paragraph>
+                  <table width="100%" styleCode="Noautorules">
+                     <col width="100.000%" align="left"/>
+                     <tbody>
+                        <tr>
+                           <td align="center" valign="top">
+                              <renderMultiMedia ID="f01" referencedObject="mm01"/>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="center" valign="top">
+                              <content styleCode="bold">M.W. 781.76</content>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>The dosage form is supplied as a sterile, colorless to light straw colored solution for IM or IV use. The 500 mg per 2 mL vial and 1 gram per 4 mL vial contains per each mL: 250 mg amikacin (as the sulfate), 0.66% sodium metabisulfite, 2.5% sodium citrate dihydrate with pH adjusted to 4.5 with sulfuric acid.
+</paragraph>
+               </text>
+               <effectiveTime value="20260727"/>
+               <component>
+                  <observationMedia ID="mm01">
+                     <text>Chemical Structure
+</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ami06-0008-01.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s4">
+               <id root="c8f71908-58c2-41fd-847b-865db627c01a"/>
+               <code code="34090-1" codeSystem="2.16.840.1.113883.6.1" displayName="CLINICAL PHARMACOLOGY SECTION"/>
+               <title>CLINICAL PHARMACOLOGY
+</title>
+               <effectiveTime value="20140527"/>
+               <component>
+                  <section ID="s5">
+                     <id root="af0b3ad7-9f1d-41b2-92e3-ad0031d5b650"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Intramuscular Administration
+</title>
+                     <text>
+                        <paragraph>Amikacin is rapidly absorbed after intramuscular administration. In normal adult volunteers, average peak serum concentrations of about 12, 16, and 21 mcg/mL are obtained 1 hour after intramuscular administration of 250 mg (3.7 mg/kg), 375 mg (5 mg/kg), 500 mg (7.5 mg/kg), single doses, respectively. At 10 hours, serum levels are about 0.3 mcg/mL, 1.2 mcg/mL, and 2.1 mcg/mL, respectively.
+</paragraph>
+                        <paragraph>Tolerance studies in normal volunteers reveal that amikacin is well tolerated locally following repeated intramuscular dosing, and when given at maximally recommended doses, no ototoxicity or nephrotoxicity has been reported. There is no evidence of drug accumulation with repeated dosing for 10 days when administered according to recommended doses.
+</paragraph>
+                        <paragraph>With normal renal function, about 91.9% of an intramuscular dose is excreted unchanged in the urine in the first 8 hours, and 98.2% within 24 hours. Mean urine concentrations for 6 hours are 563 mcg/mL following a 250 mg dose, 697 mcg/mL following a 375 mg dose, and 832 mcg/mL following a 500 mg dose.
+</paragraph>
+                        <paragraph>Preliminary intramuscular studies in newborns of different weights (less than 1.5 kg, 1.5 to 2.0 kg, over 2.0 kg) at a dose of 7.5 mg/kg revealed that, like other aminoglycosides, serum half-life values were correlated inversely with post-natal age and renal clearances of amikacin. The volume of distribution indicates that amikacin, like other aminoglycosides, remains primarily in the extracellular fluid space of neonates. Repeated dosing every 12 hours in all the above groups did not demonstrate accumulation after 5 days.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s6">
+                     <id root="93d55601-1334-4116-ba5b-4b76033c7a0a"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Intravenous Administration
+</title>
+                     <text>
+                        <paragraph>Single doses of 500 mg (7.5 mg/kg) administered to normal adults as an infusion over a period of 30 minutes produced a mean peak serum concentration of 38 mcg/mL at the end of the infusion, and levels of 24 mcg/mL, 18 mcg/mL, and 0.75 mcg/mL at 30 minutes, 1 hour, and 10 hours post-infusion, respectively. Eighty-four percent of the administered dose was excreted in the urine in 9 hours and about 94% within 24 hours.
+</paragraph>
+                        <paragraph>Repeat infusions of 7.5 mg/kg every 12 hours in normal adults were well tolerated and caused no drug accumulation.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s7">
+                     <id root="a7779b78-ffc7-4049-9a37-19bc7a426228"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>General
+</title>
+                     <text>
+                        <paragraph>Pharmacokinetic studies in normal adult subjects reveal the mean serum half-life to be slightly over 2 hours with a mean total apparent volume of distribution of 24 liters (28% of the body weight). By the ultrafiltration technique, reports of serum protein binding range from 0 to 11%. The mean serum clearance rate is about 100 mL/min and the renal clearance rate is 94 mL/min in subjects with normal renal function.
+</paragraph>
+                        <paragraph>Amikacin is excreted primarily by glomerular filtration. Patients with impaired renal function or diminished glomerular filtration pressure excrete the drug much more slowly (effectively prolonging the serum half-life). Therefore, renal function should be monitored carefully and dosage adjusted accordingly (see suggested dosage schedule under <content styleCode="bold">
+                              <linkHtml href="#s28">DOSAGE AND ADMINISTRATION</linkHtml>
+                           </content>).
+</paragraph>
+                        <paragraph>Following administration at the recommended dose, therapeutic levels are found in bone, heart, gallbladder, and lung tissue in addition to significant concentrations in urine, bile, sputum, bronchial secretions, interstitial, pleural, and synovial fluids.
+</paragraph>
+                        <paragraph>Spinal fluid levels in normal infants are approximately 10 to 20% of the serum concentrations and may reach 50% when the meninges are inflamed. Amikacin has been demonstrated to cross the placental barrier and yield significant concentrations in amniotic fluid. The peak fetal serum concentration is about 16% of the peak maternal serum concentration and maternal and fetal serum half-life values are about 2 and 3.7 hours, respectively.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s8">
+                     <id root="8698f264-d6c4-4b3a-a8ba-6f800d5e556b"/>
+                     <code code="49489-8" codeSystem="2.16.840.1.113883.6.1" displayName="MICROBIOLOGY SECTION"/>
+                     <title>Microbiology
+</title>
+                     <effectiveTime value="20140527"/>
+                     <component>
+                        <section ID="s9">
+                           <id root="b6b9cf38-7f0c-413d-a198-1786c3e98e59"/>
+                           <code code="43679-0" codeSystem="2.16.840.1.113883.6.1" displayName="MECHANISM OF ACTION SECTION"/>
+                           <title>Mechanism of Action
+</title>
+                           <text>
+                              <paragraph>Amikacin, an aminoglycoside, binds to the prokaryotic ribosome, inhibiting protein synthesis in susceptible bacteria. It is bactericidal <content styleCode="italics">in vitro</content> against Gram-positive and Gram-negative bacteria.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20150826"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s10">
+                           <id root="253a81bd-ce01-4988-adf8-03d4b304c314"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>Mechanism of Resistance
+</title>
+                           <text>
+                              <paragraph>Aminoglycosides are known to be ineffective against <content styleCode="italics">Salmonella</content> and <content styleCode="italics">Shigella</content> species in patients. Therefore, <content styleCode="italics">in vitro</content> susceptibility test results should not be reported.
+</paragraph>
+                              <paragraph>Amikacin resists degradation by certain aminoglycoside inactivating enzymes known to affect gentamicin, tobramycin, and kanamycin.
+</paragraph>
+                              <paragraph>Aminoglycosides in general have a low order of activity against Gram-positive organisms other than <content styleCode="italics">Staphylococcal</content> isolates.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20150826"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s11">
+                           <id root="951a8103-3b7a-4be6-b61b-c45fdc9e738a"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>Interaction with Other Antimicrobials
+</title>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="italics">In vitro</content> studies have shown that amikacin sulfate combined with a beta-lactam antibiotic acts synergistically against many clinically significant Gram-negative organisms.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20150826"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="d12">
+                           <id root="dc0dd656-d2de-4011-b4a1-cde7a0b87821"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>Antimicrobial Activity
+</title>
+                           <text>
+                              <paragraph>Amikacin has been shown to be active against the following bacteria, both <content styleCode="italics">in vitro</content> and in clinical infections (see <content styleCode="bold">
+                                    <linkHtml href="#s12">INDICATIONS AND USAGE</linkHtml>
+                                 </content>).										
+</paragraph>
+                              <paragraph>
+                                 <content styleCode="underline">Gram-positive Bacteria</content>
+                              </paragraph>
+                              <list listType="unordered">
+                                 <item>
+                                    <caption> 
+</caption>
+                                    <content styleCode="italics">Staphylococcus</content> species
+</item>
+                              </list>
+                              <paragraph>
+                                 <content styleCode="underline">Gram-negative Bacteria</content>
+                              </paragraph>
+                              <list listType="unordered">
+                                 <item>
+                                    <caption> 
+</caption>
+                                    <content styleCode="italics">Pseudomonas</content> species
+</item>
+                                 <item>
+                                    <caption> 
+</caption>
+                                    <content styleCode="italics">Escherichia coli</content>
+                                 </item>
+                                 <item>
+                                    <caption> 
+</caption>
+                                    <content styleCode="italics">Proteus</content> species (indole-positive and indole-negative)
+</item>
+                                 <item>
+                                    <caption> 
+</caption>
+                                    <content styleCode="italics">Klebsiella</content> species
+</item>
+                                 <item>
+                                    <caption> 
+</caption>
+                                    <content styleCode="italics">Enterobacter</content> species
+</item>
+                                 <item>
+                                    <caption> 
+</caption>
+                                    <content styleCode="italics">Serratia</content> species
+</item>
+                                 <item>
+                                    <caption> 
+</caption>
+                                    <content styleCode="italics">Acinetobacter</content> species
+</item>
+                              </list>
+                              <paragraph>Amikacin has demonstrated <content styleCode="italics">in vitro</content> activity against the following bacteria. The safety and effectiveness of amikacin in treating clinical infections due to these bacteria have not been established in adequate and well-controlled trials.
+</paragraph>
+                              <paragraph>
+                                 <content styleCode="italics">Citrobacter freundii</content>
+                              </paragraph>
+                           </text>
+                           <effectiveTime value="20160509"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="d13">
+                           <id root="26a6f9f5-c765-4ab5-8265-70eab920d12a"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>Susceptibility Testing
+</title>
+                           <text>
+                              <paragraph>For specific information regarding susceptibility test interpretive criteria and associated test methods and quality control standards recognized by FDA for this drug, please see: https://www.fda.gov/STIC.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20180329"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s12">
+               <id root="168dbada-abd8-4afb-be39-ffa7dfcc1246"/>
+               <code code="34067-9" codeSystem="2.16.840.1.113883.6.1" displayName="INDICATIONS &amp; USAGE SECTION"/>
+               <title>INDICATIONS AND USAGE
+</title>
+               <text>
+                  <paragraph>Amikacin Sulfate Injection, USP is indicated in the short-term treatment of serious infections due to susceptible strains of Gram-negative bacteria, including <content styleCode="italics">Pseudomonas</content> species, <content styleCode="italics">Escherichia coli</content>, species of indole-positive and indole-negative <content styleCode="italics">Proteus</content>, <content styleCode="italics">Providencia</content> species, <content styleCode="italics">Klebsiella-Enterobacter-Serratia</content> species, and <content styleCode="italics">Acinetobacter</content> (<content styleCode="italics">Mima-Herellea</content>) species.
+</paragraph>
+                  <paragraph>Clinical studies have shown Amikacin Sulfate Injection, USP to be effective in bacterial septicemia (including neonatal sepsis); in serious infections of the respiratory tract, bones and joints, central nervous system (including meningitis) and skin and soft tissue; intra-abdominal infections (including peritonitis); and in burns and postoperative infections (including post-vascular surgery). Clinical studies have shown amikacin also to be effective in serious complicated and recurrent urinary tract infections due to those organisms. Aminoglycosides, including Amikacin Sulfate Injection, USP are not indicated in uncomplicated initial episodes of urinary tract infections unless the causative organisms are not susceptible to antibiotics having less potential toxicity.
+</paragraph>
+                  <paragraph>Bacteriologic studies should be performed to identify causative organisms and their susceptibilities to amikacin. Amikacin may be considered as initial therapy in suspected Gram-negative infections and therapy may be instituted before obtaining the results of susceptibility testing. Clinical trials demonstrated that amikacin was effective in infections caused by gentamicin and/or tobramycin-resistant strains of Gram-negative organisms, particularly <content styleCode="italics">Proteus rettgeri</content>, <content styleCode="italics">Providencia stuartii</content>, <content styleCode="italics">Serratia marcescens</content>, and <content styleCode="italics">Pseudomonas aeruginosa</content>. The decision to continue therapy with the drug should be based on results of the susceptibility tests, the severity of the infection, the response of the patient and the important additional considerations contained in the <content styleCode="bold">
+                        <linkHtml href="#s2">WARNINGS</linkHtml>
+                     </content> box above.
+</paragraph>
+                  <paragraph>Amikacin has also been shown to be effective in staphylococci infections and may be considered as initial therapy under certain conditions in the treatment of known or suspected staphylococcal disease such as, severe infections where the causative organism may be either a Gram-negative bacterium or a staphylococcus, infections due to susceptible strains of staphylococci in patients allergic to other antibiotics, and in mixed staphylococci/Gram-negative infections.
+</paragraph>
+                  <paragraph>In certain severe infections such as neonatal sepsis, concomitant therapy with a penicillin-type drug may be indicated because of the possibility of infections due to Gram-positive organisms such as streptococci or pneumococci.
+</paragraph>
+                  <paragraph>To reduce the development of drug-resistant bacteria and maintain the effectiveness of amikacin and other antibacterial drugs, amikacin should be used only to treat or prevent infections that are proven or strongly suspected to be caused by susceptible bacteria. When culture and susceptibility information are available, they should be considered in selecting or modifying antibacterial therapy. In the absence of such data, local epidemiology and susceptibility patterns may contribute to the empiric selection of therapy.
+</paragraph>
+               </text>
+               <effectiveTime value="20140527"/>
+            </section>
+         </component>
+         <component>
+            <section ID="s13">
+               <id root="96e3c4ba-53bc-4d28-8055-bd9fc48b547a"/>
+               <code code="34070-3" codeSystem="2.16.840.1.113883.6.1" displayName="CONTRAINDICATIONS SECTION"/>
+               <title>CONTRAINDICATIONS
+</title>
+               <text>
+                  <paragraph>A history of hypersensitivity to amikacin is a contraindication for its use. A history of hypersensitivity or serious toxic reactions to aminoglycosides may contraindicate the use of any other aminoglycoside because of the known cross-sensitivities of patients to drugs in this class.
+</paragraph>
+               </text>
+               <effectiveTime value="20140527"/>
+            </section>
+         </component>
+         <component>
+            <section ID="s14">
+               <id root="fcd6da94-6c3d-4749-b3a4-543ccae2a315"/>
+               <code code="34071-1" codeSystem="2.16.840.1.113883.6.1" displayName="WARNINGS SECTION"/>
+               <title>WARNINGS
+</title>
+               <text>
+                  <paragraph>See <content styleCode="bold">
+                        <linkHtml href="#s2">WARNINGS</linkHtml>
+                     </content> box above.
+</paragraph>
+                  <paragraph>Aminoglycosides can cause fetal harm when administered to a pregnant woman. Aminoglycosides cross the placenta and there have been several reports of total irreversible, bilateral congenital deafness in children whose mothers received streptomycin during pregnancy. Although serious side effects to the fetus or newborns have not been reported in the treatment of pregnant women with other aminoglycosides, the potential for harm exists. Reproduction studies of amikacin have been performed in rats and mice and revealed no evidence of impaired fertility or harm to the fetus due to amikacin. There are no well controlled studies in pregnant women, but investigational experience does not include any positive evidence of adverse effects to the fetus. If this drug is used during pregnancy, or if the patient becomes pregnant while taking this drug, the patient should be apprised of the potential hazard to the fetus.
+</paragraph>
+                  <paragraph>Contains sodium metabisulfite, a sulfite that may cause allergic-type reactions including anaphylactic symptoms and life-threatening or less severe asthmatic episodes in certain susceptible people. The overall prevalence of sulfite sensitivity in the general population is unknown and probably low. Sulfite sensitivity is seen more frequently in asthmatic than nonasthmatic people.
+</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">Clostridium difficile</content> associated diarrhea (CDAD) has been reported with use of nearly all antibacterial agents, including Amikacin Sulfate Injection, USP, and may range in severity from mild diarrhea to fatal colitis. Treatment with antibacterial agents alters the normal flora of the colon leading to overgrowth of <content styleCode="italics">C. difficile</content>.
+</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">C. difficile</content> produces toxins A and B which contribute to the development of CDAD. Hypertoxin producing strains of <content styleCode="italics">C. difficile</content> cause increased morbidity and mortality, as these infections can be refractory to antimicrobial therapy and may require colectomy. CDAD must be considered in all patients who present with diarrhea following antibiotic use. Careful medical history is necessary since CDAD has been reported to occur over two months after the administration of antibacterial agents.
+</paragraph>
+                  <paragraph>If CDAD is suspected or confirmed, ongoing antibiotic use not directed against <content styleCode="italics">C. difficile</content> may need to be discontinued. Appropriate fluid and electrolyte management, protein supplementation, antibiotic treatment of <content styleCode="italics">C. difficile</content>, and surgical evaluation should be instituted as clinically indicated.
+</paragraph>
+               </text>
+               <effectiveTime value="20140527"/>
+               <component>
+                  <section ID="e16">
+                     <id root="07e0a84f-cc04-43e1-a413-bc137c3129e7"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <text>
+                        <paragraph>
+                           <content styleCode="underline">Risk of Ototoxicity Due to Mitochondrial DNA Variants</content>
+                        </paragraph>
+                        <paragraph>Cases of ototoxicity with aminoglycosides have been observed in patients with certain variants in the mitochondrially encoded 12S rRNA gene (<content styleCode="italics">MT-RNR1</content>), particularly the m. 1555A&gt;G variant. Ototoxicity occurred in some patients even when their aminoglycoside serum levels were within the recommended range. Mitochondrial DNA variants are present in less than 1% of the general US population, and the proportion of the variant carriers who may develop ototoxicity as well as the severity of ototoxicity is unknown. In case of known maternal history of ototoxicity due to aminoglycoside use or a known mitochondrial DNA variant in the patient, consider alternative treatments other than aminoglycosides unless the increased risk of permanent hearing loss is outweighed by the severity of infection and lack of safe and effective alternative therapies.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20221005"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s15">
+               <id root="e522d26a-7be0-4ce3-97a6-13a70ce458e2"/>
+               <code code="42232-9" codeSystem="2.16.840.1.113883.6.1" displayName="PRECAUTIONS SECTION"/>
+               <title>PRECAUTIONS
+</title>
+               <effectiveTime value="20140527"/>
+               <component>
+                  <section ID="s16">
+                     <id root="a72860ce-4ab4-4d86-9c58-da1f85292366"/>
+                     <code code="34072-9" codeSystem="2.16.840.1.113883.6.1" displayName="GENERAL PRECAUTIONS SECTION"/>
+                     <title>General
+</title>
+                     <text>
+                        <paragraph>Prescribing amikacin in the absence of a proven or strongly suspected bacterial infection or a prophylactic indication is unlikely to provide benefit to the patient and increases the risk of the development of drug-resistant bacteria.
+</paragraph>
+                        <paragraph>Aminoglycosides are quickly and almost totally absorbed when they are applied topically, except to the urinary bladder, in association with surgical procedures. Irreversible deafness, renal failure, and death due to neuromuscular blockade have been reported following irrigation of both small and large surgical fields with an aminoglycoside preparation.
+</paragraph>
+                        <paragraph>Amikacin Sulfate Injection, USP is potentially nephrotoxic, ototoxic and neurotoxic. The concurrent or serial use of other ototoxic or nephrotoxic agents should be avoided either systemically or topically because of the potential for additive effects. Increased nephrotoxicity has been reported following concomitant parenteral administration of aminoglycoside antibiotics and cephalosporins. Concomitant cephalosporins may spuriously elevate creatinine determinations.
+</paragraph>
+                        <paragraph>Since amikacin is present in high concentrations in the renal excretory system, patients should be well hydrated to minimize chemical irritation of the renal tubules. Kidney function should be assessed by the usual methods prior to starting therapy and daily during the course of treatment.
+</paragraph>
+                        <paragraph>If signs of renal irritation appear (casts, white or red cells, or albumin), hydration should be increased. A reduction in dosage (see <content styleCode="bold">
+                              <linkHtml href="#s28">DOSAGE AND ADMINISTRATION</linkHtml>
+                           </content>) may be desirable if other evidence of renal dysfunction occurs such as decreased creatinine clearance; decreased urine specific gravity; increased BUN, creatinine, or oliguria. If azotemia increases or if a progressive decrease in urinary output occurs, treatment should be stopped.
+</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Note: When patients are well-hydrated and kidney function is normal the risk of nephrotoxic reactions with amikacin is low if the dosage recommendations (see <linkHtml href="#s28">DOSAGE AND ADMINISTRATION</linkHtml>) are not exceeded</content>.
+</paragraph>
+                        <paragraph>Elderly patients may have reduced renal function which may not be evident in routine screening tests such as BUN or serum creatinine. A creatinine clearance determination may be more useful. Monitoring of renal function during treatment with aminoglycosides is particularly important.
+</paragraph>
+                        <paragraph>Aminoglycosides should be used with caution in patients with muscular disorders such as myasthenia gravis or parkinsonism since these drugs may aggravate muscle weakness because of their potential curare-like effect on the neuromuscular junction.
+</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">In vitro</content> mixing of aminoglycosides with beta-lactam antibiotics (penicillin or cephalosporin) may result in a significant mutual inactivation. A reduction in serum half-life or serum level may occur when an aminoglycoside or penicillin-type drug is administered by separate routes. Inactivation of the aminoglycoside is clinically significant only in patients with severely impaired renal function. Inactivation may continue in specimens of body fluids collected for assay, resulting in inaccurate aminoglycoside readings. Such specimens should be properly handled (assayed promptly, frozen, or treated with beta-lactamase).
+</paragraph>
+                        <paragraph>Cross-allergenicity among aminoglycosides has been demonstrated.
+</paragraph>
+                        <paragraph>As with other antibiotics, the use of amikacin may result in overgrowth of nonsusceptible organisms. If this occurs, appropriate therapy should be instituted.
+</paragraph>
+                        <paragraph>Aminoglycosides should not be given concurrently with potent diuretics (see <content styleCode="bold">
+                              <linkHtml href="#s2">WARNINGS</linkHtml>
+                           </content> box).
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s17">
+                     <id root="15026806-df65-4260-9a1c-c0d9e53a6fe6"/>
+                     <code code="34076-0" codeSystem="2.16.840.1.113883.6.1" displayName="INFORMATION FOR PATIENTS SECTION"/>
+                     <title>Information for Patients
+</title>
+                     <text>
+                        <paragraph>Patients should be counseled that antibacterial drugs including amikacin should only be used to treat bacterial infections. They do not treat viral infections (e.g., the common cold). When amikacin is prescribed to treat a bacterial infection, patients should be told that although it is common to feel better early in the course of therapy, the medication should be taken exactly as directed. Skipping doses or not completing the full course of therapy may (1) decrease the effectiveness of the immediate treatment and (2) increase the likelihood that bacteria will develop resistance and will not be treatable by amikacin or other antibacterial drugs in the future.
+</paragraph>
+                        <paragraph>Diarrhea is a common problem caused by antibiotics which usually ends when the antibiotic is discontinued. Sometimes after starting treatment with antibiotics, patients can develop watery and bloody stools (with or without stomach cramps and fever) even as late as two or more months after having taken the last dose of the antibiotic. If this occurs, patients should contact their physician as soon as possible.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s18">
+                     <id root="53855194-ee9d-4d16-aecd-8aa3e30622c7"/>
+                     <code code="34083-6" codeSystem="2.16.840.1.113883.6.1" displayName="CARCINOGENESIS &amp; MUTAGENESIS &amp; IMPAIRMENT OF FERTILITY SECTION"/>
+                     <title>Carcinogenesis, Mutagenesis, Impairment of Fertility
+</title>
+                     <text>
+                        <paragraph>Long term studies in animals to evaluate carcinogenic potential have not been performed, and mutagenicity has not been studied. Amikacin administered subcutaneously to rats at doses up to 4 times the human daily dose did not impair male or female fertility.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s19">
+                     <id root="ddd8f50e-bba9-41d1-b395-546fd7b6f7ff"/>
+                     <code code="42228-7" codeSystem="2.16.840.1.113883.6.1" displayName="PREGNANCY SECTION"/>
+                     <title>Pregnancy
+</title>
+                     <effectiveTime value="20260727"/>
+                     <component>
+                        <section ID="e19">
+                           <id root="130940f8-2c64-4c2b-846f-9fae23a1c479"/>
+                           <code code="34077-8" codeSystem="2.16.840.1.113883.6.1" displayName="TERATOGENIC EFFECTS SECTION"/>
+                           <text>
+                              <paragraph>Teratogenic Effects
+</paragraph>
+                              <paragraph>(See <content styleCode="bold">
+                                    <linkHtml href="#s14">WARNINGS</linkHtml>
+                                 </content> section.)
+</paragraph>
+                           </text>
+                           <effectiveTime value="20260727"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s20">
+                     <id root="86b8409f-4c9f-40e0-b2ee-70810741d00f"/>
+                     <code code="34080-2" codeSystem="2.16.840.1.113883.6.1" displayName="NURSING MOTHERS SECTION"/>
+                     <title>Nursing Mothers
+</title>
+                     <text>
+                        <paragraph>It is not known whether amikacin is excreted in human milk. Because many drugs are excreted in human milk and because of the potential for serious adverse reactions in nursing infants from amikacin, a decision should be made whether to discontinue nursing or to discontinue the drug, taking into account the importance of the drug to the mother.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s21">
+                     <id root="196644ae-db91-4480-8d54-4274b7269262"/>
+                     <code code="34081-0" codeSystem="2.16.840.1.113883.6.1" displayName="PEDIATRIC USE SECTION"/>
+                     <title>Pediatric Use
+</title>
+                     <text>
+                        <paragraph>Aminoglycosides should be used with caution in premature and neonatal infants because of the renal immaturity of these patients and the resulting prolongation of serum half-life of these drugs.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s22">
+               <id root="44b44af1-faaa-4b53-9850-69327d7340d0"/>
+               <code code="34084-4" codeSystem="2.16.840.1.113883.6.1" displayName="ADVERSE REACTIONS SECTION"/>
+               <title>ADVERSE REACTIONS
+</title>
+               <text>
+                  <paragraph>All aminoglycosides have the potential to induce auditory, vestibular, and renal toxicity and neuromuscular blockade (see <content styleCode="bold">
+                        <linkHtml href="#s2">WARNINGS</linkHtml>
+                     </content> box). They occur more frequently in patients with present or past history of renal impairment, of treatment with other ototoxic or nephrotoxic drugs, and in patients treated for longer periods and/or with higher doses than recommended.
+</paragraph>
+               </text>
+               <effectiveTime value="20140527"/>
+               <component>
+                  <section ID="s23">
+                     <id root="86f200d1-c22f-48c9-afe0-48c38540f5fb"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Neurotoxicity-Ototoxicity
+</title>
+                     <text>
+                        <paragraph>Toxic effects on the eighth cranial nerve can result in hearing loss, loss of balance, or both. Amikacin primarily affects auditory function. Cochlear damage includes high frequency deafness and usually occurs before clinical hearing loss can be detected.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s24">
+                     <id root="6114ea7d-67bd-4045-8741-fc3e081b7879"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Neurotoxicity-Neuromuscular Blockade
+</title>
+                     <text>
+                        <paragraph>Acute muscular paralysis and apnea can occur following treatment with aminoglycoside drugs.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s25">
+                     <id root="56423363-c78e-451e-b22f-fa43aff15e95"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Nephrotoxicity
+</title>
+                     <text>
+                        <paragraph>Elevation of serum creatinine, albuminuria, presence of red and white cells, casts, azotemia, and oliguria have been reported. Renal function changes are usually reversible when the drug is discontinued. As would be expected with any aminoglycoside, reports of toxic nephropathy and acute renal failure have been received during postmarketing surveillance.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s26">
+                     <id root="35811808-9146-45a6-8f95-61a12bc3021b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Other
+</title>
+                     <text>
+                        <paragraph>In addition to those described above, other adverse reactions which have been reported on rare occasions are skin rash, drug fever, headache, paresthesia, tremor, nausea and vomiting, eosinophilia, arthralgia, anemia, hypotension anemia, hypotension and hypomagnesemia. Macular infarction sometimes leading to permanent loss of vision has been reported following intravitreous administration (injection into the eye) of amikacin.
+</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">To report SUSPECTED ADVERSE REACTIONS, contact Sagent Pharmaceuticals at 1-866-625-1618 or FDA at 1-800-FDA-1088 or </content>
+                           <content styleCode="bold underline">www.fda.gov/medwatch</content>
+                           <content styleCode="bold">.</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20260727"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s27">
+               <id root="eeac5dd7-6aef-478c-b225-3f20c1172a97"/>
+               <code code="34088-5" codeSystem="2.16.840.1.113883.6.1" displayName="OVERDOSAGE SECTION"/>
+               <title>OVERDOSAGE
+</title>
+               <text>
+                  <paragraph>In the event of overdosage or toxic reaction, peritoneal dialysis or hemodialysis will aid in the removal of amikacin from the blood. In the newborn infant, exchange transfusion may also be considered.
+</paragraph>
+               </text>
+               <effectiveTime value="20140527"/>
+            </section>
+         </component>
+         <component>
+            <section ID="s28">
+               <id root="3a8d3f34-495c-430b-8af8-629002b66a18"/>
+               <code code="34068-7" codeSystem="2.16.840.1.113883.6.1" displayName="DOSAGE &amp; ADMINISTRATION SECTION"/>
+               <title>DOSAGE AND ADMINISTRATION
+</title>
+               <text>
+                  <paragraph>The patient's pretreatment body weight should be obtained for calculation of correct dosage. Amikacin Sulfate Injection, USP may be given intramuscularly or intravenously.
+</paragraph>
+                  <paragraph>The status of renal function should be estimated by measurement of the serum creatinine concentration or calculation of the endogenous creatinine clearance rate. The blood urea nitrogen (BUN) is much less reliable for this purpose. Reassessment of renal function should be made periodically during therapy.
+</paragraph>
+                  <paragraph>Whenever possible, amikacin concentrations in serum should be measured to assure adequate but not excessive levels. It is desirable to measure both peak and trough serum concentrations intermittently during therapy. Peak concentrations (30 to 90 minutes after injection) above 35 micrograms per mL and trough concentrations (just prior to the next dose) above 10 micrograms per mL should be avoided. Dosage should be adjusted as indicated.
+</paragraph>
+               </text>
+               <effectiveTime value="20140527"/>
+               <component>
+                  <section ID="s29">
+                     <id root="d4ac8b4d-eee6-4950-a847-f4edcd0cac09"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Intramuscular Administration for Patients with Normal Renal Function
+</title>
+                     <text>
+                        <paragraph>The recommended dosage for adults, children and older infants (see <content styleCode="bold">
+                              <linkHtml href="#s2">WARNINGS</linkHtml>
+                           </content> box) with normal renal function is 15 mg/kg/day divided into 2 or 3 equal doses administered at equally-divided intervals, i.e., 7.5 mg/kg q12h or 5 mg/kg q8h. Treatment of patients in the heavier weight classes should not exceed 1.5 gram/day.
+</paragraph>
+                        <paragraph>When amikacin is indicated in newborns (see <content styleCode="bold">
+                              <linkHtml href="#s2">WARNINGS</linkHtml>
+                           </content> box), it is recommended that a loading dose of 10 mg/kg be administered initially to be followed with 7.5 mg/kg every 12 hours.
+</paragraph>
+                        <paragraph>The usual duration of treatment is 7 to 10 days. It is desirable to limit the duration of treatment to short term whenever feasible. The total daily dose by all routes of administration should not exceed 15 mg/kg/day. In difficult and complicated infections where treatment beyond 10 days is considered, the use of amikacin should be reevaluated. If continued, amikacin serum levels, and renal, auditory, and vestibular functions should be monitored. At the recommended dosage level, uncomplicated infections due to amikacin-sensitive organisms should respond in 24 to 48 hours. If definite clinical response does not occur within 3 to 5 days, therapy should be stopped and the antibiotic susceptibility pattern of the invading organism should be rechecked. Failure of the infection to respond may be due to resistance of the organism or to the presence of septic foci requiring surgical drainage.
+</paragraph>
+                        <paragraph>When amikacin is indicated in uncomplicated urinary tract infections, a dose of 250 mg twice daily may be used.
+</paragraph>
+                        <table width="100%">
+                           <col width="20.180%" align="left"/>
+                           <col width="26.000%" align="left"/>
+                           <col width="24.320%" align="left"/>
+                           <col width="11.740%" align="left"/>
+                           <col width="17.760%" align="left"/>
+                           <tbody>
+                              <tr>
+                                 <td colspan="5" align="center" valign="top" styleCode="Toprule Botrule Lrule Rrule">
+                                    <content styleCode="bold">DOSAGE GUIDELINES</content>
+                                    <br/>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td colspan="5" align="center" valign="top" styleCode="Botrule Lrule Rrule">
+                                    <content styleCode="bold">ADULTS AND CHILDREN WITH NORMAL RENAL FUNCTION</content>
+                                    <br/>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td colspan="2" align="center" valign="top" styleCode="Botrule Lrule Rrule">
+                                    <content styleCode="bold">Patient Weight</content>
+                                 </td>
+                                 <td colspan="3" align="center" valign="top" styleCode="Botrule Rrule">
+                                    <content styleCode="bold">Dosage</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">
+                                    <content styleCode="bold">lbs</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">
+                                    <content styleCode="bold">kg</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">
+                                    <content styleCode="bold">7.5 mg/kg</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">
+                                    <content styleCode="bold">5 mg/kg</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">
+                                    <content styleCode="bold">q12h</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">
+                                    <content styleCode="bold">OR</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">
+                                    <content styleCode="bold">q8h</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule"> 
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">99
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">45
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">337.5 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">225 mg
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">110
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">50
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">375 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">250 mg
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">121
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">55
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">412.5 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">275 mg
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">132
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">60
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">450 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">300 mg
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">143
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">65
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">487.5 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">325 mg
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">154
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">70
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">525 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">350 mg
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">165
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">75
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">562.5 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">375 mg
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">176
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">80
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">600 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">400 mg
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">187
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">85
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">637.5 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">425 mg
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">198
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">90
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">675 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">450 mg
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">209
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">95
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">712.5 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">475 mg
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">220
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">100
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">750 mg
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">500 mg
+</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s30">
+                     <id root="9d71bb1c-7a30-463a-af7d-156f7b1100ad"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Intramuscular Administration for Patients with Impaired Renal Function
+</title>
+                     <text>
+                        <paragraph>Whenever possible, serum amikacin concentrations should be monitored by appropriate assay procedures. Doses may be adjusted in patients with impaired renal function either by administering normal doses at prolonged intervals or by administrating reduced doses at a fixed interval.
+</paragraph>
+                        <paragraph>Both methods are based on the patient's creatinine clearance or serum creatinine values since these have been found to correlate with aminoglycoside half-lives in patients with diminished renal function. These dosage schedules must be used in conjunction with careful clinical and laboratory observations of the patient and should be modified as necessary. Neither method should be used when dialysis is being performed.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                     <component>
+                        <section ID="s31">
+                           <id root="376e9ea2-a028-403a-98dc-10382e49fb8b"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>Normal Dosage at Prolonged Intervals
+</title>
+                           <text>
+                              <paragraph>If the creatinine clearance rate is not available and the patient's condition is stable, a dosage interval in hours for the normal dose can be calculated by multiplying the patient's serum creatinine by 9, e.g., if the serum creatinine concentration is 2 mg per 100 mL, the recommended single dose (7.5 mg/kg) should be administered every 18 hours.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20180329"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s32">
+                           <id root="f89a8eea-1314-4f5a-af4b-f7675b03a3e4"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>Reduced Dosage at Fixed Time Intervals
+</title>
+                           <text>
+                              <paragraph>When renal function is impaired and it is desirable to administer amikacin at a fixed time interval, dosage must be reduced. In these patients, serum amikacin concentrations should be measured to assure accurate administration of amikacin and to avoid concentrations above 35 mcg/mL. If serum assay determinations are not available and the patient's condition is stable, serum creatinine and creatinine clearance values are the most readily available indicators of the degree of renal impairment to use as a guide for dosage.
+</paragraph>
+                              <paragraph>First, initiate therapy by administering a normal dose, 7.5 mg/kg, as a loading dose. This loading dose is the same as the normally recommended dose which would be calculated for a patient with a normal renal function as described above.
+</paragraph>
+                              <paragraph>To determine the size of maintenance doses administered every 12 hours, the loading dose should be reduced in proportion to the reduction in the patient's creatinine clearance rate:
+</paragraph>
+                              <paragraph>
+                                 <renderMultiMedia ID="f02" referencedObject="mm02"/>
+                              </paragraph>
+                              <paragraph>An alternate rough guide for determining reduced dosage at 12-hour intervals (for patients whose steady state serum creatinine values are known) is to divide the normally recommended dose by the patient's serum creatinine.
+</paragraph>
+                              <paragraph>The above dosage schedules are not intended to be rigid recommendations but are provided as guides to dosage when the measurement of amikacin serum levels is not feasible.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20260727"/>
+                           <component>
+                              <observationMedia ID="mm02">
+                                 <text>Creatinine Clearance Rate
+</text>
+                                 <value xsi:type="ED" mediaType="image/jpeg">
+                                    <reference value="ami06-0008-02.jpg"/>
+                                 </value>
+                              </observationMedia>
+                           </component>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s33">
+                     <id root="0e8575a3-8c31-4f66-8df9-447a0599eae5"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Intravenous Administration
+</title>
+                     <text>
+                        <paragraph>The individual dose, the total daily dose, and the total cumulative dose of amikacin sulfate are identical to the dose recommended for intramuscular administration. The solution for intravenous use is prepared by adding the contents of a 500 mg vial to 100 or 200 mL of sterile diluent such as 0.9% sodium chloride injection or 5% dextrose injection or any of the compatible solutions listed below.
+</paragraph>
+                        <paragraph>The solution is administered to adults over a 30 to 60 minute period. The total daily dose should not exceed 15 mg/kg/day and may be divided into either 2 or 3 equally-divided doses at equally-divided intervals.
+</paragraph>
+                        <paragraph>In pediatric patients the amount of fluid used will depend on the amount of amikacin ordered for the patient. It should be a sufficient amount to infuse the Amikacin Sulfate Injection, USP over a 30 to 60 minute period. Infants should receive a 1 to 2 hour infusion.
+</paragraph>
+                        <paragraph>Amikacin should not be physically premixed with other drugs but should be administered separately according to the recommended dose and route.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20140527"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s34">
+                     <id root="9e8a4fa5-7412-449c-a84b-1b8e40137816"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Stability in IV Fluids
+</title>
+                     <text>
+                        <paragraph>Amikacin sulfate is stable for 24 hours at room temperature at concentrations of 0.25 and 5 mg per mL in the following solutions:
+</paragraph>
+                        <paragraph>5% Dextrose Injection, USP<br/>5% Dextrose and 0.2% Sodium Chloride Injection, USP<br/>5% Dextrose and 0.45% Sodium Chloride Injection, USP<br/>0.9% Sodium Chloride Injection, USP<br/>Lactated Ringer's Injection, USP<br/>Normosol<sup>®</sup> M in 5% Dextrose Injection (or Plasma-Lyte 56 Injection in 5% Dextrose in Water)<br/>Normosol<sup>®</sup> R in 5% Dextrose Injection (or Plasma-Lyte 148 Injection in 5% Dextrose in Water)
+</paragraph>
+                        <paragraph>In the above solutions with Amikacin Sulfate Injection concentrations of 0.25 and 5 mg per mL, solutions aged for 60 days at 4°C and then stored at 25°C had utility times of 24 hours.
+</paragraph>
+                        <paragraph>At the same concentrations, solutions frozen and aged for 30 days at -15°C, thawed, and stored at 25°C  had utility times of 24 hours.
+</paragraph>
+                        <paragraph>Parenteral drug products should be inspected visually for particulate matter and discoloration prior to administration whenever the solution and container permit.
+</paragraph>
+                        <paragraph>Aminoglycosides administered by any of the above routes should not be physically premixed with other drugs but should be administered separately.
+</paragraph>
+                        <paragraph>Because of the potential toxicity of aminoglycosides, “fixed dosage” recommendations which are not based upon body weight are not advised. Rather, it is essential to calculate the dosage to fit the needs of each patient.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20180329"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s35">
+               <id root="f49a4cb3-5017-458d-b793-d5d0100fdfa0"/>
+               <code code="34069-5" codeSystem="2.16.840.1.113883.6.1" displayName="HOW SUPPLIED SECTION"/>
+               <title>HOW SUPPLIED
+</title>
+               <text>
+                  <paragraph>Amikacin Sulfate Injection, USP is supplied as follows:
+</paragraph>
+                  <table width="100%">
+                     <col width="19.767%" align="left"/>
+                     <col width="53.933%" align="left"/>
+                     <col width="26.300%" align="left"/>
+                     <tbody>
+                        <tr>
+                           <td align="justify" valign="top">
+                              <content styleCode="bold">NDC</content>
+                           </td>
+                           <td align="justify" valign="top">
+                              <content styleCode="bold">Amikacin Sulfate Injection, USP (250 mg per mL)</content>
+                           </td>
+                           <td align="justify" valign="top">
+                              <content styleCode="bold">Package Factor</content>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="justify" valign="top">25021-173-02
+</td>
+                           <td align="justify" valign="top">500 mg per 2 mL Single-Dose* Vial
+</td>
+                           <td align="justify" valign="top">10 vials per carton
+</td>
+                        </tr>
+                        <tr>
+                           <td align="justify" valign="top">25021-173-04
+</td>
+                           <td align="justify" valign="top">1 gram per 4 mL Vial
+</td>
+                           <td align="justify" valign="top">10 vials per carton
+</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>Amikacin Sulfate Injection, USP is supplied as a colorless solution which requires no refrigeration. At times the solution may become a very pale yellow; this does not indicate a decrease in potency.
+</paragraph>
+               </text>
+               <effectiveTime value="20180329"/>
+               <component>
+                  <section ID="s36">
+                     <id root="2546fee9-ce32-4b30-a1fa-0ec38cc03047"/>
+                     <code code="44425-7" codeSystem="2.16.840.1.113883.6.1" displayName="STORAGE AND HANDLING SECTION"/>
+                     <title>Storage Conditions
+</title>
+                     <text>
+                        <paragraph>Store at 20° to 25°C (68° to 77°F). [See USP Controlled Room Temperature.]
+</paragraph>
+                        <paragraph>*Discard unused portion.
+</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Sterile, Nonpyrogenic, Preservative-free.</content>
+                           <br/>
+                           <content styleCode="bold">The container closure is not made with natural rubber latex.</content>
+                        </paragraph>
+                        <paragraph>Brands listed are the trademarks of their respective owners.
+</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">sagent</content>
+                           <sup>®</sup>
+                        </paragraph>
+                        <paragraph>Mfd. for SAGENT Pharmaceuticals<br/>Schaumburg, IL 60173 (USA)<br/>Made in Spain<br/>©2026 Sagent Pharmaceuticals
+</paragraph>
+                        <paragraph>Revised: April 2026
+</paragraph>
+                     </text>
+                     <effectiveTime value="20260727"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s41">
+               <id root="c1556372-579d-4802-9e34-9365f12deaf6"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <text>
+                  <paragraph>PACKAGE LABEL – PRINCIPAL DISPLAY PANEL – Vial Label
+</paragraph>
+                  <paragraph>NDC 25021-173-02
+</paragraph>
+                  <paragraph>Rx only
+</paragraph>
+                  <paragraph>Amikacin Sulfate Injection, USP
+</paragraph>
+                  <paragraph>500 mg per 2 mL
+</paragraph>
+                  <paragraph>(250 mg per mL)
+</paragraph>
+                  <paragraph>Equivalent to Amikacin
+</paragraph>
+                  <paragraph>For Intramuscular or Intravenous Use
+</paragraph>
+                  <paragraph>2 mL Single-Dose Vial.
+</paragraph>
+                  <renderMultiMedia ID="f03" referencedObject="mm03"/>
+               </text>
+               <effectiveTime value="20260727"/>
+               <component>
+                  <observationMedia ID="mm03">
+                     <text>PACKAGE LABEL – PRINCIPAL DISPLAY PANEL – Vial Label
+</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ami06-0008-03.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s42">
+               <id root="df30c9b0-fe35-4f76-9dcf-095e11669920"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <text>
+                  <paragraph>PACKAGE LABEL – PRINCIPAL DISPLAY PANEL – Vial Label
+</paragraph>
+                  <paragraph>NDC 25021-173-04
+</paragraph>
+                  <paragraph>Rx only
+</paragraph>
+                  <paragraph>Amikacin Sulfate Injection, USP
+</paragraph>
+                  <paragraph>1 gram per 4 mL
+</paragraph>
+                  <paragraph>(250 mg per mL)
+</paragraph>
+                  <paragraph>Equivalent to Amikacin
+</paragraph>
+                  <paragraph>For Intramuscular or Intravenous Use
+</paragraph>
+                  <paragraph>4 mL Vial
+</paragraph>
+                  <renderMultiMedia ID="f04" referencedObject="mm04"/>
+               </text>
+               <effectiveTime value="20260727"/>
+               <component>
+                  <observationMedia ID="mm04">
+                     <text>PACKAGE LABEL – PRINCIPAL DISPLAY PANEL – Vial Label
+</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ami06-0008-04.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+      </structuredBody>
+   </component>
+</document>

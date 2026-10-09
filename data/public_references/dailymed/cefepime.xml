@@ -1,0 +1,2846 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://www.accessdata.fda.gov/spl/stylesheet/spl.xsl"?>
+<document xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 https://www.accessdata.fda.gov/spl/schema/spl.xsd">
+   <id root="f5f4ce71-3a77-4670-805b-4c346a0f9bea"/>
+   <code code="34391-3" codeSystem="2.16.840.1.113883.6.1" displayName="HUMAN PRESCRIPTION DRUG LABEL"/>
+   <title>These highlights do not include all the information needed to use CEFEPIME FOR INJECTION safely and effectively. See full prescribing information for CEFEPIME FOR INJECTION.<br/>
+      <br/>CEFEPIME for injection, for intravenous or intramuscular use<br/>Initial U.S. Approval: 1996
+</title>
+   <effectiveTime value="20260803"/>
+   <setId root="de477f37-40f6-4295-ae72-a2ee36a8922e"/>
+   <versionNumber value="24"/>
+   <author>
+      <time/>
+      <assignedEntity>
+         <representedOrganization>
+            <id extension="080579617" root="1.3.6.1.4.1.519.1"/>
+            <name>Sagent Pharmaceuticals</name>
+            <assignedEntity>
+               <assignedOrganization/>
+            </assignedEntity>
+         </representedOrganization>
+      </assignedEntity>
+   </author>
+   <component>
+      <structuredBody>
+         <component>
+            <section ID="dcl-dpl">
+               <id root="fa726441-469f-45e2-acf0-e019422de1bc"/>
+               <code code="48780-1" codeSystem="2.16.840.1.113883.6.1" displayName="SPL PRODUCT DATA ELEMENTS SECTION"/>
+               <effectiveTime value="20260803"/>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code code="25021-121" codeSystem="2.16.840.1.113883.6.69"/>
+                        <name>cefepime</name>
+                        <formCode code="C42974" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INJECTION, POWDER, FOR SOLUTION"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>cefepime hydrochloride</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <ingredient classCode="ACTIM">
+                           <quantity>
+                              <numerator value="1" unit="g"/>
+                              <denominator value="20" unit="mL"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="I8X1O0607P" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>cefepime hydrochloride</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="807PW4VQE3" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>cefepime</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="94ZLA3W45F" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>arginine</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator value="20" unit="mL"/>
+                              <denominator value="1" unit="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43226" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="VIAL"/>
+                              <asContent>
+                                 <quantity>
+                                    <numerator value="10" unit="1"/>
+                                    <denominator value="1" unit="1"/>
+                                 </quantity>
+                                 <containerPackagedProduct>
+                                    <code code="25021-121-20" codeSystem="2.16.840.1.113883.6.69"/>
+                                    <formCode code="C43182" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="CARTON"/>
+                                 </containerPackagedProduct>
+                                 <subjectOf>
+                                    <marketingAct>
+                                       <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                       <statusCode code="active"/>
+                                       <effectiveTime>
+                                          <low value="20080501"/>
+                                       </effectiveTime>
+                                    </marketingAct>
+                                 </subjectOf>
+                              </asContent>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV" displayName="Type 0: Not a Combination Product"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20080501"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <subjectOf>
+                        <approval>
+                           <id extension="ANDA065441" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73584" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ANDA"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38276" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INTRAVENOUS"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C28161" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INTRAMUSCULAR"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code code="25021-122" codeSystem="2.16.840.1.113883.6.69"/>
+                        <name>cefepime</name>
+                        <formCode code="C42974" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INJECTION, POWDER, FOR SOLUTION"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>cefepime hydrochloride</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <ingredient classCode="ACTIM">
+                           <quantity>
+                              <numerator value="2" unit="g"/>
+                              <denominator value="20" unit="mL"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="I8X1O0607P" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>cefepime hydrochloride</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="807PW4VQE3" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>cefepime</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="94ZLA3W45F" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>arginine</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator value="20" unit="mL"/>
+                              <denominator value="1" unit="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43226" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="VIAL"/>
+                              <asContent>
+                                 <quantity>
+                                    <numerator value="10" unit="1"/>
+                                    <denominator value="1" unit="1"/>
+                                 </quantity>
+                                 <containerPackagedProduct>
+                                    <code code="25021-122-50" codeSystem="2.16.840.1.113883.6.69"/>
+                                    <formCode code="C43182" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="CARTON"/>
+                                 </containerPackagedProduct>
+                                 <subjectOf>
+                                    <marketingAct>
+                                       <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                       <statusCode code="active"/>
+                                       <effectiveTime>
+                                          <low value="20080501"/>
+                                       </effectiveTime>
+                                    </marketingAct>
+                                 </subjectOf>
+                              </asContent>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV" displayName="Type 0: Not a Combination Product"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20080501"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <subjectOf>
+                        <approval>
+                           <id extension="ANDA065441" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73584" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ANDA"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38276" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="INTRAVENOUS"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+            </section>
+         </component>
+         <component>
+            <section ID="s1">
+               <id root="259316c3-fff3-4059-91c1-671bd9410699"/>
+               <code code="34067-9" codeSystem="2.16.840.1.113883.6.1" displayName="INDICATIONS &amp; USAGE SECTION"/>
+               <title>1 INDICATIONS AND USAGE
+</title>
+               <effectiveTime value="20210929"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <paragraph>Cefepime for Injection is a cephalosporin antibacterial indicated for the treatment of the following infections caused by susceptible strains of the designated microorganisms:
+</paragraph>
+                        <list listType="unordered" styleCode="Disc">
+                           <item>Pneumonia. (<linkHtml href="#s2">1.1</linkHtml>)
+</item>
+                           <item>Empiric therapy for febrile neutropenic patients. (<linkHtml href="#s3">1.2</linkHtml>)
+</item>
+                           <item>Uncomplicated and complicated urinary tract infections (including pyelonephritis). (<linkHtml href="#s4">1.3</linkHtml>)
+</item>
+                           <item>Uncomplicated skin and skin structure infections. (<linkHtml href="#s5">1.4</linkHtml>)
+</item>
+                           <item>Complicated intra-abdominal infections (used in combination with metronidazole) in adults. (<linkHtml href="#s6">1.5</linkHtml>)
+</item>
+                        </list>
+                        <paragraph>To reduce the development of drug-resistant bacteria and maintain the effectiveness of Cefepime for Injection and other antibacterial drugs, Cefepime for Injection should be used only to treat or prevent infections that are proven or strongly suspected to be caused by bacteria. (<linkHtml href="#s7">1.6</linkHtml>)
+</paragraph>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="s2">
+                     <id root="14843b03-097f-4cfe-a18c-de6835bfe813"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>1.1 Pneumonia
+</title>
+                     <text>
+                        <paragraph>Cefepime for Injection is indicated in the treatment of pneumonia (moderate to severe) caused by susceptible strains of <content styleCode="italics">Streptococcus pneumoniae</content>, including cases associated with concurrent bacteremia, <content styleCode="italics">Pseudomonas aeruginosa</content>, <content styleCode="italics">Klebsiella pneumoniae</content>, or <content styleCode="italics">Enterobacter</content> species.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20170627"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s3">
+                     <id root="b8c9821e-efde-42b3-97c5-c9cb54d6950d"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>1.2 Empiric Therapy for Febrile Neutropenic Patients
+</title>
+                     <text>
+                        <paragraph>Cefepime for Injection as monotherapy is indicated for empiric treatment of febrile neutropenic patients. In patients at high risk for severe infection (including patients with a history of recent bone marrow transplantation, with hypotension at presentation, with an underlying hematologic malignancy, or with severe or prolonged neutropenia), antimicrobial monotherapy may not be appropriate. Insufficient data exist to support the efficacy of cefepime monotherapy in such patients <content styleCode="italics">[see Clinical Studies (<linkHtml href="#s75">14.1</linkHtml>)]</content>.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20170627"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s4">
+                     <id root="b2784f37-f8e6-4c8b-bea9-f086f9556c4b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>1.3 Uncomplicated and Complicated Urinary Tract Infections (including pyelonephritis)
+</title>
+                     <text>
+                        <paragraph>Cefepime for Injection is indicated in the treatment of uncomplicated and complicated urinary tract infections (including pyelonephritis) caused by susceptible isolates of <content styleCode="italics">Escherichia coli</content> or <content styleCode="italics">Klebsiella pneumoniae</content>, when the infection is severe, or caused by <content styleCode="italics">Escherichia coli</content>, <content styleCode="italics">Klebsiella pneumoniae</content>, or <content styleCode="italics">Proteus mirabilis</content>, when the infection is mild to moderate, including cases associated with concurrent bacteremia with these bacteria.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20170627"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s5">
+                     <id root="ac45cc40-be7e-41ec-bd82-7213f07d343b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>1.4 Uncomplicated Skin and Skin Structure Infections
+</title>
+                     <text>
+                        <paragraph>Cefepime for Injection is indicated in the treatment of uncomplicated skin and skin structure infections caused by <content styleCode="italics">Staphylococcus aureus</content> (methicillin-susceptible isolates only) or <content styleCode="italics">Streptococcus pyogenes</content>.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20170627"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s6">
+                     <id root="3aed1925-20fb-4ccb-a39c-17cba45adc20"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>1.5 Complicated Intra-abdominal Infections (used in combination with metronidazole)
+</title>
+                     <text>
+                        <paragraph>Cefepime for Injection is indicated in the treatment of complicated intra-abdominal infections (used in combination with metronidazole) in adults caused by susceptible isolates of <content styleCode="italics">Escherichia coli</content>, viridans group streptococci, <content styleCode="italics">Pseudomonas aeruginosa</content>, <content styleCode="italics">Klebsiella pneumoniae</content>, <content styleCode="italics">Enterobacter</content> species, or <content styleCode="italics">Bacteroides fragilis [see Clinical Studies (<linkHtml href="#s76">14.2</linkHtml>)]</content>.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20210929"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s7">
+                     <id root="5a5dce47-14c5-4506-9e83-7adc9383cd40"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>1.6 Usage
+</title>
+                     <text>
+                        <paragraph>To reduce the development of drug-resistant bacteria and maintain the effectiveness of Cefepime for Injection and other antibacterial drugs, Cefepime for Injection should be used only to treat or prevent infections that are proven or strongly suspected to be caused by susceptible bacteria. When culture and susceptibility information are available, they should be considered in selecting or modifying antibacterial therapy. In the absence of such data, local epidemiology and susceptibility patterns may contribute to the empiric selection of therapy.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20210929"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s8">
+               <id root="d181ab79-179b-4ec2-9e4f-eeb0179c3797"/>
+               <code code="34068-7" codeSystem="2.16.840.1.113883.6.1" displayName="DOSAGE &amp; ADMINISTRATION SECTION"/>
+               <title>2 DOSAGE AND ADMINISTRATION
+</title>
+               <effectiveTime value="20210929"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <table width="100%">
+                           <col width="47.263%" align="left"/>
+                           <col width="16.371%" align="left"/>
+                           <col width="19.420%" align="left"/>
+                           <col width="16.946%" align="left"/>
+                           <tfoot>
+                              <tr>
+                                 <td colspan="4" align="left" valign="top">
+                                    <paragraph styleCode="footnote">
+                                       <sup>§</sup> For <content styleCode="italics">Pseudomonas aeruginosa</content>, use 2 g IV every 8 hours. (<linkHtml href="#s9">2.1</linkHtml>)
+</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td colspan="4" align="left" valign="top">
+                                    <paragraph styleCode="footnote">* Or until resolution of neutropenia. (<linkHtml href="#s9">2.1</linkHtml>)
+</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td colspan="4" align="left" valign="top">
+                                    <paragraph styleCode="footnote">** Intramuscular route of administration is indicated only for mild to moderate, uncomplicated or complicated UTIs due to <content styleCode="italics">E. coli</content>. (<linkHtml href="#s9">2.1</linkHtml>)
+</paragraph>
+                                 </td>
+                              </tr>
+                           </tfoot>
+                           <tbody>
+                              <tr>
+                                 <td colspan="4" align="center" valign="top" styleCode="Toprule Botrule Lrule Rrule">
+                                    <content styleCode="bold">Recommended Dosage in Adults with Creatinine Clearance (CrCL)</content>
+                                    <br/>
+                                    <content styleCode="bold">Greater Than 60 mL/min (<linkHtml href="#s9">2.1</linkHtml>)</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule Lrule Rrule">
+                                    <content styleCode="bold">Site and Type of Infection</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">
+                                    <content styleCode="bold">Dose</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">
+                                    <content styleCode="bold">Frequency</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">
+                                    <content styleCode="bold">Duration (days)</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top" styleCode="Botrule Lrule Rrule">Moderate to Severe Pneumonia<sup>§</sup>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">1 to 2 g IV
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">Every 8 to 12 hours
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">10
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top" styleCode="Botrule Lrule Rrule">Empiric Therapy for Febrile Neutropenic Patients
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">2 g IV
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">Every 8<br/>hours
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">7*
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top" styleCode="Botrule Lrule Rrule">Mild to Moderate<br/>Uncomplicated or Complicated<br/>Urinary Tract Infections
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">0.5 to 1 g<br/>IV/IM**
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">Every 12<br/>hours
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">7 to 10
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top" styleCode="Botrule Lrule Rrule">Severe Uncomplicated or<br/>Complicated Urinary Tract<br/>Infections
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">2 g IV
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">Every 12<br/>hours
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">10
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top" styleCode="Botrule Lrule Rrule">Moderate to Severe<br/>Uncomplicated Skin and Skin<br/>Structure Infections
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">2 g IV
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">Every 12<br/>hours
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">10
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top" styleCode="Botrule Lrule Rrule">Complicated Intra-abdominal<br/>Infections<sup>§</sup> (used in combination<br/>with metronidazole)
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">2 g IV
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">Every 12<br/>hours
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule Rrule">7 to 10
+</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>
+                           <content styleCode="underline">Pediatric Patients (2 months to 16 years)</content>
+                        </paragraph>
+                        <paragraph>Recommended dosage in pediatric with CrCL greater than 60 mL/min. (<linkHtml href="#s10">2.2</linkHtml>)
+</paragraph>
+                        <list listType="unordered" styleCode="Disc">
+                           <item>The usual recommended dosage in pediatric patients is 50 mg per kg per dose administered every 12 hours (every 8 hours for febrile neutropenia). (<linkHtml href="#s10">2.2</linkHtml>)
+</item>
+                           <item>
+                              <content styleCode="underline">Patients with Renal Impairment:</content> Adjust dose in patients with CrCL less than or equal to 60 mL/min. (<linkHtml href="#s11">2.3</linkHtml>)
+</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="s9">
+                     <id root="f7f575d5-2817-47fa-84de-0eb63a2e2a33"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.1 Dosage for Adults
+</title>
+                     <text>
+                        <paragraph>The recommended adult dosages and routes of administration are outlined in <linkHtml href="#t1">Table 1</linkHtml> below for patients with creatinine clearance greater than 60 mL/min. Administer cefepime for injection intravenously over approximately 30 minutes.
+</paragraph>
+                        <table ID="t1" width="100%">
+                           <caption>Table 1: Recommended Dosage Schedule for Cefepime for Injection in Adult Patients with Creatinine Clearance (CrCL) Greater Than 60 mL/min
+</caption>
+                           <col width="45.525%" align="left"/>
+                           <col width="16.075%" align="left"/>
+                           <col width="22.350%" align="left"/>
+                           <col width="16.050%" align="left"/>
+                           <tfoot>
+                              <tr>
+                                 <td colspan="4" align="left" valign="top">
+                                    <paragraph styleCode="footnote">* or until resolution of neutropenia. In patients whose fever resolves but who remain neutropenic for more than 7 days, the need for continued antimicrobial therapy should be re-evaluated frequently.
+</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td colspan="4" align="left" valign="top">
+                                    <paragraph styleCode="footnote">** Intramuscular route of administration is indicated only for mild to moderate, uncomplicated or complicated UTIs due to <content styleCode="italics">E. coli</content>.
+</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td colspan="4" align="left" valign="top">
+                                    <paragraph styleCode="footnote">
+                                       <sup>§</sup> For <content styleCode="italics">P. aeruginosa</content>, use 2 g IV every 8 hours.
+</paragraph>
+                                 </td>
+                              </tr>
+                           </tfoot>
+                           <tbody>
+                              <tr>
+                                 <td align="left" valign="top" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Site and Type of Infection</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Dose</content>
+                                    <br/>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Frequency</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Duration</content>
+                                    <br/>
+                                    <content styleCode="bold">(days)</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top" styleCode="Botrule">
+                                    <content styleCode="bold">Adults</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule">Intravenous<br/>(IV)/<br/>Intramuscular<br/>(IM)
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule"/>
+                                 <td align="center" valign="top" styleCode="Botrule"/>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top">Moderate to Severe Pneumonia<sup>§</sup>
+                                 </td>
+                                 <td align="center" valign="top">1 to 2 g IV<br/>
+                                 </td>
+                                 <td align="center" valign="top">Every 8 to 12 hours<br/>
+                                 </td>
+                                 <td align="center" valign="top">10<br/>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top">Empiric therapy for febrile neutropenic patients<br/>
+                                 </td>
+                                 <td align="center" valign="top">2 g IV
+</td>
+                                 <td align="center" valign="top">Every 8 hours
+</td>
+                                 <td align="center" valign="top">7*
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top">Mild to Moderate Uncomplicated or Complicated Urinary Tract Infections, including pyelonephritis<br/>
+                                 </td>
+                                 <td align="center" valign="top">0.5 to 1 g<br/>IV/IM**<br/>
+                                 </td>
+                                 <td align="center" valign="top">Every 12 hours
+</td>
+                                 <td align="center" valign="top">7 to 10
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top">Severe Uncomplicated or Complicated Urinary Tract Infections, including pyelonephritis<br/>
+                                 </td>
+                                 <td align="center" valign="top">2 g IV
+</td>
+                                 <td align="center" valign="top">Every 12 hours
+</td>
+                                 <td align="center" valign="top">10
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top">Moderate to Severe Uncomplicated Skin and Skin Structure Infections<br/>
+                                 </td>
+                                 <td align="center" valign="top">2 g IV
+</td>
+                                 <td align="center" valign="top">Every 12 hours
+</td>
+                                 <td align="center" valign="top">10
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top" styleCode="Botrule">Complicated Intra-abdominal Infections<sup>§</sup> (used in combination with metronidazole)
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule">2 g IV
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule">Every 8 to<br/>12 hours
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule">7 to 10
+</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s10">
+                     <id root="0df6bea7-5748-4bbb-a011-a04967ad663f"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.2 Pediatric Patients (2 months up to 16 years)
+</title>
+                     <text>
+                        <paragraph>The maximum dose for pediatric patients should not exceed the recommended adult dose.
+</paragraph>
+                        <paragraph>The usual recommended dosage in pediatric patients up to 40 kg in weight for durations as given above for adults is:
+</paragraph>
+                        <list listType="unordered" styleCode="Disc">
+                           <item>50 mg per kg per dose, administered every 12 hours for uncomplicated and complicated urinary tract infections (including pyelonephritis), uncomplicated skin and skin structure infections, and pneumonia (see below).
+</item>
+                           <item>For moderate to severe pneumonia due to <content styleCode="italics">P. aeruginosa</content> give 50 mg per kg per dose, every 8 hours.
+</item>
+                           <item>50 mg per kg per dose, every 8 hours for febrile neutropenic patients.
+</item>
+                        </list>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s11">
+                     <id root="ec2ae3da-69bb-444d-b596-a6406010eb7d"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.3 Dosage Adjustments in Patients with Renal Impairment
+</title>
+                     <effectiveTime value="20210929"/>
+                     <component>
+                        <section ID="s12">
+                           <id root="26066573-1382-422a-a5a5-b66973fb3050"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Adult Patients</content>
+                              </paragraph>
+                              <paragraph>Adjust the dose of cefepime for injection in patients with creatinine clearance less than or equal to 60 mL/min to compensate for the slower rate of renal elimination. In these patients, the recommended initial dose of cefepime for injection should be the same as in patients with CrCL greater than 60 mL/min except in patients undergoing hemodialysis. The recommended doses of cefepime for injection in patients with renal impairment are presented in <linkHtml href="#t2">Table 2</linkHtml>.
+</paragraph>
+                              <paragraph>When only serum creatinine is available, the following formula (Cockcroft and Gault equation)<sup>1</sup> may be used to estimate creatinine clearance. The serum creatinine should represent a steady state of renal function:
+</paragraph>
+                              <paragraph>
+                                 <renderMultiMedia ID="f01" referencedObject="mm01"/>
+                              </paragraph>
+                              <paragraph>Females: 0.85 x above value
+</paragraph>
+                              <table ID="t2" width="100%">
+                                 <caption>Table 2: Recommended Dosing Schedule for Cefepime for Injection in Adult Patients with Creatinine Clearance Less Than or Equal to 60 mL/min
+</caption>
+                                 <col width="31.234%" align="left"/>
+                                 <col width="16.977%" align="left"/>
+                                 <col width="17.876%" align="left"/>
+                                 <col width="16.977%" align="left"/>
+                                 <col width="16.937%" align="left"/>
+                                 <tfoot>
+                                    <tr>
+                                       <td colspan="5" align="left" valign="top">
+                                          <paragraph styleCode="footnote">*On hemodialysis days, cefepime should be administered following hemodialysis. Whenever possible, cefepime should be administered at the same time each day.
+</paragraph>
+                                       </td>
+                                    </tr>
+                                 </tfoot>
+                                 <tbody>
+                                    <tr>
+                                       <td align="justify" valign="top" styleCode="Toprule Botrule">
+                                          <content styleCode="bold">Creatinine Clearance (mL/min)</content>
+                                       </td>
+                                       <td colspan="4" align="center" valign="top" styleCode="Toprule Botrule">
+                                          <content styleCode="bold">Recommended Maintenance Schedule</content>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">Greater than 60
+</td>
+                                       <td align="center" valign="top">500 mg every<br/>12 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">1 g every<br/>12 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">2 g every<br/>12 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">2 g every<br/>8 hours<br/>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">30 to 60
+</td>
+                                       <td align="center" valign="top">500 mg<br/>every 24 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">1 g<br/>every 24 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">2 g<br/>every 24 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">2 g<br/>every 12 hours<br/>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">11 to 29
+</td>
+                                       <td align="center" valign="top">500 mg<br/>every 24 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">500 mg<br/>every 24 hours
+</td>
+                                       <td align="center" valign="top">1 g<br/>every 24 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">2 g<br/>every 24 hours<br/>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">Less than 11
+</td>
+                                       <td align="center" valign="top">250 mg<br/>every 24 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">250 mg<br/>every 24 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">500 mg<br/>every 24 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">1 g<br/>every 24 hours<br/>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">Continuous Ambulatory<br/>Peritoneal Dialysis (CAPD)
+</td>
+                                       <td align="center" valign="top">500 mg<br/>every 48 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">1 g<br/>every 48 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">2 g<br/>every 48 hours<br/>
+                                       </td>
+                                       <td align="center" valign="top">2 g<br/>every 48 hours<br/>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top" styleCode="Botrule">Hemodialysis*<br/> 
+</td>
+                                       <td colspan="3" align="center" valign="bottom" styleCode="Botrule">1 g on day 1, then 500 mg every 24 hours thereafter
+</td>
+                                       <td align="center" valign="top" styleCode="Botrule">1 g<br/>every 24 hours
+</td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                              <paragraph>In patients undergoing Continuous Ambulatory Peritoneal Dialysis (CAPD), cefepime for injection may be administered at the recommended doses at a dosage interval of every 48 hours (see <linkHtml href="#t2">Table 2</linkHtml>).
+</paragraph>
+                              <paragraph>In patients undergoing hemodialysis, approximately 68% of the total amount of cefepime present in the body at the start of dialysis will be removed during a 3-hour dialysis period. The dosage of cefepime for injection for hemodialysis patients is 1 g on Day 1 followed by 500 mg every 24 hours for the treatment of all infections except febrile neutropenia, which is 1 g every 24 hours.
+</paragraph>
+                              <paragraph>Cefepime for injection should be administered at the same time each day and following the completion of hemodialysis on hemodialysis days (see <linkHtml href="#t2">Table 2</linkHtml>).
+</paragraph>
+                           </text>
+                           <effectiveTime value="20250310"/>
+                        </section>
+                     </component>
+                     <component>
+                        <observationMedia ID="mm01">
+                           <text>Equation
+</text>
+                           <value xsi:type="ED" mediaType="image/jpeg">
+                              <reference value="cef0e-0014-01.jpg"/>
+                           </value>
+                        </observationMedia>
+                     </component>
+                     <component>
+                        <section ID="s13">
+                           <id root="b7d38026-72a3-4f1c-a7b2-cc44df694267"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Pediatric Patients</content>
+                              </paragraph>
+                              <paragraph>Data in pediatric patients with impaired renal function are not available; however, since cefepime pharmacokinetics are similar in adults and pediatric patients <content styleCode="italics">[see Clinical Pharmacology (<linkHtml href="#s56">12.3</linkHtml>)]</content>, changes in the dosing regimen proportional to those in adults (see <linkHtml href="#t1">Tables 1</linkHtml> and <linkHtml href="#t2">2</linkHtml>) are recommended for pediatric patients.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s14">
+                     <id root="a972224c-4012-40e0-989d-543ee250d5a9"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.4 Preparation of Cefepime for Injection for Intravenous Infusion
+</title>
+                     <effectiveTime value="20210929"/>
+                     <component>
+                        <section ID="s15">
+                           <id root="0c2c863f-7810-43d7-b24f-91b968fddf34"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Vials</content>
+                              </paragraph>
+                              <list listType="unordered" styleCode="Disc">
+                                 <item>Constitute the 1 gram or 2 grams vial, of cefepime for injection with the one of the following diluents:<list listType="unordered" styleCode="Circle">
+                                       <item>Sterile Water for Injection
+</item>
+                                       <item>0.9% Sodium Chloride Injection
+</item>
+                                       <item>5% Dextrose Injection
+</item>
+                                       <item>0.5% or 1% Lidocaine Hydrochloride Injection
+</item>
+                                       <item>Sterile Bacteriostatic Water for Injection with Parabens or Benzyl Alcohol<br/>
+                                          <br/>
+                                       </item>
+                                    </list>
+                                 </item>
+                                 <item>Dilute the reconstituted solution with one of the following compatible infusion solutions prior to intravenous infusion (Refer to <linkHtml href="#t3">Table 3</linkHtml> below for the amount of diluent to be added to each vial and the amount of the reconstituted solution to be withdrawn):<list listType="unordered" styleCode="Circle">
+                                       <item>0.9% Sodium Chloride Injection
+</item>
+                                       <item>5% and 10% Dextrose Injection
+</item>
+                                       <item>M/6 Sodium Lactate Injection
+</item>
+                                       <item>5% Dextrose and 0.9% sodium Chloride Injection
+</item>
+                                       <item>Lactated Ringers and 5% Dextrose Injection
+</item>
+                                       <item>Normosol<sup>®</sup>-R and Normosol<sup>®</sup>-M in 5% Dextrose Injection<br/>
+                                          <br/>
+                                       </item>
+                                    </list>
+                                 </item>
+                                 <item>Parenteral drugs should be inspected visually for particulate matter before administration. If particulate matter is evident in reconstituted fluids, the drug solution should be discarded.
+</item>
+                                 <item>Administer the resulting intravenous infusion over approximately 30 minutes.
+</item>
+                                 <item>Intermittent intravenous infusion with a Y-type administration set can be accomplished with compatible solutions. However, during infusion of a solution containing cefepime, it is desirable to discontinue the other solution.
+</item>
+                              </list>
+                           </text>
+                           <effectiveTime value="20210929"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s16">
+                     <id root="c10171e9-c645-4d2c-a515-cfd350bb786e"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.5 Preparation of Cefepime for Injection for Intramuscular Administration
+</title>
+                     <text>
+                        <paragraph>Constitute cefepime for injection vials 1 gram and 2 grams with one of the following diluents: Sterile Water for Injection, 0.9% Sodium Chloride, 5% Dextrose Injection, 0.5% or 1% Lidocaine Hydrochloride, or Sterile Bacteriostatic Water for Injection with Parabens or Benzyl Alcohol. Refer to <linkHtml href="#t3">Table 3</linkHtml> below for the amount of diluent to be added to each vial and the amount of reconstituted volume to be withdrawn.
+</paragraph>
+                        <paragraph>Parenteral drugs should be inspected visually for particulate matter before administration. If particulate matter is evident in reconstituted fluids, the drug solution should be discarded.
+</paragraph>
+                        <table ID="t3" width="100%">
+                           <caption>Table 3: Preparation of Reconstituted Solutions of Cefepime for Injection
+</caption>
+                           <col width="52.687%" align="left"/>
+                           <col width="13.397%" align="left"/>
+                           <col width="16.971%" align="left"/>
+                           <col width="16.946%" align="left"/>
+                           <tbody>
+                              <tr>
+                                 <td align="left" valign="bottom" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Single-Dose Vials for Intravenous (IV)/</content>
+                                    <br/>
+                                    <content styleCode="bold">Intramuscular (IM) Administration</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Amount of Diluent to be added (mL)</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Approximate Cefepime Concentration (mg/mL)</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Amount of Reconstituted Volume to be Withdrawn</content>
+                                    <br/>
+                                    <content styleCode="bold">(mL)</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top">
+                                    <content styleCode="underline">Cefepime vial content</content>
+                                 </td>
+                                 <td colspan="3" align="left" valign="top"/>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top">1 g (IV)
+</td>
+                                 <td align="center" valign="top">10
+</td>
+                                 <td align="center" valign="top">100
+</td>
+                                 <td align="center" valign="top">10.5
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top">1 g (IM)
+</td>
+                                 <td align="center" valign="top">2.4
+</td>
+                                 <td align="center" valign="top">280
+</td>
+                                 <td align="center" valign="top">3.6
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top" styleCode="Botrule">2 g (IV)
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule">10
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule">160
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule">12.5
+</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </text>
+                     <effectiveTime value="20210929"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s17">
+                     <id root="ef608a56-8d61-43a3-999f-b2041bc38afa"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>2.6 Compatibility and Stability
+</title>
+                     <effectiveTime value="20210929"/>
+                     <component>
+                        <section ID="s18">
+                           <id root="12364d09-a901-4109-ad54-4d4ecc3c7533"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Intravenous Cefepime for Injection</content>
+                              </paragraph>
+                           </text>
+                           <effectiveTime value="20210929"/>
+                           <component>
+                              <section ID="s19">
+                                 <id root="16d8448f-588e-4b04-8537-6f56a5a72fa9"/>
+                                 <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                                 <text>
+                                    <paragraph>
+                                       <content styleCode="italics">Intravenous Infusion Compatibility</content>
+                                    </paragraph>
+                                    <paragraph>Cefepime for injection vials are compatible at concentrations between 1 mg per mL and 40 mg per mL with the following intravenous infusion fluids: 0.9% Sodium Chloride Injection, 5% and 10% Dextrose Injection, M/6 Sodium Lactate Injection, 5% Dextrose and 0.9% Sodium Chloride Injection, Lactated Ringers and 5% Dextrose Injection, Normosol<sup>®</sup>-R, and Normosol<sup>®</sup>-M in 5% Dextrose Injection. These solutions may be stored up to 24 hours at controlled room temperature 20°C to 25°C (68°F to 77°F) or 7 days in a refrigerator 2°C to 8°C (36°F to 46°F).
+</paragraph>
+                                 </text>
+                                 <effectiveTime value="20210929"/>
+                              </section>
+                           </component>
+                           <component>
+                              <section ID="s20">
+                                 <id root="f15dbb49-9d15-4ba9-9a2c-3cda23b1c2bc"/>
+                                 <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                                 <text>
+                                    <paragraph>
+                                       <content styleCode="italics">Admixture Compatibility</content>
+                                    </paragraph>
+                                    <paragraph>Cefepime for injection admixture compatibility information is summarized in <linkHtml href="#t4">Table 4</linkHtml>.
+</paragraph>
+                                    <table ID="t4" width="100%">
+                                       <caption>Table 4: Cefepime Admixture Stability
+</caption>
+                                       <col width="20.000%" align="left"/>
+                                       <col width="20.000%" align="left"/>
+                                       <col width="20.000%" align="left"/>
+                                       <col width="18.600%" align="left"/>
+                                       <col width="21.400%" align="left"/>
+                                       <tfoot>
+                                          <tr>
+                                             <td colspan="5" align="left" valign="top">
+                                                <paragraph styleCode="footnote">NS = 0.9% Sodium Chloride Injection.
+</paragraph>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="5" align="left" valign="top">
+                                                <paragraph styleCode="footnote">D5W = 5% Dextrose Injection.
+</paragraph>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="5" align="left" valign="top">
+                                                <paragraph styleCode="footnote">na = not applicable.
+</paragraph>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="5" align="left" valign="top">
+                                                <paragraph styleCode="footnote">RT/L = Ambient room temperature and light.
+</paragraph>
+                                             </td>
+                                          </tr>
+                                       </tfoot>
+                                       <tbody>
+                                          <tr>
+                                             <td align="left" valign="top" styleCode="Toprule"/>
+                                             <td align="left" valign="top" styleCode="Toprule"/>
+                                             <td align="left" valign="top" styleCode="Toprule"/>
+                                             <td align="left" valign="top" styleCode="Toprule"/>
+                                             <td align="left" valign="top" styleCode="Toprule"/>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top" styleCode="Botrule">
+                                                <content styleCode="bold">Cefepime for</content>
+                                                <br/>
+                                                <content styleCode="bold">injection</content>
+                                                <br/>
+                                                <content styleCode="bold">Concentration</content>
+                                             </td>
+                                             <td align="center" valign="top" styleCode="Botrule">
+                                                <content styleCode="bold">Admixture and</content>
+                                                <br/>
+                                                <content styleCode="bold">Concentration</content>
+                                             </td>
+                                             <td align="center" valign="top" styleCode="Botrule">
+                                                <content styleCode="bold">Intravenous (IV)</content>
+                                                <br/>
+                                                <content styleCode="bold">Infusion Solutions</content>
+                                             </td>
+                                             <td align="center" valign="top" styleCode="Botrule">
+                                                <content styleCode="bold">RT/L</content>
+                                                <br/>
+                                                <content styleCode="bold">(20° to 25°C)</content>
+                                             </td>
+                                             <td align="center" valign="top" styleCode="Botrule">
+                                                <content styleCode="bold">Stability Time for Refrigeration</content>
+                                                <br/>
+                                                <content styleCode="bold">(2° to 8°C)</content>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top">40 mg/mL
+</td>
+                                             <td align="center" valign="top">Amikacin<br/>6 mg/mL
+</td>
+                                             <td align="center" valign="top">NS or D5W
+</td>
+                                             <td align="center" valign="top">24 hours
+</td>
+                                             <td align="center" valign="top">7 days
+</td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top">40 mg/mL
+</td>
+                                             <td align="center" valign="top">Ampicillin<br/>1 mg/mL
+</td>
+                                             <td align="center" valign="top">D5W
+</td>
+                                             <td align="center" valign="top">8 hours
+</td>
+                                             <td align="center" valign="top">8 hours
+</td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top">40 mg/mL
+</td>
+                                             <td align="center" valign="top">Ampicillin<br/>10 mg/mL
+</td>
+                                             <td align="center" valign="top">D5W
+</td>
+                                             <td align="center" valign="top">2 hours
+</td>
+                                             <td align="center" valign="top">8 hours
+</td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top">40 mg/mL
+</td>
+                                             <td align="center" valign="top">Ampicillin<br/>1 mg/mL
+</td>
+                                             <td align="center" valign="top">NS
+</td>
+                                             <td align="center" valign="top">24 hours
+</td>
+                                             <td align="center" valign="top">48 hours
+</td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top">40 mg/mL
+</td>
+                                             <td align="center" valign="top">Ampicillin<br/>10 mg/mL
+</td>
+                                             <td align="center" valign="top">NS
+</td>
+                                             <td align="center" valign="top">8 hours
+</td>
+                                             <td align="center" valign="top">48 hours
+</td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top">4 mg/mL
+</td>
+                                             <td align="center" valign="top">Ampicillin<br/>40 mg/mL
+</td>
+                                             <td align="center" valign="top">NS
+</td>
+                                             <td align="center" valign="top">8 hours
+</td>
+                                             <td align="center" valign="top">8 hours
+</td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top">4 to 40 mg/mL
+</td>
+                                             <td align="center" valign="top">Clindamycin<br/>Phosphate<br/>0.25 to 6 mg/mL
+</td>
+                                             <td align="center" valign="top">NS or D5W
+</td>
+                                             <td align="center" valign="top">24 hours
+</td>
+                                             <td align="center" valign="top">7 days
+</td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top">4 mg/mL
+</td>
+                                             <td align="center" valign="top">Heparin<br/>10 to 50 units/mL
+</td>
+                                             <td align="center" valign="top">NS or D5W
+</td>
+                                             <td align="center" valign="top">24 hours
+</td>
+                                             <td align="center" valign="top">7 days
+</td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top">4 mg/mL
+</td>
+                                             <td align="center" valign="top">Potassium Chloride<br/>10 to 40 mEq/L
+</td>
+                                             <td align="center" valign="top">NS or D5W
+</td>
+                                             <td align="center" valign="top">24 hours
+</td>
+                                             <td align="center" valign="top">7 days
+</td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top">4 mg/mL
+</td>
+                                             <td align="center" valign="top">Theophylline <br/>0.8<br/>mg/mL
+</td>
+                                             <td align="center" valign="top">D5W
+</td>
+                                             <td align="center" valign="top">24 hours
+</td>
+                                             <td align="center" valign="top">7 days
+</td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top">1 to 4 mg/mL
+</td>
+                                             <td align="center" valign="top">na
+</td>
+                                             <td align="center" valign="top">Aminosyn™ II<br/>4.25% with<br/>electrolytes and<br/>calcium
+</td>
+                                             <td align="center" valign="top">8 hours
+</td>
+                                             <td align="center" valign="top">3 days
+</td>
+                                          </tr>
+                                          <tr>
+                                             <td align="center" valign="top" styleCode="Botrule">0.125 to 0.25<br/>mg/mL
+</td>
+                                             <td align="center" valign="top" styleCode="Botrule">na
+</td>
+                                             <td align="center" valign="top" styleCode="Botrule">Inpersol™ with<br/>4.25% dextrose
+</td>
+                                             <td align="center" valign="top" styleCode="Botrule">24 hours
+</td>
+                                             <td align="center" valign="top" styleCode="Botrule">7 days
+</td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </text>
+                                 <effectiveTime value="20180402"/>
+                              </section>
+                           </component>
+                           <component>
+                              <section ID="s21">
+                                 <id root="545018d8-51c0-41c3-9e74-915d9f4d8ac3"/>
+                                 <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                                 <text>
+                                    <paragraph>
+                                       <content styleCode="italics">Cefepime for Injection Admixture Incompatibility</content>
+                                    </paragraph>
+                                    <paragraph>Do not add solutions of cefepime for injection to solutions of ampicillin at a concentration greater than 40 mg per mL, or to metronidazole, vancomycin, gentamicin, tobramycin, netilmicin sulfate, or aminophylline because of potential interaction. However, if concurrent therapy with cefepime for injection is indicated, each of these antibacterial drugs can be administered separately.
+</paragraph>
+                                 </text>
+                                 <effectiveTime value="20210929"/>
+                              </section>
+                           </component>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s22">
+                           <id root="dec97493-3196-4224-8364-272a66459dcb"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Intramuscular Cefepime for Injection</content>
+                              </paragraph>
+                              <paragraph>Cefepime for injection constituted as directed is stable for 24 hours at controlled room temperature 20ºC to 25ºC (68ºF to 77ºF) or for 7 days in a refrigerator 2ºC to 8ºC (36ºF to 46ºF) with the following diluents: Sterile Water for Injection, 0.9% Sodium Chloride Injection, 5% Dextrose Injection, Sterile Bacteriostatic Water for Injection with Parabens or Benzyl Alcohol, or 0.5% or 1% Lidocaine Hydrochloride.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s23">
+                           <id root="8dd8eb52-a6e4-4af9-a31a-b026b19da321"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Intramuscular and Intravenous Cefepime for Injection</content>
+                              </paragraph>
+                              <paragraph>As with other cephalosporins, the color of cefepime for injection powder, as well as its solutions tend to darken depending on storage conditions; however, when stored as recommended, the product potency is not adversely affected.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s24">
+               <id root="e93c8d47-0e00-41f8-b4a1-73a753678638"/>
+               <code code="43678-2" codeSystem="2.16.840.1.113883.6.1" displayName="DOSAGE FORMS &amp; STRENGTHS SECTION"/>
+               <title>3 DOSAGE FORMS AND STRENGTHS
+</title>
+               <text>
+                  <paragraph>Cefepime for Injection, USP is a sterile white to pale yellow powder of cefepime in single-dose vials and it is available in the following strengths:
+</paragraph>
+                  <list listType="unordered" styleCode="Disc">
+                     <item>1 gram per vial
+</item>
+                     <item>2 grams per vial
+</item>
+                  </list>
+               </text>
+               <effectiveTime value="20210929"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <paragraph>Cefepime for Injection is a sterile powder of cefepime in single-dose vials for reconstitution, available in the following strengths:
+</paragraph>
+                        <list listType="unordered" styleCode="Disc">
+                           <item>1 gram per vial. (<linkHtml href="#s24">3</linkHtml>)
+</item>
+                           <item>2 grams per vial. (<linkHtml href="#s24">3</linkHtml>)
+</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="s25">
+               <id root="721b8b4a-29c2-48db-b3a9-e629b4d1d4e6"/>
+               <code code="34070-3" codeSystem="2.16.840.1.113883.6.1" displayName="CONTRAINDICATIONS SECTION"/>
+               <title>4 CONTRAINDICATIONS
+</title>
+               <text>
+                  <paragraph>Cefepime for injection is contraindicated in patients who have shown immediate hypersensitivity reactions to cefepime or the cephalosporin class of antibacterial drugs, penicillins or other beta-lactam antibacterial drugs.
+</paragraph>
+               </text>
+               <effectiveTime value="20210929"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <paragraph>Patients with known immediate hypersensitivity reactions to cefepime or other cephalosporins, penicillins or other beta-lactam antibacterial drugs. (<linkHtml href="#s25">4</linkHtml>)
+</paragraph>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="s26">
+               <id root="d51ebf5e-cdad-4bb4-8538-0762f60bfcb1"/>
+               <code code="43685-7" codeSystem="2.16.840.1.113883.6.1" displayName="WARNINGS AND PRECAUTIONS SECTION"/>
+               <title>5 WARNINGS AND PRECAUTIONS
+</title>
+               <effectiveTime value="20210929"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered" styleCode="Disc">
+                           <item>
+                              <content styleCode="underline">Hypersensitivity Reactions</content>: Cross-hypersensitivity among beta-lactam antibacterial drugs may occur in up to 10% of patients with a history of penicillin allergy. If an allergic reaction to cefepime for injection occurs, discontinue the drug. (<linkHtml href="#s27">5.1</linkHtml>)
+</item>
+                           <item>
+                              <content styleCode="underline">Neurotoxicity</content>: May occur especially in patients with renal impairment administered unadjusted doses. If neurotoxicity associated with cefepime for injection therapy occurs, discontinue the drug. (<linkHtml href="#s28">5.2</linkHtml>)
+</item>
+                           <item>
+                              <content styleCode="italics underline">Clostridioides difficile</content>
+                              <content styleCode="underline">-Associated Diarrhea (CDAD)</content>: Evaluate if diarrhea occurs. (<linkHtml href="#s29">5.3</linkHtml>)
+</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="s27">
+                     <id root="5683af88-1d77-4a30-82bc-5d291c5f528c"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>5.1 Hypersensitivity Reactions
+</title>
+                     <text>
+                        <paragraph>Before therapy with cefepime for injection is instituted, careful inquiry should be made to determine whether the patient has had previous immediate hypersensitivity reactions to cefepime, cephalosporins, penicillins, or other beta-lactams. Exercise caution if this product is to be given to penicillin-sensitive patients because cross-hypersensitivity among beta-lactam antibacterial drugs has been clearly documented and may occur in up to 10% of patients with a history of penicillin allergy. If an allergic reaction to cefepime for injection occurs, discontinue the drug and institute appropriate supportive measures.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s28">
+                     <id root="79a83f40-1ba9-437f-90f8-fff9dbb971e9"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>5.2 Neurotoxicity
+</title>
+                     <text>
+                        <paragraph>Serious adverse reactions have been reported including life-threatening or fatal occurrences of the following: encephalopathy (disturbance of consciousness including confusion, hallucinations, stupor, and coma), aphasia, myoclonus, seizures, and nonconvulsive status epilepticus <content styleCode="italics">[see Adverse Reactions (<linkHtml href="#s37">6.2</linkHtml>)]</content>. Most cases occurred in patients with renal impairment who did not receive appropriate dosage adjustment. However, some cases of neurotoxicity occurred in patients receiving a dosage adjustment appropriate for their degree of renal impairment. In the majority of cases, symptoms of neurotoxicity were reversible and resolved after discontinuation of cefepime and/or after hemodialysis. If neurotoxicity associated with cefepime therapy occurs, discontinue cefepime and institute appropriate supportive measures.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s29">
+                     <id root="df160f4f-ddbe-4164-a341-7ae500bdca88"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>5.3 <content styleCode="italics">Clostridioides difficile</content>-Associated Diarrhea
+</title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="italics">Clostridioides difficile</content>-associated diarrhea (CDAD) has been reported with use of nearly all antibacterial agents, including Cefepime for Injection, and may range in severity from mild diarrhea to fatal colitis. Treatment with antibacterial agents alters the normal flora of the colon leading to overgrowth of <content styleCode="italics">C. difficile</content>.
+</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">C. difficile</content> produces toxins A and B, which contribute to the development of CDAD. Hypertoxin-producing strains of <content styleCode="italics">C. difficile</content> cause increased morbidity and mortality, as these infections can be refractory to antimicrobial therapy and may require colectomy.
+</paragraph>
+                        <paragraph>CDAD must be considered in all patients who present with diarrhea following antibacterial drug use. Careful medical history is necessary since CDAD has been reported to occur over two months after the administration of antibacterial agents.
+</paragraph>
+                        <paragraph>If CDAD is suspected or confirmed, ongoing antibacterial drug use not directed against <content styleCode="italics">C. difficile</content> may need to be discontinued. Appropriate fluid and electrolyte management, protein supplementation, antibacterial drug treatment of <content styleCode="italics">C. difficile</content>, and surgical evaluation should be instituted as clinically indicated.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20210929"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s30">
+                     <id root="89562b0e-f455-41cb-b0e2-ad7475bc19af"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>5.4 Development of Drug-Resistant Bacteria
+</title>
+                     <text>
+                        <paragraph>Prescribing cefepime for injection in the absence of a proven or strongly suspected bacterial infection or a prophylactic indication is unlikely to provide benefit to the patient and increases the risk of the development of drug-resistant bacteria.
+</paragraph>
+                        <paragraph>As with other antimicrobials, prolonged use of cefepime for injection may result in overgrowth of nonsusceptible microorganisms. Repeated evaluation of the patient's condition is essential. Should superinfection occur during therapy, appropriate measures should be taken.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20210929"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s31">
+                     <id root="6acfc4c0-33ad-4ab8-a45a-d7c4491f26b8"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>5.5 Drug/Laboratory Test Interactions
+</title>
+                     <effectiveTime value="20210929"/>
+                     <component>
+                        <section ID="s32">
+                           <id root="39cd071c-d526-4c08-9739-477168ce091d"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Urinary Glucose</content>
+                              </paragraph>
+                              <paragraph>The administration of cefepime may result in a false-positive reaction for glucose in the urine when using some methods (e.g. Clinitest<sup>TM</sup> tablets) <content styleCode="italics">[see Drug Interactions (<linkHtml href="#s40">7.1</linkHtml>)]</content>.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s33">
+                           <id root="c4fe3138-c958-4373-b32b-d6697cd7ef8c"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Coombs' Tests</content>
+                              </paragraph>
+                              <paragraph>Positive direct Coombs' tests have been reported during treatment with cefepime for injection. In patients who develop hemolytic anemia, discontinue the drug and institute appropriate therapy. Positive Coombs' test may be observed in newborns whose mothers have received cephalosporin antibacterial drugs before parturition.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20210929"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s34">
+                           <id root="9830692d-9ed7-4d1a-a022-5ca699f6b652"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Prothrombin Time</content>
+                              </paragraph>
+                              <paragraph>Many cephalosporins, including cefepime, have been associated with a fall in prothrombin activity. Those at risk include patients with renal or hepatic impairment, or poor nutritional state, as well as patients receiving a protracted course of antimicrobial therapy. Prothrombin time should be monitored in patients at risk, and exogenous vitamin K administered as indicated.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s35">
+               <id root="12f3bbae-3583-4fd4-92fb-223c03dcdad0"/>
+               <code code="34084-4" codeSystem="2.16.840.1.113883.6.1" displayName="ADVERSE REACTIONS SECTION"/>
+               <title>6 ADVERSE REACTIONS
+</title>
+               <text>
+                  <paragraph>The following adverse reactions are discussed in the Warnings and Precautions section and below:
+</paragraph>
+                  <list listType="unordered" styleCode="Disc">
+                     <item>Hypersensitivity Reactions <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#s27">5.1</linkHtml>)]</content>
+                     </item>
+                     <item>Neurotoxicity <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#s28">5.2</linkHtml>)]</content>
+                     </item>
+                     <item>
+                        <content styleCode="italics">Clostridioides difficile</content>-Associated Diarrhea <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#s29">5.3</linkHtml>)]</content>
+                     </item>
+                  </list>
+               </text>
+               <effectiveTime value="20250310"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered" styleCode="Disc">
+                           <item>The most common adverse reactions (incidence ≥ 1%) were local reactions, positive Coombs' test, decreased phosphorous, increased ALT and AST, increased PT and PTT and rash. (<linkHtml href="#s36">6.1</linkHtml>)
+</item>
+                           <item>At the highest dose (2 g every 8 hours), incidence of adverse reactions was ≥1% for rash, diarrhea, nausea, vomiting, pruritus, fever, and headache. (<linkHtml href="#s36">6.1</linkHtml>)
+</item>
+                        </list>
+                        <paragraph>
+                           <content styleCode="bold">To report SUSPECTED ADVERSE REACTIONS, contact Sagent Pharmaceuticals at 1-866-625-1618 or FDA at 1-800-FDA-1088 or </content>
+                           <content styleCode="bold underline">www.fda.gov/medwatch</content>
+                           <content styleCode="bold">.</content>
+                        </paragraph>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="s36">
+                     <id root="96a8cab2-8e56-4a0b-84a6-dcc0c388fd12"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>6.1 Clinical Trials Experience
+</title>
+                     <text>
+                        <paragraph>Because clinical trials are conducted under widely varying conditions, adverse reaction rates observed in clinical trials of a drug cannot be directly compared to rates in the clinical trials of another drug and may not reflect the rates observed in practice.
+</paragraph>
+                        <paragraph>In clinical trials using multiple doses of cefepime, 4137 patients were treated with the recommended dosages of cefepime (500 mg to 2 g intravenous every 12 hours). There were no deaths or permanent disabilities thought related to drug toxicity. Sixty-four (1.5%) patients discontinued medication due to adverse reactions. Thirty-three (51%) of these 64 patients who discontinued therapy did so because of rash. The percentage of cefepime-treated patients who discontinued study drug because of drug-related adverse reactions was similar at daily doses of 500 mg, 1 g, and 2 g every 12 hours (0.8%, 1.1%, and 2%, respectively). However, the incidence of discontinuation due to rash increased with the higher recommended doses.
+</paragraph>
+                        <paragraph>The following adverse reactions (<linkHtml href="#t5">Table 5</linkHtml>) were identified in clinical trials conducted in North America (n=3125 cefepime-treated patients).
+</paragraph>
+                        <table ID="t5" width="100%">
+                           <caption>Table 5: Adverse Reactions in Cefepime Multiple-Dose Dosing Regimens Clinical Trials in North America
+</caption>
+                           <col width="50.000%" align="left"/>
+                           <col width="50.000%" align="left"/>
+                           <tbody>
+                              <tr>
+                                 <td align="justify" valign="top" styleCode="Toprule">Incidence equal to or greater than 1%
+</td>
+                                 <td align="left" valign="top" styleCode="Toprule">Local adverse reactions (3%), including phlebitis (1.3%), pain and/or inflammation (0.6%)*; rash (1.1%)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top" styleCode="Botrule">Incidence less than 1% but greater than 0.1%
+</td>
+                                 <td align="left" valign="top" styleCode="Botrule">Colitis (including pseudomembranous colitis), diarrhea, erythema, fever, headache, nausea, oral moniliasis, pruritus, urticaria, vaginitis, vomiting, anemia
+</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>At the higher dose of 2 g every 8 hours, the incidence of adverse reactions was higher among the 795 patients who received this dose of cefepime. They consisted of rash (4%), diarrhea (3%), nausea (2%), vomiting (1%), pruritus (1%), fever (1%), and headache (1%).
+</paragraph>
+                        <paragraph>The following (<linkHtml href="#t6">Table 6</linkHtml>) adverse laboratory changes, with cefepime, were seen during clinical trials conducted in North America.
+</paragraph>
+                        <table ID="t6" width="100%">
+                           <caption>Table 6: Adverse Laboratory Changes in Cefepime Multiple-Dose Dosing Regimens Clinical Trials in North America
+</caption>
+                           <col width="50.500%" align="left"/>
+                           <col width="49.500%" align="left"/>
+                           <tfoot>
+                              <tr>
+                                 <td colspan="2" align="left" valign="top">
+                                    <paragraph styleCode="footnote">* Hypocalcemia was more common among elderly patients. Clinical consequences from changes in either calcium or phosphorus were not reported.
+</paragraph>
+                                 </td>
+                              </tr>
+                           </tfoot>
+                           <tbody>
+                              <tr>
+                                 <td align="left" valign="top" styleCode="Toprule Botrule">Incidence equal to or greater than 1%
+</td>
+                                 <td align="left" valign="top" styleCode="Toprule Botrule">Positive Coombs' test (without hemolysis) (16.2%); decreased phosphorus (2.8%); increased Alanine Transaminase (ALT) (2.8%), Aspartate Transaminase (AST) (2.4%), eosinophils (1.7%); abnormal PTT (1.6%), Prothrombin Time (PT) (1.4%)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="left" valign="top" styleCode="Botrule">Incidence less than 1% but greater than 0.1%
+</td>
+                                 <td align="left" valign="top" styleCode="Botrule">Increased alkaline phosphatase, Blood Urea Nitrogen (BUN), calcium, creatinine, phosphorus, potassium, total bilirubin; decreased calcium*, hematocrit, neutrophils, platelets, White Blood Cells (WBC)
+</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>A similar safety profile was seen in clinical trials of pediatric patients.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s37">
+                     <id root="a262ecc9-f5f1-4f38-859b-643d47e6120b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>6.2 Postmarketing Experience
+</title>
+                     <text>
+                        <paragraph>The following adverse reactions have been identified during post-approval use of cefepime for injection. Because these reactions are reported voluntarily from a population of uncertain size, it is not always possible to reliably estimate their frequency or establish a causal relationship to drug exposure.
+</paragraph>
+                        <paragraph>In addition to the adverse reactions reported during the North American clinical trials with cefepime, the following adverse reactions have been reported during worldwide postmarketing experience. Encephalopathy (disturbance of consciousness including confusion, hallucinations, stupor, and coma), aphasia, myoclonus, seizures, and nonconvulsive status epilepticus have been reported <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#s28">5.2</linkHtml>)].</content>
+                        </paragraph>
+                        <paragraph>Anaphylaxis including anaphylactic shock, transient leukopenia, neutropenia, agranulocytosis and thrombocytopenia, have been reported.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s38">
+                     <id root="6963a9ce-d227-4e8b-bc7a-23853a75bf8c"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>6.3 Cephalosporin-Class Adverse Reactions
+</title>
+                     <text>
+                        <paragraph>In addition to the adverse reactions listed above that have been observed in patients treated with cefepime, the following adverse reactions and altered laboratory tests have been reported for cephalosporin-class antibacterial drugs:
+</paragraph>
+                        <paragraph>Stevens-Johnson syndrome, erythema multiforme, toxic epidermal necrolysis, renal dysfunction, toxic nephropathy, aplastic anemia, hemolytic anemia, hemorrhage, hepatic dysfunction including cholestasis, and pancytopenia.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s39">
+               <id root="4fb45a2b-330f-4a27-b92f-b97b9fbd8bb9"/>
+               <code code="34073-7" codeSystem="2.16.840.1.113883.6.1" displayName="DRUG INTERACTIONS SECTION"/>
+               <title>7 DRUG INTERACTIONS
+</title>
+               <effectiveTime value="20160531"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered" styleCode="Disc">
+                           <item>Aminoglycosides: increased potential of nephrotoxicity and ototoxicity. Monitor renal function. (<linkHtml href="#s41">7.2</linkHtml>)
+</item>
+                           <item>Diuretics: nephrotoxicity has been reported following concomitant administration of other cephalosporins with potent diuretics such as furosemide. Monitor renal function. (<linkHtml href="#s42">7.3</linkHtml>)
+</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="s40">
+                     <id root="5cd23c8f-d1bf-4d40-8600-f34c72d1f2a3"/>
+                     <code code="34074-5" codeSystem="2.16.840.1.113883.6.1" displayName="DRUG &amp; OR LABORATORY TEST INTERACTIONS SECTION"/>
+                     <title>7.1 Drug/Laboratory Test Interactions
+</title>
+                     <text>
+                        <paragraph>The administration of cefepime may result in a false-positive reaction for glucose in the urine with certain methods. It is recommended that glucose tests based on enzymatic glucose oxidase reactions be used.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s41">
+                     <id root="7d8bf2cb-19fb-4d89-8f16-a1174cfed498"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>7.2 Aminoglycosides
+</title>
+                     <text>
+                        <paragraph>Monitor renal function if aminoglycosides are to be administered with cefepime for injection because of the increased potential of nephrotoxicity and ototoxicity of aminoglycoside antibacterial drugs.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s42">
+                     <id root="ef502a62-9b49-4208-84e9-c32cdc0ef5ec"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>7.3 Diuretics
+</title>
+                     <text>
+                        <paragraph>Nephrotoxicity has been reported following concomitant administration of other cephalosporins with potent diuretics such as furosemide. Monitor renal function when cefepime is concomitantly administered with potent diuretics.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s43">
+               <id root="ce95c6e5-e5e5-427f-9937-bbafaf841d4b"/>
+               <code code="43684-0" codeSystem="2.16.840.1.113883.6.1" displayName="USE IN SPECIFIC POPULATIONS SECTION"/>
+               <title>8 USE IN SPECIFIC POPULATIONS
+</title>
+               <effectiveTime value="20210929"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered" styleCode="Disc">
+                           <item>Geriatric Use: Serious neurologic adverse reactions have occurred in geriatric patients with renal insufficiency given unadjusted doses of cefepime. (<linkHtml href="#s49">8.5</linkHtml>)
+</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="s44">
+                     <id root="fa0df9c5-b2fb-418e-9830-4f148237d703"/>
+                     <code code="42228-7" codeSystem="2.16.840.1.113883.6.1" displayName="PREGNANCY SECTION"/>
+                     <title>8.1 Pregnancy
+</title>
+                     <effectiveTime value="20210929"/>
+                     <component>
+                        <section ID="s45">
+                           <id root="9a3ca0af-b1ce-4e02-bf1e-9dfe63c93c11"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Risk Summary</content>
+                              </paragraph>
+                              <paragraph>There are no cases of cefepime exposure during pregnancy reported from postmarketing experience or from clinical trials. Available data from published observational studies and case reports over several decades with cephalosporin use in pregnant women have not established drug-associated risks of major birth defects, miscarriage or adverse maternal or fetal outcomes (<content styleCode="italics">see <linkHtml href="#e45">Data</linkHtml>
+                                 </content>).
+										</paragraph>
+                              <paragraph>Cefepime was not associated with adverse developmental outcomes in rats, mice, or rabbits when administered parenterally during organogenesis. The doses used in these studies were 1.6 (rats), approximately equal to (mice), and 0.3 times (rabbits) the recommended maximum human dose (<content styleCode="italics">see <linkHtml href="#e45">Data</linkHtml>
+                                 </content>).
+										</paragraph>
+                              <paragraph>The estimated background risk of major birth defects and miscarriage for the indicated population is unknown. All pregnancies have a background risk of birth defect, loss, or other adverse outcomes. In the U.S. general population, the estimated background risk of major birth defects and miscarriage in clinically recognized pregnancies is 2% to 4% and 15% to 20%, respectively.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20210929"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="e45">
+                           <id root="316e780a-c602-4a8a-80ed-0362932ba8d5"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Data</content>
+                              </paragraph>
+                           </text>
+                           <effectiveTime value="20210929"/>
+                           <component>
+                              <section ID="e46">
+                                 <id root="d8de371b-1487-4816-bb42-b928a7b501c6"/>
+                                 <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                                 <text>
+                                    <paragraph>
+                                       <content styleCode="italics">Human Data</content>
+                                    </paragraph>
+                                    <paragraph>While available studies cannot definitively establish the absence of risk, published data from case-control studies and case reports over several decades have not identified an association with cephalosporin use during pregnancy and major birth defects, miscarriage, or other adverse maternal or fetal outcomes. Available studies have methodologic limitations, including small sample size, retrospective data collection, and inconsistent comparator groups.
+</paragraph>
+                                 </text>
+                                 <effectiveTime value="20210929"/>
+                              </section>
+                           </component>
+                           <component>
+                              <section ID="e47">
+                                 <id root="aa848981-cb2a-40ab-8fe5-a97867ee9c1c"/>
+                                 <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                                 <text>
+                                    <paragraph>
+                                       <content styleCode="italics">Animal Data</content>
+                                    </paragraph>
+                                    <paragraph>Cefepime was not embryocidal and did not cause fetal malformations when administered parenterally during the period of organogenesis to rats at doses up to 1000 mg/kg/day, to mice at doses up to 1200 mg/kg/day, or to rabbits at doses up to 100 mg/kg/day. These doses are 1.6 times (rats), approximately equal to (mice), and 0.3 times (rabbits) the maximum recommended clinical dose based on body surface area.
+</paragraph>
+                                 </text>
+                                 <effectiveTime value="20210929"/>
+                              </section>
+                           </component>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s46">
+                     <id root="013da70b-3345-4e9d-8d04-3a31b7a92fb2"/>
+                     <code code="77290-5" codeSystem="2.16.840.1.113883.6.1" displayName="LACTATION SECTION"/>
+                     <title>8.2 Lactation
+</title>
+                     <effectiveTime value="20210929"/>
+                     <component>
+                        <section ID="e48">
+                           <id root="a9ae8242-7663-412b-b0c4-6008934f1182"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Risk Summary</content>
+                              </paragraph>
+                              <paragraph>Cefepime is present in human breast milk at low concentrations (approximately 0.5 mcg/mL) following a single intravenous dose of 1000 mg. A nursing infant consuming approximately 1000 mL of human milk per day would receive approximately 0.5 mg of cefepime per day (<content styleCode="italics">see <linkHtml href="#e49">Data</linkHtml>
+                                 </content>). There is no information regarding the effects of cefepime on the breastfed infant or on milk production.
+										</paragraph>
+                              <paragraph>The developmental and health benefits of breastfeeding should be considered along with the mother's clinical need for cefepime and any potential adverse effects on the breastfed child from cefepime or from the underlying maternal condition.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20210929"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="e49">
+                           <id root="a483570e-7faf-47ee-a816-cb22b810cbdd"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Data</content>
+                              </paragraph>
+                              <paragraph>A pharmacokinetic study was conducted in 9 healthy lactating women to evaluate the concentrations of cefepime in plasma and breast milk following a single intravenous dose of 1000 mg. The mean breast milk concentrations of cefepime during the first 8 hours post-dose were approximately 0.5 mcg/mL and then declined and became undetectable between 12- and 24-hours post-dose. The mean cumulative breast milk excretion of cefepime over 24 hours was 0.01% of the administered dose. The pharmacokinetics of cefepime are similar between lactating and non-lactating women.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20210929"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s48">
+                     <id root="17790ba4-32b3-44d3-8c53-bf74ac131cf0"/>
+                     <code code="34081-0" codeSystem="2.16.840.1.113883.6.1" displayName="PEDIATRIC USE SECTION"/>
+                     <title>8.4 Pediatric Use
+</title>
+                     <text>
+                        <paragraph>The safety and effectiveness of cefepime in the treatment of uncomplicated and complicated urinary tract infections (including pyelonephritis), uncomplicated skin and skin structure infections, pneumonia, and as empiric therapy for febrile neutropenic patients have been established in the age groups 2 months up to 16 years. Use of cefepime for injection in these age groups is supported by evidence from adequate and well-controlled studies of cefepime in adults with additional pharmacokinetic and safety data from pediatric trials <content styleCode="italics">[see Clinical Pharmacology (<linkHtml href="#s56">12.3</linkHtml>)]</content>.
+</paragraph>
+                        <paragraph>Safety and effectiveness in pediatric patients below the age of 2 months have not been established. There are insufficient clinical data to support the use of cefepime for injection in pediatric patients for the treatment of serious infections in the pediatric population where the suspected or proven pathogen is <content styleCode="italics">H. influenzae</content> type b. In those patients in whom meningeal seeding from a distant infection site or in whom meningitis is suspected or documented, an alternate agent with demonstrated clinical efficacy in this setting should be used.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s49">
+                     <id root="f56b8ca7-b417-4140-8c30-78784fee2bd6"/>
+                     <code code="34082-8" codeSystem="2.16.840.1.113883.6.1" displayName="GERIATRIC USE SECTION"/>
+                     <title>8.5 Geriatric Use
+</title>
+                     <text>
+                        <paragraph>Of the more than 6400 adults treated with cefepime for injection in clinical studies, 35% were 65 years or older while 16% were 75 years or older. When geriatric patients received the usual recommended adult dose, clinical efficacy and safety were comparable to clinical efficacy and safety in non-geriatric adult patients.
+</paragraph>
+                        <paragraph>Serious adverse events have occurred in geriatric patients with renal insufficiency given unadjusted doses of cefepime, including life-threatening or fatal occurrences of the following: encephalopathy, myoclonus, and seizures <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#s28">5.2</linkHtml>), Adverse Reactions (<linkHtml href="#s37">6.2</linkHtml>)]</content>.
+</paragraph>
+                        <paragraph>This drug is known to be substantially excreted by the kidney, and the risk of toxic reactions to this drug may be greater in patients with impaired renal function. Because elderly patients are more likely to have decreased renal function, care should be taken in dose selection, and renal function should be monitored <content styleCode="italics">[see Clinical Pharmacology (<linkHtml href="#s56">12.3</linkHtml>), Warnings and Precautions (<linkHtml href="#s28">5.2</linkHtml>), Dosage and Administration (<linkHtml href="#s11">2.3</linkHtml>)]</content>.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s50">
+                     <id root="06792946-6e6c-4bd4-9428-ee6280d21655"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>8.6 Renal Impairment
+</title>
+                     <text>
+                        <paragraph>Adjust the dose of cefepime for injection in patients with creatinine clearance less than or equal to 60 mL/min to compensate for the slower rate of renal elimination <content styleCode="italics">[see Dosage Adjustments in Patients with Renal Impairment (<linkHtml href="#s11">2.3</linkHtml>)].</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s51">
+               <id root="d8081998-0874-4f6a-a5d1-07969f3a87f5"/>
+               <code code="34088-5" codeSystem="2.16.840.1.113883.6.1" displayName="OVERDOSAGE SECTION"/>
+               <title>10 OVERDOSAGE
+</title>
+               <text>
+                  <paragraph>Patients who receive an overdose should be carefully observed and given supportive treatment. In the presence of renal insufficiency, hemodialysis, not peritoneal dialysis, is recommended to aid in the removal of cefepime from the body. Symptoms of overdose include encephalopathy (disturbance of consciousness including confusion, hallucinations, stupor, and coma), myoclonus, seizures, neuromuscular excitability, and nonconvulsive status epilepticus <content styleCode="italics">[see Warnings and Precautions (<linkHtml href="#s28">5.2</linkHtml>), Adverse Reactions (<linkHtml href="#s37">6.2</linkHtml>), Dosage and Administration (<linkHtml href="#s11">2.3</linkHtml>)]</content>.
+</paragraph>
+               </text>
+               <effectiveTime value="20160531"/>
+            </section>
+         </component>
+         <component>
+            <section ID="s52">
+               <id root="b44162fd-3b5d-4f5d-bf77-d782c916e94c"/>
+               <code code="34089-3" codeSystem="2.16.840.1.113883.6.1" displayName="DESCRIPTION SECTION"/>
+               <title>11 DESCRIPTION
+</title>
+               <text>
+                  <paragraph>Cefepime for Injection, USP is a semi-synthetic, cephalosporin antibacterial for parenteral administration. The chemical name is 1-[[(6R,7R)-7-[2-(2-amino-4-thiazolyl)-glyoxylamido]-2-carboxy-8-oxo-5-thia-1-azabicyclo[4.2.0] oct-2-en-3-yl]methyl]-1-methylpyrrolidinium chloride,7<sup>2</sup>-(Z)-(O-methyloxime), monohydrochloride, monohydrate, which corresponds to the following structural formula:
+</paragraph>
+                  <renderMultiMedia ID="f02" referencedObject="mm02"/>
+                  <paragraph>Cefepime hydrochloride is a white to pale yellow powder. Cefepime hydrochloride contains the equivalent of not less than 825 mcg and not more than 911 mcg of cefepime (C<sub>19</sub>H<sub>24</sub>N<sub>6</sub>O<sub>5</sub>S<sub>2</sub>) per mg, calculated on an anhydrous basis. It is highly soluble in water.
+</paragraph>
+                  <paragraph>Cefepime for Injection, USP is supplied for intramuscular or intravenous administration in strengths equivalent to 1 gram and 2 grams of cefepime. Cefepime for Injection, USP is a sterile, dry mixture of cefepime hydrochloride and L-arginine. The L-arginine, at an approximate concentration of 707 mg/g of cefepime, is added to control the pH of the constituted solution at 4 to 6. Freshly constituted solutions of Cefepime for Injection, USP will range in color from pale yellow to amber.
+</paragraph>
+               </text>
+               <effectiveTime value="20250310"/>
+               <component>
+                  <observationMedia ID="mm02">
+                     <text>Structural Formula
+</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="cef0e-0014-02.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s53">
+               <id root="1659edee-4c95-4a3d-8a13-12ac7cf31d95"/>
+               <code code="34090-1" codeSystem="2.16.840.1.113883.6.1" displayName="CLINICAL PHARMACOLOGY SECTION"/>
+               <title>12 CLINICAL PHARMACOLOGY
+</title>
+               <effectiveTime value="20160531"/>
+               <component>
+                  <section ID="s54">
+                     <id root="1520e96b-cda5-4417-9102-65e7a08f30c7"/>
+                     <code code="43679-0" codeSystem="2.16.840.1.113883.6.1" displayName="MECHANISM OF ACTION SECTION"/>
+                     <title>12.1 Mechanism of Action
+</title>
+                     <text>
+                        <paragraph>Cefepime is a cephalosporin antibacterial drug <content styleCode="italics">[see Microbiology (<linkHtml href="#s65">12.4</linkHtml>)]</content>.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s55">
+                     <id root="b08871f6-551c-4d84-a663-0e512aea7fab"/>
+                     <code code="43681-6" codeSystem="2.16.840.1.113883.6.1" displayName="PHARMACODYNAMICS SECTION"/>
+                     <title>12.2 Pharmacodynamics
+</title>
+                     <text>
+                        <paragraph>Similar to other beta-lactam antimicrobial agents, the time that the unbound plasma concentration of cefepime exceeds the MIC of the infecting organism has been shown to best correlate with efficacy in animal models of infection. However, the pharmacokinetic/pharmacodynamics relationship for cefepime has not been evaluated in patients.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s56">
+                     <id root="c5602cad-4aad-4282-b285-dcda133c1202"/>
+                     <code code="43682-4" codeSystem="2.16.840.1.113883.6.1" displayName="PHARMACOKINETICS SECTION"/>
+                     <title>12.3 Pharmacokinetics
+</title>
+                     <text>
+                        <paragraph>Pharmacokinetic parameters for cefepime in healthy adult male volunteers (n=9) following single 30-minute infusions (IV) of cefepime 500 mg, 1 g, and 2 g are summarized in <linkHtml href="#t7">Table 7</linkHtml>. Elimination of cefepime is principally via renal excretion with an average (±SD) half-life of 2 (±0.3) hours and total body clearance of 120 (±8) mL/min in healthy volunteers. Cefepime pharmacokinetics are linear over the range 250 mg to 2 g. There is no evidence of accumulation in healthy adult male volunteers (n=7) receiving clinically relevant doses for a period of 9 days.
+</paragraph>
+                        <table ID="t7" width="100%">
+                           <caption>Table 7: Mean Pharmacokinetic Parameters for Cefepime (±SD), Intravenous Administration
+</caption>
+                           <col width="27.868%" align="left"/>
+                           <col width="24.044%" align="left"/>
+                           <col width="24.044%" align="left"/>
+                           <col width="24.044%" align="left"/>
+                           <tbody>
+                              <tr>
+                                 <td colspan="4" align="center" valign="middle" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Cefepime for Injection</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="middle" styleCode="Botrule">
+                                    <content styleCode="bold">Parameter</content>
+                                 </td>
+                                 <td align="center" valign="middle" styleCode="Botrule">
+                                    <content styleCode="bold">500 mg IV</content>
+                                 </td>
+                                 <td align="center" valign="middle" styleCode="Botrule">
+                                    <content styleCode="bold">1 g IV</content>
+                                 </td>
+                                 <td align="center" valign="middle" styleCode="Botrule">
+                                    <content styleCode="bold">2 g IV</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="middle">C<sub>max</sub>, mcg/mL
+</td>
+                                 <td align="center" valign="middle">39.1 (3.5)
+</td>
+                                 <td align="center" valign="middle">81.7 (5.1)
+</td>
+                                 <td align="center" valign="middle">163.9 (25.3)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="middle">AUC, h•mcg/mL
+</td>
+                                 <td align="center" valign="middle">70.8 (6.7)
+</td>
+                                 <td align="center" valign="middle">148.5 (15.1)
+</td>
+                                 <td align="center" valign="middle">284.8 (30.6)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="middle" styleCode="Botrule">Number of subjects (male)
+</td>
+                                 <td align="center" valign="middle" styleCode="Botrule">9
+</td>
+                                 <td align="center" valign="middle" styleCode="Botrule">9
+</td>
+                                 <td align="center" valign="middle" styleCode="Botrule">9
+</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>Pharmacokinetic parameters for cefepime following a single intramuscular injection are summarized in <linkHtml href="#t8">Table 8</linkHtml>. The pharmacokinetics of cefepime are linear over the range of 500 mg to 2 g intramuscularly and do not vary with respect to treatment duration.
+</paragraph>
+                        <table ID="t8" width="100%">
+                           <caption>Table 8: Mean Pharmacokinetic Parameters for Cefepime (±SD), Intramuscular Administration
+</caption>
+                           <col width="25.000%" align="left"/>
+                           <col width="25.000%" align="left"/>
+                           <col width="25.000%" align="left"/>
+                           <col width="25.000%" align="left"/>
+                           <tbody>
+                              <tr>
+                                 <td colspan="4" align="center" valign="top" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Cefepime for Injection</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="middle" styleCode="Botrule">
+                                    <content styleCode="bold">Parameter</content>
+                                 </td>
+                                 <td align="center" valign="middle" styleCode="Botrule">
+                                    <content styleCode="bold">500 mg IM</content>
+                                 </td>
+                                 <td align="center" valign="middle" styleCode="Botrule">
+                                    <content styleCode="bold">1 g IM</content>
+                                 </td>
+                                 <td align="center" valign="middle" styleCode="Botrule">
+                                    <content styleCode="bold">2 g IM</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="middle">C<sub>max</sub>, mcg/mL
+</td>
+                                 <td align="center" valign="middle">13.9 (3.4)
+</td>
+                                 <td align="center" valign="middle">29.6 (4.4)
+</td>
+                                 <td align="center" valign="middle">57.5 (9.5)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="middle">T<sub>max</sub>, h
+</td>
+                                 <td align="center" valign="middle">1.4 (0.9)
+</td>
+                                 <td align="center" valign="middle">1.6 (0.4)
+</td>
+                                 <td align="center" valign="middle">1.5 (0.4)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="middle">AUC, h•mcg/mL
+</td>
+                                 <td align="center" valign="middle">60 (8)
+</td>
+                                 <td align="center" valign="middle">137 (11)
+</td>
+                                 <td align="center" valign="middle">262 (23)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="middle" styleCode="Botrule">Number of subjects (male)
+</td>
+                                 <td align="center" valign="middle" styleCode="Botrule">6
+</td>
+                                 <td align="center" valign="middle" styleCode="Botrule">6
+</td>
+                                 <td align="center" valign="middle" styleCode="Botrule">12
+</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                     <component>
+                        <section ID="s57">
+                           <id root="c2380505-0154-4e5f-9d61-d6cc33673781"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="bold">Absorption</content>
+                              </paragraph>
+                              <paragraph>Following intramuscular (IM) administration, cefepime is completely absorbed.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s58">
+                           <id root="3b27d629-1d4a-439c-89b4-1ce962dbd6ec"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="bold">Distribution</content>
+                              </paragraph>
+                              <paragraph>The average steady-state volume of distribution of cefepime is 18 (±2) L. The serum protein binding of cefepime is approximately 20% and is independent of its concentration in serum.
+</paragraph>
+                              <paragraph>Concentrations of cefepime achieved in specific tissues and body fluids are listed in <linkHtml href="#t9">Table 9</linkHtml>.
+</paragraph>
+                              <table ID="t9" width="100%">
+                                 <caption>Table 9: Mean Concentrations of Cefepime in Specific Body Fluids (mcg/mL) or Tissues (mcg/g)
+</caption>
+                                 <col width="26.280%" align="left"/>
+                                 <col width="18.420%" align="left"/>
+                                 <col width="18.440%" align="left"/>
+                                 <col width="18.440%" align="left"/>
+                                 <col width="18.420%" align="left"/>
+                                 <tbody>
+                                    <tr>
+                                       <td align="center" valign="middle" styleCode="Toprule Botrule">
+                                          <content styleCode="bold">Tissue or Fluid</content>
+                                       </td>
+                                       <td align="center" valign="middle" styleCode="Toprule Botrule">
+                                          <content styleCode="bold">Dose/</content>
+                                          <br/>
+                                          <content styleCode="bold">Route</content>
+                                       </td>
+                                       <td align="center" valign="middle" styleCode="Toprule Botrule">
+                                          <content styleCode="bold"># of Patients</content>
+                                       </td>
+                                       <td align="center" valign="middle" styleCode="Toprule Botrule">
+                                          <content styleCode="bold">Mean Time of Sample Post-Dose (h)</content>
+                                       </td>
+                                       <td align="center" valign="middle" styleCode="Toprule Botrule">
+                                          <content styleCode="bold">Mean Concentration</content>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">Blister Fluid
+</td>
+                                       <td align="center" valign="middle">2 g IV
+</td>
+                                       <td align="center" valign="middle">6
+</td>
+                                       <td align="center" valign="middle">1.5
+</td>
+                                       <td align="center" valign="middle">81.4 mcg/mL
+</td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">Bronchial Mucosa
+</td>
+                                       <td align="center" valign="middle">2 g IV
+</td>
+                                       <td align="center" valign="middle">20
+</td>
+                                       <td align="center" valign="middle">4.8
+</td>
+                                       <td align="center" valign="middle">24.1 mcg/g
+</td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">Sputum
+</td>
+                                       <td align="center" valign="middle">2 g IV
+</td>
+                                       <td align="center" valign="middle">5
+</td>
+                                       <td align="center" valign="middle">4
+</td>
+                                       <td align="center" valign="middle">7.4 mcg/mL
+</td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">Urine
+</td>
+                                       <td align="center" valign="middle">500 mg IV<br/>1 g IV<br/>2 g IV
+</td>
+                                       <td align="center" valign="middle">8<br/>12<br/>12
+</td>
+                                       <td align="center" valign="middle">0 to 4<br/>0 to 4<br/>0 to 4
+</td>
+                                       <td align="center" valign="middle">292 mcg/mL<br/>926 mcg/mL<br/>3120 mcg/mL
+</td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">Bile
+</td>
+                                       <td align="center" valign="middle">2 g IV
+</td>
+                                       <td align="center" valign="middle">26
+</td>
+                                       <td align="center" valign="middle">9.4
+</td>
+                                       <td align="center" valign="middle">17.8 mcg/mL
+</td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">Peritoneal Fluid
+</td>
+                                       <td align="center" valign="middle">2 g IV
+</td>
+                                       <td align="center" valign="middle">19
+</td>
+                                       <td align="center" valign="middle">4.4
+</td>
+                                       <td align="center" valign="middle">18.3 mcg/mL
+</td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">Appendix
+</td>
+                                       <td align="center" valign="middle">2 g IV
+</td>
+                                       <td align="center" valign="middle">31
+</td>
+                                       <td align="center" valign="middle">5.7
+</td>
+                                       <td align="center" valign="middle">5.2 mcg/g
+</td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top">Gallbladder
+</td>
+                                       <td align="center" valign="middle">2 g IV
+</td>
+                                       <td align="center" valign="middle">38
+</td>
+                                       <td align="center" valign="middle">8.9
+</td>
+                                       <td align="center" valign="middle">11.9 mcg/g
+</td>
+                                    </tr>
+                                    <tr>
+                                       <td align="left" valign="top" styleCode="Botrule">Prostate
+</td>
+                                       <td align="center" valign="middle" styleCode="Botrule">2 g IV
+</td>
+                                       <td align="center" valign="middle" styleCode="Botrule">5
+</td>
+                                       <td align="center" valign="middle" styleCode="Botrule">1
+</td>
+                                       <td align="center" valign="middle" styleCode="Botrule">31.5 mcg/g
+</td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                              <paragraph>Data suggest that cefepime does cross the inflamed blood-brain barrier. The clinical relevance of these data is uncertain at this time.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20210929"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s59">
+                           <id root="be84f026-8aa2-4fd4-a755-3b98852a3520"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="bold">Metabolism and Excretion</content>
+                              </paragraph>
+                              <paragraph>Cefepime is metabolized to N-methylpyrrolidine (NMP) which is rapidly converted to the N-oxide (NMP-N-oxide). Urinary recovery of unchanged cefepime accounts for approximately 85% of the administered dose. Less than 1% of the administered dose is recovered from urine as NMP, 6.8% as NMP-N-oxide, and 2.5% as an epimer of cefepime. Because renal excretion is a significant pathway of elimination, patients with renal dysfunction and patients undergoing hemodialysis require dosage adjustment <content styleCode="italics">[see Dosage and Administration (<linkHtml href="#s11">2.3</linkHtml>)]</content>.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s60">
+                           <id root="c355c634-5530-4a21-ad93-46c0284971ea"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="bold">Specific Populations</content>
+                              </paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s61">
+                           <id root="fe1f9106-ab07-41c7-8156-c91f4d1c8398"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="bold italics">Patients with Renal impairment</content>
+                              </paragraph>
+                              <paragraph>Cefepime pharmacokinetics have been investigated in patients with various degrees of renal impairment (n=30). The average half-life in patients requiring hemodialysis was 13.5 (±2.7) hours and in patients requiring continuous peritoneal dialysis was 19 (±2) hours. Cefepime total body clearance decreased proportionally with creatinine clearance in patients with abnormal renal function, which serves as the basis for dosage adjustment recommendations in this group of patients <content styleCode="italics">[see Dosage and Administration (<linkHtml href="#s11">2.3</linkHtml>)].</content>
+                              </paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s62">
+                           <id root="06248edd-c7b6-4ea5-9ef3-05eb221f8752"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="bold italics">Patients with Hepatic impairment</content>
+                              </paragraph>
+                              <paragraph>The pharmacokinetics of cefepime were unaltered in patients with hepatic impairment who received a single 1 g dose (n=11).
+</paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s63">
+                           <id root="754201d4-d6ec-4645-b503-8162190ad734"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="bold italics">Geriatric patients</content>
+                              </paragraph>
+                              <paragraph>Cefepime pharmacokinetics have been investigated in elderly (65 years of age and older) men (n=12) and women (n=12) whose mean (SD) creatinine clearance was 74 (±15) mL/min. There appeared to be a decrease in cefepime total body clearance as a function of creatinine clearance. Therefore, dosage administration of cefepime in the elderly should be adjusted as appropriate if the patient's creatinine clearance is 60 mL/min or less <content styleCode="italics">[see Dosage and Administration (<linkHtml href="#s11">2.3</linkHtml>)]</content>.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s64">
+                           <id root="21aab91e-2ded-4d27-9402-2b0817f16b4e"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="bold italics">Pediatric patients</content>
+                              </paragraph>
+                              <paragraph>Cefepime pharmacokinetics have been evaluated in pediatric patients from 2 months to 11 years of age following single and multiple doses on every 8 hours (n=29) and every 12 hours (n=13) schedules. Following a single intravenous dose, total body clearance and the steady-state volume of distribution averaged 3.3 (±1) mL/min/kg and 0.3 (±0.1) L/kg, respectively. The urinary recovery of unchanged cefepime was 60.4 (±30.4)% of the administered dose, and the average renal clearance was 2 (±1.1) mL/min/kg. There were no significant effects of age or gender (25 male vs. 17 female) on total body clearance or volume of distribution, corrected for body weight. No accumulation was seen when cefepime was given at 50 mg per kg every 12 hours (n=13), while C<sub>max</sub>, AUC, and t<sub>½</sub> were increased about 15% at steady state after 50 mg per kg every 8 hours. The exposure to cefepime following a 50 mg per kg intravenous dose in a pediatric patient is comparable to that in an adult treated with a 2 g intravenous dose. The absolute bioavailability of cefepime after an intramuscular dose of 50 mg per kg was 82.3 (±15)% in eight patients.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s65">
+                     <id root="fc1f52e5-17a0-463c-a216-74b5963e768f"/>
+                     <code code="49489-8" codeSystem="2.16.840.1.113883.6.1" displayName="MICROBIOLOGY SECTION"/>
+                     <title>12.4 Microbiology
+</title>
+                     <effectiveTime value="20160531"/>
+                     <component>
+                        <section ID="s66">
+                           <id root="6ceaa6cf-f95b-4cf0-b441-426f11991cda"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Mechanism of Action</content>
+                              </paragraph>
+                              <paragraph>Cefepime is a bactericidal drug that acts by inhibition of bacterial cell wall synthesis. Cefepime has a broad spectrum of <content styleCode="italics">in vitro</content> activity that encompasses a wide range of Gram-positive and Gram-negative bacteria. Within bacterial cells, the molecular targets of cefepime are the penicillin binding proteins (PBP).
+</paragraph>
+                           </text>
+                           <effectiveTime value="20160531"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s67">
+                           <id root="a5df93a5-f3ad-49a4-be86-4b81454cbd37"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Antimicrobial Activity</content>
+                              </paragraph>
+                              <paragraph>Cefepime has been shown to be active against most isolates of the following microorganisms, both <content styleCode="italics">in vitro</content> and in clinical infections as described in the Indications and Usage section (<linkHtml href="#s1">1</linkHtml>).
+</paragraph>
+                              <paragraph>Gram-negative Bacteria<br/>
+                                 <content styleCode="italics">Enterobacter</content> spp.<br/>
+                                 <content styleCode="italics">Escherichia coli</content>
+                                 <br/>
+                                 <content styleCode="italics">Klebsiella pneumoniae</content>
+                                 <br/>
+                                 <content styleCode="italics">Proteus mirabilis</content>
+                                 <br/>
+                                 <content styleCode="italics">Pseudomonas aeruginosa</content>
+                              </paragraph>
+                              <paragraph>Gram-positive Bacteria<br/>
+                                 <content styleCode="italics">Staphylococcus aureus</content> (methicillin-susceptible isolates only)<br/>
+                                 <content styleCode="italics">Streptococcus pneumoniae</content>
+                                 <br/>
+                                 <content styleCode="italics">Streptococcus pyogenes</content>
+                                 <br/>Viridans group <content styleCode="italics">streptococci</content>
+                              </paragraph>
+                              <paragraph>The following <content styleCode="italics">in vitro</content> data are available, but their clinical significance is unknown. At least 90 percent of the following bacteria exhibit an <content styleCode="italics">in vitro</content> minimum inhibitory concentration (MIC) less than or equal to the susceptible breakpoint for cefepime against isolates of similar genus or organism group. However, the efficacy of cefepime in treating clinical infections due to these bacteria has not been established in adequate and well-controlled clinical trials.
+</paragraph>
+                              <paragraph>Gram-positive Bacteria<br/>
+                                 <content styleCode="italics">Staphylococcus epidermidis</content> (methicillin-susceptible isolates only)<br/>
+                                 <content styleCode="italics">Staphylococcus saprophyticus</content>
+                                 <br/>
+                                 <content styleCode="italics">Streptococcus agalactiae</content>
+                              </paragraph>
+                              <paragraph>NOTE: Most isolates of enterococci, e.g., <content styleCode="italics">Enterococcus faecalis</content>, and methicillin-resistant staphylococci are resistant to cefepime.
+</paragraph>
+                              <paragraph>Gram-negative Bacteria<br/>
+                                 <content styleCode="italics">Acinetobacter calcoaceticus</content> subsp. <content styleCode="italics">lwoffii</content>
+                                 <br/>
+                                 <content styleCode="italics">Citrobacter diversus</content>
+                                 <br/>
+                                 <content styleCode="italics">Citrobacter freundii</content>
+                                 <br/>
+                                 <content styleCode="italics">Enterobacter agglomerans</content>
+                                 <br/>
+                                 <content styleCode="italics">Haemophilus influenzae</content>
+                                 <br/>
+                                 <content styleCode="italics">Hafnia alvei</content>
+                                 <br/>
+                                 <content styleCode="italics">Klebsiella oxytoca</content>
+                                 <br/>
+                                 <content styleCode="italics">Moraxella catarrhalis</content>
+                                 <br/>
+                                 <content styleCode="italics">Morganella morganii</content>
+                                 <br/>
+                                 <content styleCode="italics">Proteus vulgaris</content>
+                                 <br/>
+                                 <content styleCode="italics">Providencia rettgeri</content>
+                                 <br/>
+                                 <content styleCode="italics">Providencia stuartii</content>
+                                 <br/>
+                                 <content styleCode="italics">Serratia marcescens</content>
+                              </paragraph>
+                              <paragraph>NOTE: Cefepime is inactive against many isolates of <content styleCode="italics">Stenotrophomonas maltophilia.</content>
+                              </paragraph>
+                           </text>
+                           <effectiveTime value="20180402"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="s68">
+                           <id root="e38a72b8-47e4-4460-97bd-e07ba21e1a9c"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <text>
+                              <paragraph>
+                                 <content styleCode="underline">Susceptibility Testing</content>
+                              </paragraph>
+                              <paragraph>For specific information regarding susceptibility test interpretive criteria and associated test methods and quality control standards recognized by FDA for this drug, please see: https://www.fda.gov/STIC.
+</paragraph>
+                           </text>
+                           <effectiveTime value="20180402"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s72">
+               <id root="3208d120-0bd4-4dc0-befc-9e69bf2afc63"/>
+               <code code="43680-8" codeSystem="2.16.840.1.113883.6.1" displayName="NONCLINICAL TOXICOLOGY SECTION"/>
+               <title>13 NONCLINICAL TOXICOLOGY
+</title>
+               <effectiveTime value="20210929"/>
+               <component>
+                  <section ID="s73">
+                     <id root="2d183a70-b355-4766-872b-353c9316a870"/>
+                     <code code="34083-6" codeSystem="2.16.840.1.113883.6.1" displayName="CARCINOGENESIS &amp; MUTAGENESIS &amp; IMPAIRMENT OF FERTILITY SECTION"/>
+                     <title>13.1 Carcinogenesis, Mutagenesis, Impairment of Fertility
+</title>
+                     <text>
+                        <paragraph>No animal carcinogenicity studies have been conducted with cefepime. In chromosomal aberration studies, cefepime was positive for clastogenicity in primary human lymphocytes, but negative in Chinese hamster ovary cells. In other <content styleCode="italics">in vitro</content> assays (bacterial and mammalian cell mutation, DNA repair in primary rat hepatocytes, and sister chromatid exchange in human lymphocytes), cefepime was negative for genotoxic effects. Moreover, <content styleCode="italics">in vivo</content> assessments of cefepime in mice (2 chromosomal aberration and 2 micronucleus studies) were negative for clastogenicity. No untoward effects on fertility were observed in rats when cefepime was administered subcutaneously at doses up to 1000 mg/kg/day (1.6 times the recommended maximum human dose based on body surface area).
+</paragraph>
+                     </text>
+                     <effectiveTime value="20210929"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s74">
+               <id root="01885f94-98af-434e-b654-017ae1709ef1"/>
+               <code code="34092-7" codeSystem="2.16.840.1.113883.6.1" displayName="CLINICAL STUDIES SECTION"/>
+               <title>14 CLINICAL STUDIES
+</title>
+               <effectiveTime value="20210929"/>
+               <component>
+                  <section ID="s75">
+                     <id root="0ac47d23-7b52-44e0-bb76-ffe671d79a71"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>14.1 Febrile Neutropenic Patients
+</title>
+                     <text>
+                        <paragraph>The safety and efficacy of empiric cefepime monotherapy of febrile neutropenic patients have been assessed in two multicenter, randomized trials comparing cefepime monotherapy (at a dose of 2 g intravenously every 8 hours) to ceftazidime monotherapy (at a dose of 2 g intravenously every 8 hours). These studies comprised 317 evaluable patients. <linkHtml href="#t10">Table 10</linkHtml> describes the characteristics of the evaluable patient population.
+</paragraph>
+                        <table ID="t10" width="100%">
+                           <caption>Table 10: Demographics of Evaluable Patients (First Episodes Only)
+</caption>
+                           <col width="45.100%" align="left"/>
+                           <col width="25.100%" align="left"/>
+                           <col width="29.800%" align="left"/>
+                           <tfoot>
+                              <tr>
+                                 <td colspan="3" align="left" valign="top">
+                                    <paragraph styleCode="footnote">ANC = absolute neutrophil count; SBP = systolic blood pressure
+</paragraph>
+                                 </td>
+                              </tr>
+                           </tfoot>
+                           <tbody>
+                              <tr>
+                                 <td align="justify" valign="top" styleCode="Toprule"/>
+                                 <td align="center" valign="middle" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Cefepime</content>
+                                 </td>
+                                 <td align="center" valign="middle" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Ceftazidime</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top" styleCode="Botrule">
+                                    <content styleCode="bold">Total</content>
+                                 </td>
+                                 <td align="center" valign="middle" styleCode="Botrule">
+                                    <content styleCode="bold">164</content>
+                                 </td>
+                                 <td align="center" valign="middle" styleCode="Botrule">
+                                    <content styleCode="bold">153</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Median age (yr)
+</td>
+                                 <td align="center" valign="middle">56 (range, 18 to 82)
+</td>
+                                 <td align="center" valign="middle">55 (range, 16 to 84)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Male
+</td>
+                                 <td align="center" valign="middle">86 (52%)
+</td>
+                                 <td align="center" valign="middle">85 (56%)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Female
+</td>
+                                 <td align="center" valign="middle">78 (48%)
+</td>
+                                 <td align="center" valign="middle">68 (44%)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Leukemia
+</td>
+                                 <td align="center" valign="middle">65 (40%)
+</td>
+                                 <td align="center" valign="middle">52 (34%)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Other hematologic malignancies
+</td>
+                                 <td align="center" valign="middle">43 (26%)
+</td>
+                                 <td align="center" valign="middle">36 (24%)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Solid tumor
+</td>
+                                 <td align="center" valign="middle">54 (33%)
+</td>
+                                 <td align="center" valign="middle">56 (37%)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Median ANC nadir (cells/microliter)
+</td>
+                                 <td align="center" valign="middle">20 (range, 0 to 500)
+</td>
+                                 <td align="center" valign="middle">20 (range, 0 to 500)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Median duration of neutropenia (days)
+</td>
+                                 <td align="center" valign="middle">6 (range, 0 to 39)
+</td>
+                                 <td align="center" valign="middle">6 (range, 0 to 32)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Indwelling venous catheter
+</td>
+                                 <td align="center" valign="middle">97 (59%)
+</td>
+                                 <td align="center" valign="middle">86 (56%)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Prophylactic antibacterial drugs
+</td>
+                                 <td align="center" valign="middle">62 (38%)
+</td>
+                                 <td align="center" valign="middle">64 (42%)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Bone marrow graft
+</td>
+                                 <td align="center" valign="middle">9 (5%)
+</td>
+                                 <td align="center" valign="middle">7 (5%)
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top" styleCode="Botrule">SBP less than 90 mm Hg at entry
+</td>
+                                 <td align="center" valign="middle" styleCode="Botrule">7 (4%)
+</td>
+                                 <td align="center" valign="middle" styleCode="Botrule">2 (1%)
+</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>
+                           <linkHtml href="#t11">Table 11</linkHtml> describes the clinical response rates observed. For all outcome measures, cefepime was therapeutically equivalent to ceftazidime.
+</paragraph>
+                        <table ID="t11" width="100%">
+                           <caption>Table 11: Pooled Response Rates for Empiric Therapy of Febrile Neutropenic Patients
+</caption>
+                           <col width="64.267%" align="left"/>
+                           <col width="18.467%" align="left"/>
+                           <col width="17.267%" align="left"/>
+                           <tbody>
+                              <tr>
+                                 <td align="justify" valign="top" styleCode="Toprule"/>
+                                 <td align="center" valign="top" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">% Response Cefepime</content>
+                                 </td>
+                                 <td align="center" valign="bottom" styleCode="Toprule Botrule">
+                                    <content styleCode="bold">Ceftazidime</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top" styleCode="Botrule">
+                                    <content styleCode="bold">Outcome Measures</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule">
+                                    <content styleCode="bold">(n=164)</content>
+                                 </td>
+                                 <td align="center" valign="top" styleCode="Botrule">
+                                    <content styleCode="bold">(n=153)</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Primary episode resolved with no treatment modification, no new febrile episodes or infection, and oral antibacterial drugs allowed for completion of treatment
+</td>
+                                 <td align="center" valign="top">51
+</td>
+                                 <td align="center" valign="top">55
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Primary episode resolved with no treatment modification, no new febrile episodes or infection and no post-treatment oral antibacterial drugs
+</td>
+                                 <td align="center" valign="top">34
+</td>
+                                 <td align="center" valign="top">39
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Survival, any treatment modification allowed
+</td>
+                                 <td align="center" valign="top">93
+</td>
+                                 <td align="center" valign="top">97
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">Primary episode resolved with no treatment modification and oral antibacterial drugs allowed for completion of treatment
+</td>
+                                 <td align="center" valign="top">62
+</td>
+                                 <td align="center" valign="top">67
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top" styleCode="Botrule">Primary episode resolved with no treatment modification and no post-treatment oral antibacterial drugs
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule">46
+</td>
+                                 <td align="center" valign="top" styleCode="Botrule">51
+</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>Insufficient data exist to support the efficacy of cefepime monotherapy in patients at high risk for severe infection (including patients with a history of recent bone marrow transplantation, with hypotension at presentation, with an underlying hematologic malignancy, or with severe or prolonged neutropenia). No data are available in patients with septic shock.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20210929"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s76">
+                     <id root="4bbd6b8e-9431-45a7-8007-f9f6c3dd0f55"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>14.2 Complicated Intra-abdominal Infections
+</title>
+                     <text>
+                        <paragraph>Patients hospitalized with complicated intra-abdominal infections participated in a randomized, double-blind, multicenter trial comparing the combination of cefepime (2 g every 12 hours) plus intravenous metronidazole (500 mg every 6 hours) versus imipenem/cilastatin (500 mg every 6 hours) for a maximum duration of 14 days of therapy. The study was designed to demonstrate equivalence of the two therapies. The primary analyses were conducted on the population consisting of those with a surgically confirmed complicated infection, at least one pathogen isolated pretreatment, at least 5 days of treatment, and a 4 to 6 week follow-up assessment for cured patients. Subjects in the imipenem/cilastatin arm had higher APACHE II scores at baseline. The treatment groups were otherwise generally comparable with regard to their pretreatment characteristics. The overall clinical cure rate among the primary analysis patients was 81% (51 cured/63 evaluable patients) in the cefepime plus metronidazole group and 66% (62/94) in the imipenem/cilastatin group. The observed differences in efficacy may have been due to a greater proportion of patients with high APACHE II scores in the imipenem/cilastatin group.
+</paragraph>
+                     </text>
+                     <effectiveTime value="20210929"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s77">
+               <id root="ba6f5846-d8b4-4f82-86bb-53aceecd3984"/>
+               <code code="34093-5" codeSystem="2.16.840.1.113883.6.1" displayName="REFERENCES SECTION"/>
+               <title>15 REFERENCES
+</title>
+               <text>
+                  <list listType="ordered" styleCode="Arabic">
+                     <item>Cockcroft DW, Gault MH. Prediction of creatinine clearance from serum creatinine. Nephron. 1976; 16:31-41.
+</item>
+                  </list>
+               </text>
+               <effectiveTime value="20180402"/>
+            </section>
+         </component>
+         <component>
+            <section ID="s78">
+               <id root="70ff99db-33e9-409b-86a5-133cd103df59"/>
+               <code code="34069-5" codeSystem="2.16.840.1.113883.6.1" displayName="HOW SUPPLIED SECTION"/>
+               <title>16 HOW SUPPLIED/STORAGE AND HANDLING
+</title>
+               <effectiveTime value="20210929"/>
+               <component>
+                  <section ID="s79">
+                     <id root="735f166f-b014-4d15-a6a2-0a47bcf0ce6c"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <text>
+                        <paragraph>
+                           <content styleCode="bold">How Supplied</content>
+                        </paragraph>
+                        <paragraph>Cefepime for Injection, USP is supplied as follows:
+</paragraph>
+                        <paragraph>Cefepime for Injection, USP in the dry state, is a white to pale yellow powder. Constituted solution of Cefepime for Injection, USP can range in color from pale yellow to amber.
+</paragraph>
+                        <table width="100%" styleCode="Noautorules">
+                           <col width="29.067%" align="left"/>
+                           <col width="32.933%" align="left"/>
+                           <col width="38.000%" align="left"/>
+                           <tfoot>
+                              <tr>
+                                 <td colspan="3" align="left" valign="top">
+                                    <paragraph styleCode="footnote">*Based on cefepime activity.
+</paragraph>
+                                 </td>
+                              </tr>
+                           </tfoot>
+                           <tbody>
+                              <tr>
+                                 <td align="justify" valign="top">
+                                    <content styleCode="bold">NDC</content>
+                                 </td>
+                                 <td align="justify" valign="top">
+                                    <content styleCode="bold">Cefepime for Injection, USP</content>
+                                 </td>
+                                 <td align="justify" valign="top">
+                                    <content styleCode="bold">Package Factor</content>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">25021-121-20
+</td>
+                                 <td align="justify" valign="top">1 gram* Single-Dose Vial
+</td>
+                                 <td align="justify" valign="top">10 vials per carton
+</td>
+                              </tr>
+                              <tr>
+                                 <td align="justify" valign="top">25021-122-50
+</td>
+                                 <td align="justify" valign="top">2 gram* Single-Dose Vial
+</td>
+                                 <td align="justify" valign="top">10 vials per carton
+</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </text>
+                     <effectiveTime value="20210929"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="s80">
+                     <id root="d6b5ad8d-e63a-48d1-82ce-744fd5e63024"/>
+                     <code code="44425-7" codeSystem="2.16.840.1.113883.6.1" displayName="STORAGE AND HANDLING SECTION"/>
+                     <text>
+                        <paragraph>
+                           <content styleCode="bold">Storage and Handling</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">In the dry state store at 20° to 25°C (68° to 77°F); excursions permitted between 15° and 30°C (59° and 86°F). [See USP Controlled Room Temperature.]</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Protect from light.</content> Retain in carton until time of use.<br/>Discard unused portion.
+								</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Sterile, Nonpyrogenic, Preservative-free.<br/>The container closure is not made with natural rubber latex.</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20160531"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s81">
+               <id root="ea557f6a-0797-4bb0-ad53-7aae3fe8f48a"/>
+               <code code="34076-0" codeSystem="2.16.840.1.113883.6.1" displayName="INFORMATION FOR PATIENTS SECTION"/>
+               <title>17 PATIENT COUNSELING INFORMATION
+</title>
+               <text>
+                  <list listType="unordered" styleCode="Disc">
+                     <item>Counsel patients that antibacterial drugs including cefepime for injection should only be used to treat bacterial infections. They do not treat viral infections (e.g., the common cold). When cefepime for injection is prescribed to treat a bacterial infection, patients should be told that although it is common to feel better early in the course of therapy, the medication should be taken exactly as directed. Skipping doses or not completing the full course of therapy may (1) decrease the effectiveness of the immediate treatment and (2) increase the likelihood that bacteria will develop resistance and will not be treatable by cefepime for injection or other antibacterial drugs in the future.
+</item>
+                     <item>Diarrhea is a common problem caused by antibacterial drugs, which usually ends when the antibacterial drug is discontinued. Inform patient that they may develop watery and bloody stools (with or without stomach cramps and fever) during treatment and as late as two or more months after having taken the last dose of the antibacterial drug. Inform patients that they should contact their physician as soon as possible if this occurs.
+</item>
+                     <item>Advise patients of neurological adverse events that could occur with cefepime for injection use. Instruct patients or their caregivers to inform their healthcare provider at once of any neurological signs and symptoms, including encephalopathy (disturbance of consciousness including confusion, hallucinations, stupor, and coma), aphasia (disturbance of speaking and understanding spoken and written language), myoclonus, seizures and nonconvulsive status epilepticus, for immediate treatment, dosage adjustment, or discontinuation of cefepime for injection.
+</item>
+                  </list>
+                  <paragraph>Brands listed are the trademarks of their respective owners.
+</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">sagent<sup>®</sup>
+                     </content>
+                     <br/>Mfd. for SAGENT Pharmaceuticals<br/>Schaumburg, IL 60173 (USA)<br/>Made in Brazil<br/>©2025 Sagent Pharmaceuticals</paragraph>
+                  <paragraph>Revised: March 2025
+</paragraph>
+               </text>
+               <effectiveTime value="20250310"/>
+            </section>
+         </component>
+         <component>
+            <section ID="s82">
+               <id root="1096e1f7-2e37-48a2-aad6-8663440d6a39"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <text>
+                  <paragraph>PACKAGE LABEL – PRINCIPAL DISPLAY PANEL – Vial Label
+</paragraph>
+                  <paragraph>NDC 25021-121-20
+</paragraph>
+                  <paragraph>Rx only
+</paragraph>
+                  <paragraph>CEFEPIME for Injection, USP
+</paragraph>
+                  <paragraph>1 gram per vial
+</paragraph>
+                  <paragraph>Single-Dose Vial
+</paragraph>
+                  <paragraph>For Intravenous or
+</paragraph>
+                  <paragraph>Intramuscular Use
+</paragraph>
+                  <paragraph>After Constitution
+</paragraph>
+                  <renderMultiMedia ID="f03" referencedObject="mm03"/>
+               </text>
+               <effectiveTime value="20250310"/>
+               <component>
+                  <observationMedia ID="mm03">
+                     <text>PACKAGE LABEL – PRINCIPAL DISPLAY PANEL – Vial Label
+</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="cef0e-0014-03.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="s83">
+               <id root="a4b4ed6f-6845-4d20-8447-fc683997e721"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <text>
+                  <paragraph>PACKAGE LABEL – PRINCIPAL DISPLAY PANEL – Vial Label
+</paragraph>
+                  <paragraph>NDC 25021-122-50
+</paragraph>
+                  <paragraph>Rx only
+</paragraph>
+                  <paragraph>CEFEPIME for Injection, USP
+</paragraph>
+                  <paragraph>2 grams per vial
+</paragraph>
+                  <paragraph>Single-Dose Vial
+</paragraph>
+                  <paragraph>For Intravenous Use
+</paragraph>
+                  <paragraph>After Constitution
+</paragraph>
+                  <renderMultiMedia ID="f04" referencedObject="mm04"/>
+               </text>
+               <effectiveTime value="20250310"/>
+               <component>
+                  <observationMedia ID="mm04">
+                     <text>PACKAGE LABEL – PRINCIPAL DISPLAY PANEL – Vial Label
+</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="cef0e-0014-04.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+      </structuredBody>
+   </component>
+</document>

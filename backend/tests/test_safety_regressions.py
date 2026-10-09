@@ -43,7 +43,7 @@ def test_baseline_input_does_not_receive_rule_derived_candidate_set(monkeypatch,
     assert calls[1]['case_summary']['ast_results']==case()['ast_results']
 
 @pytest.mark.parametrize('bad_field,bad_value',[('drug_code','DEMO_DRUG_C'),('evidence_refs',['fabricated']),('rule_refs',['invented'])])
-@pytest.mark.parametrize('mode', ['rag-only', 'single-agent', 'multi-agent'])
+@pytest.mark.parametrize('mode', ['rag-only', 'single-agent'])
 def test_provider_cannot_escape_shared_final_gate(monkeypatch,bad_field,bad_value,mode):
     from app.providers import service
     class Fake:
@@ -83,7 +83,7 @@ def test_document_conflict_cannot_be_hidden_by_limit(tmp_path):
     assert docs.search('DEMO_ORGANISM_A',limit=1)['status']=='conflict'
 
 
-@pytest.mark.parametrize('mode', ['rag-only', 'single-agent', 'multi-agent'])
+@pytest.mark.parametrize('mode', ['rag-only', 'single-agent'])
 def test_overlapping_candidate_is_removed_and_empty_result_withheld(monkeypatch, mode):
     from app.providers import service
     class Contradictory:

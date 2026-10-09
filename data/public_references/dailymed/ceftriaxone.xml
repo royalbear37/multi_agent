@@ -1,0 +1,2576 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://www.accessdata.fda.gov/spl/stylesheet/spl.xsl"?>
+<document xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 https://www.accessdata.fda.gov/spl/schema/spl.xsd">
+   <id root="1553de11-36df-4e7e-a450-025b8563dd11"/>
+   <code code="34391-3" displayName="HUMAN PRESCRIPTION DRUG LABEL" codeSystem="2.16.840.1.113883.6.1"/>
+   <title>CEFTRIAXONE FOR INJECTION, USP</title>
+   <effectiveTime value="20260930"/>
+   <setId root="8351aa37-552d-471d-b293-c564dcb6ec29"/>
+   <versionNumber value="18"/>
+   <author>
+      <time/>
+      <assignedEntity>
+         <representedOrganization>
+            <id extension="001230762" root="1.3.6.1.4.1.519.1"/>
+            <name>Hikma Pharmaceuticals USA Inc.</name>
+            <assignedEntity>
+               <assignedOrganization>
+                  <assignedEntity>
+                     <assignedOrganization>
+                        <id extension="452742943" root="1.3.6.1.4.1.519.1"/>
+                        <name>HIKMA FARMACEUTICA (PORTUGAL), S.A</name>
+                     </assignedOrganization>
+                     <performance>
+                        <actDefinition>
+                           <code code="C25391" displayName="analysis" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9859" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C25391" displayName="analysis" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9858" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C25391" displayName="analysis" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9857" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C25391" displayName="analysis" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9856" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C84732" displayName="label" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9859" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C84732" displayName="label" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9858" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C84732" displayName="label" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9857" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C84732" displayName="label" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9856" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C43360" displayName="manufacture" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9859" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C43360" displayName="manufacture" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9858" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C43360" displayName="manufacture" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9857" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C43360" displayName="manufacture" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9856" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C84731" displayName="pack" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9859" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C84731" displayName="pack" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9858" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C84731" displayName="pack" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9857" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C84731" displayName="pack" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="0143-9856" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                  </assignedEntity>
+               </assignedOrganization>
+            </assignedEntity>
+         </representedOrganization>
+      </assignedEntity>
+   </author>
+   <component>
+      <structuredBody>
+         <component>
+            <section>
+               <id root="94d48510-77a8-4484-8a40-4033d551e7f0"/>
+               <code code="48780-1" displayName="SPL listing data elements section" codeSystem="2.16.840.1.113883.6.1"/>
+               <effectiveTime value="20260930"/>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code code="0143-9859" codeSystem="2.16.840.1.113883.6.69"/>
+                        <name>Ceftriaxone</name>
+                        <formCode code="C42974" displayName="INJECTION, POWDER, FOR SOLUTION" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>ceftriaxone</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <ingredient classCode="ACTIM">
+                           <quantity>
+                              <numerator unit="mg" value="250"/>
+                              <denominator unit="1" value="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="023Z5BR09K" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>CEFTRIAXONE SODIUM</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="75J73V1629" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>CEFTRIAXONE</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator unit="1" value="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="0143-9859-01" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43226" displayName="VIAL" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                              <asContent>
+                                 <quantity>
+                                    <numerator unit="1" value="25"/>
+                                    <denominator value="1"/>
+                                 </quantity>
+                                 <containerPackagedProduct>
+                                    <code code="0143-9859-25" codeSystem="2.16.840.1.113883.6.69"/>
+                                    <formCode code="C43178" displayName="BOX" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 </containerPackagedProduct>
+                                 <subjectOf>
+                                    <marketingAct>
+                                       <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                       <statusCode code="active"/>
+                                       <effectiveTime>
+                                          <low value="20080110"/>
+                                       </effectiveTime>
+                                    </marketingAct>
+                                 </subjectOf>
+                              </asContent>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <approval>
+                           <id extension="ANDA065342" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73584" displayName="ANDA" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20080110"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C28161" displayName="INTRAMUSCULAR" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38276" displayName="INTRAVENOUS" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code code="0143-9858" codeSystem="2.16.840.1.113883.6.69"/>
+                        <name>Ceftriaxone</name>
+                        <formCode code="C42974" displayName="INJECTION, POWDER, FOR SOLUTION" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>Ceftriaxone</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <ingredient classCode="ACTIM">
+                           <quantity>
+                              <numerator unit="mg" value="500"/>
+                              <denominator unit="1" value="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="023Z5BR09K" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>CEFTRIAXONE SODIUM</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="75J73V1629" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>CEFTRIAXONE</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator unit="1" value="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="0143-9858-01" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43226" displayName="VIAL" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                              <asContent>
+                                 <quantity>
+                                    <numerator unit="1" value="25"/>
+                                    <denominator value="1"/>
+                                 </quantity>
+                                 <containerPackagedProduct>
+                                    <code code="0143-9858-25" codeSystem="2.16.840.1.113883.6.69"/>
+                                    <formCode code="C43178" displayName="BOX" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 </containerPackagedProduct>
+                                 <subjectOf>
+                                    <marketingAct>
+                                       <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                       <statusCode code="active"/>
+                                       <effectiveTime>
+                                          <low value="20080110"/>
+                                       </effectiveTime>
+                                    </marketingAct>
+                                 </subjectOf>
+                              </asContent>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <approval>
+                           <id extension="ANDA065342" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73584" displayName="ANDA" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20080110"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C28161" displayName="INTRAMUSCULAR" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38276" displayName="INTRAVENOUS" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code code="0143-9857" codeSystem="2.16.840.1.113883.6.69"/>
+                        <name>Ceftriaxone</name>
+                        <formCode code="C42974" displayName="INJECTION, POWDER, FOR SOLUTION" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>Ceftriaxone</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <ingredient classCode="ACTIM">
+                           <quantity>
+                              <numerator unit="g" value="1"/>
+                              <denominator unit="1" value="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="023Z5BR09K" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>CEFTRIAXONE SODIUM</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="75J73V1629" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>CEFTRIAXONE</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator unit="1" value="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="0143-9857-01" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43226" displayName="VIAL" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                              <asContent>
+                                 <quantity>
+                                    <numerator unit="1" value="25"/>
+                                    <denominator value="1"/>
+                                 </quantity>
+                                 <containerPackagedProduct>
+                                    <code code="0143-9857-25" codeSystem="2.16.840.1.113883.6.69"/>
+                                    <formCode code="C43178" displayName="BOX" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 </containerPackagedProduct>
+                                 <subjectOf>
+                                    <marketingAct>
+                                       <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                       <statusCode code="active"/>
+                                       <effectiveTime>
+                                          <low value="20080110"/>
+                                       </effectiveTime>
+                                    </marketingAct>
+                                 </subjectOf>
+                              </asContent>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <approval>
+                           <id extension="ANDA065342" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73584" displayName="ANDA" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20080110"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C28161" displayName="INTRAMUSCULAR" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38276" displayName="INTRAVENOUS" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code code="0143-9856" codeSystem="2.16.840.1.113883.6.69"/>
+                        <name>Ceftriaxone</name>
+                        <formCode code="C42974" displayName="INJECTION, POWDER, FOR SOLUTION" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>Ceftriaxone</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <ingredient classCode="ACTIM">
+                           <quantity>
+                              <numerator unit="g" value="2"/>
+                              <denominator unit="1" value="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="023Z5BR09K" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>CEFTRIAXONE SODIUM</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="75J73V1629" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>CEFTRIAXONE</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator unit="1" value="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="0143-9856-01" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43226" displayName="VIAL" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                              <asContent>
+                                 <quantity>
+                                    <numerator unit="1" value="25"/>
+                                    <denominator value="1"/>
+                                 </quantity>
+                                 <containerPackagedProduct>
+                                    <code code="0143-9856-25" codeSystem="2.16.840.1.113883.6.69"/>
+                                    <formCode code="C43178" displayName="BOX" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                 </containerPackagedProduct>
+                                 <subjectOf>
+                                    <marketingAct>
+                                       <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                                       <statusCode code="active"/>
+                                       <effectiveTime>
+                                          <low value="20080110"/>
+                                       </effectiveTime>
+                                    </marketingAct>
+                                 </subjectOf>
+                              </asContent>
+                           </containerPackagedProduct>
+                           <subjectOf>
+                              <characteristic>
+                                 <code code="SPLCMBPRDTP" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                                 <value code="C112160" displayName="Type 0: Not a Combination Product" codeSystem="2.16.840.1.113883.3.26.1.1" xsi:type="CV"/>
+                              </characteristic>
+                           </subjectOf>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <approval>
+                           <id extension="ANDA065342" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73584" displayName="ANDA" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="20080110"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C28161" displayName="INTRAMUSCULAR" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38276" displayName="INTRAVENOUS" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_a0b16aee-0292-401a-9243-a45b8070e9e5">
+               <id root="e14784fb-4971-4ae5-ba56-b982abe129c9"/>
+               <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+               <title/>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">Rx Only</content>
+                  </paragraph>
+                  <paragraph>To reduce the development of drug-resistant bacteria and maintain the effectiveness of ceftriaxone for injection and other antibacterial drugs, ceftriaxone for injection should be used only to treat or prevent infections that are proven or strongly suspected to be caused by bacteria.</paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_e4cc52d9-ebe6-4d43-8826-a1cbb81a0b9a">
+               <id root="b4369f05-f4fe-4a16-8a37-0a5b2236e06f"/>
+               <code code="34089-3" codeSystem="2.16.840.1.113883.6.1" displayName="DESCRIPTION SECTION"/>
+               <title>
+                  <content styleCode="bold">DESCRIPTION</content>
+               </title>
+               <text>
+                  <paragraph>Ceftriaxone for Injection, USP is a sterile, semisynthetic, broad-spectrum cephalosporin antibiotic for intravenous or intramuscular administration. Ceftriaxone sodium is (6<content styleCode="italics">R</content>,7<content styleCode="italics">R</content>)-7-[2-(2-Amino-4-thiazolyl)glyoxylamido]-8-oxo-3-[[(1,2,5,6-tetrahydro-2-methyl-5,6-dioxo-<content styleCode="italics">as</content>-triazin-3-yl)thio]methyl]-5-thia-1-azabicyclo[4.2.0]oct-2-ene-2-carboxylic acid, 7<sup>2</sup>-(<content styleCode="italics">Z</content>)-(<content styleCode="italics">O</content>-methyloxime), disodium salt, sesquaterhydrate.</paragraph>
+                  <paragraph>The chemical formula of ceftriaxone sodium is C<sub>1</sub>
+                     <sub>8</sub>H<sub>1</sub>
+                     <sub>6</sub>N<sub>8</sub>Na<sub>2</sub>O<sub>7</sub>S<sub>3</sub>•3.5H<sub>2</sub>O. It has a calculated molecular weight of 661.59 and the following structural formula:</paragraph>
+                  <renderMultiMedia referencedObject="MM1"/>
+                  <paragraph>Ceftriaxone for Injection, USP is a white to yellowish-orange crystalline powder which is readily soluble in water, sparingly soluble in methanol and very slightly soluble in ethanol. The pH of a 1% aqueous solution is approximately 6.7. The color of Ceftriaxone for Injection, USP solutions ranges from light yellow to amber, depending on the length of storage, concentration and diluent used.</paragraph>
+                  <paragraph>Ceftriaxone for Injection, USP contains approximately 83 mg (3.6 mEq) of sodium per gram of ceftriaxone activity.</paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <observationMedia ID="MM1">
+                     <text>Structural formula</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ceftriaxone-for-injection-1.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_78044489-3122-491b-80d7-702b170c2e04">
+               <id root="ae4470b0-3372-4345-81a8-25a56aa7e745"/>
+               <code code="34090-1" codeSystem="2.16.840.1.113883.6.1" displayName="CLINICAL PHARMACOLOGY SECTION"/>
+               <title>
+                  <content styleCode="bold">CLINICAL PHARMACOLOGY</content>
+               </title>
+               <text>
+                  <paragraph>Average plasma concentrations of ceftriaxone following a single 30-minute intravenous (IV) infusion of a 0.5, 1 or 2 gm dose and intramuscular (IM) administration of a single 0.5 (250 mg/mL or 350 mg/mL concentrations) or 1 gm dose in healthy subjects are presented in <content styleCode="bold">Table 1</content>.</paragraph>
+                  <table>
+                     <caption>TABLE 1. Ceftriaxone Plasma Concentrations After Single Dose Administration</caption>
+                     <col width="1px"/>
+                     <col width="1px"/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <tbody>
+                        <tr>
+                           <td align="center" styleCode=" Botrule">  Dose/Route</td>
+                           <td align="center" colspan="9" styleCode=" Botrule">  Average Plasma Concentrations (mcg/mL)</td>
+                        </tr>
+                        <tr>
+                           <td styleCode=" Botrule">    </td>
+                           <td align="center" styleCode=" Botrule">  0.5 hr</td>
+                           <td align="center" styleCode=" Botrule"> 1 hr</td>
+                           <td align="center" styleCode=" Botrule"> 2 hr</td>
+                           <td align="center" styleCode=" Botrule">  4 hr</td>
+                           <td align="center" styleCode=" Botrule">  6 hr</td>
+                           <td align="center" styleCode=" Botrule">  8 hr</td>
+                           <td align="center" styleCode=" Botrule">  12 hr</td>
+                           <td align="center" styleCode=" Botrule">  16 hr</td>
+                           <td align="center" styleCode=" Botrule">  24 hr</td>
+                        </tr>
+                        <tr>
+                           <td>  0.5 gm IV*</td>
+                           <td align="center">82</td>
+                           <td align="center"> 59</td>
+                           <td align="center">48</td>
+                           <td align="center">37</td>
+                           <td align="center"> 29</td>
+                           <td align="center">23</td>
+                           <td align="center">15</td>
+                           <td align="center">10</td>
+                           <td align="center">5</td>
+                        </tr>
+                        <tr>
+                           <td>  0.5 gm IM <br/>   250 mg/mL</td>
+                           <td align="center">22</td>
+                           <td align="center"> 33</td>
+                           <td align="center"> 38</td>
+                           <td align="center"> 35</td>
+                           <td align="center">  30</td>
+                           <td align="center">26</td>
+                           <td align="center">16</td>
+                           <td align="center">ND</td>
+                           <td align="center">5</td>
+                        </tr>
+                        <tr>
+                           <td>  0.5 gm IM <br/>   350 mg/mL</td>
+                           <td align="center">20</td>
+                           <td align="center"> 32</td>
+                           <td align="center"> 38</td>
+                           <td align="center"> 34</td>
+                           <td align="center">  31</td>
+                           <td align="center">24</td>
+                           <td align="center">16</td>
+                           <td align="center">ND</td>
+                           <td align="center">5</td>
+                        </tr>
+                        <tr>
+                           <td>  1 gm IV*</td>
+                           <td align="center">151</td>
+                           <td align="center">  111</td>
+                           <td align="center"> 88</td>
+                           <td align="center"> 67</td>
+                           <td align="center">  53</td>
+                           <td align="center">43</td>
+                           <td align="center">28</td>
+                           <td align="center">18</td>
+                           <td align="center">9</td>
+                        </tr>
+                        <tr>
+                           <td>  1 gm IM</td>
+                           <td align="center">40</td>
+                           <td align="center"> 68</td>
+                           <td align="center"> 76</td>
+                           <td align="center"> 68</td>
+                           <td align="center">  56</td>
+                           <td align="center">44</td>
+                           <td align="center"> 29</td>
+                           <td align="center">ND</td>
+                           <td align="center">ND</td>
+                        </tr>
+                        <tr>
+                           <td styleCode=" Botrule">  2 gm IV*</td>
+                           <td align="center" styleCode=" Botrule">257</td>
+                           <td align="center" styleCode=" Botrule">  192</td>
+                           <td align="center" styleCode=" Botrule">  154</td>
+                           <td align="center" styleCode=" Botrule">  117</td>
+                           <td align="center" styleCode=" Botrule">  89</td>
+                           <td align="center" styleCode=" Botrule">74</td>
+                           <td align="center" styleCode=" Botrule">46</td>
+                           <td align="center" styleCode=" Botrule">31</td>
+                           <td align="center" styleCode=" Botrule">15</td>
+                        </tr>
+                        <tr>
+                           <td colspan="10">ND = Not determined.<br/>* IV doses were infused at a constant rate over 30 minutes.</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>Ceftriaxone was completely absorbed following IM administration with mean maximum plasma concentrations occurring between 2 and 3 hours post-dose. Multiple IV or IM doses ranging from 0.5 to 2 gm at 12 to 24 hour intervals resulted in 15% to 36% accumulation of ceftriaxone above single dose values.</paragraph>
+                  <paragraph>Ceftriaxone concentrations in urine are shown in <content styleCode="bold">Table 2</content>.</paragraph>
+                  <table>
+                     <caption>TABLE 2. Urinary Concentrations of Ceftriaxone After Single Dose Administration</caption>
+                     <col width="1px"/>
+                     <col width="1px"/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <tbody>
+                        <tr>
+                           <td align="center" styleCode=" Botrule">  Dose/Route</td>
+                           <td align="center" colspan="6" styleCode=" Botrule">  Average Urinary Concentrations (mcg/mL)</td>
+                        </tr>
+                        <tr>
+                           <td styleCode=" Botrule">    </td>
+                           <td align="center" styleCode=" Botrule">  0 - 2 hr</td>
+                           <td align="center" styleCode=" Botrule">  2 - 4 hr</td>
+                           <td align="center" styleCode=" Botrule">  4 - 8 hr</td>
+                           <td align="center" styleCode=" Botrule">  8 - 12 hr</td>
+                           <td align="center" styleCode=" Botrule">  12 - 24 hr</td>
+                           <td align="center" styleCode=" Botrule">  24 - 48 hr</td>
+                        </tr>
+                        <tr>
+                           <td>  0.5 gm IV </td>
+                           <td align="center">  526</td>
+                           <td align="center">  366</td>
+                           <td align="center">  142</td>
+                           <td align="center">  87</td>
+                           <td align="center">  70</td>
+                           <td align="center">  15</td>
+                        </tr>
+                        <tr>
+                           <td>  0.5 gm IM </td>
+                           <td align="center">  115</td>
+                           <td align="center">  425</td>
+                           <td align="center">  308</td>
+                           <td align="center">  127</td>
+                           <td align="center">  96</td>
+                           <td align="center">  28</td>
+                        </tr>
+                        <tr>
+                           <td>  1 gm IV </td>
+                           <td align="center">  995</td>
+                           <td align="center">  855</td>
+                           <td align="center">  293</td>
+                           <td align="center">  147</td>
+                           <td align="center">  132</td>
+                           <td align="center">  32</td>
+                        </tr>
+                        <tr>
+                           <td>  1 gm IM </td>
+                           <td align="center">  504</td>
+                           <td align="center">  628</td>
+                           <td align="center">  418</td>
+                           <td align="center">  237</td>
+                           <td align="center">  ND</td>
+                           <td align="center">  ND</td>
+                        </tr>
+                        <tr>
+                           <td styleCode=" Botrule">  2 gm IV </td>
+                           <td align="center" styleCode=" Botrule">  2692</td>
+                           <td align="center" styleCode=" Botrule">  1976</td>
+                           <td align="center" styleCode=" Botrule">  757</td>
+                           <td align="center" styleCode=" Botrule">  274</td>
+                           <td align="center" styleCode=" Botrule">  198</td>
+                           <td align="center" styleCode=" Botrule">  40</td>
+                        </tr>
+                        <tr>
+                           <td colspan="7">  ND = Not determined.</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>Thirty-three percent to 67% of a ceftriaxone dose was excreted in the urine as unchanged drug and the remainder was secreted in the bile and ultimately found in the feces as microbiologically inactive compounds. After a 1 gm IV dose, average concentrations of ceftriaxone, determined from 1 to 3 hours after dosing, were 581 mcg/mL in the gallbladder bile, 788 mcg/mL in the common duct bile, 898 mcg/mL in the cystic duct bile, 78.2 mcg/gm in the gallbladder wall and 62.1 mcg/mL in the concurrent plasma.</paragraph>
+                  <paragraph>Over a 0.15 to 3 gm dose range in healthy adult subjects, the values of elimination half-life ranged from 5.8 to 8.7 hours; apparent volume of distribution from 5.78 to 13.5 L; plasma clearance from 0.58 to 1.45 L/hour; and renal clearance from 0.32 to 0.73 L/hour. </paragraph>
+                  <paragraph>Ceftriaxone is reversibly bound to human plasma proteins, and the binding decreased from a value of 95% bound at plasma concentrations of &lt; 25 mcg/mL to a value of 85% bound at 300 mcg/mL. Ceftriaxone crosses the blood placenta barrier.</paragraph>
+                  <paragraph>The average values of maximum plasma concentration, elimination half-life, plasma clearance and volume of distribution after a 50 mg/kg IV dose and after a 75 mg/kg IV dose in pediatric patients suffering from bacterial meningitis are shown in <content styleCode="bold">Table 3</content>. </paragraph>
+                  <paragraph>Ceftriaxone penetrated the inflamed meninges of infants and pediatric patients; CSF concentrations after a 50 mg/kg IV dose and after a 75 mg/kg IV dose are also shown in <content styleCode="bold">Table 3</content>.</paragraph>
+                  <table>
+                     <caption>TABLE 3. Average Pharmacokinetic Parameters of Ceftriaxone in Pediatric Patients With Meningitis</caption>
+                     <col width="1px"/>
+                     <col width="1px"/>
+                     <col width="1px"/>
+                     <tbody>
+                        <tr>
+                           <td styleCode=" Botrule">    </td>
+                           <td align="center" styleCode=" Botrule">50 mg/kg IV</td>
+                           <td align="center" styleCode=" Botrule">75 mg/kg IV</td>
+                        </tr>
+                        <tr>
+                           <td> Maximum Plasma Concentrations (mcg/mL)</td>
+                           <td align="center">216</td>
+                           <td align="center">275</td>
+                        </tr>
+                        <tr>
+                           <td> Elimination Half-life (hr)</td>
+                           <td align="center">4.6</td>
+                           <td align="center">4.3</td>
+                        </tr>
+                        <tr>
+                           <td> Plasma Clearance (mL/hr/kg)</td>
+                           <td align="center">49</td>
+                           <td align="center">60</td>
+                        </tr>
+                        <tr>
+                           <td> Volume of Distribution (mL/kg)</td>
+                           <td align="center">338</td>
+                           <td align="center">373</td>
+                        </tr>
+                        <tr>
+                           <td> CSF Concentration - inflamed meninges (mcg/mL)</td>
+                           <td align="center">5.6</td>
+                           <td align="center">6.4</td>
+                        </tr>
+                        <tr>
+                           <td> Range (mcg/mL)</td>
+                           <td align="center">1.3 - 18.5</td>
+                           <td align="center">1.3 - 44</td>
+                        </tr>
+                        <tr>
+                           <td> Time after dose (hr)</td>
+                           <td align="center">3.7 (± 1.6)</td>
+                           <td align="center">3.3 (± 1.4)</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>Compared to that in healthy adult subjects, the pharmacokinetics of ceftriaxone were only minimally altered in elderly subjects and in patients with renal impairment or hepatic dysfunction (<content styleCode="bold">Table 4</content>); therefore, dosage adjustments are not necessary for these patients with ceftriaxone dosages up to 2 gm per day. Ceftriaxone was not removed to any significant extent from the plasma by hemodialysis; in six of 26 dialysis patients, the elimination rate of ceftriaxone was markedly reduced.</paragraph>
+                  <table>
+                     <caption>TABLE 4. Average Pharmacokinetic Parameters of Ceftriaxone in Humans</caption>
+                     <col width="1px"/>
+                     <col width="1px"/>
+                     <col width="1px"/>
+                     <col width="1px"/>
+                     <tbody>
+                        <tr>
+                           <td styleCode=" Botrule">Subject Group</td>
+                           <td align="center" styleCode=" Botrule">Elimination Half-Life<br/>(hr)</td>
+                           <td align="center" styleCode=" Botrule">Plasma Clearance<br/>(L/hr)</td>
+                           <td align="center" styleCode=" Botrule">Volume of Distribution<br/>(L)</td>
+                        </tr>
+                        <tr>
+                           <td> Healthy Subjects</td>
+                           <td align="center">5.8 - 8.7</td>
+                           <td align="center">0.58 - 1.45</td>
+                           <td align="center">5.8 - 13.5</td>
+                        </tr>
+                        <tr>
+                           <td> Elderly Subjects (mean age, 70.5 yr)</td>
+                           <td align="center">8.9</td>
+                           <td align="center">0.83</td>
+                           <td align="center">10.7</td>
+                        </tr>
+                        <tr>
+                           <td> Patients With Renal Impairment </td>
+                           <td align="center">  </td>
+                           <td align="center">  </td>
+                           <td align="center">  </td>
+                        </tr>
+                        <tr>
+                           <td> Hemodialysis Patients (0 - 5 mL/min)* </td>
+                           <td align="center">14.7</td>
+                           <td align="center">0.65</td>
+                           <td align="center">13.7</td>
+                        </tr>
+                        <tr>
+                           <td> Severe (5 - 15 mL/min) </td>
+                           <td align="center">15.7</td>
+                           <td align="center">0.56</td>
+                           <td align="center">12.5</td>
+                        </tr>
+                        <tr>
+                           <td> Moderate (16 - 30 mL/min) </td>
+                           <td align="center">11.4</td>
+                           <td align="center">0.72</td>
+                           <td align="center">11.8</td>
+                        </tr>
+                        <tr>
+                           <td> Mild (31 - 60 mL/min) </td>
+                           <td align="center">12.4</td>
+                           <td align="center">0.70</td>
+                           <td align="center">13.3</td>
+                        </tr>
+                        <tr>
+                           <td> Patients With Liver Disease</td>
+                           <td align="center">8.8</td>
+                           <td align="center">1.1</td>
+                           <td align="center">13.6</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>*Creatinine clearance.</paragraph>
+                  <paragraph>The elimination of ceftriaxone is not altered when ceftriaxone for injection is co-administered with probenecid.</paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <section ID="LINK_2d72da62-6af2-42d6-9f84-b5a9ea8f33fa">
+                     <id root="04e54675-216b-49c5-b61b-c2fe91340c38"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Pharmacokinetics in the Middle Ear Fluid</title>
+                     <text>
+                        <paragraph>In one study, total ceftriaxone concentrations (bound and unbound) were measured in middle ear fluid obtained during the insertion of tympanostomy tubes in 42 pediatric patients with otitis media. Sampling times were from 1 to 50 hours after a single intramuscular injection of 50 mg/kg of ceftriaxone. Mean (± SD) ceftriaxone levels in the middle ear reached a peak of 35 (± 12) mcg/mL at 24 hours, and remained at 19 (± 7) mcg/‌mL at 48 hours. Based on middle ear fluid ceftriaxone concentrations in the 23 to 25 hour and the 46 to 50 hour sampling time intervals, a half-life of 25 hours was calculated. Ceftriaxone is highly bound to plasma proteins. The extent of binding to proteins in the middle ear fluid is unknown.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_ca3e23f8-4189-46e7-aaeb-90a4e2e5dea0">
+                     <id root="aae28541-02c8-4e4d-9be4-56626ee1d778"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Interaction with Calcium</title>
+                     <text>
+                        <paragraph>Two <content styleCode="italics">in vitro</content> studies, one using adult plasma and the other neonatal plasma from umbilical cord blood have been carried out to assess interaction of ceftriaxone and calcium. Ceftriaxone concentrations up to 1 mM (in excess of concentrations achieved <content styleCode="italics">in vivo</content> following administration of 2 grams ceftriaxone infused over 30 minutes) were used in combination with calcium concentrations up to 12 mM (48 mg/‌dL). Recovery of ceftriaxone from plasma was reduced with calcium concentrations of 6 mM (24 mg/‌dL) or higher in adult plasma or 4 mM (16 mg/‌dL) or higher in neonatal plasma. This may be reflective of ceftriaxone-calcium precipitation.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_5645fdda-e380-4bef-9665-3eebe5d3a9d0">
+                     <id root="cfac3222-f5c4-4bf1-8f1a-ca18c4c14826"/>
+                     <code code="49489-8" codeSystem="2.16.840.1.113883.6.1" displayName="MICROBIOLOGY SECTION"/>
+                     <title>Microbiology</title>
+                     <effectiveTime value="20260930"/>
+                     <component>
+                        <section ID="LINK_6635342a-19b9-49b0-83b4-dca330819b90">
+                           <id root="3685f023-13b9-4aa0-b03b-0afd4ea7d88d"/>
+                           <code code="43679-0" codeSystem="2.16.840.1.113883.6.1" displayName="MECHANISM OF ACTION SECTION"/>
+                           <title>
+                              <content styleCode="italics">Mechanism of Action</content>
+                           </title>
+                           <text>
+                              <paragraph>Ceftriaxone is a bactericidal agent that acts by inhibition of bacterial cell wall synthesis. Ceftriaxone has activity in the presence of some beta-lactamases, both penicillinases and cephalosporinases, of Gram-negative and Gram-positive bacteria.</paragraph>
+                           </text>
+                           <effectiveTime value="20260930"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="LINK_d9747a3e-c60d-41c6-8e90-3a7dc2e07639">
+                           <id root="1fc73a4e-7971-405c-923d-cf73cbdc6dea"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>
+                              <content styleCode="italics">Mechanism of Resistance</content>
+                           </title>
+                           <text>
+                              <paragraph>Resistance to ceftriaxone is primarily through hydrolysis by beta-lactamase, alteration of penicillin-binding proteins (PBPs), and decreased permeability.</paragraph>
+                           </text>
+                           <effectiveTime value="20260930"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="LINK_4f378767-f238-4d47-84b3-1c478d67726b">
+                           <id root="a492b609-6400-4d89-a5c8-359b416716de"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title>
+                              <content styleCode="underline">Interaction with Other Antimicrobials</content>
+                           </title>
+                           <text>
+                              <paragraph>In an <content styleCode="italics">in vitro</content> study antagonistic effects have been observed with the combination of chloramphenicol and ceftriaxone.</paragraph>
+                           </text>
+                           <effectiveTime value="20260930"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="LINK_c526e0eb-3b6a-4649-86ff-a372c0e1869e">
+                           <id root="c3fbe107-324d-4c98-a7b7-a3d6cd84ca9c"/>
+                           <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                           <title/>
+                           <text>
+                              <paragraph>Ceftriaxone has been shown to be active against most isolates of the following bacteria, both <content styleCode="italics">in vitro</content> and in clinical infections as described in the <content styleCode="bold">
+                                    <linkHtml href="#www.splportal.comLINK_224b25e1-c3ab-4162-a8c8-e0422dc338f7">INDICATIONS AND USAGE</linkHtml>
+                                 </content> section:<br/>
+                                 <content styleCode="underline">
+                                    <br/>Gram-negative bacteria<br/>
+                                 </content>
+                                 <content styleCode="italics">Acinetobacter calcoaceticus<br/>
+                                 </content>
+                                 <content styleCode="italics">Enterobacter aerogenes<br/>
+                                 </content>
+                                 <content styleCode="italics">Enterobacter cloacae<br/>
+                                 </content>
+                                 <content styleCode="italics">Escherichia coli<br/>
+                                 </content>
+                                 <content styleCode="italics">Haemophilus influenzae<br/>
+                                 </content>
+                                 <content styleCode="italics">Haemophilus parainfluenzae<br/>
+                                 </content>
+                                 <content styleCode="italics">Klebsiella oxytoca<br/>
+                                 </content>
+                                 <content styleCode="italics">Klebsiella pneumoniae<br/>
+                                 </content>
+                                 <content styleCode="italics">Moraxella catarrhalis<br/>
+                                 </content>
+                                 <content styleCode="italics">Morganella morganii<br/>
+                                 </content>
+                                 <content styleCode="italics">Neisseria gonorrhoeae<br/>
+                                 </content>
+                                 <content styleCode="italics">Neisseria meningitidis<br/>
+                                 </content>
+                                 <content styleCode="italics">Proteus mirabilis<br/>
+                                 </content>
+                                 <content styleCode="italics">Proteus vulgaris<br/>
+                                 </content>
+                                 <content styleCode="italics">Pseudomonas aeruginosa<br/>
+                                 </content>
+                                 <content styleCode="italics">Serratia marcescens</content>
+                              </paragraph>
+                              <paragraph>
+                                 <content styleCode="italics">
+                                    <content styleCode="underline">Gram-positive bacteria<br/>
+                                    </content>
+                                    <content styleCode="italics">Staphylococcus aureus<br/>
+                                    </content>
+                                    <content styleCode="italics">Staphylococcus epidermidis<br/>
+                                    </content>
+                                    <content styleCode="italics">Streptococcus pneumoniae<br/>
+                                    </content>
+                                    <content styleCode="italics">Streptococcus pyogenes<br/>
+                                    </content>
+                                    <content styleCode="italics">Viridans group streptococci</content>
+                                 </content>
+                              </paragraph>
+                              <paragraph>
+                                 <content styleCode="italics">
+                                    <content styleCode="italics">
+                                       <content styleCode="underline">Anaerobic bacteria<br/>
+                                       </content>
+                                       <content styleCode="italics">Bacteroides fragilis<br/>
+                                       </content>
+                                       <content styleCode="italics">Clostridium </content>species<br/>
+                                       <content styleCode="italics">Peptostreptococcus </content>species</content>
+                                 </content>
+                              </paragraph>
+                              <paragraph>The following <content styleCode="italics">in vitro </content>data are available, <content styleCode="underline">but their clinical significance is unknown</content>. At least 90 percent of the following microorganisms exhibit an <content styleCode="italics">in vitro </content>minimum inhibitory concentration (MIC) less than or equal to the susceptible breakpoint for ceftriaxone. However, the efficacy of ceftriaxone in treating clinical infections due to these microorganisms has not been established in adequate and well-controlled clinical trials.</paragraph>
+                              <paragraph>
+                                 <content styleCode="underline">Gram-negative bacteria<br/>
+                                 </content>
+                                 <content styleCode="italics">Citrobacter diversus<br/>
+                                 </content>
+                                 <content styleCode="italics">Citrobacter freundii<br/>
+                                 </content>
+                                 <content styleCode="italics">Providencia </content>species (including <content styleCode="italics">Providencia rettgeri</content>)<br/>
+                                 <content styleCode="italics">Salmonella </content>species (including <content styleCode="italics">Salmonella typhi</content>)<br/>
+                                 <content styleCode="italics">Shigella </content>species</paragraph>
+                              <paragraph>
+                                 <content styleCode="underline">Gram-positive bacteria<br/>
+                                 </content>
+                                 <content styleCode="italics">Streptococcus agalactiae</content>
+                              </paragraph>
+                              <paragraph>
+                                 <content styleCode="underline">Anaerobic bacteria</content>
+                                 <content styleCode="italics">
+                                    <br/>
+                                    <content styleCode="italics">Porphyromonas (Bacteroides) melaninogenicus<br/>
+                                    </content>
+                                    <content styleCode="italics">Prevotella (Bacteroides) bivius</content>
+                                 </content>
+                              </paragraph>
+                           </text>
+                           <effectiveTime value="20260930"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_81f9f305-875b-46b8-bdad-a1720ba3bc2c">
+                     <id root="a02d150d-87bb-4f82-8d2f-89ea2af5894a"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Susceptibility Test Methods</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>For specific information regarding susceptibility test interpretive criteria and associated test methods and quality control standards recognized by FDA for this drug, please see: <linkHtml href="https://www.fda.gov/STIC">https://www.fda.gov/STIC</linkHtml>.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_224b25e1-c3ab-4162-a8c8-e0422dc338f7">
+               <id root="42e7434e-71a4-4eff-b365-bfb19f209453"/>
+               <code code="34067-9" codeSystem="2.16.840.1.113883.6.1" displayName="INDICATIONS &amp; USAGE SECTION"/>
+               <title>
+                  <content styleCode="bold">INDICATIONS AND USAGE</content>
+               </title>
+               <text>
+                  <paragraph>Before instituting treatment with Ceftriaxone for Injection, USP, appropriate specimens should be obtained for isolation of the causative organism and for determination of its susceptibility to the drug. Therapy may be instituted prior to obtaining results of susceptibility testing.</paragraph>
+                  <paragraph>To reduce the development of drug-resistant bacteria and maintain the effectiveness of Ceftriaxone for Injection, USP and other antibacterial drugs, Ceftriaxone for Injection, USP should be used only to treat or prevent infections that are proven or strongly suspected to be caused by susceptible bacteria. When culture and susceptibility information are available, they should be considered in selecting or modifying antibacterial therapy. In the absence of such data, local epidemiology and susceptibility patterns may contribute to the empiric selection of therapy.</paragraph>
+                  <paragraph>Ceftriaxone for Injection, USP is indicated for the treatment of the following infections when caused by susceptible organisms:</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">LOWER RESPIRATORY TRACT INFECTIONS </content>caused by <content styleCode="italics">Streptococcus pneumoniae, Staphylococcus aureus, Haemophilus influenzae, Haemophilus parainfluenzae, Klebsiella pneumoniae, Escherichia coli, Enterobacter aerogenes, Proteus mirabilis </content>or <content styleCode="italics">Serratia marcescens.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">ACUTE BACTERIAL OTITIS MEDIA </content>caused by <content styleCode="italics">Streptococcus pneumoniae, Haemophilus influenzae </content>(including beta‑lactamase producing strains) or <content styleCode="italics">Moraxella catarrhalis </content>(including beta-lactamase producing strains).</paragraph>
+                  <paragraph>NOTE: In one study lower clinical cure rates were observed with a single dose of Ceftriaxone for Injection, USP compared to 10 days of oral therapy. In a second study comparable cure rates were observed between single dose of Ceftriaxone for Injection, USP and the comparator. The potentially lower clinical cure rate of Ceftriaxone for Injection, USP should be balanced against the potential advantages of parenteral therapy (see <content styleCode="bold">
+                        <linkHtml href="#www.splportal.comLINK_c9eb7e14-515c-48de-b9b8-fbd87508afdc">CLINICAL STUDIES</linkHtml>
+                     </content>).</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">SKIN AND SKIN STRUCTURE INFECTIONS </content>caused by <content styleCode="italics">Staphylococcus aureus, Staphylococcus epidermidis, Streptococcus pyogenes</content>, Viridans group streptococci, <content styleCode="italics">Escherichia coli, Enterobacter cloacae, Klebsiella oxytoca, Klebsiella pneumoniae, </content>
+                     <content styleCode="italics">Proteus mirabilis, Morganella morganii<sup>1</sup>, </content>
+                     <content styleCode="italics">Pseudomonas aeruginosa, Serratia marcescens, Acinetobacter calcoaceticus, Bacteroides fragilis<sup>1</sup>
+                     </content> or <content styleCode="italics">Peptostreptococcus </content>species.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">URINARY TRACT INFECTIONS (complicated and uncomplicated) </content>caused by <content styleCode="italics">Escherichia coli, Proteus mirabilis, Proteus vulgaris, Morganella morganii </content>or <content styleCode="italics">Klebsiella pneumoniae.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">UNCOMPLICATED GONORRHEA (cervical/urethral and rectal) </content>caused by <content styleCode="italics">Neisseria gonorrhoeae, </content>including both penicillinase- and nonpenicillinase-producing strains, and pharyngeal gonorrhea caused by nonpenicillinase‑producing strains of <content styleCode="italics">Neisseria </content>
+                     <content styleCode="italics">gonorrhoeae.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">PELVIC INFLAMMATORY DISEASE </content>caused by <content styleCode="italics">Neisseria gonorrhoeae. </content>Ceftriaxone for Injection, USP, like other cephalosporins, has no activity against <content styleCode="italics">Chlamydia trachomatis</content>. Therefore, when cephalosporins are used in the treatment of patients with pelvic inflammatory disease and <content styleCode="italics">Chlamydia trachomatis </content>is one of the suspected pathogens, appropriate antichlamydial coverage should be added.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">BACTERIAL SEPTICEMIA </content>caused by <content styleCode="italics">Staphylococcus aureus, Streptococcus pneumoniae, Escherichia coli, Haemophilus influenzae </content>or <content styleCode="italics">Klebsiella pneumoniae.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="italics">BONE AND JOINT INFECTIONS </content>caused by <content styleCode="italics">Staphylococcus aureus, Streptococcus pneumoniae, Escherichia coli, Proteus mirabilis, Klebsiella pneumoniae </content>or <content styleCode="italics">Enterobacter </content>species.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">INTRA-ABDOMINAL INFECTIONS </content>caused by <content styleCode="italics">Escherichia coli, Klebsiella pneumoniae, Bacteroides fragilis, Clostridium </content>species (Note: most strains of <content styleCode="italics">Clostridium difficile </content>are resistant) or <content styleCode="italics">Peptostreptococcus </content>species.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">MENINGITIS </content>caused by <content styleCode="italics">Haemophilus influenzae, Neisseria meningitidis </content>or <content styleCode="italics">Streptococcus pneumoniae. </content>Ceftriaxone for Injection, USP has also been used successfully in a limited number of cases of meningitis and shunt infection caused by <content styleCode="italics">Staphylococcus epidermidis<sup>1</sup>
+                     </content> and <content styleCode="italics">Escherichia coli.<sup>1</sup>
+                     </content>
+                  </paragraph>
+                  <paragraph>
+                     <sup>1</sup>Efficacy for this organism in this organ system was studied in fewer than ten infections.</paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <section ID="LINK_4cffbacb-445b-416d-b4eb-7ff997ce0ec9">
+                     <id root="6838aeb6-9f1c-417a-befb-331153c3419a"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>SURGICAL PROPHYLAXIS</title>
+                     <text>
+                        <paragraph>The preoperative administration of a single 1 gm dose of Ceftriaxone for Injection, USP may reduce the incidence of postoperative infections in patients undergoing surgical procedures classified as contaminated or potentially contaminated (e.g.<content styleCode="italics">, </content>vaginal or abdominal hysterectomy or cholecystectomy for chronic calculous cholecystitis in high-risk patients, such as those over 70 years of age, with acute cholecystitis not requiring therapeutic antimicrobials, obstructive jaundice or common duct bile stones) and in surgical patients for whom infection at the operative site would present serious risk (e.g.<content styleCode="italics">,</content> during coronary artery bypass surgery). Although Ceftriaxone for Injection, USP has been shown to have been as effective as cefazolin in the prevention of infection following coronary artery bypass surgery, no placebo-controlled trials have been conducted to evaluate any cephalosporin antibiotic in the prevention of infection following coronary artery bypass surgery.</paragraph>
+                        <paragraph>When administered prior to surgical procedures for which it is indicated, a single 1 gm dose of Ceftriaxone for Injection, USP provides protection from most infections due to susceptible organisms throughout the course of the procedure.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_d0ad79f2-7221-46b1-ace2-ed626f7e30f5">
+               <id root="a64f85ca-4905-4b1e-a6dc-a99ef2e7f0c2"/>
+               <code code="34070-3" codeSystem="2.16.840.1.113883.6.1" displayName="CONTRAINDICATIONS SECTION"/>
+               <title>
+                  <content styleCode="bold">CONTRAINDICATIONS</content>
+               </title>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <section ID="LINK_17793cf4-2679-4528-89ca-cb682fc75a71">
+                     <id root="dc666d99-8573-4cd8-8c96-df0ff73c55ef"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Hypersensitivity</title>
+                     <text>
+                        <paragraph>Ceftriaxone is contraindicated in patients with known hypersensitivity to ceftriaxone, any of its excipients or to any other cephalosporin. Patients with previous hypersensitivity reactions to penicillin and other beta lactam antibacterial agents may be at greater risk of hypersensitivity to ceftriaxone (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_a22c5b4c-818a-4b3c-984e-f57a2d9aae3e">WARNINGS – Hypersensitivity</linkHtml>
+                           </content>).</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_c1e18f7c-23db-4ead-96f9-42cae0f686fe">
+                     <id root="eb3917cb-99c9-409c-93aa-c36eb6367fc9"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Neonates</content>
+                     </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="italics">Premature neonates:</content> Ceftriaxone is contraindicated in premature neonates up to a postmenstrual age of 41 weeks (gestational age + chronological age).</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Hyperbilirubinemic neonates:</content> Hyperbilirubinemic neonates should not be treated with ceftriaxone. Ceftriaxone can displace bilirubin from its binding to serum albumin, leading to a risk of bilirubin encephalopathy in these patients.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_a04f1036-b457-4694-b7a4-75b9a52e286e">
+                     <id root="7dd7c089-09bc-4f43-8646-5e22e4ebebd1"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Neonates Requiring Calcium
+Containing IV Solutions</title>
+                     <text>
+                        <paragraph>Ceftriaxone is contraindicated in neonates (≤ 28 days) if they require (or are expected to require) treatment with calcium‑containing IV solutions, including continuous calcium-containing infusions such as parenteral nutrition because of the risk of precipitation of ceftriaxone‑calcium (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_78044489-3122-491b-80d7-702b170c2e04">CLINICAL PHARMACOLOGY</linkHtml>
+                           </content>, <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_c464cb91-3838-4c41-b651-9cf36bab9eb7">WARNINGS</linkHtml>
+                           </content> and <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_57459a1c-3148-4272-886f-c95efa8600d0">DOSAGE AND ADMINISTRATION</linkHtml>
+                           </content>).</paragraph>
+                        <paragraph>Cases of fatal outcomes in which a crystalline material was observed in the lungs and kidneys at autopsy have been reported in neonates receiving ceftriaxone and calcium-containing fluids. In some of these cases, the same intravenous infusion line was used for both ceftriaxone and calcium-containing fluids and in some a precipitate was observed in the intravenous infusion line. There have been no similar reports in patients other than neonates.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_e84ccdbc-f578-465a-8fd0-eda31398f44f">
+                     <id root="04b4dd70-8ae3-4592-8b5f-9cea6ec93fbb"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Lidocaine</title>
+                     <text>
+                        <paragraph>Intravenous administration of ceftriaxone solutions containing lidocaine is contraindicated. When lidocaine solution is used as a solvent with ceftriaxone for intramuscular injection, exclude all contraindications to lidocaine. Refer to the prescribing information of lidocaine.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_c464cb91-3838-4c41-b651-9cf36bab9eb7">
+               <id root="34362353-e50b-4d87-80ce-24068f0ae040"/>
+               <code code="34071-1" codeSystem="2.16.840.1.113883.6.1" displayName="WARNINGS SECTION"/>
+               <title>
+                  <content styleCode="bold">WARNINGS</content>
+               </title>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <section ID="LINK_a22c5b4c-818a-4b3c-984e-f57a2d9aae3e">
+                     <id root="e6f99473-8caa-47ae-b390-d37f0d5730a4"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Hypersensitivity Reactions</content>
+                     </title>
+                     <text>
+                        <paragraph>Before therapy with ceftriaxone is instituted, careful inquiry should be made to determine whether the patient has had previous hypersensitivity reactions to cephalosporins, penicillins and other beta-lactam agents or other drugs. This product should be given cautiously to penicillin and other beta-lactam agent‑sensitive patients. Antibacterial drugs should be administered with caution to any patient who has demonstrated some form of allergy, particularly to drugs. Serious acute hypersensitivity reactions may require the use of subcutaneous epinephrine and other emergency measures.</paragraph>
+                        <paragraph>As with all beta-lactam antibacterial agents, serious and occasionally fatal hypersensitivity reactions (i.e., anaphylaxis) have been reported. In case of severe hypersensitivity reactions, treatment with ceftriaxone must be discontinued immediately and adequate emergency measures must be initiated. </paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_64b269ab-3413-4b65-995e-8a90f0283372">
+                     <id root="dc57ccf4-a80a-446f-8727-21608d2ed25d"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Interaction with Calcium-Containing Products</content>
+                     </title>
+                     <text>
+                        <paragraph>Do not use diluents containing calcium, such as Ringer’s solution or Hartmann’s solution, to reconstitute ceftriaxone vials or to further dilute a reconstituted vial for IV administration because a precipitate can form. Precipitation of ceftriaxone-calcium can also occur when ceftriaxone is mixed with calcium-containing solutions in the same IV administration line. Ceftriaxone must not be administered simultaneously with calcium-containing IV solutions, including continuous calcium-containing infusions such as parenteral nutrition via a Y-site. However, in patients other than neonates, ceftriaxone and calcium-containing solutions may be administered sequentially of one another if the infusion lines are thoroughly flushed between infusions with a compatible fluid. <content styleCode="italics">In vitro</content> studies using adult and neonatal plasma from umbilical cord blood demonstrated that neonates have an increased risk of precipitation of ceftriaxone-calcium (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_78044489-3122-491b-80d7-702b170c2e04">CLINICAL PHARMACOLOGY</linkHtml>
+                           </content>, <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_d0ad79f2-7221-46b1-ace2-ed626f7e30f5">CONTRAINDICATIONS</linkHtml>
+                           </content> and <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_57459a1c-3148-4272-886f-c95efa8600d0">DOSAGE AND ADMINISTRATION</linkHtml>
+                           </content>).</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_dca8d811-dd4f-4c01-8b16-e1c240c62647">
+                     <id root="9840eebd-afa1-4ad3-a8fd-d1adf7ab9b41"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Neurological Adverse Reactions</title>
+                     <text>
+                        <paragraph>Serious neurological adverse reactions have been reported during postmarketing surveillance with ceftriaxone use. These reactions include encephalopathy (disturbance of consciousness including somnolence, lethargy, and confusion), seizures, myoclonus, and non-convulsive status epilepticus (see <linkHtml href="#LINK_9b06dc71-f17c-4a3f-bb03-c011d9fa6ede">ADVERSE REACTIONS</linkHtml>). Some cases occurred in patients with severe renal impairment who did not receive appropriate dosage adjustment. However, in other cases, neurological adverse reactions occurred in patients receiving an appropriate dosage adjustment. The neurological adverse reactions were reversible and resolved after discontinuation. If neurological adverse reactions associated with Ceftriaxone for Injection therapy occur, discontinue Ceftriaxone for Injection and institute appropriate supportive measures. Make appropriate dosage adjustments in patients with severe renal impairment (see <linkHtml href="#LINK_57459a1c-3148-4272-886f-c95efa8600d0">DOSAGE AND ADMINISTRATION</linkHtml>).</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_12897e9c-373b-4f48-83f0-374f1b4fcc56">
+                     <id root="ad6da723-2a71-45fa-9233-58fb37b2ffe1"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Clostridium difficile </content>-Associated Diarrhea</content>
+                     </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="italics">Clostridium difficile </content>associated diarrhea (CDAD) has been reported with use of nearly all antibacterial agents, including ceftriaxone, and may range in severity from mild diarrhea to fatal colitis. Treatment with antibacterial agents alters the normal flora of the colon leading to overgrowth of <content styleCode="italics">C. difficile.</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">C. difficile </content>produces toxins A and B which contribute to the development of CDAD. Hypertoxin producing strains of <content styleCode="italics">C. difficile </content>cause increased morbidity and mortality, as these infections can be refractory to antimicrobial therapy and may require colectomy. CDAD must be considered in all patients who present with diarrhea following antibiotic use. Careful medical history is necessary since CDAD has been reported to occur over two months after the administration of antibacterial agents.</paragraph>
+                        <paragraph>If CDAD is suspected or confirmed, ongoing antibiotic use not directed against <content styleCode="italics">C. difficile </content>may need to be discontinued. Appropriate fluid and electrolyte management, protein supplementation, antibiotic treatment of <content styleCode="italics">C. difficile, </content>and surgical evaluation should be instituted as clinically indicated.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_a4f6e9fd-5929-4ba3-9593-6e2c00b50a2c">
+                     <id root="b48804ac-481e-478b-9078-f9b0e4b5ee89"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Hemolytic Anemia</content>
+                     </title>
+                     <text>
+                        <paragraph>An immune mediated hemolytic anemia has been observed in patients receiving cephalosporin class antibacterials including ceftriaxone. Severe cases of hemolytic anemia, including fatalities, have been reported during treatment in both adults and children. If a patient develops anemia while on ceftriaxone, the diagnosis of a cephalosporin associated anemia should be considered and ceftriaxone stopped until the etiology is determined. </paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_1665d28d-14b4-4aa5-9c6c-9eaecb9abb03">
+               <id root="ed6e5bef-5b9b-46c5-8c4b-57a0f9a33ff9"/>
+               <code code="42232-9" codeSystem="2.16.840.1.113883.6.1" displayName="PRECAUTIONS SECTION"/>
+               <title>
+                  <content styleCode="bold">PRECAUTIONS</content>
+               </title>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <section ID="LINK_f4e05cad-fff3-4b9c-afa8-d07a442b20bd">
+                     <id root="58f5ea59-3ec5-4000-acbc-6e3587452339"/>
+                     <code code="34072-9" codeSystem="2.16.840.1.113883.6.1" displayName="GENERAL PRECAUTIONS SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Development
+of Drug-resistant Bacteria</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>Prescribing ceftriaxone in the absence of a proven or strongly suspected bacterial infection or a prophylactic indication is unlikely to provide benefit to the patient and increases the risk of the development of drug-resistant bacteria. Prolonged use of ceftriaxone may result in overgrowth of nonsusceptible organisms. Careful observation of the patient is essential. If superinfection occurs during therapy, appropriate measures should be taken.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_536c94b5-a9a7-4097-9113-14ce444ba4ee">
+                     <id root="5a8ef7e3-7e82-4b7b-8ba5-1253274c1330"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Patients with Renal or Hepatic
+Impairment</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>Ceftriaxone is excreted via both biliary and renal excretion (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_78044489-3122-491b-80d7-702b170c2e04">CLINICAL PHARMACOLOGY</linkHtml>
+                           </content>). Therefore, patients with renal failure normally require no adjustment in dosage when usual doses of ceftriaxone are administered.</paragraph>
+                        <paragraph>Dosage adjustments should not be necessary in patients with hepatic dysfunction; however, in patients with both hepatic dysfunction and significant renal disease, caution should be exercised and the ceftriaxone dosage should not exceed 2 gm daily. </paragraph>
+                        <paragraph>Ceftriaxone is not removed by peritoneal- or hemodialysis. In patients undergoing dialysis no additional supplementary dosing is required following the dialysis. In patients with both severe renal and hepatic dysfunction, close clinical monitoring for safety and efficacy is advised.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_bad1be51-140b-484c-9889-da5d492296d9">
+                     <id root="2f8939ea-ee1e-4b99-bed1-73d6551e8375"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="italics">
+                           <content styleCode="bold">Effect on Prothrombin Time</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>Alterations in prothrombin times have occurred in patients treated with ceftriaxone. Monitor prothrombin time during ceftriaxone treatment in patients with impaired vitamin K synthesis or low vitamin K stores (e.g., chronic hepatic disease and malnutrition). Vitamin K administration (10 mg weekly) may be necessary if the prothrombin time is prolonged before or during therapy.</paragraph>
+                        <paragraph>Concomitant use of ceftriaxone with Vitamin K antagonists may increase the risk of bleeding. Coagulation parameters should be monitored frequently, and the dose of the anticoagulant adjusted accordingly, both during and after treatment with ceftriaxone (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_9b06dc71-f17c-4a3f-bb03-c011d9fa6ede">ADVERSE REACTIONS</linkHtml>
+                           </content>).</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_0326e146-9193-4854-9507-d44fdcd01e2e">
+                     <id root="e2fc473b-9df4-4e84-ae7e-bdf8e3266cc1"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Gallbladder Pseudolithiasis</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>Ceftriaxone-calcium precipitates in the gallbladder have been observed in patients receiving ceftriaxone. These precipitates appear on sonography as an echo without acoustical shadowing suggesting sludge or as an echo with acoustical shadowing which may be misinterpreted as gallstones. The probability of such precipitates appears to be greatest in pediatric patients. Patients may be asymptomatic or may develop symptoms of gallbladder disease. The condition appears to be reversible upon discontinuation of ceftriaxone sodium and institution of conservative management. Discontinue ceftriaxone sodium  in patients who develop signs and symptoms suggestive of gallbladder disease and/‌or the sonographic findings described above.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_609f71a9-b639-4eb1-bbbb-3e66243705c4">
+                     <id root="8259adc7-8e7e-4f5d-aa0b-c0fb4ba2aaf3"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Urolithiasis and Post-Renal
+Acute Renal Failure</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>Ceftriaxone-calcium precipitates in the urinary tract have been observed in patients receiving ceftriaxone and may be detected as sonographic abnormalities. The probability of such precipitates appears to be greatest in pediatric patients. Patients may be asymptomatic or may develop symptoms of urolithiasis, and ureteral obstruction and post-renal acute renal failure. The condition appears to be reversible upon discontinuation of ceftriaxone sodium and institution of appropriate management. Ensure adequate hydration in patients receiving ceftriaxone. Discontinue ceftriaxone in patients who develop signs and symptoms suggestive of urolithiasis, oliguria or renal failure and/or the sonographic findings described above.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_eebe38e9-ea88-4a9a-8905-1f2db58f7b73">
+                     <id root="d5aadb50-08bb-4c31-a802-5f5fb5717a07"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Pancreatitis</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>Cases of pancreatitis, possibly secondary to biliary obstruction, have been reported in patients treated with ceftriaxone. Most patients presented with risk factors for biliary stasis and biliary sludge (preceding major therapy, severe illness, total parenteral nutrition). A cofactor role of ceftriaxone-related biliary precipitation cannot be ruled out.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_4fda7640-ebed-48d7-9e69-80209ffc06f7">
+                     <id root="e7082328-baa8-4790-abc9-06300bd5a8cf"/>
+                     <code code="34076-0" codeSystem="2.16.840.1.113883.6.1" displayName="INFORMATION FOR PATIENTS SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Information for Patients</content>
+                        </content>
+                     </title>
+                     <text>
+                        <list listType="unordered" styleCode="Disk">
+                           <item>Advise patients that neurological adverse reactions could occur with Ceftriaxone for Injection use. Instruct patients or their caregivers to inform their healthcare provider at once of any neurological signs and symptoms, including encephalopathy (disturbance of consciousness including somnolence, lethargy, and confusion), seizures, myoclonus, and nonconvulsive status epilepticus, for immediate treatment, or discontinuation of Ceftriaxone for Injection (see <linkHtml href="#LINK_c464cb91-3838-4c41-b651-9cf36bab9eb7">WARNINGS AND PRECAUTIONS</linkHtml>).</item>
+                           <item> Patients should be counseled that antibacterial drugs including ceftriaxone should only be used to treat bacterial infections. They do not treat viral infections (e.g., common cold).</item>
+                           <item>When ceftriaxone is prescribed to treat a bacterial infection, patients should be told that although it is common to feel better early in the course of therapy, the medication should be taken exactly as directed. Skipping doses or not completing the full course of therapy may (1) decrease the effectiveness of the immediate treatment and (2) increase the likelihood that bacteria will develop resistance and will not be treatable by ceftriaxone or other antibacterial drugs in the future.</item>
+                           <item>Diarrhea is a common problem caused by antibiotics which usually ends when the antibiotic is discontinued. Sometimes after starting treatment with antibiotics, patients can develop watery and bloody stools (with or without stomach cramps and fever) even as late as two or more months after having taken the last dose of the antibiotic. If this occurs, patients should contact their physician as soon as possible.</item>
+                        </list>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_42c3c574-8c98-4b06-bc16-96147ee3b8bd">
+                     <id root="af26bbde-70df-43f9-9278-e33fda0435eb"/>
+                     <code code="34083-6" codeSystem="2.16.840.1.113883.6.1" displayName="CARCINOGENESIS &amp; MUTAGENESIS &amp; IMPAIRMENT OF FERTILITY SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Carcinogenesis, Mutagenesis, Impairment of Fertility</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="italics">Carcinogenesis: </content>Considering the maximum duration of treatment and the class of the compound, carcinogenicity studies with ceftriaxone in animals have not been performed. The maximum duration of animal toxicity studies was 6 months.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Mutagenesis: </content>Genetic toxicology tests included the Ames test, a micronucleus test and a test for chromosomal aberrations in human lymphocytes cultured <content styleCode="italics">in vitro</content> with ceftriaxone. Ceftriaxone showed no potential for mutagenic activity in these studies.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Impairment of Fertility: </content>Ceftriaxone produced no impairment of fertility when given intravenously to rats at daily doses up to 586 mg/kg/day, approximately 20 times the recommended clinical dose of 2 gm/day.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_d815cd3a-afc9-4d32-bb6e-40443d863fd0">
+                     <id root="ca59cf6b-2284-42e0-b326-b78b704bb0eb"/>
+                     <code code="42228-7" codeSystem="2.16.840.1.113883.6.1" displayName="PREGNANCY SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Pregnancy</content>
+                        </content>
+                     </title>
+                     <effectiveTime value="20260930"/>
+                     <component>
+                        <section ID="LINK_85876c1e-78c5-47dc-9dd6-aee8761365ce">
+                           <id root="87a0676c-01f4-40ef-8075-98f5e4918169"/>
+                           <code code="34077-8" codeSystem="2.16.840.1.113883.6.1" displayName="TERATOGENIC EFFECTS SECTION"/>
+                           <title>
+                              <content styleCode="italics">Teratogenic Effects</content>
+                           </title>
+                           <text>
+                              <paragraph>Reproductive studies have been performed in mice and rats at doses up to 20 times the usual human dose and have no evidence of embryotoxicity, fetotoxicity or teratogenicity. In primates, no embryotoxicity or teratogenicity was demonstrated at a dose approximately 3 times the human dose.</paragraph>
+                              <paragraph>There are, however, no adequate and well-controlled studies in pregnant women. Because animal reproductive studies are not always predictive of human response, this drug should be used during pregnancy only if clearly needed.</paragraph>
+                           </text>
+                           <effectiveTime value="20260930"/>
+                        </section>
+                     </component>
+                     <component>
+                        <section ID="LINK_0c62f997-1a71-4390-b39d-b96bfb4e7e7e">
+                           <id root="6bdbfe73-56b5-45e0-9a8d-74370bfb31ac"/>
+                           <code code="34078-6" codeSystem="2.16.840.1.113883.6.1" displayName="NONTERATOGENIC EFFECTS SECTION"/>
+                           <title>
+                              <content styleCode="italics">Nonteratogenic Effects: </content>
+                           </title>
+                           <text>
+                              <paragraph>In rats, in the Segment I (fertility and general reproduction) and Segment III (perinatal and postnatal) studies with intravenously administered ceftriaxone, no adverse effects were noted on various reproductive parameters during gestation and lactation, including postnatal growth, functional behavior and reproductive ability of the offspring, at doses of 586 mg/kg/day or less.</paragraph>
+                           </text>
+                           <effectiveTime value="20260930"/>
+                        </section>
+                     </component>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_4b8e042f-8002-42e5-83bb-e2b2b439794b">
+                     <id root="2dd6e96a-a1fc-408f-8258-2812756ca213"/>
+                     <code code="34080-2" codeSystem="2.16.840.1.113883.6.1" displayName="NURSING MOTHERS SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Nursing Mothers</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>Low concentrations of ceftriaxone are excreted in human milk. Caution should be exercised when ceftriaxone is administered to a nursing woman.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_3ccfc130-b1c3-4a30-a2bf-e8723fb5b436">
+                     <id root="9836dbf0-0e5c-441e-8fc6-52eca66a9704"/>
+                     <code code="34081-0" codeSystem="2.16.840.1.113883.6.1" displayName="PEDIATRIC USE SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Pediatric Use</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>Safety and effectiveness of ceftriaxone in neonates, infants and pediatric patients have been established for the dosages described in the <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_57459a1c-3148-4272-886f-c95efa8600d0">DOSAGE AND ADMINISTRATION</linkHtml>
+                           </content> section. <content styleCode="italics">In vitro</content> studies have shown that ceftriaxone, like some other cephalosporins, can displace bilirubin from serum albumin. Ceftriaxone should not be administered to hyperbilirubinemic neonates, especially prematures (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_d0ad79f2-7221-46b1-ace2-ed626f7e30f5">CONTRAINDICATIONS</linkHtml>
+                           </content>).</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_30dfe98f-27b4-4120-9f09-a2638b692fee">
+                     <id root="9d0ad385-e69f-42da-84cb-97ab623aece6"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Geriatric Use</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>Of the total number of subjects in clinical studies of ceftriaxone, 32% were 60 and over. No overall differences in safety or effectiveness were observed between these subjects and younger subjects, and other reported clinical experience has not identified differences in responses between the elderly and younger patients, but greater sensitivity of some older individuals cannot be ruled out.</paragraph>
+                        <paragraph>The pharmacokinetics of ceftriaxone were only minimally altered in geriatric patients compared to healthy adult subjects and dosage adjustments are not necessary for geriatric patients with ceftriaxone dosages up to 2 grams per day provided there is no severe renal and hepatic impairment (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_78044489-3122-491b-80d7-702b170c2e04">CLINICAL PHARMACOLOGY</linkHtml>
+                           </content>).</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_65378822-3816-45d9-b0e6-4f078381f5fa">
+                     <id root="6dda8be1-3b02-49d2-b763-c4eaa81021cf"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Influence on Diagnostic Tests</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>In patients treated with ceftriaxone the Coombs’ test may become positive. Ceftriaxone, like other antibacterial drugs, may result in positive test results for galactosemia. </paragraph>
+                        <paragraph>Nonenzymatic methods for the glucose determination in urine may give false-positive results. For this reason, urine-glucose determination during therapy with ceftriaxone should be done enzymatically. </paragraph>
+                        <paragraph>The presence of ceftriaxone may falsely lower estimated blood glucose values obtained with some blood glucose monitoring systems. Please refer to instructions for use for each system. Alternative testing methods should be used if necessary.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_9b06dc71-f17c-4a3f-bb03-c011d9fa6ede">
+               <id root="fc57c1a8-9971-4958-b22c-f72bfa6da9f5"/>
+               <code code="34084-4" codeSystem="2.16.840.1.113883.6.1" displayName="ADVERSE REACTIONS SECTION"/>
+               <title>
+                  <content styleCode="bold">ADVERSE REACTIONS</content>
+               </title>
+               <text>
+                  <paragraph>Ceftriaxone is generally well tolerated. In clinical trials, the following adverse reactions, which were considered to be related to ceftriaxone therapy or of uncertain etiology, were observed:</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">LOCAL REACTIONS </content>– pain, induration and tenderness was 1% overall. Phlebitis was reported in &lt; 1% after IV administration. The incidence of warmth, tightness or induration was 17% (3/17) after IM administration of 350 mg/mL and 5% (1/20) after IM administration of 250 mg/mL.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS — </content>injection site pain (0.6%).</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">HYPERSENSITIVITY</content> – rash (1.7%). Less frequently reported (&lt; 1%) were pruritus, fever or chills.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">INFECTIONS AND INFESTATIONS — </content>genital fungal infection (0.1%).</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">HEMATOLOGIC</content> – eosinophilia (6%), thrombocytosis (5.1%) and leukopenia (2.1%). Less frequently reported (&lt; 1%) were anemia, hemolytic anemia, neutropenia, lymphopenia, thrombocytopenia and prolongation of the prothrombin time.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">BLOOD AND LYMPHATIC DISORDERS — </content>granulocytopenia (0.9%), coagulopathy (0.4%).</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">GASTROINTESTINAL</content> – diarrhea/loose stools (2.7%). Less frequently reported (&lt; 1%) were nausea or vomiting, and dysgeusia. The onset of pseudomembranous colitis symptoms may occur during or after antibacterial treatment (see <content styleCode="bold">
+                        <linkHtml href="#www.splportal.comLINK_c464cb91-3838-4c41-b651-9cf36bab9eb7">WARNINGS</linkHtml>
+                     </content>).</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">HEPATIC</content> – elevations of aspartate aminotransferase (AST) (3.1%) or alanine aminotransferase (ALT) (3.3%). Less frequently reported (&lt; 1%) were elevations of alkaline phosphatase and bilirubin.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">RENAL</content> – elevations of the BUN (1.2%). Less frequently reported (&lt; 1%) were elevations of creatinine and the presence of casts in the urine.</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">CENTRAL NERVOUS SYSTEM</content> – headache or dizziness were reported occasionally (&lt; 1%).</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">GENITOURINARY</content> – moniliasis or vaginitis were reported occasionally (&lt; 1%).</paragraph>
+                  <paragraph>
+                     <content styleCode="italics">MISCELLANEOUS</content> – diaphoresis and flushing were reported occasionally (&lt; 1%).</paragraph>
+                  <paragraph>INVESTIGATIONS—blood creatinine increased (0.6%).</paragraph>
+                  <paragraph>Other rarely observed adverse reactions (&lt; 0.1%) include abdominal pain, agranulocytosis, allergic pneumonitis, anaphylaxis, basophilia, biliary lithiasis, bronchospasm, colitis, dyspepsia, epistaxis, flatulence, gallbladder sludge, glycosuria, hematuria, jaundice, leukocytosis, lymphocytosis, monocytosis, nephrolithiasis, palpitations, a decrease in the prothrombin time, renal precipitations, seizures, and serum sickness.</paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <section ID="LINK_440bc928-e649-4de0-97ff-8587fcd5c42e">
+                     <id root="1446530d-160b-4af7-8a39-bda82d4aaae4"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">Post-marketing Experience</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>In addition to the adverse reactions reported during clinical trials, the following adverse experiences have been reported during clinical practice in patients treated with ceftriaxone. Data are generally insufficient to allow an estimate of incidence or to establish causation.</paragraph>
+                        <paragraph>A small number of cases of fatal outcomes in which a crystalline material was observed in the lungs and kidneys at autopsy have been reported in neonates receiving ceftriaxone and calcium-containing fluids. In some of these cases, the same intravenous infusion line was used for both ceftriaxone and calcium‑containing fluids and in some a precipitate was observed in the intravenous infusion line. At least one fatality has been reported in a neonate in whom ceftriaxone and calcium‑containing fluids were administered at different time points via different intravenous lines; no crystalline material was observed at autopsy in this neonate. There have been no similar reports in patients other than neonates.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">GASTROINTESTINAL</content> – pancreatitis, stomatitis and glossitis.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">GENITOURINARY </content>– oliguria, ureteric obstruction, post-renal acute renal failure.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">DERMATOLOGIC</content> – exanthema, allergic dermatitis, urticaria, edema; acute generalized exanthematous pustulosis (AGEP) and isolated cases of severe cutaneous adverse reactions (erythema multiforme, Stevens-Johnson syndrome or Lyell’s syndrome/toxic epidermal necrolysis) have been reported.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">HEMATOLOGICAL CHANGES</content> – isolated cases of agranulocytosis (&lt; 500/mm<sup>3</sup>) have been reported, most of them after 10 days of treatment and following total doses of 20 g or more.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">NEUROLOGIC – encephalopathy, seizures, myoclonus. and non-convulsive status epilepticus (see <linkHtml href="#LINK_c464cb91-3838-4c41-b651-9cf36bab9eb7">WARNINGS AND PRECAUTIONS)</linkHtml>.</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">OTHER, Adverse Reactions</content> – symptomatic precipitation of ceftriaxone calcium salt in the gallbladder, kernicterus, oliguria, and anaphylactic or anaphylactoid reactions.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_4b08a6a9-7ddc-48d4-9f89-6410e6e50394">
+                     <id root="c3ebb19d-a934-470e-ac19-eb86fb8c46c4"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">Cephalosporin Class Adverse Reactions </content>
+                     </title>
+                     <text>
+                        <paragraph>In addition to the adverse reactions listed above which have been observed in patients treated with ceftriaxone, the following adverse reactions and altered laboratory test results have been reported for cephalosporin class antibiotics:</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Adverse Reactions</content>: Allergic reactions, drug fever, serum sickness-like reaction, renal dysfunction, toxic nephropathy, reversible hyperactivity, hypertonia, hepatic dysfunction including cholestasis, aplastic anemia, hemorrhage, and superinfection.</paragraph>
+                        <paragraph>
+                           <content styleCode="italics">Altered Laboratory Tests:</content> Positive direct Coombs’ test, false-positive test for urinary glucose, and elevated LDH (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_1665d28d-14b4-4aa5-9c6c-9eaecb9abb03">PRECAUTIONS</linkHtml>
+                           </content>).</paragraph>
+                        <paragraph>Several cephalosporins have been implicated in triggering seizures, particularly in patients with renal impairment when the dosage was not reduced (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_57459a1c-3148-4272-886f-c95efa8600d0">DOSAGE AND ADMINISTRATION</linkHtml>
+                           </content>). If seizures associated with drug therapy occur, the drug should be discontinued. Anticonvulsant therapy can be given if clinically indicated.</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">To report SUSPECTED ADVERSE REACTIONS, contact Hikma Pharmaceuticals USA Inc. at 1-877-845-0689 or FDA at 1-800-FDA-1088 or <linkHtml href="http://www.fda.gov/medwatch">www.fda.gov/medwatch</linkHtml>.</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_e2278e34-a1f6-4d61-a849-b1d7eaa15967">
+               <id root="b704a435-bfe1-42b6-be78-13ec17ed8e1b"/>
+               <code code="34088-5" codeSystem="2.16.840.1.113883.6.1" displayName="OVERDOSAGE SECTION"/>
+               <title>
+                  <content styleCode="bold">OVERDOSAGE</content>
+               </title>
+               <text>
+                  <paragraph>Ceftriaxone overdosage has been reported in patients with severe renal impairment. Reactions have included neurological outcomes, including encephalopathy, seizures. myoclonus, and non-convulsive status epilepticus. In the event of overdosage, discontinue Ceftriaxone for Injection therapy and provide general supportive treatment (see <linkHtml href="#LINK_57459a1c-3148-4272-886f-c95efa8600d0">DOSAGE AND ADMINISTRATION</linkHtml> and <linkHtml href="#LINK_c464cb91-3838-4c41-b651-9cf36bab9eb7">WARNINGS AND PRECAUTIONS</linkHtml>).</paragraph>
+                  <paragraph>In the case of overdosage, drug concentration would not be reduced by hemodialysis or peritoneal dialysis. There is no specific antidote. Treatment of overdosage should be symptomatic.</paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_57459a1c-3148-4272-886f-c95efa8600d0">
+               <id root="ba69c690-0262-4e63-ae93-fa92896b8d2b"/>
+               <code code="34068-7" codeSystem="2.16.840.1.113883.6.1" displayName="DOSAGE &amp; ADMINISTRATION SECTION"/>
+               <title>
+                  <content styleCode="bold">DOSAGE AND ADMINISTRATION</content>
+               </title>
+               <text>
+                  <paragraph>Ceftriaxone may be administered intravenously or intramuscularly.</paragraph>
+                  <paragraph>Do not use diluents containing calcium, such as Ringer’s solution or Hartmann’s solution, to reconstitute ceftriaxone vials or to further dilute a reconstituted vial for IV administration because a precipitate can form. Precipitation of ceftriaxone-calcium can also occur when ceftriaxone is mixed with calcium-containing solutions in the same IV administration line. Ceftriaxone must not be administered simultaneously with calcium‑containing IV solutions, including continuous calcium-containing infusions such as parenteral nutrition via a Y-site. However, in patients other than neonates, ceftriaxone and calcium-containing solutions may be administered sequentially of one another if the infusion lines are thoroughly flushed between infusions with a compatible fluid (see <content styleCode="bold">
+                        <linkHtml href="#www.splportal.comLINK_c464cb91-3838-4c41-b651-9cf36bab9eb7">WARNINGS</linkHtml>
+                     </content>).</paragraph>
+                  <paragraph>There have been no reports of an interaction between ceftriaxone and oral calcium-containing products or interaction between intramuscular ceftriaxone and calcium-containing products (IV or oral).</paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <section ID="LINK_bbab0e29-60fc-4f25-aa7a-36e0bfac3ece">
+                     <id root="f5888fcb-e3ae-4e74-9fa4-760adb94dd11"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">NEONATES</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>Hyperbilirubinemic neonates, especially prematures, should not be treated with ceftriaxone. Ceftriaxone is contraindicated in premature neonates  (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_d0ad79f2-7221-46b1-ace2-ed626f7e30f5">CONTRAINDICATIONS</linkHtml>
+                           </content>).</paragraph>
+                        <paragraph>Ceftriaxone is contraindicated in neonates (≤28 days) if they require (or are expected to require) treatment with calcium‑containing IV solutions, including continuous calcium‑containing infusions such as parenteral nutrition because of the risk of precipitation of ceftriaxone-calcium (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_d0ad79f2-7221-46b1-ace2-ed626f7e30f5">CONTRAINDICATIONS</linkHtml>
+                           </content>).</paragraph>
+                        <paragraph>Intravenous doses should be given over 60 minutes in neonates to reduce the risk of bilirubin encephalopathy.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_d112e7cb-9409-44fb-b0f2-b628c7c1bbb4">
+                     <id root="3659abaa-6ad4-4c4e-8443-ebdeb644ae3b"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">
+                           <content styleCode="italics">PEDIATRIC PATIENTS</content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>For the treatment of skin and skin structure infections, the recommended total daily dose is 50 to 75 mg/kg given once a day (or in equally divided doses twice a day). The total daily dose should not exceed 2 grams.</paragraph>
+                        <paragraph>For the treatment of acute bacterial otitis media, a single intramuscular dose of 50 mg/kg (not to exceed 1 gram) is recommended (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_224b25e1-c3ab-4162-a8c8-e0422dc338f7">INDICATIONS AND USAGE</linkHtml>
+                           </content>). </paragraph>
+                        <paragraph>For the treatment of serious miscellaneous infections other than meningitis, the recommended total daily dose is 50 to 75 mg/kg, given in divided doses every 12 hours. The total daily dose should not exceed 2 grams. </paragraph>
+                        <paragraph>In the treatment of meningitis, it is recommended that the initial therapeutic dose be 100 mg/kg (not to exceed 4 grams). Thereafter, a total daily dose of 100 mg/‌kg/‌day (not to exceed 4 grams daily) is recommended. The daily dose may be administered once a day (or in equally divided doses every 12 hours). The usual duration of therapy is 7 to 14 days.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_8e098632-00ac-4e87-8822-efb1213ba5f5">
+                     <id root="8c85d0b4-1a8d-4e8d-95c1-4b8c2deddf4f"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="italics">
+                           <content styleCode="bold">ADULTS </content>
+                        </content>
+                     </title>
+                     <text>
+                        <paragraph>The usual adult daily dose is 1 to 2 grams given once a day (or in equally divided doses twice a day) depending on the type and severity of infection. The total daily dose should not exceed 4 grams.</paragraph>
+                        <paragraph>If <content styleCode="italics">Chlamydia trachomatis </content>is a suspected pathogen, appropriate antichlamydial coverage should be added, because ceftriaxone sodium has no activity against this organism.</paragraph>
+                        <paragraph>For the treatment of uncomplicated gonococcal infections, a single intramuscular dose of 250 mg is recommended.</paragraph>
+                        <paragraph>For preoperative use (surgical prophylaxis), a single dose of 1 gram administered intravenously 1/2 to 2 hours before surgery is recommended.</paragraph>
+                        <paragraph>Generally, ceftriaxone therapy should be continued for at least 2 days after the signs and symptoms of infection have disappeared. The usual duration of therapy is 4 to 14 days; in complicated infections, longer therapy may be required.</paragraph>
+                        <paragraph>When treating infections caused by <content styleCode="italics">Streptococcus pyogenes</content>, therapy should be continued for at least 10 days.</paragraph>
+                        <paragraph>No dosage adjustment is necessary for patients with impairment of renal or hepatic function (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_1665d28d-14b4-4aa5-9c6c-9eaecb9abb03">PRECAUTIONS</linkHtml>
+                           </content>).</paragraph>
+                        <paragraph>The dosages recommended for adults require no modification in elderly patients, up to 2 gm per day, provided there is no severe renal and hepatic impairment (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_1665d28d-14b4-4aa5-9c6c-9eaecb9abb03">PRECAUTIONS</linkHtml>
+                           </content>).</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="LINK_34f95dd8-ea89-42a1-bae2-63f5f3b49071">
+                     <id root="a4bf4c89-115d-420a-85a5-f129dd8a31d8"/>
+                     <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>
+                        <content styleCode="bold">DIRECTIONS FOR USE</content>
+                     </title>
+                     <text>
+                        <paragraph>
+                           <content styleCode="bold">Intramuscular Administration:</content> Reconstitute ceftriaxone powder with the appropriate diluent (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_0a3d6b6a-e736-4738-83a4-3fd789dbe3ac">COMPATIBILITY AND STABILITY</linkHtml>
+                           </content>).</paragraph>
+                        <paragraph>Inject diluent into vial, shake vial thoroughly to form solution. Withdraw entire contents of vial into syringe to equal total labeled dose.</paragraph>
+                        <paragraph>After reconstitution, each 1 mL of solution contains approximately 250 mg or 350 mg equivalent of ceftriaxone according to the amount of diluent indicated below. If required, more dilute solutions could be utilized.</paragraph>
+                        <paragraph>As with all intramuscular preparations, ceftriaxone should be injected well within the body of a relatively large muscle; aspiration helps to avoid unintentional injection into a blood vessel.</paragraph>
+                        <table>
+                           <col/>
+                           <col/>
+                           <col/>
+                           <tbody>
+                              <tr>
+                                 <td align="center" styleCode=" Botrule"> Vial Dosage Size</td>
+                                 <td valign="top" align="center" colspan="2" styleCode=" Botrule"> Amount of Diluent to be Added</td>
+                              </tr>
+                              <tr>
+                                 <td valign="top" align="center" styleCode=" Botrule"> </td>
+                                 <td valign="top" align="center" styleCode=" Botrule">250 mg/mL </td>
+                                 <td valign="top" align="center" styleCode=" Botrule">350 mg/mL </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top" align="center">
+                                    <paragraph>250 mg</paragraph>
+                                 </td>
+                                 <td valign="top" align="center">
+                                    <paragraph>0.9 mL</paragraph>
+                                 </td>
+                                 <td valign="top" align="center">
+                                    <paragraph>—</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top" align="center">
+                                    <paragraph>500 mg</paragraph>
+                                 </td>
+                                 <td valign="top" align="center">
+                                    <paragraph>1.8 mL</paragraph>
+                                 </td>
+                                 <td valign="top" align="center">
+                                    <paragraph>1 mL</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top" align="center">
+                                    <paragraph>1 gm</paragraph>
+                                 </td>
+                                 <td valign="top" align="center">
+                                    <paragraph>3.6 mL</paragraph>
+                                 </td>
+                                 <td valign="top" align="center">
+                                    <paragraph>2.1 mL</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top" align="center" styleCode=" Botrule">
+                                    <paragraph>2 gm</paragraph>
+                                 </td>
+                                 <td valign="top" align="center" styleCode=" Botrule">
+                                    <paragraph>7.2 mL</paragraph>
+                                 </td>
+                                 <td valign="top" align="center" styleCode=" Botrule">
+                                    <paragraph>4.2 mL</paragraph>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>
+                           <content styleCode="bold">Intravenous Administration: </content>Ceftriaxone should be administered intravenously by infusion over a period of 30 minutes, except in neonates where administration over 60 minutes is recommended to reduce the risk of bilirubin encephalopathy. Concentrations between 10 mg/mL and 40 mg/‌mL are recommended; however, lower concentrations may be used if desired. Reconstitute vials with an appropriate IV diluent (see <content styleCode="bold">
+                              <linkHtml href="#www.splportal.comLINK_0a3d6b6a-e736-4738-83a4-3fd789dbe3ac">COMPATIBILITY AND STABILITY</linkHtml>
+                           </content>).</paragraph>
+                        <table>
+                           <col/>
+                           <col/>
+                           <tbody>
+                              <tr>
+                                 <td valign="top" align="center" styleCode=" Botrule">
+                                    <paragraph>Vial Dosage Size</paragraph>
+                                 </td>
+                                 <td valign="top" align="center" styleCode=" Botrule">
+                                    <paragraph>  Amount of Diluent to be Added</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top" align="center">
+                                    <paragraph>250 mg</paragraph>
+                                 </td>
+                                 <td valign="top" align="center">
+                                    <paragraph>2.4 mL</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top" align="center">
+                                    <paragraph>500 mg</paragraph>
+                                 </td>
+                                 <td valign="top" align="center">
+                                    <paragraph>4.8 mL</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top" align="center">
+                                    <paragraph>1 gm</paragraph>
+                                 </td>
+                                 <td valign="top" align="center">
+                                    <paragraph>9.6 mL</paragraph>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top" align="center">
+                                    <paragraph>2 gm</paragraph>
+                                 </td>
+                                 <td valign="top" align="center">
+                                    <paragraph>19.2 mL</paragraph>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <paragraph>After reconstitution, each 1 mL of solution contains approximately 100 mg equivalent of ceftriaxone. Withdraw entire contents and dilute to the desired concentration with the appropriate IV diluent.</paragraph>
+                     </text>
+                     <effectiveTime value="20260930"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_0a3d6b6a-e736-4738-83a4-3fd789dbe3ac">
+               <id root="b21f6f6d-2652-47d8-ab73-a46a83927bc5"/>
+               <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+               <title>
+                  <content styleCode="bold">COMPATIBILITY AND STABILITY</content>
+               </title>
+               <text>
+                  <paragraph>Do not use diluents containing calcium, such as Ringer’s solution or Hartmann’s solution, to reconstitute ceftriaxone vials or to further dilute a reconstituted vial for IV administration. Particulate formation can result.</paragraph>
+                  <paragraph> Ceftriaxone has been shown to be compatible with Flagyl<sup>®</sup> IV (metronidazole hydrochloride). The concentration should not exceed 5 to 7.5 mg/mL metronidazole hydrochloride with ceftriaxone 10 mg/mL as an admixture. The admixture is stable for 24 hours at room temperature only in 0.9% sodium chloride injection or 5% dextrose in water (D5W). No compatibility studies have been conducted with the Flagyl<sup>®</sup> IV RTU<sup>®</sup> (metronidazole) formulation or using other diluents. Metronidazole at concentrations greater than 8 mg/mL will precipitate. Do not refrigerate the admixture as precipitation will occur.</paragraph>
+                  <paragraph>Vancomycin, amsacrine, aminoglycosides, and fluconazole are incompatible with ceftriaxone in admixtures. When any of these drugs are to be administered concomitantly with ceftriaxone by intermittent intravenous infusion, it is recommended that they be given sequentially, with thorough flushing of the intravenous lines (with one of the compatible fluids) between the administrations.</paragraph>
+                  <paragraph>Ceftriaxone solutions should <content styleCode="italics">not </content>be physically mixed with or piggybacked into solutions containing other antimicrobial drugs or into diluent solutions other than those listed above, due to possible incompatibility (see <content styleCode="bold">
+                        <linkHtml href="#www.splportal.comLINK_c464cb91-3838-4c41-b651-9cf36bab9eb7">WARNINGS</linkHtml>
+                     </content>).</paragraph>
+                  <paragraph>Ceftriaxone sterile powder should be stored at 20º to 25ºC (68º to 77ºF) [see USP Controlled Room Temperature] and protected from light. After reconstitution, protection from normal light is not necessary. The color of solutions ranges from light yellow to amber, depending on the length of storage, concentration and diluent used. </paragraph>
+                  <paragraph>Ceftriaxone <content styleCode="italics">intramuscular </content>solutions remain stable (loss of potency less than 10%) for the following time periods:</paragraph>
+                  <table>
+                     <col width="1px"/>
+                     <col width="1px"/>
+                     <col width="119.1pt"/>
+                     <col/>
+                     <tbody>
+                        <tr>
+                           <td rowspan="2" styleCode=" Botrule">
+                              <paragraph>Diluent</paragraph>
+                           </td>
+                           <td align="center" rowspan="2" styleCode=" Botrule">
+                              <paragraph>Concentration<br/>mg/mL</paragraph>
+                           </td>
+                           <td align="center" colspan="2">
+                              <paragraph>Storage</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="center" styleCode=" Botrule">
+                              <paragraph>Room Temp.<br/>(25°C)</paragraph>
+                           </td>
+                           <td align="center" styleCode=" Botrule">
+                              <paragraph>Refrigerated<br/>(4°C)</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td valign="top" rowspan="2">
+                              <paragraph>Sterile Water for Injection</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>100</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>2 days</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>10 days</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="center">
+                              <paragraph>250, 350</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>24 hours</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>3 days</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td valign="top" rowspan="2">
+                              <paragraph>0.9% Sodium Chloride Solution</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>100</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>2 days</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>10 days</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="center">
+                              <paragraph>250, 350</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>24 hours</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>3 days</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td valign="top" rowspan="2">
+                              <paragraph>5% Dextrose Solution</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>100</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>2 days</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>10 days</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="center">
+                              <paragraph>250, 350</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>24 hours</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>3 days</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td valign="top" rowspan="2">
+                              <paragraph>Bacteriostatic Water + 0.9% Benzyl Alcohol</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>100</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>24 hours</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>10 days</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="center">
+                              <paragraph>250, 350</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>24 hours</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>3 days</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td valign="top">
+                              <paragraph>1% Lidocaine Solution (without epinephrine)</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>100</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>24 hours</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>10 days</paragraph>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td valign="top"> </td>
+                           <td align="center">
+                              <paragraph>250, 350</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>24 hours</paragraph>
+                           </td>
+                           <td align="center">
+                              <paragraph>3 days</paragraph>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>Ceftriaxone <content styleCode="italics">intravenous </content>solutions, at concentrations of 10, 20 and 40 mg/mL, remain stable (loss of potency less than 10%) for the following time periods stored in glass or PVC containers:</paragraph>
+                  <table>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <tbody>
+                        <tr>
+                           <td> </td>
+                           <td align="center" colspan="2">Storage</td>
+                        </tr>
+                        <tr>
+                           <td> Diluent</td>
+                           <td align="center">Room Temp. </td>
+                           <td align="center">Refrigerated </td>
+                        </tr>
+                        <tr>
+                           <td styleCode=" Botrule"> </td>
+                           <td align="center" styleCode=" Botrule">(25ºC)</td>
+                           <td align="center" styleCode=" Botrule">(4ºC)</td>
+                        </tr>
+                        <tr>
+                           <td> Sterile Water</td>
+                           <td align="center"> 2 days</td>
+                           <td align="center">10 days </td>
+                        </tr>
+                        <tr>
+                           <td> 0.9% Sodium Chloride Solution</td>
+                           <td align="center"> 2 days</td>
+                           <td align="center"> 10 days</td>
+                        </tr>
+                        <tr>
+                           <td> 5% Dextrose Solution</td>
+                           <td align="center"> 2 days</td>
+                           <td align="center"> 10 days</td>
+                        </tr>
+                        <tr>
+                           <td> 10% Dextrose Solution</td>
+                           <td align="center"> 2 days</td>
+                           <td align="center"> 10 days</td>
+                        </tr>
+                        <tr>
+                           <td> 5% Dextrose + 0.9% Sodium Chloride Solution*</td>
+                           <td align="center"> 2 days</td>
+                           <td align="center"> Incompatible</td>
+                        </tr>
+                        <tr>
+                           <td> 5% Dextrose + 0.45% Sodium Chloride Solution</td>
+                           <td align="center"> 2 days</td>
+                           <td align="center"> Incompatible</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph> *Data available for 10 to 40 mg/mL concentrations in this diluent in PVC containers only.</paragraph>
+                  <paragraph>The following <content styleCode="italics">intravenous </content>ceftriaxone solutions are stable at room temperature (25°C) for 24 hours, at concentrations between 10 mg/mL and 40 mg/mL: Sodium Lactate (PVC container), 10% Invert Sugar (glass container), 5% Sodium Bicarbonate (glass container), Freamine III (glass container), Normosol-M in 5% Dextrose (glass and PVC containers), Ionosol-B in 5% Dextrose (glass container), 5% Mannitol (glass container), 10% Mannitol (glass container).</paragraph>
+                  <paragraph>After the indicated stability time periods, unused portions of solutions should be discarded.</paragraph>
+                  <paragraph>NOTE: Parenteral drug products should be inspected visually for particulate matter before administration.</paragraph>
+                  <paragraph>Ceftriaxone reconstituted with 5% Dextrose or 0.9% Sodium Chloride solution at concentrations between 10 mg/‌mL and 40 mg/mL, and then stored in frozen state (- 20°C) in PVC or polyolefin containers, remains stable for 26 weeks.</paragraph>
+                  <paragraph>Frozen solutions of ceftriaxone should be thawed at room temperature before use. After thawing, unused portions should be discarded. <content styleCode="bold">DO NOT REFREEZE</content>.</paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_43f7325f-b613-4ffc-bf2f-05dff1fbcec4">
+               <id root="9ef529e8-22be-4b68-b9a5-857e6cec9e81"/>
+               <code code="42229-5" codeSystem="2.16.840.1.113883.6.1" displayName="SPL UNCLASSIFIED SECTION"/>
+               <title>
+                  <content styleCode="bold">ANIMAL PHARMACOLOGY</content>
+               </title>
+               <text>
+                  <paragraph>Concretions consisting of the precipitated calcium salt of ceftriaxone have been found in the gallbladder bile of dogs and baboons treated with ceftriaxone.</paragraph>
+                  <paragraph>These appeared as a gritty sediment in dogs that received 100 mg/kg/day for 4 weeks. A similar phenomenon has been observed in baboons but only after a protracted dosing period (6 months) at higher dose levels (335 mg/kg/day or more). The likelihood of this occurrence in humans is considered to be low, since ceftriaxone has a greater plasma half-life in humans, the calcium salt of ceftriaxone is more soluble in human gallbladder bile and the calcium content of human gallbladder bile is relatively low.</paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_becd3c3d-b979-42c5-9a17-5c18cdfc2222">
+               <id root="06393050-e55d-4922-9fab-0ceb304e1bbc"/>
+               <code code="34069-5" codeSystem="2.16.840.1.113883.6.1" displayName="HOW SUPPLIED SECTION"/>
+               <title>
+                  <content styleCode="bold">HOW SUPPLIED</content>
+               </title>
+               <text>
+                  <paragraph>Ceftriaxone for Injection, USP is supplied as a sterile crystalline powder in glass vials. The following packages are available:</paragraph>
+                  <paragraph>Vials containing ceftriaxone sodium equivalent to 250 mg ceftriaxone      Box of 25 (NDC 0143-9859-25)</paragraph>
+                  <paragraph>Vials containing ceftriaxone sodium equivalent to 500 mg ceftriaxone      Box of 25 (NDC 0143-9858-25)</paragraph>
+                  <paragraph>Vials containing ceftriaxone sodium equivalent to 1 gm ceftriaxone         Box of 25 (NDC 0143-9857-25)</paragraph>
+                  <paragraph>Vials containing ceftriaxone sodium equivalent to 2 gm ceftriaxone         Box of 25 (NDC 0143-9856-25)</paragraph>
+                  <paragraph>Note: Ceftriaxone for Injection, USP sterile powder should be stored at 20º to 25ºC (68º to 77ºF) [See USP Controlled Room Temperature], and protected from light.</paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_c9eb7e14-515c-48de-b9b8-fbd87508afdc">
+               <id root="e61b385d-2327-441c-9178-d451749f5236"/>
+               <code code="34092-7" codeSystem="2.16.840.1.113883.6.1" displayName="CLINICAL STUDIES SECTION"/>
+               <title>
+                  <content styleCode="bold">CLINICAL STUDIES</content>
+               </title>
+               <text>
+                  <paragraph>
+                     <content styleCode="italics">
+                        <content styleCode="bold">Clinical Trials in Pediatric Patients with Acute Bacterial Otitis Media:  </content>
+                     </content>In two adequate and well-controlled US clinical trials a single IM dose of ceftriaxone was compared with a 10 day course of oral antibiotic in pediatric patients between the ages of 3 months and 6 years. The clinical cure rates and statistical outcome appear in the table below:</paragraph>
+                  <table>
+                     <caption>Table 5. Clinical Efficacy in Pediatric Patients with Acute Bacterial Otitis Media</caption>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <tbody>
+                        <tr>
+                           <td styleCode=" Botrule">
+                              <content styleCode="bold">Study Day</content> </td>
+                           <td align="center" styleCode=" Botrule"> <content styleCode="bold">Ceftriaxone Single Dose</content>
+                           </td>
+                           <td align="center" styleCode=" Botrule">
+                              <content styleCode="bold">Comparator - 10 Days of Oral Therapy</content> </td>
+                           <td align="center" styleCode=" Botrule">
+                              <content styleCode="bold">95% Confidence Interval</content> </td>
+                           <td align="center" styleCode=" Botrule">
+                              <content styleCode="bold">Statistical Outcome</content> </td>
+                        </tr>
+                        <tr>
+                           <td styleCode=" Botrule">Study 1 - US</td>
+                           <td align="center" styleCode=" Botrule"> </td>
+                           <td align="center" styleCode=" Botrule"> amoxicillin/clavulanate</td>
+                           <td align="center" styleCode=" Botrule"> </td>
+                           <td align="center" styleCode=" Botrule"> </td>
+                        </tr>
+                        <tr>
+                           <td align="center" styleCode=" Botrule"> 14</td>
+                           <td align="center" styleCode=" Botrule">74% (220/296) </td>
+                           <td align="center" styleCode=" Botrule">82% (247/302) </td>
+                           <td align="center" styleCode=" Botrule">(-14.4%, -0.5%) </td>
+                           <td align="center"> Ceftriaxone is lower than control</td>
+                        </tr>
+                        <tr>
+                           <td align="center" styleCode=" Botrule"> 28</td>
+                           <td align="center" styleCode=" Botrule"> 58% (167/288)</td>
+                           <td align="center" styleCode=" Botrule">67% (200/297) </td>
+                           <td align="center" styleCode=" Botrule">(-17.5%, -1.2%) </td>
+                           <td align="center" styleCode=" Botrule">at study day 14 and 28. </td>
+                        </tr>
+                        <tr>
+                           <td styleCode=" Botrule">Study 2 - US<sup>5</sup>
+                           </td>
+                           <td align="center" styleCode=" Botrule"> </td>
+                           <td align="center" styleCode=" Botrule">TMP-SMZ </td>
+                           <td align="center" styleCode=" Botrule"> </td>
+                           <td align="center" styleCode=" Botrule"> </td>
+                        </tr>
+                        <tr>
+                           <td align="center" styleCode=" Botrule"> 14</td>
+                           <td align="center" styleCode=" Botrule">54% (113/210) </td>
+                           <td align="center" styleCode=" Botrule"> 60% (124/206)</td>
+                           <td align="center" styleCode=" Botrule">(-16.4%, 3.6%) </td>
+                           <td align="center"> Ceftriaxone is equivalent to control</td>
+                        </tr>
+                        <tr>
+                           <td align="center" styleCode=" Botrule"> 28</td>
+                           <td align="center" styleCode=" Botrule">35% (73/206) </td>
+                           <td align="center" styleCode=" Botrule">45% (93/205) </td>
+                           <td align="center" styleCode=" Botrule">(-19.9%, 0.0%) </td>
+                           <td align="center" styleCode=" Botrule">at study day 14 and 28.</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>An open-label bacteriologic study of ceftriaxone without a comparator enrolled 108 pediatric patients, 79 of whom had positive baseline cultures for one or more of the common pathogens. The results of this study are tabulated as follows:</paragraph>
+                  <paragraph>Week 2 and 4 Bacteriologic Eradication Rates in the Per Protocol Analysis in the Roche Bacteriologic Study by pathogen:</paragraph>
+                  <table>
+                     <caption>Table 6. Bacteriologic Eradication Rates by Pathogen</caption>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <col/>
+                     <tbody>
+                        <tr>
+                           <td styleCode=" Botrule"> </td>
+                           <td align="center" colspan="2" styleCode=" Botrule"> Study Day 13-15</td>
+                           <td align="center" colspan="2" styleCode=" Botrule"> Study Day 30+2</td>
+                        </tr>
+                        <tr>
+                           <td> Organism</td>
+                           <td align="center">No. Analyzed </td>
+                           <td align="center"> No. Erad. (%)</td>
+                           <td align="center">No. Analyzed </td>
+                           <td align="center">No. Erad. (%) </td>
+                        </tr>
+                        <tr>
+                           <td> <content styleCode="italics">Streptococcus pneumoniae</content>
+                           </td>
+                           <td align="center"> 38</td>
+                           <td align="center">32 (84)</td>
+                           <td align="center">35</td>
+                           <td align="center">25 (71)</td>
+                        </tr>
+                        <tr>
+                           <td> <content styleCode="italics">Haemophilus influenzae</content>
+                           </td>
+                           <td align="center"> 33</td>
+                           <td align="center">28 (85)</td>
+                           <td align="center">31</td>
+                           <td align="center">22 (71)</td>
+                        </tr>
+                        <tr>
+                           <td> <content styleCode="italics">Moraxella catarrhalis</content>
+                           </td>
+                           <td align="center"> 15</td>
+                           <td align="center">12 (80)</td>
+                           <td align="center">15</td>
+                           <td align="center">9 (60)</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <br/>
+               </text>
+               <effectiveTime value="20260930"/>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_870aea00-52c6-4ebf-b80b-340fe380333b">
+               <id root="fbe3a259-6202-4221-b7d8-f8a4bd97ddfc"/>
+               <code code="34093-5" codeSystem="2.16.840.1.113883.6.1" displayName="REFERENCES SECTION"/>
+               <title>
+                  <content styleCode="bold">REFERENCES</content>
+               </title>
+               <text>
+                  <list listType="ordered" styleCode="Arabic">
+                     <item>
+                        <paragraph>Barnett ED, Teele DW, Klein JO, et al. <content styleCode="italics">Comparison of Ceftriaxone and Trimethoprim-Sulfamethoxazole for Acute Otitis Media. </content>Pediatrics. Vol. 99, No. 1, January 1997. </paragraph>
+                     </item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">Manufactured by: <br/>
+                     </content>HIKMA FARMACÊUTICA (PORTUGAL), S.A.<br/>
+Estrada do Rio da Mó, nº 8, 8A e 8B – Fervença - 2705 – 906 Terrugem SNT, PORTUGAL</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Distributed by:<br/>
+                     </content>Hikma Pharmaceuticals USA Inc.<br/>
+Berkeley Heights, NJ 07922</paragraph>
+                  <paragraph>Revised: December 2021</paragraph>
+                  <paragraph>PIN149-WES/11</paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_128c9973-e2c5-42d8-9b11-7526a312de7d">
+               <id root="f42dcf67-3d92-47fd-a3c2-4b5a9e26fb11"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <title>
+                  <content styleCode="bold">PRINCIPAL DISPLAY PANEL</content>
+               </title>
+               <text>
+                  <paragraph>NDC 0143-9859-01<br/>Rx only<br/>
+                     <content styleCode="bold">CEFTRIAXONE</content>
+                     <br/>FOR INJECTION, USP<br/>250 mg/Vial<br/>
+                     <content styleCode="bold">EQUIVALENT TO 250 MG CEFTRIAXONE<br/>FOR IV OR IM USE</content>
+                     <br/>Single Dose Vial<br/>PROTECT FROM LIGHT<br/>
+                     <content styleCode="bold">A 350 mg/mL concentration is not recom-<br/>mended for the 250 mg vial since it may<br/>not be possible to withdraw the entire<br/>contents.<br/>For IV or IM administration and </content>
+                     <content styleCode="bold">USUAL<br/>DOSAGE:</content> See package insert.<br/>
+                     <content styleCode="bold">Storage Prior to Reconstitution: </content>Store<br/>powder at 20º to 25ºC (68º to 77ºF) [See<br/>USP Controlled Room Temperature].<br/>
+                     <content styleCode="bold">Storage After Reconstitution:</content> See package<br/>insert.</paragraph>
+                  <renderMultiMedia referencedObject="MM2"/>
+                  <paragraph>NDC 0143-9859-25<br/>Rx only<br/>
+                     <content styleCode="bold">CEFTRIAXONE</content>
+                     <br/>FOR INJECTION, USP<br/>250 mg/Vial<br/>
+                     <content styleCode="bold">EQUIVALENT TO 250 MG CEFTRIAXONE<br/>FOR IV OR IM USE</content>
+                     <br/>Single Dose Vial</paragraph>
+                  <renderMultiMedia referencedObject="MM3"/>
+               </text>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <observationMedia ID="MM2">
+                     <text>cef 250mg vial</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ceftriaxone-for-injection-2.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+               <component>
+                  <observationMedia ID="MM3">
+                     <text>cef 250mg s-p</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ceftriaxone-for-injection-3.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_50ae53a4-510c-42f8-be63-38fcdee3bbd6">
+               <id root="d0da724f-ed58-4d26-a27b-84bce16a4c62"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <title>PRINCIPAL DISPLAY PANEL</title>
+               <text>
+                  <paragraph>NDC 0143-9858-01<br/>Rx only<br/>
+                     <content styleCode="bold">CEFTRIAXONE</content>
+                     <br/>FOR INJECTION, USP<br/>500 mg/Vial<br/>
+                     <content styleCode="bold">EQUIVALENT TO 500 MG CEFTRIAXONE<br/>FOR IV OR IM USE</content>
+                     <br/>Single Dose Vial<br/>PROTECT FROM LIGHT<br/>
+                     <content styleCode="bold">For IM administration: </content>Reconstitute with 1 mL 1%<br/>Lidocaine Hydrochloride Injection, USP or Sterile<br/>Water for Injection, USP. Each 1 mL of solution con-<br/>tains approximately 350 mg equivalent of ceftriaxone.<br/>
+                     <content styleCode="bold">For IV administration: </content>Reconstitute with 4.8 mL of an<br/>IV diluent specified in the accompanying package<br/>insert. Each 1 mL of solution contains approximately<br/>100 mg equivalent of ceftriaxone. <content styleCode="bold">Withdraw entire<br/>
+                     </content>contents and dilute to the desired concentration with<br/>the appropriate IV diluent.<br/>
+                     <content styleCode="bold">USUAL DOSAGE and Storage After Reconstitution:</content>
+                     <br/>See package insert. <content styleCode="bold">Storage Prior to Reconstitution:<br/>
+                     </content>Store powder at 20º to 25ºC (68º to 77ºF) [See USP<br/>Controlled Room Temperature].</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">                                          <renderMultiMedia referencedObject="MM4"/>
+                     </content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold"> </content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">NDC 0143-9858-25<br/>Rx only<br/>
+                        <content styleCode="bold">CEFTRIAXONE</content>
+                        <br/>FOR INJECTION, USP<br/>500 mg/Vial<br/>
+                        <content styleCode="bold">EQUIVALENT TO 500 MG CEFTRIAXONE<br/>FOR IV OR IM USE</content>
+                        <br/>Single Dose Vial</content>
+                  </paragraph>
+                  <paragraph>                                        <renderMultiMedia referencedObject="MM5"/>
+                     <br/>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold"> </content>
+                  </paragraph>
+               </text>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <observationMedia ID="MM4">
+                     <text>cef 500mg vial</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ceftriaxone-for-injection-4.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+               <component>
+                  <observationMedia ID="MM5">
+                     <text>cef 500mg s-p</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ceftriaxone-for-injection-5.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_b94de92f-8106-4f8b-a65a-187f73ac3d27">
+               <id root="c7e9bc86-5eef-48e6-8804-6267b613840c"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <title>PRINCIPAL DISPLAY PANEL</title>
+               <text>
+                  <paragraph>NDC 0143-9857-01<br/>Rx only<br/>
+                     <content styleCode="bold">CEFTRIAXONE</content>
+                     <br/>FOR INJECTION, USP<br/>
+                     <content styleCode="bold">
+                        <content styleCode="bold">1 gram/V</content>ial</content>
+                     <br/>
+                     <content styleCode="bold">EQUIVALENT TO 1 GRAM CEFTRIAXONE<br/>FOR IV OR IM USE</content>
+                     <br/>Single Dose Vial<br/>PROTECT FROM LIGHT<br/>
+                     <content styleCode="bold">For IM administration: </content>Reconstitute with 2.1 mL 1%<br/>Lidocaine Hydrochloride Injection, USP or Sterile<br/>Water for Injection, USP. Each 1 mL of solution con-<br/>tains approximately 350 mg equivalent of ceftriaxone.<br/>
+                     <content styleCode="bold">For IV administration: </content>Reconstitute with 9.6 mL of an<br/>IV diluent specified in the accompanying package<br/>insert. Each 1 mL of solution contains approximately<br/>100 mg equivalent of ceftriaxone. <content styleCode="bold">Withdraw entire<br/>
+                     </content>contents and dilute to the desired concentration with<br/>the appropriate IV diluent.<br/>
+                     <content styleCode="bold">USUAL DOSAGE and Storage After Reconstitution:<br/>
+                     </content>See package insert. <content styleCode="bold">Storage Prior to Reconstitution:<br/>
+                     </content>Store powder at 20º to 25ºC (68º to 77ºF) [See USP<br/>Controlled Room Temperature].</paragraph>
+                  <renderMultiMedia referencedObject="MM6"/>
+                  <paragraph>NDC 0143-9857-25<br/>Rx only<br/>
+                     <content styleCode="bold">CEFTRIAXONE</content>
+                     <br/>FOR INJECTION, USP<br/>
+                     <content styleCode="bold">
+                        <content styleCode="bold">1 gram/V</content>ial</content>
+                     <br/>
+                     <content styleCode="bold">EQUIVALENT TO 1 GRAM CEFTRIAXONE<br/>FOR IV OR IM USE</content>
+                     <br/>Single Dose Vial</paragraph>
+                  <renderMultiMedia referencedObject="MM7"/>
+               </text>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <observationMedia ID="MM6">
+                     <text>cef 1g vial</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ceftriaxone-for-injection-6.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+               <component>
+                  <observationMedia ID="MM7">
+                     <text>cef 1g s-p</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ceftriaxone-for-injection-7.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="LINK_6b71e8b7-49f3-4043-9f22-c0470c88aead">
+               <id root="8704cc07-ed92-4118-9607-06abc3489156"/>
+               <code code="51945-4" codeSystem="2.16.840.1.113883.6.1" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <title>PRINCIPAL DISPLAY PANEL</title>
+               <text>
+                  <paragraph>NDC 0143-9856-01<br/>Rx only<br/>
+                     <content styleCode="bold">CEFTRIAXONE</content>
+                     <br/>FOR INJECTION, USP<br/>
+                     <content styleCode="bold">
+                        <content styleCode="bold">2 grams/V</content>ial</content>
+                     <br/>
+                     <content styleCode="bold">EQUIVALENT TO 2 GRAMS CEFTRIAXONE<br/>FOR IV OR IM USE</content>
+                     <br/>Single Dose Vial<br/>PROTECT FROM LIGHT<br/>
+                     <content styleCode="bold">For IM administration: </content>Reconstitute with 4.2 mL 1%<br/>Lidocaine Hydrochloride Injection, USP or Sterile<br/>Water for Injection, USP. Each 1 mL of solution con-<br/>tains approximately 350 mg equivalent of ceftriaxone.<br/>
+                     <content styleCode="bold">For IV administration: </content>Reconstitute with 19.2 mL of<br/>an IV diluent specified in the accompanying package<br/>insert. Each 1 mL of solutin contains approximately<br/>100 mg equivalent of ceftriaxone. <content styleCode="bold">Withdraw entire<br/>
+                     </content>contents and dilute to the desired concentration with<br/>the appropriate IV diluent.<br/>
+                     <content styleCode="bold">USUAL DOSAGE and Storage After Reconstitution:<br/>
+                     </content>See package insert. <content styleCode="bold">Storage Prior to Reconstitution:<br/>
+                     </content>Store powder at 20º to 25ºC (68º to 77ºF) [See USP<br/>Controlled Room Temperature].</paragraph>
+                  <renderMultiMedia referencedObject="MM8"/>
+                  <paragraph>NDC 0143-9856-25<br/>Rx only<br/>
+                     <content styleCode="bold">CEFTRIAXONE</content>
+                     <br/>FOR INJECTION, USP<br/>
+                     <content styleCode="bold">
+                        <content styleCode="bold">2 grams/V</content>ial</content>
+                     <br/>
+                     <content styleCode="bold">EQUIVALENT TO 2 GRAMS CEFTRIAXONE<br/>FOR IV OR IM USE</content>
+                     <br/>Single Dose Vial</paragraph>
+                  <renderMultiMedia referencedObject="MM9"/>
+               </text>
+               <effectiveTime value="20260930"/>
+               <component>
+                  <observationMedia ID="MM8">
+                     <text>cef 2g vial</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ceftriaxone-for-injection-8.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+               <component>
+                  <observationMedia ID="MM9">
+                     <text>cef 2g s-p</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="ceftriaxone-for-injection-9.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+      </structuredBody>
+   </component>
+</document>

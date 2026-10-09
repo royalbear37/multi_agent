@@ -167,3 +167,23 @@ test('review identifies the run and requires an explicit decision before submiss
   fireEvent.change(screen.getByLabelText('決定'),{target:{value:'reject'}});
   expect(screen.getByRole('button',{name:'送出審閱'})).toBeEnabled();
 });
+
+test('historical provenance and confirmation links use the run snapshot', async () => {
+  const record={case_id:'case-ui',revision:4,case:{case_id:'case-ui',is_synthetic:true,policy_refs:[]}};
+  const issue={agent_id:'evidence_agent',field:'evidence_context',impact:'省略 2 個片段',action:'核對引用快照'};
+  const run={run_id:'run-old',case_id:'case-ui',case_revision:2,mode:'multi-agent',decision_basis:'agent',provider_kind:'live',model:'gpt-4.1-mini',status:'partial',gate_status:'needs_confirmation',confirmation_items:[issue,issue,{...issue,agent_id:'clinical_agent'}],nodes:[{node_id:'evidence_agent',agent_id:'evidence_agent',status:'needs_confirmation',output:{findings:['仍需核對感染情境']}}],errors:[]};
+  vi.stubGlobal('fetch',vi.fn(async(url:string)=>({ok:true,json:async()=>url==='/api/cases'?[record]:url==='/api/cases/case-ui'?record:url==='/api/runs?case_id=case-ui'?[run]:url==='/api/runs/run-old'?run:url==='/api/config'?{}:[]})));
+  render(<App/>);
+  await waitFor(()=>expect(screen.getByLabelText('目前病例')).toBeEnabled());
+  fireEvent.change(screen.getByLabelText('目前病例'),{target:{value:'case-ui'}});
+  fireEvent.click(await screen.findByRole('button',{name:/run-old/}));
+  expect(await screen.findByText(/分析當時病例：case-ui · 病例版本 2 · 模型：gpt-4.1-mini/)).toBeVisible();
+  fireEvent.click(screen.getByText(/系統證據核對缺口（3）/));
+  expect(screen.getAllByText('文件片段未完整納入')).toHaveLength(2);
+  expect(screen.getByText('相同記錄 2 筆')).toBeVisible();
+  expect(screen.getByText('臨床風險 Agent')).toBeVisible();
+  expect(screen.getAllByRole('button',{name:'查看此步驟'})).toHaveLength(1);
+  fireEvent.click(screen.getAllByRole('button',{name:'查看此步驟'})[0]);
+  expect(await screen.findByText('仍需核對感染情境')).toBeVisible();
+  expect(document.getElementById('agent-step-evidence_agent')).toHaveAttribute('open');
+});

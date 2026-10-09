@@ -74,6 +74,11 @@ def test_four_modes_unconfigured_and_mock_are_separate(client):
         assert not run['is_mock']
         mock=c.post('/api/runs',json={'case_id':'case-01-complete','mode':mode,'provider_kind':'mock'}).json()
         assert mock['is_mock'] is True
+        if mode == 'multi-agent':
+            assert mock['gate_status'] == 'needs_confirmation'
+            assert mock['agent_execution']['calls'] == 6
+            assert mock['output']['pending'] and not mock['output']['candidates']
+            continue
         assert mock['gate_status'] == 'ready_for_review', mock
         assert mock['output']['candidates'], mock
 

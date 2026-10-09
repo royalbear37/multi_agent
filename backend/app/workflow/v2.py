@@ -391,7 +391,7 @@ def sum_usage(attempts):
 def public_agent_nodes(nodes, *, publish: bool):
     result = copy.deepcopy(nodes)
     for node in result:
-        if node.get("agent_id") and (not publish or node.get("status") not in {"completed", "needs_confirmation"}):
+        if node.get("agent_id") and ((not publish and node.get('workflow_version') not in {'agent-led-1.0', 'agent-led-1.1', 'agent-led-1.2', 'agent-led-1.3', 'agent-led-1.3.1', 'agent-led-1.3.2', 'agent-led-1.3.3', 'agent-led-1.3.4', 'agent-led-1.3.5', 'agent-led-1.3.6', 'agent-led-1.3.7', 'agent-led-1.4.0', 'agent-led-1.4.1', 'agent-led-1.4.2', 'agent-led-1.5.0','agent-led-1.5.1'}) or node.get("status") not in {"completed", "needs_confirmation"}):
             node["input"] = None
             node["output"] = None
             node["content_withheld"] = True

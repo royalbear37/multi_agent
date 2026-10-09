@@ -30,8 +30,10 @@ def test_prepare_source_cases_preserves_reference_and_retries_failed_runs(tmp_pa
         script['main_cli']()
         first = [r for r in database.list_runs() if r['run_id'] not in failed_ids]
         assert len(first) == 4
-        assert all(r['gate_status'] == 'ready_for_review' and not r['errors'] and not r['missing_fields'] for r in first)
-        assert all(r['output']['candidates'] and r['evidence_snapshots'] for r in first)
+        assert all(not r['errors'] and not r['missing_fields'] for r in first)
+        assert all(r['evidence_snapshots'] for r in first)
+        assert all(r['gate_status'] == 'ready_for_review' and r['output']['candidates'] for r in first if r['mode']=='rule-only')
+        assert all(r['agent_execution']['calls']==6 and r['output']['pending'] for r in first if r['mode']=='multi-agent')
         script['main_cli']()
         assert len(database.list_runs()) == 12
         assert service.detail(original['doc_id'])['metadata'] == {'policy_refs': [], 'population': 'all', 'population_revision': 0}

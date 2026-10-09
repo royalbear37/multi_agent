@@ -54,6 +54,41 @@ def test_import_field_error_and_alternate():
         assert result.status_code == 200 and result.json()["case_id"] == "alternate-1"
 
 
+def test_allergy_supplement_creates_revision_without_rewriting_original():
+    import copy
+    from tests.test_workflow import case
+    payload = case(created_at='2026-10-06T09:00:00+08:00', allergies={
+        'status':'known_present','items':[{'drug_code':'amoxicillin','reaction':'anaphylaxis','severity':'severe'}]})
+    with TestClient(app) as client:
+        first = client.post('/api/cases/import', json={'payload':payload})
+        assert first.status_code == 200
+        revised = copy.deepcopy(payload)
+        revised['allergies']['items'][0].update(verification_status='conflicting',
+            verification_source='人工測試評估紀錄',verification_note='既有紀錄互相矛盾，需核對')
+        result = client.post('/api/cases/'+payload['case_id']+'/revisions',json={'payload':revised})
+        assert result.status_code == 200
+        history = client.get('/api/cases/'+payload['case_id']+'/revisions').json()
+        assert len(history) == 2
+        assert history[0]['case']['allergies']['items'][0]['verification_status'] == 'not_recorded'
+        assert history[0]['case']['allergies']['items'][0]['reaction'] == 'anaphylaxis'
+        assert result.json()['case']['allergies']['status'] == 'known_present'
+        assert result.json()['case']['allergies']['items'][0]['verification_status'] == 'conflicting'
+
+
+def test_document_import_preserves_research_design_and_rejects_active_url():
+    with TestClient(app) as client:
+        fields = {'title':'Allergy label cohort','version':'2025','is_synthetic':'false',
+                  'document_kind':'research_article','study_design':'observational',
+                  'source_url':'https://example.org/paper','jurisdiction':'UK'}
+        files = {'file':('paper.md', b'# Study\nAllergy labels and population outcomes.', 'text/markdown')}
+        response = client.post('/api/documents/import',data=fields,files=files)
+        assert response.status_code == 200
+        assert response.json()['metadata']['document_kind'] == 'research_article'
+        assert response.json()['metadata']['study_design'] == 'observational'
+        fields['source_url'] = 'javascript:alert(1)'
+        assert client.post('/api/documents/import',data=fields,files=files).status_code == 422
+
+
 def test_review_rejects_prescription_fields():
     with TestClient(app) as client:
         client.post("/api/seed")
