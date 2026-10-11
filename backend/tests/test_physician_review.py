@@ -61,3 +61,42 @@ def test_decline_does_not_require_adoption_ack_and_other_modes_unchanged(review_
  changed=copy.deepcopy(run);changed['decision_basis']='rule';repo.save_run('r',changed)
  assert client.post('/api/reviews',json=body()).status_code==422
  assert client.get('/api/reviews/missing/export').status_code==404
+
+
+def test_physician_added_drug_is_saved_and_exported_without_fabricated_assessment(review_env):
+ client,run,repo=review_env
+ request=body();request['drug_decisions'][0].update(drug_code='Other antibiotic',outside_analysis=True)
+ response=client.post('/api/reviews',json=request)
+ assert response.status_code==200,response.text
+ decision=response.json()['drug_decisions'][0]
+ assert decision['outside_analysis'] and decision['selection_origin']=='physician_added'
+ assert decision['system_assessment'] is None and decision['warnings']
+ assert client.get('/api/reviews/'+response.json()['review_id']+'/export').json()['drug_decisions'][0]==decision
+ assert repo.get_run('r')==run
+
+
+def test_manual_spelling_of_existing_drug_retains_original_warning_and_prevents_duplicates(review_env):
+ client,run,_=review_env
+ request=body();request['drug_decisions'][0].update(drug_code=' B ',outside_analysis=True)
+ response=client.post('/api/reviews',json=request)
+ assert response.status_code==200
+ decision=response.json()['drug_decisions'][0]
+ assert decision['drug_code']=='b' and not decision['outside_analysis']
+ assert decision['system_assessment']==run['drug_assessments'][1]
+ request['drug_decisions'].append({**request['drug_decisions'][0],'drug_code':'b'})
+ assert client.post('/api/reviews',json=request).status_code==422
+
+
+@pytest.mark.parametrize('alias',['amoxicillin/clavulanate','Amoxicillin + Clavulanate','amoxicillin／clavulanate','amoxicillin–clavulanate'])
+def test_compound_alias_preserves_avoid_assessment_and_duplicate_detection(review_env,alias):
+ client,run,repo=review_env
+ run['drug_assessments'].append({'drug_code':'amoxicillin_clavulanate','status':'avoid','reason':'嚴重過敏警示'})
+ repo.save_run('r',run)
+ request=body();request['drug_decisions'][0].update(drug_code=alias,outside_analysis=True)
+ response=client.post('/api/reviews',json=request)
+ assert response.status_code==200,response.text
+ decision=response.json()['drug_decisions'][0]
+ assert decision['drug_code']=='amoxicillin_clavulanate'
+ assert decision['system_assessment']['reason']=='嚴重過敏警示' and not decision['outside_analysis']
+ request['drug_decisions'].append({**request['drug_decisions'][0],'drug_code':'amoxicillin_clavulanate'})
+ assert client.post('/api/reviews',json=request).status_code==422

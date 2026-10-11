@@ -166,6 +166,11 @@ class OpenAICompatibleProvider(BaseProvider):
         return {"kind": "live", "configured": configured, "api_key_configured": bool(self.api_key), "base_url_configured": bool(self.base_url), "model": self.model or None, "is_mock": False, "status": "ready" if configured else "not_configured", "usage": None}
 
     def _request(self, payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
+        # Check message content, never the intentional authentication header.
+        # Reject rather than rewrite source quotations and invalidate provenance.
+        content = json.dumps(payload.get("messages", []), ensure_ascii=False)
+        if re.search(r"\bsk-[A-Za-z0-9_-]{10,}|Bearer\s+[^\s\"\\]+", content, re.I):
+            raise ProviderError("SENSITIVE_MODEL_INPUT", "分析輸入含疑似憑證，請移除後再分析")
         url = self.base_url if self.base_url.endswith("/chat/completions") else self.base_url + "/chat/completions"
         headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.api_key}"}
         attempts = 0
@@ -217,14 +222,8 @@ class OpenAICompatibleProvider(BaseProvider):
         if not self.status()["configured"]:
             raise ProviderError("MODEL_NOT_CONFIGURED", "模型尚未設定")
         summary = context.get("case_summary")
-        local = urlparse(self.base_url).hostname in {'127.0.0.1', 'localhost', '::1'}
-        if not isinstance(summary, dict) or (summary.get("is_synthetic") is not True and not (summary.get('data_origin') in {'deidentified','hybrid'} and (local or summary.get('external_model_allowed') is True))):
-            raise ProviderError("NON_SYNTHETIC_INPUT", "來源病例預設僅供本機模型；外部模型需確認資料可傳送並啟用病例設定")
-        for item in context.get("evidence") or []:
-            if (not local and isinstance(item, dict) and item.get("is_synthetic") is not True
-                    and item.get("external_model_allowed") is not True
-                    and summary.get("external_model_allowed") is not True):
-                raise ProviderError("NON_SYNTHETIC_EVIDENCE", "參考文件片段尚未允許外送")
+        if not isinstance(summary, dict) or (summary.get("is_synthetic") is not True and summary.get('data_origin') not in {'deidentified','hybrid'}):
+            raise ProviderError("NON_SYNTHETIC_INPUT", "病例須標明合成、去識別或混合資料來源")
         # Send only necessary structured fields and authorized snippets.
         evidence = [{k: e.get(k) for k in ("chunk_id", "document_version", "text", "location") if k in e} for e in (context.get("evidence") or []) if isinstance(e, dict)]
         # Keep the outbound context deliberately narrow.  A caller may attach

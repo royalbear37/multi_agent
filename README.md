@@ -2,7 +2,7 @@
 
 GitHub 交接：[目前病例包](data/handoff/README.md) 包含 28 個使用中的測試情境、95 筆修訂、95 藥／97 菌名稱字典及 24 份文件的安裝清單。[DailyMed 資料包](data/public_references/dailymed/README.md) 包含 20 份標示原件、檢索文字、來源及雜湊。原始 CSV、`.env` 與完整本機資料庫不隨 Git 交接。
 
-目前提供四模式：**rule-only、rag-only、single-agent、multi-agent**。目前 multi-agent 使用 `agent-led-1.5.1`：五角色、正常六次模型呼叫（含獨立引用複核），分析與審閱不呼叫 RuleEngine；支援分層選項及逐藥醫師決策。其他三種模式保留原行為；歷史結果保留原快照並按版本顯示。Benchmark 可勾選病例與模式。來源病例操作見 [Agent 主導 DEMO](docs/AGENT_LED_DEMO.md)，目前修正見 [1.5.1 驗收紀錄](docs/AGENT_LED_151_VALIDATION.md)。
+目前提供四模式：**rule-only、rag-only、single-agent、multi-agent**。目前 multi-agent 使用 `agent-led-1.6.0`：五角色、正常六次模型呼叫（含獨立引用複核），分析與審閱不呼叫 RuleEngine。候選供醫師選擇，不再因引用／風險核對未完成就隱藏；已核對的抗藥、同藥嚴重過敏或已核對避用理由另列不建議區。AI 核對進度、警示及醫師決定分開保存。其他三種模式的分析行為保留，病例外送勾選則全面移除。人工審閱預設一列選藥，可添加／移除及自行輸入其他藥名；未對應本次評估的名稱會明示由醫師另行核對並保留在匯出。分析總覽支援搜尋與展開，文件證據依版本分組。來源病例操作見 [Agent 主導 DEMO](docs/AGENT_LED_DEMO.md)，目前修正見 [1.6.0 驗證](docs/AGENT_LED_160_VALIDATION.md)。
 
 Windows 本機研究工作台，使用本機 CSV 的實際菌種、測試藥品與藥敏判讀，搭配明確標示的模擬臨床情境、WHO／DailyMed 文件檢索（RAG）、Agent 分析、表單審閱與四模式研究比較。
 
@@ -28,7 +28,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\frontend.ps1
 
 開啟 [操作畫面](http://127.0.0.1:5173)，選 `agent-complete` → 核對第 4 版及 18 筆 AST → 模式選 multi-agent、模型選 mock →「執行分析」。查看逐藥表、證據與流程、人工審閱、歷史及匯出；其他模式同樣可用 mock 操作。此入口匯入原工作站的測試病例與 WHO／DailyMed／論文文件，明確設定 lexical＋mock，不需 `.env`、Ollama、私人 CSV 或付費模型。mock 顯示待確認是預期行為，不是模型已完成臨床核對。
 
-此指令使用一般 DB（預設 `data/runtime/prototype.db`），保留既有病例、不覆寫。要用自己的模型及向量檢索，先 Ctrl+C 停止 handoff，再依第 2–4 節建立設定並啟動一般後端，於文件庫重建 reference 索引。病例已附，**不必再取得原 CSV**；只有重新產生資料集時才需第 6 節 CSV。外送授權已重設，需在接手環境重新確認。歷史 run、醫師審閱與付費診斷檔不隨 Git 移轉；完整差異見 [病例包說明](data/handoff/README.md)。
+此指令使用一般 DB（預設 `data/runtime/prototype.db`），保留既有病例、不覆寫。要用自己的模型及向量檢索，先 Ctrl+C 停止 handoff，再依第 2–4 節建立設定並啟動一般後端，於文件庫重建 reference 索引。病例已附，**不必再取得原 CSV**；只有重新產生資料集時才需第 6 節 CSV。選 live 即使用設定的模型，不再需要逐病例外送勾選。歷史 run、醫師審閱與付費診斷檔不隨 Git 移轉；完整差異見 [病例包說明](data/handoff/README.md)。
 
 ## 目錄
 
@@ -135,7 +135,7 @@ PROTOTYPE_DB_PATH=../data/runtime/prototype.db
 
 目前 adapter 使用 Chat Completions、`temperature=0` 和 JSON mode。`gpt-4.1-mini` 是相容設定範例，模型權限以你的 API 專案為準；更換模型前需確認參數相容。目前沒有 reasoning effort 設定。[OpenAI 模型文件](https://developers.openai.com/api/docs/models/gpt-4.1-mini)、[API 認證說明](https://developers.openai.com/api/reference/overview)。
 
-重啟一般後端後，在「研究與設定」確認模型名稱與 configured。**configured 代表設定齊全，不代表真實連線已成功。** 選完整病例、multi-agent、外部模型，再執行一次，才會呼叫回答 API，傳送必要病例欄位（來源病例須先確認可外送並開啟病例設定）與檢索片段，可能產生費用。
+重啟一般後端後，在「研究與設定」確認模型名稱與 configured。**configured 代表設定齊全，不代表真實連線已成功。** 選完整病例、multi-agent、外部模型，再執行一次，才會呼叫回答 API，傳送必要病例欄位與檢索片段，可能產生費用。
 
 ### 3.2 安裝 Ollama 與 embedding 模型
 
@@ -262,7 +262,7 @@ CSV 為結構化資料，請使用匯入腳本，不要放進 RAG 文件上傳�
 
 原始 `AST_pheno` 與 `CLSI_2022_pheno` 分開保存。預設使用後者，未提供則不偷偷回退成另一欄。I、R、SDD、NS、缺漏與前後不一致都不自動變成 S。AST_val1/val2 未有單位，不一律當成 MIC，也不以數值推算界值。
 
-來源病例預設可用 rule-only、mock 或本機 Ollama。若來源資料與文件使用條款允許外送，可在病例摘要勾選「允許此病例的必要分析欄位與所選文件片段送至外部模型」，會保存新版本；之後選 live 才會呼叫已設定的 OpenAI 等服務。傳送資料不含來源病人 ID、就醫 ID、原檔列或偏移日期。**此勾選本身不授予資料使用權。**
+選 live 並執行分析，即使用設定的模型服務，傳送必要病例欄位與檢索片段；不再需要逐病例外送勾選。舊 `external_model_allowed` 欄位保留供舊檔相容，值為 false 不會阻擋。來源資料標示、輸出金鑰遮蔽及傳送欄位縮減仍保留，不傳來源病人 ID、就醫 ID、原檔列或偏移日期。
 
 ### 6.3 編輯與歷史
 
@@ -304,7 +304,7 @@ CSV 為結構化資料，請使用匯入腳本，不要放進 RAG 文件上傳�
 
 歷史 V2 及其他模式保留既有 demo 輸出容錯。新 multi-agent 改用「逐藥決策表」顯示可供審閱、待確認、不建議、未選入及專責評估，不使用「通過規則／規則排除」描述；沒有候選時仍展示有效分析與缺漏。模型無法核對的引用不可視為支持。
 
-新版分開呈現「完整核對候選」「有證據的待審閱選項」「其他待確認」「不建議／未選入」。感染適用性通過而風險尚未完成，不等於完整候選；未知過敏不當成沒有過敏。每項可展開病例來源、文件片段、分項複核及具體缺口。v2.2／v2.3 為歷史流程版本，不是目前預設。
+新版主要分成「候選藥品（供醫師審閱）」與「不建議藥品（保留原因）」。候選仍標示 AI 核對進度，包含引用不足、缺資料、AST 衝突或一般注意事項的項目，由醫師記錄採用／有條件採用／不採用；不能把展示候選解讀為已完成適用性與風險核對。未知過敏仍是未知，已知無過敏不重複要求填寫一般過敏史。歷史 AI 分層及輸出不改寫；API 新增 `physician_candidates`、`physician_excluded` 與展示版本，匯出同步包含。
 
 「藥品數量與去向」區分來源筆數、規則排除、最終選入及其餘未選入；例如 17 項來源可以是 6 項規則排除、4 項選入、7 項通過規則但未選入，並不表示另外 13 項都不適用。rag-only 的 AST 節點為程式規則核對，生成模型只收到摘要、測試藥品名稱與引用，沒有完整逐筆 AST。文件旁會標示合成測試／真實參考／來源類型未記錄；合成測試文件只驗證流程，不代表指引支持。
 

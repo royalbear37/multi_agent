@@ -15,6 +15,18 @@ def _context():
     return {"mode": "single-agent", "case_summary": {"is_synthetic": True}, "allowed_drugs": ["DEMO_DRUG_A"], "rule_refs": ["rule.demo"], "evidence": [{"chunk_id": "doc_chunk_0001", "document_version": "v1", "text": "fixture", "is_synthetic": True, "location": {"page": 1}}]}
 
 
+@pytest.mark.parametrize('secret', ['sk-testcredential12345', 'Bearer test-access-credential'])
+def test_document_credentials_blocked_at_transport_without_rewriting_quotes(secret):
+    calls = []
+    provider = OpenAICompatibleProvider('http://localhost/v1', 'test', 'key', http_post=lambda *a, **k: calls.append(k))
+    payload = {'messages': [{'role': 'user', 'content': json.dumps({'evidence': [{'text': secret}]})}]}
+    original = json.dumps(payload)
+    with pytest.raises(ProviderError) as error:
+        provider._request(payload)
+    assert error.value.code == 'SENSITIVE_MODEL_INPUT'
+    assert calls == [] and json.dumps(payload) == original
+
+
 def test_unconfigured_is_explicit():
     provider = get_provider("unconfigured")
     assert provider.status()["status"] == "not_configured"
@@ -151,14 +163,14 @@ json_module = json
 
 
 @pytest.mark.parametrize('base_url,consent,document_consent,synthetic,allowed', [
-    ('https://remote.invalid/v1', False, False, False, False),
-    ('https://remote.invalid/v1', False, False, None, False),
+    ('https://remote.invalid/v1', False, False, False, True),
+    ('https://remote.invalid/v1', False, False, None, True),
     ('https://remote.invalid/v1', True, False, False, True),
     ('https://remote.invalid/v1', False, True, False, True),
     ('https://remote.invalid/v1', False, False, True, True),
     ('http://localhost:9000/v1', False, False, False, True),
 ])
-def test_reference_evidence_requires_consent_before_request(base_url, consent, document_consent, synthetic, allowed):
+def test_reference_evidence_does_not_require_legacy_consent(base_url, consent, document_consent, synthetic, allowed):
     context = _context()
     context['case_summary']['external_model_allowed'] = consent
     context['evidence'][0].update(is_synthetic=synthetic, external_model_allowed=document_consent)

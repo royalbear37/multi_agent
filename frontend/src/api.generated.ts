@@ -653,6 +653,8 @@ export interface components {
             evidence_scope: "synthetic" | "reference";
             /**
              * External Model Allowed
+             * @deprecated
+             * @description Legacy metadata; no longer controls provider access. Selecting live uses the configured external model.
              * @default false
              */
             external_model_allowed: boolean;
@@ -771,6 +773,11 @@ export interface components {
              * @default false
              */
             acknowledged_warnings: boolean;
+            /**
+             * Outside Analysis
+             * @default false
+             */
+            outside_analysis: boolean;
         };
         /** Encounter */
         Encounter: {

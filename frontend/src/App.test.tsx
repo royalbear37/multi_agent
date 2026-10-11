@@ -27,11 +27,8 @@ test('reference selection resets between cases and saves library or pinned scope
   await waitFor(() => expect(screen.getByLabelText('目前病例')).toBeEnabled());
   fireEvent.change(screen.getByLabelText('目前病例'), {target:{value:'a'}});
   await screen.findByText('改為指定參考文件');
-  const consent = screen.getByRole('checkbox', {name:/允許此病例的必要分析欄位與所選文件片段/});
-  expect(consent).not.toBeChecked();
-  fireEvent.click(consent);
-  await waitFor(() => expect(saved.at(-1)).toMatchObject({case_id:'a',external_model_allowed:true}));
-  await waitFor(() => expect(consent).toBeChecked());
+  expect(screen.queryByRole('checkbox', {name:/允許此病例的必要分析欄位與所選文件片段/})).toBeNull();
+  expect(saved).toHaveLength(0);
   fireEvent.click(screen.getByText('改為指定參考文件'));
   expect(screen.getByLabelText(/WHO book/)).toBeChecked();
   fireEvent.change(screen.getByLabelText('目前病例'), {target:{value:'b'}});

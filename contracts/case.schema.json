@@ -838,6 +838,8 @@
     },
     "external_model_allowed": {
       "default": false,
+      "deprecated": true,
+      "description": "Legacy metadata; no longer controls provider access. Selecting live uses the configured external model.",
       "title": "External Model Allowed",
       "type": "boolean"
     },

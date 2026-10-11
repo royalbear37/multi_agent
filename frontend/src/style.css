@@ -6,6 +6,41 @@
   font-size: 14px;
   line-height: 1.65;
 }
+
+.selection-line, .filter-bar, .status-line, .analysis-counts {
+  display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+}
+.selection-line { align-items: end; }
+.selection-line label { flex: 1; min-width: 180px; }
+.drug-choice { min-width: 0; padding: 20px; margin: 18px 0; border: 1px solid #cddfdf; border-radius: 12px; background: #fff; }
+.drug-choice legend { padding: 0 8px; font-weight: 700; color: #106965; }
+.decision-fields { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 18px; align-items: start; }
+.selected-assessment { background: #f4f8f8; border-radius: 8px; padding: 14px 18px; margin: 14px 0; }
+.selection-warning { color: #87470b; background: #fff6e7; border-radius: 6px; padding: 8px 12px; display: block; }
+.status-line { font-size: 13px; }
+.analysis-counts { padding: 16px 0; border-block: 1px solid #e1eaea; margin: 16px 0; }
+.analysis-counts span { padding-right: 24px; }
+.analysis-counts strong { font-size: 24px; color: #096968; }
+.filter-bar { margin: 16px 0; align-items: end; }
+.filter-bar label { margin: 0; }
+.filter-bar input { min-width: 220px; }
+.cell-note { display: block; color: #5c7077; margin-top: 4px; }
+.compact-drug-table td { vertical-align: middle; }
+.compact-drug-table td:first-child { overflow-wrap: anywhere; }
+.drug-detail-row > td { background: #f5f9f9; padding: 20px; }
+.drug-detail-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.drug-detail-grid > section { background: white; border: 1px solid #e0e9e9; padding: 16px; border-radius: 8px; min-width: 0; }
+.drug-detail-grid h3 { margin-top: 0; }
+.evidence-workspace, .review-workspace { display: grid; grid-template-columns: minmax(0,1fr); gap: 20px; }
+.source-group { padding: 14px; border: 1px solid #dce6e9; border-radius: 8px; margin: 12px 0; }
+.source-excerpt { margin: 10px 0 10px 12px; padding: 10px; border-left: 3px solid #d9e9e7; }
+.evidence-library blockquote { max-height: 440px; overflow: auto; white-space: pre-wrap; }
+.context-fold { margin: 12px 0; }
+@media(max-width: 850px) {
+ .drug-detail-grid, .decision-fields { grid-template-columns: minmax(0,1fr); }
+ .filter-bar label { flex: 1; }
+ .drug-choice { padding: 12px; }
+}
 * {
   box-sizing: border-box;
 }

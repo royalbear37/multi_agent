@@ -17,6 +17,8 @@ from .partial_agents import validate_partial, merge_partial
 from .input_context import compact_sources, assessment_source_refs
 from .source_scope import source_scope_issues
 from .time_budget import TimeBudget
+from .audit_context import fit_audit_context
+from .physician_candidates import add_physician_candidates
 
 
 def text_key(value):
@@ -383,6 +385,14 @@ def execute(case, provider_kind, document_service, run_id, checkpoint=None):
         # Enforce the existing input cap on the context we actually need, not
         # duplicated storage metadata. Full provenance remains in run snapshots.
         data['evidence'] = compact_sources(data['evidence'])
+        if agent.id == 'evidence_audit':
+            data = agent.input_type.model_validate(data).model_dump(mode='json')
+            available = len(data['evidence'])
+            data = fit_audit_context(data)
+            run['evidence_selection'].append({'agent_id':agent.id,'available_chunks':available,
+                'selected_chunks':len(data['evidence']),'omitted_chunks':available-len(data['evidence']),
+                'characters':sum(len(e.get('text','')) for e in data['evidence'])})
+            run.setdefault('evidence_coverage', []).extend(dict(agent_id=agent.id, **g) for g in data['evidence_groups'])
         node = {'node_id': agent.id, 'agent_id': agent.id, 'workflow_version': runtime.VERSION,
             'status': 'running', 'started_at': utc(), 'span_id': str(uuid.uuid4()),
             'depends_on': list(agent.dependencies), 'attempts': [], 'errors': [],
@@ -539,6 +549,7 @@ def execute(case, provider_kind, document_service, run_id, checkpoint=None):
     run['elapsed_ms'] = round((time.perf_counter()-start)*1000, 3)
     save()
     run['agent_execution'].update(completed_agents=sum(n.get('status') in {'completed','needs_confirmation'} for n in run['nodes'] if n.get('agent_id')), usage_complete=bool(attempts) and all(a.get('usage') for a in attempts))
+    add_physician_candidates(run)
     return run
 
 

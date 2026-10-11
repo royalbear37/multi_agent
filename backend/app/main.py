@@ -53,6 +53,7 @@ class DrugDecisionBody(BaseModel):
     reason: str = Field(min_length=1, max_length=4000)
     conditions: str = Field(default='', max_length=4000)
     acknowledged_warnings: bool = Field(default=False, strict=True)
+    outside_analysis: bool = Field(default=False, strict=True)
 
     @field_validator('drug_code', 'reason')
     @classmethod
@@ -130,6 +131,9 @@ def _public_run(run: dict[str, Any]) -> dict[str, Any]:
         baseline.pop("payload",None)
         baseline["withheld"]=True if run.get("mode") != "rule-only" else baseline.get("withheld",False)
     public["disclaimer"]=DISCLAIMER
+    # Add a physician-facing selection view without rewriting historical AI results.
+    from app.workflow.physician_candidates import add_physician_candidates
+    add_physician_candidates(public)
     return public
 def _public_benchmark(obj: dict[str, Any]) -> dict[str, Any]:
     public=copy.deepcopy(obj)

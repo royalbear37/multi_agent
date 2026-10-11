@@ -14,7 +14,7 @@ powershell -ExecutionPolicy Bypass -File scripts/handoff.ps1
 
 3. 另開終端啟動 `scripts/frontend.ps1`。病例選 `agent-complete`，確認第4版／18筆 AST；文件庫應有24份文件。此啟動方式是 lexical＋mock，可立即操作，不需 CSV／Ollama／API key。
 4. 要切到原本的向量與外部模型，停止 handoff 服務，依 README 設定自己的 `.env`、Ollama，再用一般後端啟動。選「參考文件」，按「重建向量索引」，確認沒有缺少片段後再執行 multi-agent。重建使用本機 Ollama，不會執行付費 LLM 分析。
-5. 病例與95筆修訂已包含，來源 AST 保留，外送授權需重新確認。歷史分析與醫師決策沒有複製，接手者重新分析與審閱；完整差異見 [病例包](../data/handoff/README.md)。若只需要 DailyMed，可單獨使用 `install_reference_bundle.py`，不必重新下載。
+5. 病例與95筆修訂已包含，來源 AST 保留，外送勾選已於1.6.0移除，選 live 即使用設定的模型。歷史分析與醫師決策沒有複製，接手者重新分析與審閱；完整差異見 [病例包](../data/handoff/README.md)。若只需要 DailyMed，可單獨使用 `install_reference_bundle.py`，不必重新下載。
 
 既有 DB 若同一份文件標示不同，安裝會在任何資產匯入前停止，不覆寫標示。依錯誤在文件庫人工核對修改，或設定新的 `PROTOTYPE_DB_PATH` 再安裝；WHO 的舊 all／新 mixed 差異尤其需要注意。全新 clone 不會碰到此衝突。
 
@@ -38,6 +38,6 @@ powershell -ExecutionPolicy Bypass -File scripts/handoff.ps1
 | WHO／DailyMed 檢索 | 將 Git 內公開資料匯入自己的 DB；向量模式另需 Ollama 模型及重建索引 |
 | 真實藥名與目前模擬情境 | 已隨 Git 提供28病例／95修訂，執行 handoff 匯入即可；只有重新處理全資料集才需另取原 CSV |
 | 重現原機歷史／審閱 | 另行移交獲准分享的 runtime DB 與同層 documents，服務停止時備份／還原 |
-| 外部模型分析 | 自己的 `.env`、模型帳號／額度及病例外送授權 |
+| 外部模型分析 | 自己的 `.env`、模型帳號／額度；選 live 才執行外部模型 |
 
 乾淨副本驗證結果見 [交接驗證](HANDOFF_VALIDATION.md)。歷史報告中的 `data/local/...` 路徑、PID、session 與索引數量是原工作站當時狀態，不是接手後會自動存在的資料。WHO 全書族群由原機的 all 改為 mixed，其餘文件保留原分類；這項安全修正可能改變檢核結果。模型服務、向量索引與歷史分析不可能只靠 clone 就逐位元相同，應以固定病例／文件及可執行流程驗收。

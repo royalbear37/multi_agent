@@ -127,7 +127,7 @@ def test_provider_local_source_input_and_no_outbound_identifiers():
     assert sent['data_origin']=='hybrid' and 'case_id' not in sent
     assert 'source_record_id' not in json.dumps(payloads)
     remote=OpenAICompatibleProvider('https://provider.invalid/v1','remote','unused',http_post=post)
-    with pytest.raises(ProviderError): remote.generate(context)
+    remote.generate(context)  # Selecting live no longer requires a per-case flag.
     context['case_summary']['external_model_allowed']=True
     remote.generate(context)
 

@@ -114,17 +114,10 @@ class AgentProvider:
             return
         if self.kind != "live" or not all((self.model, self.base_url, self.key)):
             raise ProviderError("MODEL_NOT_CONFIGURED")
-        local = urlparse(self.base_url).hostname in {"localhost", "127.0.0.1", "::1"}
         if case.get("is_synthetic") is not True and not (
             case.get("data_origin") in {"deidentified", "hybrid"}
-            and (local or case.get("external_model_allowed") is True)
         ):
             raise ProviderError("NON_SYNTHETIC_INPUT")
-        for item in (data or {}).get("evidence", []):
-            if (not local and isinstance(item, dict) and item.get("is_synthetic") is not True
-                    and item.get("external_model_allowed") is not True
-                    and case.get('external_model_allowed') is not True):
-                raise ProviderError("NON_SYNTHETIC_EVIDENCE")
 
     def complete(self, agent: Agent, data: dict, *, timeout: float) -> dict:
         if self.kind == "mock":

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { EvidenceCoverage } from './AgentLed';
+import { EvidenceLibrary } from './EvidenceLibrary';
 import { api, pretty } from "./api";
 import type { components } from "./api.generated";
 import { ReviewEditor, reviewOutput } from "./ReviewEditor";
 import { PhysicianReview, physicianDecisionNames } from './PhysicianReview';
-import { CaseContext, CandidateEvidence, evidenceLocation } from './ClinicalContext';
+import { CaseContext, CandidateEvidence } from './ClinicalContext';
 import {AllergyEditor, allergyStatuses} from './AllergyContext';
 import {
   BenchmarkOverview,
@@ -361,30 +363,6 @@ export default function App() {
                         <button disabled={busy} type="submit">保存指定文件</button>
                       </form>
                     </details>
-                    {(
-                      <label className="check-label">
-                        <input
-                          type="checkbox"
-                          checked={c.external_model_allowed ?? false}
-                          disabled={busy}
-                          onChange={(e) => {
-                            const allowed = e.target.checked;
-                            void work(async () => {
-                              await api("/cases/" + c.case_id + "/revisions", {
-                                payload: {
-                                  ...c,
-                                  external_model_allowed: allowed,
-                                },
-                              });
-                              await chooseCase(c.case_id);
-                            });
-                          }}
-                        />
-                        允許此病例的必要分析欄位與所選文件片段送至外部模型（請先確認來源資料及文件使用條款允許；本機
-                        Ollama 不需開啟）
-                      </label>
-                    )}
-                    <p className="muted">上方勾選為此病例已保存的外送設定，變更會建立新版本；不是本次分析的臨時選項。</p>
                     <div className="facts">
                       <div>
                         <small>病例 ID</small>
@@ -650,21 +628,22 @@ export default function App() {
                 </a>
               </div>
               <RunProvenance run={run}/>
-              <section className="panel"><CaseContext value={run.case_snapshot} snapshot /></section>
-              {run.decision_basis==='agent' && <DrugOverview run={run} />}
-              <div className="grid two">
+              <details className="panel"><summary>分析時的病例摘要</summary><CaseContext value={run.case_snapshot} snapshot /></details>
+              {run.decision_basis==='agent' && <><DrugOverview key={run.run_id} run={run} /><section className="panel"><RunIssues run={run} onOpenAgent={openAgent}/></section></>}
+              {run.decision_basis!=='agent' && <div className="grid two">
                 <section className="panel">
                   {run.decision_basis!=='agent' && <DrugOverview run={run} />}
                   <DemoSourceResult run={run} />
-                  <h2>{run.decision_basis==='agent' ? '系統完成核對的候選' : '可供審閱的藥敏選項'}</h2>
-                  {run.output?.candidates?.length ? (
+                  <h2>可供審閱的藥敏選項</h2>
+                  {(run.output?.candidates || []).length ? (
                     run.output.candidates.map((x: any) => (
                       <article className="candidate" key={x.drug_code}>
                         <h3>
                           {x.drug_code} {run.decision_basis!=='agent' && <Status value="demo_only" />}
                         </h3>
                         <p><strong>模型理由（待核對）：</strong>{x.reason}</p>
-                        <CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots} audited={run.decision_basis==='agent'} />
+
+                        <CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots} audited={run.decision_basis==='agent' && x.verification_status==='complete'} />
                         <TechnicalDetails value={{rule_refs:x.rule_refs,evidence_refs:x.evidence_refs}} label={run.decision_basis==='agent' ? '技術資料：引用代碼（JSON）' : '技術資料：規則與引用代碼（JSON）'} />
                       </article>
                     ))
@@ -678,13 +657,13 @@ export default function App() {
                     (x: any, i: number) => (
                       <article key={i}>
                         <h3>{x.drug_code}</h3>
-                        <p>{sourceExclusionReason(run, x.drug_code, x.reason)}</p>
+                        <p>{run.decision_basis==='agent' ? x.exclusion_reasons?.join('；') || x.reason : sourceExclusionReason(run, x.drug_code, x.reason)}</p>
                       </article>
                     ),
                   )}
                   <RunIssues run={run} onOpenAgent={openAgent} />
                 </section>
-              </div>
+              </div>}
               {run.raw_baseline?.withheld && (
                 <div className="alert">
                   研究基線原始輸出已隔離保存；此畫面僅呈現通過共用安全檢核的內容。
@@ -698,11 +677,11 @@ export default function App() {
           ))}
         {section === 2 &&
           (run ? (
-            <div className="grid two">
+            <div className="evidence-workspace">
               <section className="panel">
                 <h2>分析步驟與結果</h2>
                 <RunProvenance run={run}/>
-                <DrugOverview run={run} />
+                {run.decision_basis!=='agent' && <DrugOverview run={run} />}
                 <p>
                   展開步驟查看做了什麼與得到的結果；「步驟已執行」不代表資料或候選已通過檢核。
                 </p>
@@ -719,52 +698,21 @@ export default function App() {
                   />
                 </details>
               </section>
-              <section className="panel">
-                <h2>本次使用的文件片段</h2>
-                <p className="muted">
-                  保留分析當時的版本與內容，供回頭核對依據。
-                </p>
-                <p>{new Set((run.evidence_snapshots ?? []).map((e: any) => e.doc_id)).size} 份文件 · {run.evidence_snapshots?.length ?? 0} 個檢索片段 · 候選採用 {new Set((run.output?.candidates ?? []).flatMap((x: any) => x.evidence_refs ?? [])).size} 個片段。取得片段不等於被候選採用。</p>
-                {run.evidence_snapshots?.length ? (
-                  run.evidence_snapshots.map((e: any, i: number) => (
-                    <article className="evidence" key={i}>
-                      <h3>{e.document_title || e.title || e.doc_id}</h3>
-                      <p><strong>{evidenceOrigin(e)}</strong></p>
-                      <small>
-                        {e.chunk_id} · v{e.document_version}
-                      </small>
-                      <blockquote>{e.text}</blockquote>
-                      <p>{evidenceLocation(e.location)}</p>
-                      <a
-                        href={
-                          "/api/documents/" +
-                          e.doc_id +
-                          "/source" +
-                          (e.location?.page ? "#page=" + e.location.page : "")
-                        }
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        開啟原始文件
-                      </a>
-                    </article>
-                  ))
-                ) : (
-                  <Empty>此執行沒有可用文件證據。</Empty>
-                )}
-              </section>
+              <section className="panel"><EvidenceCoverage run={run}/><details><summary>檢索查詢紀錄（{run.retrievals?.length || 0} 次）</summary><div className="tablewrap"><table><thead><tr><th>查詢</th><th>狀態</th><th>片段數</th></tr></thead><tbody>{run.retrievals?.map((r:any,i:number)=><tr key={i}><td>{r.query}</td><td>{r.status}</td><td>{r.count}</td></tr>)}</tbody></table></div></details></section>
+              <EvidenceLibrary run={run}/>
+
             </div>
           ) : (
             <Empty>選擇執行紀錄後查看流程與引用。</Empty>
           ))}
         {section === 3 &&
           (run ? (
-            <div className="grid two">
+            <div className="review-workspace">
               <section className="panel">
                 <h2>人工審閱</h2>
                 <RunProvenance run={run}/>
                 <p>分析：{run.run_id} · {modeNames[run.display_mode || run.mode] || run.mode} · {localTime(run.created_at || run.nodes?.[0]?.started_at)}</p>
-                <CaseContext value={run.case_snapshot} snapshot />
+                <details><summary>病例摘要</summary><CaseContext value={run.case_snapshot} snapshot /></details>
                 {run.decision_basis==='agent' && <PhysicianReview key={run.run_id} run={run} role={role} busy={busy} onSave={async decisions=>{
                   setBusy(true);
                   try {
@@ -774,8 +722,8 @@ export default function App() {
                   } finally {setBusy(false);}
                 }}/>}
                 <details open={run.decision_basis!=='agent'}><summary>{run.decision_basis==='agent'?'整份 AI 結果審閱（原有流程）':'整份結果審閱'}</summary>
-                <h3>本次待審候選</h3>
-                {run.output?.candidates?.length ? run.output.candidates.map((x: any) => <article key={x.drug_code}><h4>{x.drug_code}</h4><p><strong>模型理由（待核對）：</strong>{x.reason}</p><CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots} /></article>) : <p>{run.decision_basis==='agent'?'本次沒有完成系統核對的候選；仍可使用上方逐藥醫師決策。':'本次沒有可接受或修改的候選；可以拒絕並記錄原因。'}</p>}
+                {run.decision_basis!=='agent' && <><h3>本次待審候選</h3>
+                {run.output?.candidates?.length ? run.output.candidates.map((x: any) => <article key={x.drug_code}><h4>{x.drug_code}</h4><p><strong>模型理由（待核對）：</strong>{x.reason}</p><CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots} /></article>) : <p>本次沒有可接受或修改的候選；可以拒絕並記錄原因。</p>}</>}
                 <button onClick={() => setSection(1)}>回看病例情境與待確認事項</button>
                 <RunIssues run={run} onOpenAgent={openAgent} />
                 <p>審閱者 demo-user · {role} · 僅展示角色</p>
@@ -866,7 +814,7 @@ export default function App() {
                         {({accept:'接受',modify:'修改',reject:'拒絕',drug_review:'逐藥醫師決策'} as Record<string,string>)[r.action] || r.action} · {r.reviewer_id}
                       </strong>
                       <p>{r.reason}</p>
-                      {r.drug_decisions?.map((d:any)=><div key={d.drug_code}><strong>{d.drug_code}：{physicianDecisionNames[d.decision] || d.decision}</strong><p>理由：{d.reason}</p>{d.conditions && <p>使用條件：{d.conditions}</p>}<p>原系統狀態：{statusNames[d.system_assessment?.status] || d.system_assessment?.status}；警示與未完成項目仍保留。</p></div>)}
+                      {r.drug_decisions?.map((d:any)=><div key={d.drug_code}><strong>{d.drug_code}：{physicianDecisionNames[d.decision] || d.decision}</strong><p>理由：{d.reason}</p>{d.conditions && <p>使用條件：{d.conditions}</p>}<p>{d.outside_analysis?'醫師自行新增；此名稱未對應本次藥品評估，請核對是否為既有藥品別名':`原系統狀態：${statusNames[d.system_assessment?.status] || d.system_assessment?.status}；警示與未完成項目仍保留。`}</p></div>)}
                       {r.action==='drug_review' && <a href={'/api/reviews/'+r.review_id+'/export'} download>匯出醫師決策與原始警示</a>}
                       <small>{localTime(r.created_at)}</small>
                       <details>

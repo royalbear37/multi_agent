@@ -1547,7 +1547,9 @@
           "external_model_allowed": {
             "type": "boolean",
             "title": "External Model Allowed",
-            "default": false
+            "description": "Legacy metadata; no longer controls provider access. Selecting live uses the configured external model.",
+            "default": false,
+            "deprecated": true
           },
           "source": {
             "anyOf": [
@@ -1862,6 +1864,11 @@
           "acknowledged_warnings": {
             "type": "boolean",
             "title": "Acknowledged Warnings",
+            "default": false
+          },
+          "outside_analysis": {
+            "type": "boolean",
+            "title": "Outside Analysis",
             "default": false
           }
         },

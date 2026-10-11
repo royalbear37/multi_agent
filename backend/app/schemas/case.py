@@ -159,7 +159,7 @@ class Case(StrictModel):
     is_synthetic: StrictBool
     data_origin: Literal["synthetic", "deidentified", "hybrid"] = "synthetic"
     evidence_scope: Literal["synthetic", "reference"] = "synthetic"
-    external_model_allowed: StrictBool = False
+    external_model_allowed: StrictBool = Field(default=False, deprecated=True, description='Legacy metadata; no longer controls provider access. Selecting live uses the configured external model.')
     source: str | None = None
     created_at: datetime
     demographics: Demographics = Field(default_factory=Demographics)

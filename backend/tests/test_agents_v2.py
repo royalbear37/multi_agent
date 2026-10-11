@@ -24,8 +24,8 @@ def agents(run):
     return [n for n in run["nodes"] if n.get("agent_id")]
 
 
-@pytest.mark.parametrize('local,consent,allowed', [(False,False,False),(False,True,True),(True,False,True)])
-def test_reference_evidence_uses_explicit_case_consent_or_local_transport(monkeypatch, local, consent, allowed):
+@pytest.mark.parametrize('local,consent,allowed', [(False,False,True),(False,True,True),(True,False,True)])
+def test_reference_evidence_no_longer_requires_legacy_case_consent(monkeypatch, local, consent, allowed):
     monkeypatch.setenv('LLM_BASE_URL', 'http://localhost:1234/v1' if local else 'https://example.invalid/v1')
     monkeypatch.setenv('LLM_MODEL', 'test')
     monkeypatch.setenv('LLM_API_KEY', 'unused')
@@ -358,16 +358,12 @@ def test_live_adapter_uses_separate_prompts_and_projected_payloads(monkeypatch):
     assert run["usage"]["total_tokens"] == 75 and run["agent_execution"]["usage_complete"]
 
 
-def test_source_external_permission_checked_before_every_agent(monkeypatch):
+def test_source_external_permission_is_legacy_metadata(monkeypatch):
     monkeypatch.setenv("LLM_BASE_URL", "https://provider.invalid/v1")
     monkeypatch.setenv("LLM_MODEL", "test-model")
     monkeypatch.setenv("LLM_API_KEY", "unused")
-    def unexpected(*args, **kwargs):
-        pytest.fail("source case sent without permission")
-    monkeypatch.setattr(runtime.AgentProvider, "complete", unexpected)
-    run = execute(case(is_synthetic=False, data_origin="hybrid", external_model_allowed=False), "multi-agent", "live", DocStub())
-    assert run["output"] is None and run["agent_execution"]["calls"] == 0
-    assert run["errors"][-1]["code"] == "NON_SYNTHETIC_INPUT"
+    provider = runtime.AgentProvider('live', runtime.AGENTS[0])
+    provider.check(case(is_synthetic=False, data_origin="hybrid", external_model_allowed=False), {'evidence':[{'is_synthetic':False}]})
 
 
 def test_api_persists_v2_and_all_exports_quarantine_blocked_content(tmp_path, monkeypatch):

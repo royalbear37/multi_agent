@@ -9,6 +9,7 @@ test('source linkage errors stay visible while invalid original assertions remai
   ast:{assessment:'unknown',reason:'藥敏來源欄位未核對',model_reason:'無依據的敏感推論',source_validation:{status:'unconfirmed'}},
   reason:'整合引用錯誤，非病例缺漏',model_reason:'無依據的建議',reference_validation:{status:'unconfirmed'}
  }]}}/>);
+ fireEvent.click(screen.getAllByRole('button',{name:/詳細資料$/})[0]);
  expect(screen.getByText('藥敏來源欄位未核對')).toBeVisible();
  expect(screen.getByText('整合引用錯誤，非病例缺漏')).toBeVisible();
  expect(screen.getByText('無依據的敏感推論')).not.toBeVisible();
@@ -19,6 +20,7 @@ test('legacy AST validation warning does not unfold its original positive assert
  render(<AgentDrugTable run={{drug_assessments:[{drug_code:'ertapenem',status:'pending',ast_available:true,
   ast:{assessment:'unknown',reason:'原始MIC低所以敏感，適合使用；來源未核對',source_validation:{status:'unconfirmed'}},reason:'待確認'
  }]}}/>);
+ fireEvent.click(screen.getAllByRole('button',{name:/詳細資料$/})[0]);
  expect(screen.getByText(/藥敏類別來源尚未通過核對/)).toBeVisible();
  expect(screen.getByText('原始MIC低所以敏感，適合使用；來源未核對')).not.toBeVisible();
 });
@@ -28,6 +30,7 @@ test('independent audit distinguishes AST source verification from clinical supp
   audit:{verdict:'uncertain',reason:'來源不符',ast_check:{assessment:'resistant'},ast_check_validation:{status:'confirmed'},
          provenance_issues:['引文沒有本藥名稱']}
  }]}}/>);
+ fireEvent.click(screen.getAllByRole('button',{name:/詳細資料$/})[0]);
  fireEvent.click(screen.getByText('查看模型證據草稿（尚非建議）'));
  expect(screen.getByText(/獨立藥敏來源核對：來源欄位一致；類別：抗藥/)).toBeVisible();
  expect(screen.getByText(/這不代表藥品適用性已確認/)).toBeVisible();
@@ -39,6 +42,7 @@ test('confirmed unknown source does not imply a confirmed susceptible claim',()=
   audit:{verdict:'uncertain',ast_check:{assessment:'unknown',claim_assessment:'susceptible'},
    ast_check_validation:{status:'unconfirmed',source_status:'confirmed',claim_status:'unconfirmed'}}
  }]}}/>);
+ fireEvent.click(screen.getAllByRole('button',{name:/詳細資料$/})[0]);
  fireEvent.click(screen.getByText('查看模型證據草稿（尚非建議）'));
  expect(screen.getByText(/獨立藥敏來源核對：來源欄位一致；類別：未知/)).toBeVisible();
  expect(screen.getByText('複核辨識的原聲明判讀：敏感；與來源比對：尚未一致。')).toBeVisible();
@@ -97,11 +101,10 @@ test.each([
 test('agent workflow shows drug-specific pending reasons without rule terminology',()=>{
  const run={decision_basis:'agent',retrievals:[],evidence_snapshots:[],drug_assessments:[{drug_code:'amoxicillin',status:'pending',ast_available:false,reason:'缺少支持片段',source_ast:[],clinical:{status:'unknown',allergy:'未確認',renal:'缺測量',interactions:'未確認'},evidence:{status:'uncertain'}}]};
  render(<DrugOverview run={run}/>);
- expect(screen.getByRole('heading',{name:'逐藥決策表'})).toBeVisible();
+ fireEvent.click(screen.getAllByRole('button',{name:/詳細資料$/})[0]);
+ expect(screen.getByRole('heading',{name:'逐藥分析總覽'})).toBeVisible();
  expect(screen.getByText(/指引選項；本例未測 AST/)).toBeVisible();
- expect(screen.getByText('尚未通過完整核對，不能視為用藥建議。')).toBeVisible();
- expect(screen.getByText('缺少支持片段')).not.toBeVisible();
- fireEvent.click(screen.getByText('整合草稿與限制（尚非建議）'));
+ expect(screen.getByText('醫師候選',{selector:'small'})).toBeVisible();
  expect(screen.getByText('缺少支持片段')).toBeVisible();
  expect(screen.queryByText(/通過規則|規則排除/)).toBeNull();
 });
@@ -136,6 +139,7 @@ test('empty audit does not look completed or approved',()=>{
 test('legacy supported match labels without audit quotes are explicitly unverified',()=>{
  render(<DrugOverview run={{decision_basis:'agent',drug_assessments:[{drug_code:'a',status:'pending',source_ast:[],
    audit:{verdict:'uncertain',basis:'mixed',infection_match:'supported',population_match:'supported',drug_match:'supported',quotes:[]}}]}}/>);
+ fireEvent.click(screen.getAllByRole('button',{name:/詳細資料$/})[0]);
  fireEvent.click(screen.getByText('查看模型證據草稿（尚非建議）'));
  expect(screen.getByText('本次複核沒有選取引文；上述模型細項不能視為已通過文件核對。')).toBeVisible();
 });
@@ -155,15 +159,17 @@ test('empty agent issue list does not conceal unresolved drug rows',()=>{
  expect(screen.queryByText('此步驟未列出額外待確認事項。')).toBeNull();
 });
 
-test.each(['agent-led-1.4.0','agent-led-1.4.1','agent-led-1.4.2','agent-led-1.5.0','agent-led-1.5.1'])('new layered table %s shows a review option once with risk gaps and distinct claim checks',(version)=>{
+test.each(['agent-led-1.4.0','agent-led-1.4.1','agent-led-1.4.2','agent-led-1.5.0','agent-led-1.5.1','agent-led-1.6.0'])('new layered table %s shows a review option once with risk gaps and distinct claim checks',(version)=>{
  const row={drug_code:'option_a',status:'pending',result_tier:'review_option',ast_available:false,source_ast:[],
    blockers:[{kind:'case_data_missing',dimension:'renal',detail:'腎功能檢驗時間未提供'}],
    audit:{verdict:'uncertain',basis:'mixed',quotes:[],claim_checks:[{dimension:'infection',verdict:'supported',reason:'感染來源已核對',evidence_refs:[]},{dimension:'renal',verdict:'uncertain',reason:'風險尚待核對',evidence_refs:[]}]}};
  render(<DrugOverview run={{decision_basis:'agent',versions:{workflow:version},drug_assessments:[row],output:{pending:[row],review_options:[row]}}}/>);
+ fireEvent.click(screen.getAllByRole('button',{name:/詳細資料$/})[0]);
  expect(screen.getAllByText('option_a')).toHaveLength(1);
- expect(screen.getByText(/不能直接接受為完成建議/)).toBeVisible();
+ expect(screen.getByText(/候選包含仍需核對或有條件使用的藥品/)).toBeVisible();
+ fireEvent.click(screen.getByText('option_a：未完成項目'));
  expect(screen.getByText('腎功能檢驗時間未提供')).toBeVisible();
- expect(screen.getByText(/本例未測 AST/)).toBeVisible();
+ expect(screen.getAllByText(/本例未測 AST/)[0]).toBeVisible();
  fireEvent.click(screen.getByText('查看模型證據草稿（尚非建議）'));
  expect(screen.getByText('感染來源已核對')).toBeVisible();
  expect(screen.getByText('風險尚待核對')).toBeVisible();
@@ -174,9 +180,10 @@ test('zero review options and incomplete risk input do not read as confirmed sup
    clinical:{status:'no_identified_risk',risk_details:{renal:{status:'no_identified_risk',reason:'模型初评',fact_refs:[],evidence_refs:[]}}},
    blockers:[{kind:'input_omitted',dimension:'renal',detail:'來源未完整提供'}]};
  render(<AgentDrugTable run={{versions:{workflow:'agent-led-1.4.2'},drug_assessments:[row],evidence_snapshots:[]}}/>);
+ fireEvent.click(screen.getAllByRole('button',{name:/詳細資料$/})[0]);
  expect(screen.queryByText(/感染適用性已有支持/)).toBeNull();
- expect(screen.getByText(/0 項有證據的待審閱選項/)).toBeVisible();
- expect(screen.getByText(/尚未完成整體核對，不能解讀為已排除風險/)).toBeVisible();
- expect(screen.getByText(/部分來源片段未提供/)).toBeVisible();
+ expect(screen.getByText(/項候選供醫師選擇/)).toBeVisible();
+ fireEvent.click(screen.getByText('risk_a：未完成項目'));
+ expect(screen.getByText(/來源未完整提供/)).toBeVisible();
  expect(screen.getByText(/腎功能初評/)).toBeVisible();
 });

@@ -1,7 +1,7 @@
 import { CandidateEvidence, EvidenceSourceNotice, evidenceLocation } from './ClinicalContext';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
+import {physicianCandidates, physicianExcluded, riskNextAction} from './physicianCandidates';
 
-const tierLabels:Record<string,string>={candidate:'完整核對候選',review_option:'有證據的待審閱選項',pending:'其他待確認',avoid:'不建議',not_selected:'未選入'};
 const dimensions:Record<string,string>={infection:'感染適用性',ast:'藥敏',allergy:'過敏',renal:'腎功能',interactions:'交互作用'};
 const blockerLabels:Record<string,string>={reported_avoid:'避用風險待釐清',model_output_incomplete:'模型回覆未完整',model_citation_missing:'模型漏選引用',retrieval_failed:'檢索未完成',retrieval_empty:'檢索未找到',input_omitted:'輸入片段被省略',case_data_missing:'病例缺資料',risk_unconfirmed:'風險尚未核對',citation_unsupported:'引用未支持',ast_unconfirmed:'藥敏尚未確認'};
 
@@ -63,7 +63,8 @@ export function RiskDetails({risk,run}:{risk:any;run:any}) {
     return <details key={key}><summary>{riskNames[key] || key}初評：{labels[detail.status] || detail.status}</summary>
       <p>{detail.reason}</p><p>病例依據：{detail.fact_refs?.map(factLabel).join('、') || '未提供'}</p>
       {!!detail.missing_fields?.length && <p>缺少：{detail.missing_fields.map(factLabel).join('、')}</p>}
-      {detail.next_action && <p>下一步：{detail.next_action}</p>}
+      {key==='allergy' && run.case_snapshot?.allergies?.status==='known_none' && <p>病例已記錄無已知過敏；藥品的一般過敏警語不表示本例已知過敏。</p>}
+      {riskNextAction(run,key,detail) && <p>下一步：{riskNextAction(run,key,detail)}</p>}
       <Quotes quotes={risk.quotes?.filter((q:any)=>detail.evidence_refs?.includes(q.chunk_id))} run={run}/>
     </details>;
   })}</>;
@@ -82,31 +83,34 @@ function AuditDetails({audit,run}:{audit:any;run:any}) {
     <Quotes quotes={audit?.quotes} run={run}/></>;
 }
 export function AgentDrugTable({run}:{run:any}) {
-  const layered=['agent-led-1.4.0','agent-led-1.4.1','agent-led-1.4.2','agent-led-1.5.0','agent-led-1.5.1'].includes(run.versions?.workflow);
-  const order=['candidate','review_option','pending','avoid','not_selected'];
-  const rows=layered ? [...(run.drug_assessments || [])].sort((a:any,b:any)=>order.indexOf(a.result_tier)-order.indexOf(b.result_tier)) : run.drug_assessments || [];
-  return <section className="panel" aria-label="Agent 逐藥決策">
-    <h2>逐藥決策表</h2><p>Agent 主導判斷 · {rows.length} 項藥品 · {rows.filter((x:any)=>x.status==='reviewable').length} 項系統核對完成 · {rows.filter((x:any)=>x.status==='pending').length} 項待確認</p>
-    {layered && <p>{rows.filter((x:any)=>x.result_tier==='review_option').length} 項有證據的待審閱選項（包含於待確認）。此層僅收錄感染適用性已獨立核對、仍有風險缺口的項目；不能直接接受為完成建議。</p>}
-    {!!rows.length && !rows.some((x:any)=>x.status==='reviewable') && <p role="status">目前沒有完成系統核對的候選。仍可前往人工審閱逐藥記錄醫師決策，並保留待確認與不建議理由；此結果不等於所有藥品均不適用。</p>}
-    <div className="tablewrap"><table><thead><tr><th>藥品／來源</th><th>原始 AST</th><th>藥敏評估</th><th>臨床風險</th><th>文件支持與複核</th><th>最終去向與理由</th></tr></thead><tbody>
-      {rows.map((x:any,i:number)=><Fragment key={x.drug_code}>{layered && (i===0 || x.result_tier!==rows[i-1].result_tier) && <tr><th colSpan={6} scope="rowgroup">{tierLabels[x.result_tier] || '其他待確認'}</th></tr>}<tr>
-        <td><span>{x.drug_code}</span><br/><strong>{layered ? tierLabels[x.result_tier] : labels[x.status] || x.status}</strong><br/>{x.ast_available?'本例有 AST':'指引選項；本例未測 AST'}</td>
-        <td>{x.source_ast?.map((a:any,i:number)=><p key={i}>原始：{a.source_phenotype || a.reported_sir || '未知'}；CLSI 2022：{a.clsi_2022_phenotype || '未提供'}<br/>MIC：{a.mic == null ? '未提供（不自行換算）' : `${a.comparator || ''}${a.mic} ${a.unit || '單位未知'}`}</p>)}</td>
-        <td>模型判讀：{labels[x.ast?.assessment] || '未測／未完成'}{x.ast?.source_validation?.status==='unconfirmed' && <p>{typeof x.ast.model_reason==='string'?x.ast.reason:'藥敏類別來源尚未通過核對，請核對來源或重新分析；不能以草稿推定敏感性。'}</p>}{x.status==='reviewable'?<p>{x.ast?.reason}</p>:<details><summary>藥敏模型草稿（不等於治療建議）</summary><p>{x.ast?.model_reason || x.ast?.reason}</p></details>}<ASTSources assessment={x.ast}/></td>
-        <td>臨床初評：{labels[x.clinical?.status] || '未完成'}{x.status==='pending' && <p>尚未完成整體核對，不能解讀為已排除風險。{x.blockers?.some((b:any)=>b.kind==='input_omitted') && '部分來源片段未提供，請查看未完成項目。'}</p>}{x.clinical ? <RiskDetails risk={x.clinical} run={run}/> : <p>此 Agent 沒有可用評估；未核對不代表病例未提供資料。請查看病例摘要及執行錯誤。</p>}</td>
-        <td><details open={x.status==='reviewable'}><summary>{x.status==='reviewable'?'查看文件支持與複核':'查看模型證據草稿（尚非建議）'}</summary><p>模型初評：{labels[x.evidence?.status] || '未完成'}</p><p>{x.evidence?.reason}</p><p>{x.evidence?.applicability}</p><Quotes quotes={x.evidence?.quotes} run={run}/><AuditDetails audit={x.audit} run={run}/></details></td>
-        <td><strong>{labels[x.status] || x.status}</strong>{x.status==='pending' ? <><p>尚未通過完整核對，不能視為用藥建議。</p>{x.reference_validation?.status==='unconfirmed' && <p>{x.reason}</p>}<details><summary>整合草稿與限制（尚非建議）</summary><p>{x.model_reason || x.reason}</p></details></> : <p>{x.reason}</p>}{x.review_notes?.map((n:any,i:number)=><p key={i}>審閱注意事項（{riskNames[n.dimension]}）：{n.next_action}</p>)}{x.disagreements?.map((d:string,i:number)=><p key={i}>分歧：{d}</p>)}</td>
-      </tr>{layered && !!x.blockers?.length && <tr><td colSpan={6}><details open={x.result_tier==='review_option'}><summary>{x.drug_code}：未完成項目</summary><table><thead><tr><th>類型</th><th>面向</th><th>原因</th></tr></thead><tbody>{x.blockers.map((b:any,j:number)=><tr key={j}><td>{blockerLabels[b.kind] || b.kind}</td><td>{dimensions[b.dimension] || '整體'}</td><td>{b.detail}</td></tr>)}</tbody></table></details></td></tr>}</Fragment>)}
+  const [query,setQuery]=useState(''),[filter,setFilter]=useState('all'),[expanded,setExpanded]=useState<string[]>([]);
+  const selectable=new Set(physicianCandidates(run).map((r:any)=>r.drug_code)), excluded=physicianExcluded(run);
+  const all=[...(run.drug_assessments || [])].sort((a:any,b:any)=>Number(selectable.has(b.drug_code))-Number(selectable.has(a.drug_code)));
+  const rows=all.filter((r:any)=>r.drug_code.toLowerCase().includes(query.toLowerCase()) && (filter==='all' || (filter==='candidates'?selectable.has(r.drug_code):!selectable.has(r.drug_code))));
+  return <section className="panel drug-overview" aria-label="Agent 逐藥決策">
+    <div className="section-heading"><div><h2>逐藥分析總覽</h2><p className="muted">候選包含仍需核對或有條件使用的藥品；醫師決策與 AI 核對進度分開保存。</p></div></div>
+    <div className="analysis-counts"><span><strong>{selectable.size}</strong> 項候選供醫師選擇</span><span><strong>{excluded.length}</strong> 項另列不建議</span><span><strong>{all.filter((x:any)=>x.status==='reviewable').length}</strong> 項 AI 完整核對</span></div>
+    <div className="filter-bar"><label>搜尋藥品<input value={query} onChange={e=>setQuery(e.target.value)} placeholder="輸入藥名"/></label><label>顯示範圍<select value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">全部藥品</option><option value="candidates">醫師候選</option><option value="excluded">不建議</option></select></label><span>{rows.length} / {all.length} 項</span></div>
+    <div className="tablewrap"><table className="compact-drug-table"><thead><tr><th>藥品</th><th>AST 核對</th><th>AI 核對進度</th><th>注意事項</th><th>詳細資料</th></tr></thead><tbody>
+      {rows.map((x:any)=>{const open=expanded.includes(x.drug_code), exclusion=excluded.find((r:any)=>r.drug_code===x.drug_code);return <Fragment key={x.drug_code}><tr>
+        <td><strong>{x.drug_code}</strong><small className="cell-note">{selectable.has(x.drug_code)?'醫師候選':'不建議・另列'}</small></td>
+        <td>{x.ast_available ? labels[x.ast?.assessment] || '未完成' : '本例未測 AST'}</td>
+        <td>{x.status==='reviewable'?'已完成':'尚有未完成項目'}</td>
+        <td>{exclusion ? <span className="selection-warning">{exclusion.exclusion_reasons?.join('；') || x.reason}</span> : <span>{x.ast?.assessment==='conflicting'?'藥敏來源衝突；':''}{x.blockers?.length || 0} 項核對缺口{Object.values(x.clinical?.risk_details || {}).some((d:any)=>['caution','avoid'].includes(d.status))?'；有用藥限制':''}</span>}</td>
+        <td><button aria-label={`${x.drug_code} 詳細資料`} aria-expanded={open} onClick={()=>setExpanded(v=>open?v.filter(c=>c!==x.drug_code):[...v,x.drug_code])}>{open?'收合':'展開'}</button></td>
+      </tr>{open && <tr className="drug-detail-row"><td colSpan={5}><div className="drug-detail-grid">
+        <section><h3>整合判斷</h3><p>{x.reason || '尚無整合說明'}</p>{x.model_reason && <details><summary>原始整合草稿（來源尚待核對）</summary><p>{x.model_reason}</p></details>}{x.disagreements?.map((d:string,i:number)=><p key={i}>Agent 分歧：{d}</p>)}{x.review_notes?.map((n:any,i:number)=>riskNextAction(run,n.dimension,n) && <p key={i}>審閱注意事項（{riskNames[n.dimension]}）：{riskNextAction(run,n.dimension,n)}</p>)}</section>
+        <section><h3>藥敏與原始報告</h3>{!x.ast_available && <p>指引選項；本例未測 AST，不能稱為敏感。</p>}{x.source_ast?.map((a:any,i:number)=><p key={i}>原始：{a.source_phenotype || a.reported_sir || '未知'}；CLSI 2022：{a.clsi_2022_phenotype || '未提供'}<br/>MIC：{a.mic == null ? '未提供（不自行換算）' : `${a.comparator || ''}${a.mic} ${a.unit || '單位未知'}`}</p>)}<p>模型判讀：{labels[x.ast?.assessment] || '未測／未完成'}</p>{x.ast?.source_validation?.status==='unconfirmed' && !x.ast?.model_reason ? <><p>藥敏類別來源尚未通過核對，請核對來源；不能以草稿推定敏感性。</p><details><summary>藥敏模型草稿（不等於治療建議）</summary><p>{x.ast?.reason}</p></details></> : <p>{x.ast?.reason}</p>}<ASTSources assessment={x.ast}/>{x.ast?.model_reason && <details><summary>藥敏模型草稿（不等於治療建議）</summary><p>{x.ast.model_reason}</p></details>}</section>
+        <section><h3>臨床風險初評</h3>{x.clinical ? <RiskDetails risk={x.clinical} run={run}/> : <p>臨床 Agent 尚無可用評估；風險由醫師核對。</p>}</section>
+        <section><h3>證據與獨立複核</h3><details><summary>{x.status==='reviewable'?'查看文件支持與複核':'查看模型證據草稿（尚非建議）'}</summary><p>模型初評：{labels[x.evidence?.status] || '未完成'}</p><p>{x.evidence?.reason}</p><p>{x.evidence?.applicability}</p><Quotes quotes={x.evidence?.quotes} run={run}/><AuditDetails audit={x.audit} run={run}/></details></section>
+      </div>{!!x.blockers?.length && <details><summary>{x.drug_code}：未完成項目</summary><table><thead><tr><th>類型</th><th>面向</th><th>原因</th></tr></thead><tbody>{x.blockers.map((b:any,j:number)=><tr key={j}><td>{blockerLabels[b.kind] || b.kind}</td><td>{dimensions[b.dimension] || '整體'}</td><td>{b.detail}</td></tr>)}</tbody></table></details>}</td></tr>}</Fragment>})}
     </tbody></table></div>
-    {!rows.length && <p>尚無逐藥結果；請查看 Agent 執行紀錄。</p>}
-    <EvidenceCoverage run={run}/>
-    <details><summary>本次檢索紀錄（{run.retrievals?.length || 0} 次）</summary><table><thead><tr><th>查詢</th><th>狀態</th><th>片段數</th></tr></thead><tbody>{run.retrievals?.map((r:any,i:number)=><tr key={i}><td>{r.query}</td><td>{r.status}</td><td>{r.count}</td></tr>)}</tbody></table></details>
+    {!rows.length && <p>沒有符合條件的藥品。</p>}
   </section>;
 }
 export function EvidenceCoverage({run}:{run:any}) {
   if (!run.evidence_coverage?.length) return null;
-  const stages:Record<string,string>={infection:'感染情境',guideline_options:'指引選項',clinical:'藥品風險',background:'研究背景'};
+  const stages:Record<string,string>={infection:'感染情境',guideline_options:'指引選項',clinical:'藥品風險',audit:'引用獨立複核',background:'研究背景'};
   const statuses:Record<string,string>={ok:'檢索完成',no_results:'未找到片段',no_documents:'沒有可用文件',conflict:'文件版本衝突：請指定文件版本後重跑',failed:'檢索失敗',budget_exceeded:'未執行：時間已用盡',index_required:'未執行：向量索引尚未備妥',budget_reserved:'未執行：保留後續 Agent 時間',not_configured:'尚未設定'};
   const warnings:Record<string,string>={agent_index_not_ready:'請到文件資料庫重建向量索引後再分析；分析期間不臨時補建索引。',time_reserved_for_remaining_agents:'為整合及獨立複核保留時間；未完成的查詢不代表沒有證據。',document_version_conflict:'同名文件有多個版本；請在病例文件範圍指定版本後重跑。',no_documents_for_requested_genre:'沒有符合本次檢索用途的文件。',embedding_failed:'向量檢索失敗，請查看索引狀態。'};
   const execution=(node:any)=>!node?'未記錄呼叫狀態':node.is_mock?'Mock 流程，未呼叫外部模型':
@@ -137,7 +141,7 @@ export function AgentStep({node:n,index,run}:{node:any,index:number,run:any}) {
         {o.rapid_assessment && <p>快速鑑定：{o.rapid_assessment}</p>}{o.resistance_assessment && <p>抗藥背景：{o.resistance_assessment}</p>}
         {!!o.issues?.length ? <AgentIssues items={o.issues.map((x:any)=>({...x,agent_id:n.node_id}))}/> : pendingRows.length ? <p>模型未另列缺漏清單，但逐藥結果有 {pendingRows.length} 項需注意或尚未完成核對；請查看下方對應理由與來源，不能解讀為全部通過。</p> : <AgentIssues items={[]}/>}
         {n.node_id!=='case_agent' && <p>下方為此 Agent 的模型回報；最終是否可供審閱，以逐藥決策表為準。</p>}
-        {o.drugs?.length>0 && <table><thead><tr><th>藥品</th><th>判斷</th><th>具體理由／引用</th></tr></thead><tbody>{o.drugs.map((x:any)=><tr key={x.drug_code}><td>{x.drug_code}</td><td>{labels[x.status || x.assessment || x.verdict]}</td><td>{x.reason}{x.applicability && <p>{x.applicability}</p>}{x.risk_details ? <RiskDetails risk={x} run={run}/> : <>{x.allergy && <p>過敏：{x.allergy}；腎功能：{x.renal}；交互作用：{x.interactions}</p>}<Quotes quotes={x.quotes} run={run}/></>}{x.evidence_refs?.length>0 && <CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots}/>}</td></tr>)}</tbody></table>}
+        {o.drugs?.length>0 && <table><thead><tr><th>藥品</th><th>判斷</th><th>具體理由／引用</th></tr></thead><tbody>{o.drugs.map((x:any)=><tr key={x.drug_code}><td>{x.drug_code}</td><td>{labels[x.status || x.assessment || x.verdict]}</td><td><details><summary>查看判斷理由與來源</summary><p>{x.reason}</p>{x.applicability && <p>{x.applicability}</p>}{x.risk_details ? <RiskDetails risk={x} run={run}/> : <>{x.allergy && <p>過敏：{x.allergy}；腎功能：{x.renal}；交互作用：{x.interactions}</p>}<Quotes quotes={x.quotes} run={run}/></>}{x.evidence_refs?.length>0 && <CandidateEvidence refs={x.evidence_refs} evidence={run.evidence_snapshots}/>}</details></td></tr>)}</tbody></table>}
       </> : <p>{n.skip_reason==='no_claims'?'沒有可複核聲明；未呼叫模型，不算複核通過。':'此步驟沒有可用回覆；其他已完成步驟仍可查看。'}</p>}
       {n.errors?.map((e:any,i:number)=><p key={i}>{({AGENT_TIME_RESERVED:'本步驟剩餘時間不足，已保留後續 Agent 的時間；本步驟未完成。',AGENT_STAGE_TIMEOUT:'本步驟回覆超過分配時間，未納入判斷；其他有效結果保留。',AGENT_OUTPUT_TRUNCATED:'模型回覆達輸出長度上限，未完成 JSON；需調整輸出預算後重新分析，不能視為藥品不適用。',AGENT_PARTIAL_INVALID:'部分藥品的回覆未通過檢查，其他有效結果已保留。',CITATION_SELECTION_INVALID:'模型選擇的來源段落無法核對，需重新分析。',AGENT_INPUT_TOO_LARGE:'本步驟輸入超過長度上限，未完成評估；不代表藥品不適用。',AGENT_SCHEMA_INVALID:'回覆未通過格式或來源檢核，未完成評估。',AGENT_BUDGET_EXCEEDED:'執行時間或呼叫額度已用盡，未完成評估。'} as Record<string,string>)[e.code] || e.code}</p>)}
     </div></details>;

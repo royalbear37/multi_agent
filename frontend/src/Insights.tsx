@@ -197,8 +197,9 @@ const errorNames: Record<string, string> = {
   AGENT_EXECUTION_FAILED: "Agent 執行失敗，後續步驟已停止",
   V2_FINAL_VALIDATION_FAILED: "整合結果未通過最終安全檢查",
   NON_SYNTHETIC_INPUT:
-    "來源病例尚未啟用外送；請使用本機模型，或確認資料可外送後更新病例設定",
-  NON_SYNTHETIC_EVIDENCE: "參考文件片段尚未允許外送；請確認病例的資料與文件片段外送設定，或使用本機模型",
+    "病例來源須標記為人工情境、去識別資料或混合來源；舊版紀錄也可能因當時的外送設定而停止",
+  NON_SYNTHETIC_EVIDENCE: "這是舊版文件外送設定造成的停止紀錄；新版已移除此設定",
+  SENSITIVE_MODEL_INPUT: "分析輸入含疑似金鑰或存取憑證，請移除後再分析",
   duplicate_candidate: "候選清單有重複藥物，請保留一筆",
   duplicate_avoid: "避免清單有重複藥物，請保留一筆",
   candidate_avoid_overlap: "同一藥物同時出現在候選與避免清單",

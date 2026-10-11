@@ -21,7 +21,7 @@ powershell -ExecutionPolicy Bypass -File scripts/handoff.ps1
 - 95 個藥品名稱、97 個菌種名稱的字典，匯入到 `data/local/microbiology/catalog.json`。只有名称與彙總筆數，不含 CSV 明細。既有不同字典不覆寫。
 - 病例內原有的抗藥背景彙總仍保留；它不是院內 antibiogram。
 
-安全差異：移除病例 `source_record_id`，每版的 `external_model_allowed` 設為 false；不提供原始 CSV、raw_payload、API key、`.env`、本機帳號／路徑、完整 runtime DB、歷史模型回覆及審閱者記錄。接手者若要使用外部模型，必須在自己的環境確認資料使用與外送，再保存病例授權。
+安全差異：移除病例 `source_record_id`，每版的 `external_model_allowed` 設為 false；不提供原始 CSV、raw_payload、API key、`.env`、本機帳號／路徑、完整 runtime DB、歷史模型回覆及審閱者記錄。1.6.0 已移除外送勾選；external_model_allowed 僅為舊 metadata，不影響執行，選 live 即使用設定的模型。
 
 WHO 原書在原工作站曾標示「所有年齡」，此包改為「混合」，避免把全書當成每段都適用於所有族群。其餘文件內容、來源分類、版本與病例分析欄位均保留。這項明示的修正可能改變其他三模式的候選檢核結果。
 
