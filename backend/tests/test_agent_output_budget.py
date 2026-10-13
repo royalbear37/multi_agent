@@ -4,7 +4,7 @@ from app.agents import runtime_led as rt, runtime_v2 as legacy
 from app.workflow.engine import execute
 from tests.test_agent_led import case, Docs, successful
 
-@pytest.mark.parametrize('role,expected', [('case_agent',6000),('synthesis_agent',16000),('evidence_audit',24000)])
+@pytest.mark.parametrize('role,expected', [('case_agent',16384),('synthesis_agent',32768),('evidence_audit',32768)])
 def test_role_budget_is_sent_and_provider_finish_reason_retained(monkeypatch,role,expected):
     for key in ['LLM_AGENT_LED_MAX_OUTPUT_TOKENS','LLM_AGENT_SYNTHESIS_MAX_OUTPUT_TOKENS','LLM_AGENT_AUDIT_MAX_OUTPUT_TOKENS']:
         monkeypatch.delenv(key,raising=False)
@@ -29,7 +29,7 @@ def test_configured_budget_honored_and_legacy_cap_unchanged(monkeypatch):
     assert captured[-1]['max_tokens']==6000
     monkeypatch.setenv(agent.output_tokens_setting,'999999')
     legacy.AgentProvider('live',agent).complete(agent,{},timeout=1)
-    assert captured[-1]['max_tokens']==24000
+    assert captured[-1]['max_tokens']==32768
     monkeypatch.setenv('LLM_V2_MAX_OUTPUT_TOKENS','999999')
     old=legacy.AGENTS[0]
     legacy.AgentProvider('live',old).complete(old,{},timeout=1)
@@ -39,7 +39,7 @@ def test_configured_budget_honored_and_legacy_cap_unchanged(monkeypatch):
 def test_truncation_does_not_retry_identical_budget_or_publish_partial_json(monkeypatch):
     def reply(self,agent,data,**kwargs):
         if agent.id=='synthesis_agent':
-            assert 60 < kwargs['timeout'] <= 180
+            assert 300 < kwargs['timeout'] <= 600
             return {'output':None,'finish_reason':'length','output_token_limit':16000,'usage':{'total_tokens':16000}}
         return successful(self,agent,data,**kwargs)
     monkeypatch.setattr(rt.Provider,'complete',reply)

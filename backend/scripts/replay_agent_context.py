@@ -6,6 +6,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from app.agents import runtime_led as rt
 from app.workflow.engine import execute
 from app.agents.contracts_led import ASTItem
+from app.agents.limits import AgentLedLimits
 
 def replay(saved):
     sources={e['chunk_id']:e for e in saved['evidence_snapshots']}
@@ -32,7 +33,7 @@ def replay(saved):
     with patch.object(rt.Provider,'complete',complete):
         result=execute(saved['case_snapshot'],'multi-agent','mock',RecordedDocs())
     for data in inputs.values():
-        assert len(json.dumps(data,ensure_ascii=False))<=180000
+        assert len(json.dumps(data,ensure_ascii=False))<=AgentLedLimits.from_env().input_chars
         assert data['ast_results']==saved['case_snapshot']['ast_results']
         for e in data['evidence']:
             if 'text' in e: assert e['text']==sources[e['chunk_id']]['text']

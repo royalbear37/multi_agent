@@ -2,6 +2,7 @@ import copy
 import json
 
 from app.agents import runtime_led as rt
+from app.agents.limits import AgentLedLimits
 from app.workflow.engine import execute
 from app.workflow.input_context import compact_sources, assessment_source_refs
 from tests.test_agent_led import case, Docs, successful
@@ -40,7 +41,7 @@ def test_full_flow_does_not_count_storage_metadata_or_unused_catalog_as_context(
     inputs={}
     def reply(self,agent,data,**kw):
         inputs[agent.id]=copy.deepcopy(data)
-        assert len(json.dumps(data,ensure_ascii=False))<180000
+        assert len(json.dumps(data,ensure_ascii=False))<AgentLedLimits.from_env().input_chars
         return successful(self,agent,data,**kw)
     monkeypatch.setattr(rt.Provider,'complete',reply)
     result=execute(case(),'multi-agent','mock',MetadataDocs())

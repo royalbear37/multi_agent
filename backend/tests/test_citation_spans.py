@@ -161,7 +161,7 @@ def test_synthesis_does_not_duplicate_long_quotes_but_audit_keeps_source(monkeyp
     run=execute(value,'multi-agent','mock',LongDocs())
     assert not run['errors']
     assert len(run['output']['candidates'])==18
-    assert run['agent_execution']['calls']==6
+    assert run['agent_execution']['calls']==16
 
 
 def test_invalid_selection_preserves_model_usage_for_retry_accounting(monkeypatch):

@@ -1127,7 +1127,7 @@ export default function App() {
                   已勾選 {benchmarkCaseIds.length} 個病例 × {benchmarkModes.length} 種模式，共 {benchmarkCaseIds.length * benchmarkModes.length} 筆結果。
                 </p>
                 <p className="muted">
-                  獨立代理協作每病例正常六次模型呼叫（含引用複核）。各模式的檢索與呼叫量不同；這是軟體流程比較。
+                  獨立代理協作包含六個評估步驟，臨床及整合評估依藥物數量分批呼叫模型，必要時補答或補正引用。各模式的檢索與呼叫量不同；這是軟體流程比較。
                 </p>
                 <fieldset><legend>選擇比較病例</legend>{cases.map(c=><label className="check-label" key={c.case_id}><input type="checkbox" checked={benchmarkCaseIds.includes(c.case_id)} onChange={e=>setBenchmarkCaseIds(e.target.checked ? [...benchmarkCaseIds,c.case_id] : benchmarkCaseIds.filter(id=>id!==c.case_id))}/>{c.case_id}</label>)}</fieldset>
                 <fieldset><legend>選擇比較模式</legend>{modes.map(m=><label className="check-label" key={m}><input type="checkbox" checked={benchmarkModes.includes(m)} onChange={e=>setBenchmarkModes(e.target.checked ? [...benchmarkModes,m] : benchmarkModes.filter(x=>x!==m))}/>{modeNames[m]}</label>)}</fieldset>

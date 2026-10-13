@@ -5,15 +5,19 @@ import json
 import re
 import time
 import uuid
+from dataclasses import replace
 from pydantic import ValidationError
 from app.agents import runtime_led as runtime
-from app.agents.runtime_v2 import redact, setting
+from app.agents.runtime_v2 import redact
+from app.agents.limits import AgentLedLimits
 from app.providers.service import ProviderError
 from .v2 import digest, sum_usage, utc
 from .risk_details import validate_risk_details, caution_ready, fact_value
 from .ast_sources import validate_ast_sources
 from .claim_checks import validate_claim_checks, classify_options
 from .partial_agents import validate_partial, merge_partial
+from .citation_repairs import collect_citation_repairs, apply_citation_repairs
+from .agent_schedule import AgentSchedule, batch_context, batch_size, initial_calls
 from .input_context import compact_sources, assessment_source_refs
 from .source_scope import source_scope_issues
 from .time_budget import TimeBudget
@@ -131,6 +135,22 @@ def validate_output(agent, raw, data):
             for dimension,detail in (row.get('risk_details') or {}).items():
                 detail['model_status']=original['risk_details'][dimension]['status']
         if agent.id == 'ast_agent': validate_ast_sources(row,data)
+        if agent.id == 'synthesis_agent' and data.get('assessments'):
+            own = {role: next((r for r in report.get('drugs', []) if r['drug_code'] == row['drug_code']), {})
+                   for role, report in data['assessments'].items()}
+            bad = []
+            for claim in row.get('claims', []):
+                dimension = claim['dimension']
+                if dimension == 'ast':
+                    continue
+                specialist = own.get('evidence_agent', {}) if dimension == 'infection' else (
+                    own.get('clinical_agent', {}).get('risk_details') or {}).get(dimension, {})
+                allowed = assessment_source_refs(specialist)
+                bad.extend(ref for ref in claim['evidence_refs'] if ref not in allowed)
+            if bad:
+                row['reference_validation'] = {'status': 'unconfirmed', 'invalid_refs': list(dict.fromkeys(bad))}
+                row['status'] = 'pending'
+                row['reason'] += '；分項引用未連到本藥同面向的專家評估，需重新核對。'
         if row.get('quotes') and not check_quotes(row['quotes'], data['evidence']):
             original_count = len(row['quotes'])
             row['quotes'] = [q for q in row['quotes'] if check_quotes([q], data['evidence'])]
@@ -268,14 +288,19 @@ def execute(case, provider_kind, document_service, run_id, checkpoint=None):
         missing_fields=[], drug_assessments=[], output=None, safety_summary={'avoid': [], 'limitations': []})
     outputs = {}
     calls = 0
-    max_calls = setting('LLM_V2_MAX_CALLS', 8, 6, 8)
-    # Six specialist calls plus retrieval need their own budget. Legacy V2's
+    limits = AgentLedLimits.from_env()
+    agents = tuple(replace(a, max_timeout_seconds=limits.role_timeout(a)) for a in runtime.AGENTS)
+    max_calls = limits.max_calls
+    # Specialist calls plus retrieval need their own budget. Legacy V2's
     # common 120-second deployment setting must not silently truncate this flow.
-    timeout_seconds = setting('LLM_AGENT_LED_TIMEOUT_SECONDS', 780, 10, 900)
-    budget = TimeBudget(start, timeout_seconds, runtime.AGENTS)
+    timeout_seconds = limits.timeout_seconds
+    budget = TimeBudget(start, timeout_seconds, agents)
     deadline = budget.deadline
     run['budget'] = {'timeout_seconds': timeout_seconds, 'max_calls': max_calls,
-        'reserved_role_seconds':dict(zip((a.id for a in runtime.AGENTS),budget.reservations)),
+        'max_retries_per_drug_and_kind': limits.max_retries, 'max_input_chars': limits.input_chars,
+        'evidence_text_chars': limits.evidence_text_chars, 'evidence_context_chars': limits.evidence_context_chars,
+        'max_retrieval_drugs': limits.retrieval_drugs, 'drug_search_hits': limits.drug_search_hits,
+        'reserved_role_seconds':dict(zip((a.id for a in agents),budget.reservations)),
         'policy':'reserve_remaining_roles_before_retrieval_or_retry'}
     run['evidence_selection'] = []
 
@@ -326,25 +351,25 @@ def execute(case, provider_kind, document_service, run_id, checkpoint=None):
             cost = len(json.dumps(compact_sources([e])[0], ensure_ascii=False)) + 2
             # Include titles, locations and source identity in the selection
             # budget, reserving space for case facts and per-query coverage.
-            if size + len(e['text']) <= 65000 and context_size + cost <= 120000:
+            if size + len(e['text']) <= limits.evidence_text_chars and context_size + cost <= limits.evidence_context_chars:
                 chosen.append(copy.deepcopy(e)); size += len(e['text']); context_size += cost
         run['evidence_selection'].append({'agent_id': role, 'available_chunks': len(ranked), 'selected_chunks': len(chosen), 'omitted_chunks': len(ranked)-len(chosen), 'characters': size, 'context_characters': context_size})
         return chosen
 
     from .engine import evidence_query
     query = evidence_query(case)
-    for agent_index, agent in enumerate(runtime.AGENTS):
+    for agent_index, agent in enumerate(agents):
         if agent.id == 'evidence_agent':
-            retrieve(query, 8)
-            retrieve(query + ' recommended first choice alternative antibiotics', 4, stage='guideline_options')
-            for drug in drugs[:30]: retrieve(query + ' ' + drug.replace('_', ' '), 2, drug=drug)
+            retrieve(query, limits.infection_search_hits)
+            retrieve(query + ' recommended first choice alternative antibiotics', limits.guideline_search_hits, stage='guideline_options')
+            for drug in drugs[:limits.retrieval_drugs]: retrieve(query + ' ' + drug.replace('_', ' '), limits.drug_search_hits, drug=drug)
         if agent.id == 'clinical_agent':
-            for drug in drugs[:30]:
+            for drug in drugs[:limits.retrieval_drugs]:
                 active = ' '.join(str(m.get('drug_code', '')) for m in case.get('medications', []) if m.get('status') == 'active')
                 for dimension,terms in [('allergy','contraindications hypersensitivity allergy'),('renal','renal impairment creatinine clearance precautions'),('interactions','drug interactions '+active)]:
-                    retrieve(drug.replace('_',' ')+' '+terms,2,stage='clinical',drug=drug,dimension=dimension)
+                    retrieve(drug.replace('_',' ')+' '+terms,limits.drug_search_hits,stage='clinical',drug=drug,dimension=dimension)
             if case.get('allergies', {}).get('items'):
-                retrieve('antibiotic allergy labels confirmation observational study', 2, stage='background')
+                retrieve('antibiotic allergy labels confirmation observational study', limits.drug_search_hits, stage='background')
         role_facts = copy.deepcopy(facts)
         if agent.id != 'ast_agent': role_facts.pop('resistance_context', None)
         data = dict(facts=role_facts, ast_results=ast, drugs=drugs, original_drugs=list(drugs), evidence=[], assessments={}, claims=[])
@@ -388,7 +413,7 @@ def execute(case, provider_kind, document_service, run_id, checkpoint=None):
         if agent.id == 'evidence_audit':
             data = agent.input_type.model_validate(data).model_dump(mode='json')
             available = len(data['evidence'])
-            data = fit_audit_context(data)
+            data = fit_audit_context(data, limit=limits.audit_input_chars)
             run['evidence_selection'].append({'agent_id':agent.id,'available_chunks':available,
                 'selected_chunks':len(data['evidence']),'omitted_chunks':available-len(data['evidence']),
                 'characters':sum(len(e.get('text','')) for e in data['evidence'])})
@@ -411,60 +436,81 @@ def execute(case, provider_kind, document_service, run_id, checkpoint=None):
         retained=None; unresolved=[]
         try:
             data = agent.input_type.model_validate(data).model_dump(mode='json')
-            if len(json.dumps(data, ensure_ascii=False)) > 180000: raise ProviderError('AGENT_INPUT_TOO_LARGE')
+            original_data = data
+            size = batch_size(drugs, max_calls)
+            schedule = AgentSchedule(agent.id, data['drugs'], limits.max_retries, size)
             provider = runtime.Provider(provider_kind, agent)
             node['model'] = provider.model
             provider.check(case, data)
-            for attempt_no in range(2):
+            last_error = None
+            while (job := schedule.pop()) is not None:
+                future_calls = sum(initial_calls(a.id, drugs, size) for a in agents[agent_index + 1:])
+                if calls >= max_calls - future_calls:
+                    node['retry_skipped_reason'] = 'calls_reserved_for_remaining_agents'
+                    last_error = ProviderError('AGENT_BUDGET_EXCEEDED')
+                    break
                 now = time.perf_counter()
-                call_timeout = budget.call_timeout(now,agent_index,agent.max_timeout_seconds)
-                if calls >= max_calls: raise ProviderError('AGENT_BUDGET_EXCEEDED')
-                if call_timeout < 1: raise ProviderError('AGENT_TIME_RESERVED')
+                call_timeout = min(agent.max_timeout_seconds,
+                    budget.available(now, agent_index) / (1 + len(schedule.initial)))
+                if call_timeout < 1:
+                    node['retry_skipped_reason'] = 'time_reserved_for_remaining_agents'
+                    last_error = ProviderError('AGENT_TIME_RESERVED')
+                    break
+                data = batch_context(agent.id, original_data, job['drugs'])
+                data['validation_feedback'] = job['feedback'][:limits.feedback_items]
+                apply_citation_repairs(data, job['repairs'])
+                if len(json.dumps(data, ensure_ascii=False)) > limits.input_chars:
+                    last_error = ProviderError('AGENT_INPUT_TOO_LARGE')
+                    node.setdefault('batch_errors', []).append({'code': last_error.code, 'drugs': job['drugs']})
+                    continue
                 call_deadline = now + call_timeout
                 calls += 1
-                attempt = {'attempt': attempt_no + 1, 'status': 'running', 'started_at': utc()}
-                attempt['requested_drugs']=list(data['drugs'])
-                attempt['validation_feedback']=list(data.get('validation_feedback',[]))
-                attempt['timeout_seconds']=call_timeout
-                attempt['reserved_downstream_seconds']=sum(budget.reservations[agent_index+1:])
+                attempt = {'attempt': len(node['attempts']) + 1, 'kind': job['kind'],
+                           'status': 'running', 'started_at': utc()}
+                attempt['requested_drugs'] = list(data['drugs'])
+                attempt['validation_feedback'] = list(data.get('validation_feedback', []))
+                attempt['input_evidence_chunks'] = len(data['evidence'])
+                attempt['input_evidence_refs'] = [e['chunk_id'] for e in data['evidence']]
+                if data.get('citation_repairs'):
+                    attempt['citation_repairs'] = [{k: r[k] for k in
+                        ('drug_code', 'missing_quote_refs', 'dimensions', 'validation_issues')} for r in data['citation_repairs']]
+                attempt['timeout_seconds'] = call_timeout
+                attempt['reserved_downstream_seconds'] = sum(budget.reservations[agent_index + 1:])
                 node['attempts'].append(attempt)
                 save()
                 try:
                     reply = provider.complete(agent, copy.deepcopy(data), timeout=call_timeout)
                     attempt.update(usage=reply.get('usage'), response_id=reply.get('response_id'), finish_reason=reply.get('finish_reason'), output_token_limit=reply.get('output_token_limit'))
+                    if 'structured_output' in reply: attempt['structured_output'] = reply['structured_output']
                     if time.perf_counter() > call_deadline: raise ProviderError('AGENT_STAGE_TIMEOUT')
                     if reply.get('finish_reason') == 'length':
                         raise ProviderError('AGENT_OUTPUT_TRUNCATED')
                     if reply.get('citation_aliases') is not None:
                         attempt.update(citation_aliases=reply['citation_aliases'], request_input_hash=reply['request_input_hash'])
                         attempt['citation_spans'] = reply.get('citation_spans', {})
-                    output, diagnostics, unresolved = validate_partial(agent,reply.get('output'),data,validate_output)
-                    diagnostics=list(reply.get('wire_errors',[]))+diagnostics
+                    output, diagnostics, job_unresolved = validate_partial(agent, reply.get('output'), data, validate_output)
+                    diagnostics = list(reply.get('wire_errors', [])) + diagnostics
                     if time.perf_counter() > deadline: raise ProviderError('AGENT_BUDGET_EXCEEDED')
-                    retained=merge_partial(retained,output)
-                    attempt.update(status='completed', validation_status='partial' if diagnostics else 'valid', validation_details=diagnostics[:30])
-                    roles_left=len(runtime.AGENTS)-agent_index-1
-                    retry_time=budget.available(time.perf_counter(),agent_index)
-                    if diagnostics and attempt_no==0 and max_calls-calls>roles_left and retry_time>=1:
-                        data['validation_feedback']=diagnostics[:30]
-                        if unresolved:
-                            data['drugs']=unresolved
-                            data['claims']=[c for c in data['claims'] if c['drug_code'] in unresolved]
-                        continue
-                    if diagnostics and retry_time<1: node['retry_skipped_reason']='time_reserved_for_remaining_agents'
-                    break
+                    repairs = collect_citation_repairs(agent.id, reply.get('output'), data, job_unresolved, output)
+                    retained = merge_partial(retained, output)
+                    attempt.update(status='completed', validation_status='partial' if diagnostics else 'valid', validation_details=diagnostics[:limits.feedback_items])
+                    schedule.finish(job, job_unresolved, diagnostics, repairs)
                 except (ProviderError, ValidationError, ValueError, TypeError, KeyError) as exc:
+                    last_error = exc
                     if hasattr(exc, 'usage'):
                         attempt.update(usage=exc.usage, response_id=exc.response_id)
                     attempt.update(status='failed', validation_status='invalid', error_code=getattr(exc, 'code', 'AGENT_SCHEMA_INVALID'))
                     diagnostics = [f"{'.'.join(map(str,e['loc']))}: {e['type']}" for e in exc.errors(include_input=False,include_context=False)] if isinstance(exc,ValidationError) else getattr(exc, 'validation_details', [getattr(exc,'code',type(exc).__name__)])
-                    attempt['validation_details'] = diagnostics[:30]
-                    data['validation_feedback'] = diagnostics[:30]
-                    roles_left = len(runtime.AGENTS) - agent_index - 1
-                    if attempt_no == 1 or max_calls - calls <= roles_left or budget.available(time.perf_counter(),agent_index)<1 or isinstance(exc, ProviderError) and not exc.retryable:
-                        if retained is not None: break
-                        raise
-                finally: attempt['finished_at'] = utc()
+                    attempt['validation_details'] = diagnostics[:limits.feedback_items]
+                    if not isinstance(exc, ProviderError) or exc.retryable:
+                        schedule.finish(job, job['drugs'], diagnostics)
+                    else:
+                        break
+                finally:
+                    attempt['finished_at'] = utc()
+            unresolved = schedule.unresolved
+            if retained is None and last_error is not None:
+                raise last_error
             output=retained
             if output is None: raise ValueError('no valid agent content')
             outputs[agent.id] = output
@@ -479,7 +525,16 @@ def execute(case, provider_kind, document_service, run_id, checkpoint=None):
             code = getattr(exc, 'code', 'AGENT_SCHEMA_INVALID')
             node.update(status='failed', errors=[{'code': code}], input=None, content_withheld=True)
             run['errors'].append({'node_id': agent.id, 'code': code})
-        node.update(finished_at=utc(), elapsed_ms=round((time.perf_counter()-tick)*1000, 3), usage=sum_usage(node['attempts']), retry_count=max(0, len(node['attempts'])-1))
+        node.update(finished_at=utc(), elapsed_ms=round((time.perf_counter()-tick)*1000, 3), usage=sum_usage(node['attempts']), retry_count=sum(a.get('kind') != 'initial' for a in node['attempts']))
+        for group in run.get('evidence_coverage', []):
+            if group['agent_id'] != agent.id:
+                continue
+            attempted = {ref for attempt in node['attempts']
+                         if group.get('drug_code') in (None, *attempt['requested_drugs'])
+                         for ref in attempt['input_evidence_refs']}
+            group['unsent_refs'] = [ref for ref in group['evidence_refs'] if ref not in attempted]
+            group['unsent_count'] = len(group['unsent_refs'])
+            group['attempted_count'] = group['selected_count'] - group['unsent_count']
         save()
 
     by_role = {role: {x['drug_code']: x for x in out.get('drugs', [])} for role, out in outputs.items()}
@@ -529,7 +584,7 @@ def execute(case, provider_kind, document_service, run_id, checkpoint=None):
                 issues.append({'agent_id':'clinical_agent','field':dimension,'drug_code':row['drug_code'],
                     'impact':row['drug_code']+'：'+detail['reason']+('；'+detail['next_action'] if detail['next_action'] else ''),
                     'action':detail['next_action'] or '補充對應病例資料與文件後重新分析','blocking':detail['status']=='unknown'})
-    if len(drugs) > 30: issues.append({'agent_id': 'evidence_agent', 'field': 'drugs', 'impact': '逐藥檢索上限 30 項；其餘項目可能缺乏專屬片段', 'action': '縮小病例範圍後重新分析'})
+    if len(drugs) > limits.retrieval_drugs: issues.append({'agent_id': 'evidence_agent', 'field': 'drugs', 'impact': f'逐藥檢索上限 {limits.retrieval_drugs} 項；其餘項目可能缺乏專屬片段', 'action': '提高逐藥檢索設定或縮小病例範圍後重新分析'})
     for selection in run['evidence_selection']:
         if selection['omitted_chunks']:
             issues.append({'agent_id': selection['agent_id'], 'field': 'evidence_context', 'impact': f"輸入長度限制省略 {selection['omitted_chunks']} 個片段；未讀取部分不能視為已核對", 'action': '檢視引用快照，必要時縮小文件範圍重新分析'})

@@ -1,9 +1,12 @@
 """Bound independent audit input without removing claims or fabricating evidence."""
 import copy
 import json
+from app.agents.limits import AgentLedLimits
 
 
-def fit_audit_context(data, limit=178000):
+def fit_audit_context(data, limit=None):
+    if limit is None:
+        limit = AgentLedLimits.from_env().audit_input_chars
     result = copy.deepcopy(data)
     sources = {e['chunk_id']:e for e in result['evidence']}
     pools = []

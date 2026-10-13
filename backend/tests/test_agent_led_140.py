@@ -40,7 +40,7 @@ def test_repair_only_failed_drug_preserves_other_rows(monkeypatch):
     assert seen==[['DEMO_DRUG_A','amoxicillin'],['amoxicillin']]
 
 
-def test_failed_repair_keeps_valid_drug_and_limits_to_eight(monkeypatch):
+def test_failed_repair_keeps_valid_drug_and_honors_explicit_call_limit(monkeypatch):
     def change(agent,out,data):
         if agent.id=='clinical_agent':
             for row in out['drugs']:
@@ -49,7 +49,8 @@ def test_failed_repair_keeps_valid_drug_and_limits_to_eight(monkeypatch):
             for row in out['drugs']:
                 if row['drug_code']=='amoxicillin': row['quotes']=[]
     value=case(); value['ast_results'].append({**value['ast_results'][0],'drug_code':'amoxicillin'})
-    monkeypatch.setenv('LLM_V2_MAX_CALLS','16')
+    monkeypatch.setenv('LLM_AGENT_LED_MAX_CALLS','8')
+    monkeypatch.setenv('LLM_AGENT_LED_MAX_RETRIES','1')
     result=run(monkeypatch,change,value)
     assert result['agent_execution']['calls']==8
     assert [r['drug_code'] for r in result['output']['candidates']]==['DEMO_DRUG_A']
@@ -203,7 +204,7 @@ def test_repair_cannot_turn_unanchored_extra_drug_into_original_drug(monkeypatch
                 assert data['original_drugs']==['DEMO_DRUG_A']
     result=run(monkeypatch,change)
     evidence=next(n for n in result['nodes'] if n.get('agent_id')=='evidence_agent')
-    assert count==2
+    assert count==4
     assert [r['drug_code'] for r in evidence['output']['drugs']]==['DEMO_DRUG_A']
     assert not any(r['drug_code']=='invented' for r in result['drug_assessments'])
 

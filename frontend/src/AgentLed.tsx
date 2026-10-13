@@ -3,7 +3,7 @@ import { Fragment, useState } from 'react';
 import {physicianCandidates, physicianExcluded, riskNextAction} from './physicianCandidates';
 
 const dimensions:Record<string,string>={infection:'感染適用性',ast:'藥敏',allergy:'過敏',renal:'腎功能',interactions:'交互作用'};
-const blockerLabels:Record<string,string>={reported_avoid:'避用風險待釐清',model_output_incomplete:'模型回覆未完整',model_citation_missing:'模型漏選引用',retrieval_failed:'檢索未完成',retrieval_empty:'檢索未找到',input_omitted:'輸入片段被省略',case_data_missing:'病例缺資料',risk_unconfirmed:'風險尚未核對',citation_unsupported:'引用未支持',ast_unconfirmed:'藥敏尚未確認'};
+const blockerLabels:Record<string,string>={reported_avoid:'避用風險待釐清',model_output_incomplete:'模型回覆未完整',model_citation_missing:'模型漏選引用',retrieval_failed:'檢索未完成',retrieval_empty:'檢索未找到',input_omitted:'輸入片段被省略',input_not_sent:'輸入尚未送出',assessment_unconfirmed:'評估待確認',case_data_missing:'病例缺資料',risk_unconfirmed:'風險尚未核對',citation_unsupported:'引用未支持',ast_unconfirmed:'藥敏尚未確認'};
 
 const labels: Record<string,string> = {
   reviewable:'可供審閱', pending:'待確認', avoid:'不建議', not_selected:'未選入',
@@ -121,7 +121,7 @@ export function EvidenceCoverage({run}:{run:any}) {
       {run.evidence_coverage.map((g:any,i:number)=>{const notice=g.warnings || run.retrievals?.find((r:any)=>r.stage===g.stage && r.drug_code===g.drug_code)?.warnings || []; return <tr key={i}>
         <td>{titles[g.agent_id]}／{stages[g.stage] || g.stage}{g.dimension && `／${dimensions[g.dimension] || g.dimension}`}</td><td>{g.drug_code || '共同情境'}</td>
         <td>{statuses[g.retrieval_status] || g.retrieval_status}{notice.map((w:string,j:number)=><p key={j}>{warnings[w] || w}</p>)}</td><td>{g.retrieved_count}</td><td>{g.selected_count}</td><td>{g.omitted_refs?.length || 0}</td>
-        <td>{execution(run.nodes?.find((n:any)=>n.node_id===g.agent_id))}</td>
+        <td>{execution(run.nodes?.find((n:any)=>n.node_id===g.agent_id))}{g.attempted_count !== undefined && <p>納入呼叫：{g.attempted_count}；尚未送出：{g.unsent_count}</p>}</td>
         <td>{!!g.evidence_refs?.length && <details><summary>已準備片段</summary><CandidateEvidence refs={g.evidence_refs} evidence={run.evidence_snapshots}/></details>}
           {!!g.omitted_refs?.length && <details><summary>未納入片段（輸入長度限制）</summary><CandidateEvidence refs={g.omitted_refs} evidence={run.evidence_snapshots}/></details>}</td>
       </tr>})}

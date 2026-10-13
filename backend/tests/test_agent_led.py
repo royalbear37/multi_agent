@@ -144,7 +144,8 @@ def test_avoid_is_not_published_when_audit_quote_identifies_only_another_drug(mo
         return reply
     monkeypatch.setattr(rt.Provider,'complete',changed)
     run=execute(case(),'multi-agent','mock',OtherDrugDocs())
-    assert not run['errors']
+    assert {e['code'] for e in run['errors']} == {'AGENT_PARTIAL_INVALID'}
+    assert {e['node_id'] for e in run['errors']} == {'clinical_agent', 'evidence_audit'}
     assert not run['output']['avoid']
     assert run['drug_assessments'][0]['status']=='pending'
     assert run['drug_assessments'][0]['audit']['provenance_issues']
@@ -244,7 +245,7 @@ def test_retries_reserve_one_call_for_every_remaining_role(monkeypatch):
             return {'output': {'invalid': True}}
         return successful(self, agent, data, **kw)
     monkeypatch.setattr(rt.Provider, 'complete', changed)
-    monkeypatch.setenv('LLM_V2_MAX_CALLS', '8')
+    monkeypatch.setenv('LLM_AGENT_LED_MAX_CALLS', '8')
     run = execute(case(), 'multi-agent', 'mock', Docs())
     assert seen['evidence_audit'] == 1 and run['agent_execution']['calls'] == 8
     assert run['nodes'][2]['status'] == 'failed'

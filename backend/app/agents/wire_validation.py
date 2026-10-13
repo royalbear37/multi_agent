@@ -11,6 +11,8 @@ def checked_wire(raw, schema):
         # Report schema/path, not raw values or untrusted model prose.
         suffix=': '+', '.join(k for k in error.validator_value if k not in error.instance) if error.validator=='required' and isinstance(error.instance,dict) else ''
         diagnostics.append('.'.join(map(str,path))+': '+error.validator+suffix)
+        if path == ['drugs'] and error.validator in {'minItems', 'maxItems'}:
+            continue  # Preserve valid rows; the scheduler repairs missing assignments.
         if len(path)>1 and path[0]=='drugs' and isinstance(path[1],int): bad_rows.add(path[1])
         else: envelope_bad=True
     if envelope_bad:

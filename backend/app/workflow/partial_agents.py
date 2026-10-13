@@ -1,6 +1,7 @@
 """Preserve validated rows and repair only incomplete rows within the call budget."""
 import copy
 from pydantic import ValidationError
+from .citation_repairs import citation_repair
 
 
 def validate_partial(agent, raw, data, validate):
@@ -33,6 +34,17 @@ def validate_partial(agent, raw, data, validate):
                 problems.append('quotes: select supplied chunk_id/span_ids or explicitly report uncertainty')
             if checked.get('citation_validation',{}).get('invalid_count') or checked.get('reference_validation',{}).get('invalid_refs'):
                 problems.append('references: select identifiers and spans supplied in this call')
+            repair = citation_repair(agent.id, row, data, checked)
+            if repair:
+                problems.append('citations: incomplete or unsupported source selections in ' + ', '.join(repair['dimensions']) +
+                    '; use citation_repairs.missing_quote_refs to select supplied spans, recheck the previous '
+                    'assessment, remove unsupported references or report uncertainty')
+            if agent.id == 'ast_agent' and checked.get('source_validation', {}).get('status') == 'unconfirmed':
+                problems.append('ast_sources: select the nonempty selected_field for this drug; comparison categories belong in the reason, not a definite category source selection')
+            if (agent.id == 'evidence_audit' and
+                    (row.get('ast_check') or {}).get('assessment') in {'susceptible', 'intermediate', 'resistant', 'conflicting'} and
+                    checked.get('ast_check_validation', {}).get('source_status') == 'unconfirmed'):
+                problems.append('ast_sources: independently select the applicable original category source, or explicitly retain unknown/untested when unavailable')
             if agent.id=='synthesis_agent' and (len(row.get('claims',[]))!=5 or {c['dimension'] for c in row.get('claims',[])}!={'infection','ast','allergy','renal','interactions'}):
                 problems.append('claims: provide each of the five dimensions exactly once')
             if agent.id=='evidence_audit' and not checked.get('claim_checks_complete'):
@@ -41,9 +53,16 @@ def validate_partial(agent, raw, data, validate):
                 unresolved.append(drug); diagnostics.extend(f'{drug}: {p}' for p in problems)
         except (ValidationError,ValueError,TypeError,KeyError) as exc:
             diagnostics.append(f'{drug}: '+type(exc).__name__); unresolved.append(drug)
-    for drug in expected-seen:
+    for drug in (d for d in data['drugs'] if d not in seen):
         unresolved.append(drug); diagnostics.append(f'{drug}: missing valid drug row')
-    result['issues']=[i for i in result['issues'] if i.get('drug_code') is None or i.get('drug_code') in seen]
+    issues = []
+    for issue in result['issues']:
+        if issue.get('field') in {'drug_rows', 'drugs'} and issue.get('drug_code') is None:
+            # Missing model rows are local output gaps, not global case facts.
+            issues.extend({**issue, 'drug_code': drug} for drug in dict.fromkeys(unresolved))
+        elif issue.get('drug_code') is None or issue.get('drug_code') in seen:
+            issues.append(issue)
+    result['issues'] = issues
     return result, diagnostics, list(dict.fromkeys(unresolved))
 
 

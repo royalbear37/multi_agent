@@ -9,6 +9,7 @@ from typing import Any
 from urllib.parse import urlparse
 
 from app.providers.service import OpenAICompatibleProvider, ProviderError
+from .structured_output import strict_output_schema
 from .contracts_v2 import (
     CaseInput, ASTInput, EvidenceInput, ClinicalInput, SynthesisInput,
     CaseAssessment, ASTAssessment, EvidenceAssessment, ClinicalAssessment, SynthesisOutput,
@@ -123,14 +124,20 @@ class AgentProvider:
         if self.kind == "mock":
             return {"output": mock_output(agent, data), "usage": None, "response_id": None}
         provider = OpenAICompatibleProvider(self.base_url, self.model, self.key, timeout=timeout, retries=0)
+        structured = getattr(agent, 'structured_output', False) and os.getenv('LLM_AGENT_STRUCTURED_OUTPUTS', 'true').lower() not in {'false', '0', 'off'}
+        schema = agent.output_type.model_json_schema()
+        if structured:
+            schema = strict_output_schema(schema)
         payload = {
             "model": self.model,
             "messages": [
                 {"role": "system", "content": getattr(agent, 'common', COMMON) + " " + agent.instruction},
                 {"role": "user", "content": json.dumps({"input": data,
-                    "output_schema": agent.output_type.model_json_schema()}, ensure_ascii=False)},
+                    "output_schema": schema}, ensure_ascii=False)},
             ],
-            "temperature": 0, "response_format": {"type": "json_object"},
+            "temperature": 0,
+            "response_format": {"type": "json_schema", "json_schema": {
+                "name": agent.id, "strict": True, "schema": schema}} if structured else {"type": "json_object"},
             "max_tokens": setting(getattr(agent, 'output_tokens_setting', 'LLM_V2_MAX_OUTPUT_TOKENS'), getattr(agent, 'max_output_tokens', 2000), 256, getattr(agent, 'output_token_ceiling', 8000)),
         }
         response, _ = provider._request(payload)
@@ -148,6 +155,7 @@ class AgentProvider:
         except (KeyError, IndexError, TypeError, ValueError):
             output = None
         return {"output": output, "usage": usage or None, "finish_reason": finish_reason, "output_token_limit": payload["max_tokens"],
+                "structured_output": bool(structured),
                 "response_id": str(response.get("id", ""))[:200] if isinstance(response, dict) else None}
 
 

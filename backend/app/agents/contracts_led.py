@@ -162,6 +162,7 @@ class Input(Message):
     assessments: dict[str, Any] = Field(default_factory=dict)
     claims: list[dict[str, Any]] = Field(default_factory=list)
     validation_feedback: list[str] = Field(default_factory=list)
+    citation_repairs: list[dict[str, Any]] = Field(default_factory=list)
     risk_details_required: bool = False
     ast_sources_required: bool = False
     audit_sources_required: bool = False

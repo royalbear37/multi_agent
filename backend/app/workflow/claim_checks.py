@@ -81,10 +81,18 @@ def classify_options(run):
         for node in run['nodes']:
             if node.get('agent_id') and row['drug_code'] in node.get('unresolved_drugs',[]):
                 blockers.append({'kind':'model_output_incomplete','agent_id':node['agent_id'],'detail':'模型回覆格式或引用尚未補齊'})
+        for issue in run.get('confirmation_items', []):
+            if (issue.get('agent_id') in {'case_agent', 'clinical_agent'} and issue.get('blocking')
+                    and issue.get('drug_code') in (None, row['drug_code'])):
+                blockers.append({'kind':'assessment_unconfirmed','agent_id':issue['agent_id'],
+                                 'detail':issue['impact']})
         for group in run.get('evidence_coverage',[]):
             if group.get('drug_code') not in (None,row['drug_code']): continue
             kind='retrieval_failed' if group['retrieval_status'] not in {'ok','no_results'} else 'retrieval_empty' if not group['retrieved_count'] else 'input_omitted' if group['omitted_count'] else None
             if kind: blockers.append({'kind':kind,'dimension':group.get('dimension'),'detail':'查詢或輸入片段尚未完整提供'})
+            if group.get('unsent_count'):
+                blockers.append({'kind':'input_not_sent','dimension':group.get('dimension'),
+                                 'detail':'已準備的片段尚未納入此藥的模型呼叫；請查看執行預算或輸入錯誤'})
         for dimension,detail in (risk.get('risk_details') or {}).items():
             if detail.get('missing_fields'): blockers.append({'kind':'case_data_missing','dimension':dimension,'detail':'、'.join(detail['missing_fields'])})
             if detail.get('status')=='unknown': blockers.append({'kind':'risk_unconfirmed','dimension':dimension,'detail':detail['reason']})

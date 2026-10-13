@@ -98,6 +98,15 @@ test.each([
  expect(screen.queryByText('送入')).toBeNull();
 });
 
+test('prepared evidence reports unsent drug batches separately from retrieval omissions',()=>{
+ render(<EvidenceCoverage run={{nodes:[{node_id:'clinical_agent',attempts:[{status:'completed'}]}],evidence_coverage:[
+  {agent_id:'clinical_agent',stage:'clinical',drug_code:'ampicillin',retrieval_status:'ok',retrieved_count:4,selected_count:4,evidence_refs:[],omitted_refs:[],attempted_count:0,unsent_count:4}
+ ]}}/>);
+ fireEvent.click(screen.getByText('逐藥證據準備與呼叫情況'));
+ expect(screen.getByText('納入呼叫：0；尚未送出：4')).toBeVisible();
+ expect(screen.queryByText('未納入片段（輸入長度限制）')).toBeNull();
+});
+
 test('agent workflow shows drug-specific pending reasons without rule terminology',()=>{
  const run={decision_basis:'agent',retrievals:[],evidence_snapshots:[],drug_assessments:[{drug_code:'amoxicillin',status:'pending',ast_available:false,reason:'缺少支持片段',source_ast:[],clinical:{status:'unknown',allergy:'未確認',renal:'缺測量',interactions:'未確認'},evidence:{status:'uncertain'}}]};
  render(<DrugOverview run={run}/>);
@@ -159,7 +168,7 @@ test('empty agent issue list does not conceal unresolved drug rows',()=>{
  expect(screen.queryByText('此步驟未列出額外待確認事項。')).toBeNull();
 });
 
-test.each(['agent-led-1.4.0','agent-led-1.4.1','agent-led-1.4.2','agent-led-1.5.0','agent-led-1.5.1','agent-led-1.6.0'])('new layered table %s shows a review option once with risk gaps and distinct claim checks',(version)=>{
+test.each(['agent-led-1.4.0','agent-led-1.4.1','agent-led-1.4.2','agent-led-1.5.0','agent-led-1.5.1','agent-led-1.6.0','agent-led-1.7.0','agent-led-1.7.1','agent-led-1.8.0'])('new layered table %s shows a review option once with risk gaps and distinct claim checks',(version)=>{
  const row={drug_code:'option_a',status:'pending',result_tier:'review_option',ast_available:false,source_ast:[],
    blockers:[{kind:'case_data_missing',dimension:'renal',detail:'腎功能檢驗時間未提供'}],
    audit:{verdict:'uncertain',basis:'mixed',quotes:[],claim_checks:[{dimension:'infection',verdict:'supported',reason:'感染來源已核對',evidence_refs:[]},{dimension:'renal',verdict:'uncertain',reason:'風險尚待核對',evidence_refs:[]}]}};

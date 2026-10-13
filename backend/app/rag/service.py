@@ -57,7 +57,7 @@ class OllamaEmbeddingProvider:
         *,
         base_url: str = "http://127.0.0.1:11434",
         model: str = "embeddinggemma",
-        timeout: float = 30.0,
+        timeout: float = 180.0,
         prompt_version: str | None = None,
     ):
         self.base_url = str(base_url).rstrip("/")
@@ -182,12 +182,12 @@ class DocumentService:
             self._configuration_warnings.append("invalid_retrieval_mode_defaulted")
             self.retrieval_mode = "embedding"
         try:
-            configured_timeout = float(embedding_timeout if embedding_timeout is not None else os.getenv("EMBEDDING_TIMEOUT", os.getenv("EMBEDDING_TIMEOUT_SECONDS", "30")))
+            configured_timeout = float(embedding_timeout if embedding_timeout is not None else os.getenv("EMBEDDING_TIMEOUT", os.getenv("EMBEDDING_TIMEOUT_SECONDS", "180")))
         except (TypeError, ValueError):
-            configured_timeout = 30.0
+            configured_timeout = 180.0
             self._configuration_warnings.append("invalid_embedding_timeout_defaulted")
         if not math.isfinite(configured_timeout) or configured_timeout <= 0:
-            configured_timeout = 30.0
+            configured_timeout = 180.0
             self._configuration_warnings.append("invalid_embedding_timeout_defaulted")
         self.embedding_provider = embedding_provider or OllamaEmbeddingProvider(
             base_url=embedding_base_url or os.getenv("EMBEDDING_BASE_URL", "http://127.0.0.1:11434"),
