@@ -34,7 +34,7 @@ def _fixture(case_id: str) -> dict:
 
 def test_complete_interactive_cases_run_with_mock_embedding_and_llm(tmp_path):
     embeddings = FlatMockEmbeddings()
-    documents = DocumentService(tmp_path / "documents", embedding_provider=embeddings)
+    documents = DocumentService(tmp_path / "documents", retrieval_mode="embedding", embedding_provider=embeddings)
     policy = ROOT / "data" / "demo_documents" / "synthetic_policy.md"
     documents.import_document(
         policy.name,

@@ -27,7 +27,7 @@ class FakeEmbeddings:
 
 def test_reindex_recovers_changed_dimensions_and_preserves_old_on_failure(tmp_path):
     provider = FakeEmbeddings()
-    service = DocumentService(tmp_path, embedding_provider=provider)
+    service = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=provider)
     service.import_document("a.txt", b"kidney", "A", "v1")
     assert service.reindex()["status"] == "ok"
     provider.embed = lambda texts: [[1.0, 0.0, 0.0] for _ in texts]
@@ -262,7 +262,7 @@ def test_reference_scope_searches_only_non_synthetic_documents(tmp_path: Path):
 
 def test_reference_scope_reindex_isolated_from_synthetic_index(tmp_path: Path):
     provider = FakeEmbeddings()
-    service = DocumentService(tmp_path, embedding_provider=provider)
+    service = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=provider)
     reference = service.import_document("who.txt", b"kidney reference", "WHO", "2024", is_synthetic=False)
     synthetic = service.import_document("demo.txt", b"kidney demo", "Demo", "v1", is_synthetic=True)
 
@@ -362,7 +362,7 @@ def test_pdf_table_page_is_excluded_until_review(tmp_path: Path):
 
 def test_embedding_retrieval_finds_semantic_match_and_persists(tmp_path: Path):
     provider = FakeEmbeddings()
-    service = DocumentService(tmp_path, embedding_provider=provider)
+    service = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=provider)
     doc = service.import_document("semantic.txt", b"The patient has kidney dysfunction.", "Semantic", "v1")
     service.import_document("other.txt", b"The culture grew an unrelated organism.", "Other", "v1")
     result = service.search("renal complications", limit=1)
@@ -371,13 +371,13 @@ def test_embedding_retrieval_finds_semantic_match_and_persists(tmp_path: Path):
     assert result["evidence"][0]["score"] == 1.0
     assert service.status()["index"]["embedded_chunks"] == 2
 
-    reopened = DocumentService(tmp_path, embedding_provider=FakeEmbeddings())
+    reopened = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=FakeEmbeddings())
     assert reopened.search("renal complications", limit=1)["status"] == "ok"
     assert len(reopened.embedding_provider.calls) == 1  # query only; chunk vectors were persisted
 
 
 def test_embedding_search_ranks_by_cosine_after_normalization(tmp_path: Path):
-    service = DocumentService(tmp_path, embedding_provider=NonUnitEmbeddings())
+    service = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=NonUnitEmbeddings())
     first = service.import_document("first.txt", b"first", "First", "v1")
     service.import_document("second.txt", b"second", "Second", "v1")
     result = service.search("query", limit=1)
@@ -387,7 +387,7 @@ def test_embedding_search_ranks_by_cosine_after_normalization(tmp_path: Path):
 
 def test_embedding_dimension_mismatch_returns_no_evidence_and_does_not_index(tmp_path: Path):
     provider = MismatchedDimensions()
-    service = DocumentService(tmp_path, embedding_provider=provider)
+    service = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=provider)
     service.import_document("a.txt", b"kidney finding", "Policy", "v1")
     result = service.search("query")
     assert result["status"] == "failed"
@@ -398,7 +398,7 @@ def test_embedding_dimension_mismatch_returns_no_evidence_and_does_not_index(tmp
 
 def test_embedding_index_excludes_non_synthetic_documents(tmp_path: Path):
     provider = FakeEmbeddings()
-    service = DocumentService(tmp_path, embedding_provider=provider)
+    service = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=provider)
     service.import_document("private.txt", b"kidney private", "Private", "v1", is_synthetic=False)
     service.import_document("public.txt", b"kidney public", "Public", "v1")
     assert service.reindex()["status"] == "ok"
@@ -408,10 +408,10 @@ def test_embedding_index_excludes_non_synthetic_documents(tmp_path: Path):
 
 
 def test_embedding_model_switch_creates_new_fingerprint(tmp_path: Path):
-    first = DocumentService(tmp_path, embedding_provider=FakeEmbeddings("model-a"))
+    first = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=FakeEmbeddings("model-a"))
     first.import_document("a.txt", b"kidney finding", "Policy", "v1")
     first.search("renal")
-    second = DocumentService(tmp_path, embedding_provider=FakeEmbeddings("model-b"))
+    second = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=FakeEmbeddings("model-b"))
     result = second.search("renal")
     assert result["status"] == "ok"
     assert second.status()["index"]["embedded_chunks"] == 1
@@ -420,7 +420,7 @@ def test_embedding_model_switch_creates_new_fingerprint(tmp_path: Path):
 
 
 def test_embedding_failure_returns_no_evidence(tmp_path: Path):
-    service = DocumentService(tmp_path, embedding_provider=BrokenEmbeddings())
+    service = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=BrokenEmbeddings())
     service.import_document("a.txt", b"kidney finding", "Policy", "v1")
     result = service.search("renal")
     assert result["status"] == "failed"
@@ -429,7 +429,7 @@ def test_embedding_failure_returns_no_evidence(tmp_path: Path):
 
 
 def test_invalid_embedding_vectors_are_rejected(tmp_path: Path):
-    service = DocumentService(tmp_path, embedding_provider=InvalidEmbeddings())
+    service = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=InvalidEmbeddings())
     service.import_document("a.txt", b"kidney finding", "Policy", "v1")
     result = service.search("renal")
     assert result["status"] == "failed"
@@ -438,7 +438,7 @@ def test_invalid_embedding_vectors_are_rejected(tmp_path: Path):
 
 
 def test_embedding_policy_filter_and_limit_one_version_guard(tmp_path: Path):
-    service = DocumentService(tmp_path, embedding_provider=FakeEmbeddings())
+    service = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=FakeEmbeddings())
     service.import_document("v1.txt", b"kidney guidance", "Policy", "v1", policy_refs=["P1"])
     service.import_document("v2.txt", b"kidney guidance revised", "Policy", "v2", policy_refs=["P2"])
     assert service.search("renal", limit=1)["status"] == "conflict"
@@ -450,7 +450,7 @@ def test_embedding_policy_filter_and_limit_one_version_guard(tmp_path: Path):
 
 def test_reindex_rolls_back_partial_batch_on_provider_failure(tmp_path: Path):
     provider = FailSecondBatchEmbeddings()
-    service = DocumentService(tmp_path, embedding_provider=provider)
+    service = DocumentService(tmp_path, retrieval_mode="embedding", embedding_provider=provider)
     content = "\n".join(f"# Section {number}\nkidney guidance {number}" for number in range(33)).encode()
     service.import_document("many.md", content, "Many", "v1")
     result = service.reindex()

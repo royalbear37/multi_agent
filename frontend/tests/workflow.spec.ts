@@ -1,5 +1,28 @@
 import { expect, test } from "@playwright/test";
 
+function expectPendingMock(run: any) {
+  expect(run.provider_kind).toBe("mock");
+  expect(run.is_mock).toBe(true);
+  expect(run.versions.workflow).toBe("agent-led-1.6.0");
+  expect(run.status).toBe("partial");
+  expect(run.gate_status).toBe("needs_confirmation");
+  expect(run.errors).toEqual([]);
+  const agents = run.nodes.filter((n: any) => n.agent_id);
+  expect(agents.map((n: any) => n.agent_id)).toEqual([
+    "case_agent", "ast_agent", "evidence_agent", "clinical_agent", "synthesis_agent", "evidence_audit",
+  ]);
+  expect(run.agent_execution.calls).toBe(6);
+  expect(agents.every((n: any) => n.attempts.length === 1 && n.attempts[0].status === "completed")).toBeTruthy();
+  expect(agents.map((n: any) => n.status)).toEqual(["completed", ...Array(5).fill("needs_confirmation")]);
+  const drugs = [...new Set(run.case_snapshot.ast_results.map((a: any) => a.drug_code))];
+  expect(drugs.length).toBeGreaterThan(0);
+  expect(run.output.candidates).toEqual([]);
+  expect(run.output.pending.map((d: any) => d.drug_code)).toEqual(drugs);
+  expect(run.drug_assessments.every((d: any) => d.status === "pending")).toBeTruthy();
+  expect(run.physician_candidates.map((d: any) => d.drug_code)).toEqual(drugs);
+  expect(run.physician_candidates.every((d: any) => d.verification_status === "incomplete")).toBeTruthy();
+}
+
 test("multi-agent independent agents are persisted and visible in the workflow", async ({ page }) => {
   await page.goto("/");
   await page.getByLabel("目前病例").selectOption("case-01-complete");
@@ -10,17 +33,28 @@ test("multi-agent independent agents are persisted and visible in the workflow",
   const run = await (await response).json();
   expect(run.mode).toBe("multi-agent");
   expect(run.output).not.toBeNull();
-  const agents = run.nodes.filter((n: any) => n.agent_id);
-  expect(agents).toHaveLength(5);
-  expect(agents.every((n: any) => n.attempts.length === 1)).toBeTruthy();
+  expectPendingMock(run);
+  await expect(page.getByRole("heading", { name: "逐藥分析總覽", exact: true })).toBeVisible();
+  await expect(page.locator(".analysis-counts")).toContainText("0 項 AI 完整核對");
   await page.getByRole("button", { name: "查看證據與流程" }).click();
-  const synthesis = page.locator("details.node").filter({ hasText: "結果整合 Agent" });
+  const synthesis = page.locator("#agent-step-synthesis_agent");
   await synthesis.locator("summary").first().click();
   await expect(synthesis.getByText(/模型：synthetic-agent-mock-v2/)).toBeVisible();
-  await synthesis.getByText("技術資料：Agent 輸入（JSON）", { exact: true }).click();
-  await expect(synthesis.getByText(/clinical_assessment/).first()).toBeVisible();
+  await synthesis.getByText("查看判斷理由與來源", { exact: true }).click();
+  await expect(synthesis.getByText("MOCK：僅驗證流程", { exact: true })).toBeVisible();
   const trace = await page.request.get(`/api/runs/${run.run_id}/trace`);
-  expect((await trace.json()).nodes.filter((n: any) => n.agent_id)).toHaveLength(5);
+  expect(trace.ok()).toBeTruthy();
+  const nodes = (await trace.json()).nodes;
+  expect(nodes.filter((n: any) => n.agent_id)).toHaveLength(6);
+  const synthesisInput = nodes.find((n: any) => n.node_id === "synthesis_agent").input;
+  expect(Object.keys(synthesisInput.assessments)).toEqual(["case_agent", "ast_agent", "evidence_agent", "clinical_agent"]);
+  expect(synthesisInput.assessments.clinical_agent.drugs[0].status).toBe("unknown");
+  const auditInput = nodes.find((n: any) => n.node_id === "evidence_audit").input;
+  expect(auditInput.assessments).toEqual({});
+  expect(auditInput.claims[0].claims).toHaveLength(5);
+  const saved = await page.request.get(`/api/runs/${run.run_id}`);
+  expect(saved.ok()).toBeTruthy();
+  expectPendingMock(await saved.json());
 });
 
 test.beforeAll(async ({ request }) => {
@@ -156,9 +190,22 @@ test("adult case with pediatric-only reference withholds output and explains why
   await page.getByLabel("目前病例").selectOption("case-population-mismatch");
   await page.getByLabel("比較模式").selectOption("multi-agent");
   await page.getByLabel("模型執行方式").selectOption("mock");
+  const multiResponse = page.waitForResponse(r => r.url().endsWith("/api/runs") && r.request().method() === "POST");
   await page.getByRole("button", { name: "執行分析", exact: true }).click();
+  expectPendingMock(await (await multiResponse).json());
   await expect(page.locator(".candidate")).toHaveCount(0);
-  await expect(page.getByText("沒有族群相符且已標示的參考片段，請確認文件範圍後重新分析")).toBeVisible();
+  // The baseline population gate and agent-led Audit are different paths.
+  // Keep the multi-agent non-publication check, then verify the explicit gate.
+  await page.getByRole("button", { name: "01病例工作台" }).click();
+  await page.getByLabel("比較模式").selectOption("single-agent");
+  const baselineResponse = page.waitForResponse(r => r.url().endsWith("/api/runs") && r.request().method() === "POST");
+  await page.getByRole("button", { name: "執行分析", exact: true }).click();
+  const baseline = await (await baselineResponse).json();
+  expect(baseline.output).toBeNull();
+  expect(baseline.gate_status).toBe("needs_confirmation");
+  expect(baseline.nodes.find((n: any) => n.node_id === "evidence_retrieval").output.population_filter.mismatched).toBe(1);
+  expect(baseline.nodes.find((n: any) => n.node_id === "candidate_presentation").status).toBe("skipped");
+  await expect(page.getByText("沒有族群相符且已標示的參考片段，請確認文件範圍後重新分析", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "查看證據與流程" }).click();
   const retrieval = page.locator("details.node").nth(4);
   await retrieval.locator("summary").first().click();
@@ -171,13 +218,14 @@ test("seed → analysis → evidence/trace → review → reread persists", asyn
   const selector = page.getByLabel("目前病例");
   const first = "case-01-complete";
   await selector.selectOption(first);
+  await page.getByLabel("比較模式").selectOption("rule-only");
   await expect(
     page.getByRole("button", { name: "執行分析", exact: true }),
   ).toBeEnabled();
   await page.getByRole("button", { name: "執行分析", exact: true }).click();
   await expect(page.getByText("可供審閱的藥敏選項")).toBeVisible();
   await expect(
-    page.getByText("ceftriaxone", { exact: false }).first(),
+    page.locator(".candidate").getByRole("heading", { name: /^ceftriaxone/ }),
   ).toBeVisible();
   await page.screenshot({
     path: "test-results/analysis-overview.png",
@@ -189,8 +237,11 @@ test("seed → analysis → evidence/trace → review → reread persists", asyn
   await step.locator("summary").first().click();
   await expect(step.getByText("來源藥敏：1 筆")).toBeVisible();
   await expect(step.locator("pre")).not.toBeVisible();
-  await step.getByText("詳細資料（原始 JSON）", { exact: true }).click();
+  await step.getByText("技術資料（原始 JSON，供除錯）", { exact: true }).click();
   await expect(step.locator("pre")).toBeVisible();
+  const sourceGroup = page.locator(".source-group").filter({ hasText: "Workflow reference fixture" });
+  await sourceGroup.locator("summary").first().click();
+  await sourceGroup.locator(".source-excerpt summary").first().click();
   await expect(
     page.getByRole("link", { name: "開啟原始文件" }).first(),
   ).toBeVisible();
@@ -224,14 +275,24 @@ test("unknown allergy withholds output and cannot be accepted", async ({
 }) => {
   await page.goto("/");
   await page.getByLabel("目前病例").selectOption("case-03-allergy-unknown");
+  await page.getByLabel("比較模式").selectOption("rule-only");
+  const response = page.waitForResponse(r => r.url().endsWith("/api/runs") && r.request().method() === "POST");
   await page.getByRole("button", { name: "執行分析", exact: true }).click();
+  const run = await (await response).json();
   await expect(
     page.getByText(/未產生候選：.*前置安全檢查未通過，因此 Agent 尚未呼叫。/),
   ).toBeVisible();
   await page.getByRole("button", { name: "前往人工審閱" }).click();
   await page.getByLabel("審閱理由").fill("不應解除資料缺漏限制");
-  await page.getByRole("button", { name: "送出審閱" }).click();
-  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(page.getByRole("option", { name: "接受", exact: true })).toHaveJSProperty("disabled", true);
+  await expect(page.getByRole("option", { name: "修改", exact: true })).toHaveJSProperty("disabled", true);
+  await expect(page.getByRole("button", { name: "送出審閱" })).toBeDisabled();
+  const attemptedAccept = await page.request.post("/api/reviews", { data: {
+    run_id: run.run_id, action: "accept", reason: "E2E must not bypass unknown allergy",
+    reviewer_id: "demo-user", role: "physician",
+  } });
+  expect(attemptedAccept.status()).toBe(422);
+  expect(await (await page.request.get(`/api/reviews?run_id=${run.run_id}`)).json()).toEqual([]);
 });
 
 test("explicit mock multi-agent and four mode benchmark", async ({ page }) => {
@@ -239,13 +300,20 @@ test("explicit mock multi-agent and four mode benchmark", async ({ page }) => {
   await page.getByLabel("目前病例").selectOption("case-01-complete");
   await page.getByLabel("比較模式").selectOption("multi-agent");
   await page.getByLabel("模型執行方式").selectOption("mock");
+  const response = page.waitForResponse(r => r.url().endsWith("/api/runs") && r.request().method() === "POST");
   await page.getByRole("button", { name: "執行分析", exact: true }).click();
-  await expect(page.getByText("可供審閱的藥敏選項")).toBeVisible();
-  await expect(page.locator(".candidate")).not.toHaveCount(0);
+  expectPendingMock(await (await response).json());
+  await expect(page.getByRole("heading", { name: "逐藥分析總覽", exact: true })).toBeVisible();
+  await expect(page.locator(".analysis-counts")).toContainText("0 項 AI 完整核對");
   await expect(page.locator(".runbanner")).toContainText("MOCK 模擬");
   await page.getByRole("button", { name: "06研究與設定" }).click();
+  await page.getByRole("checkbox", { name: "case-01-complete", exact: true }).check();
   await page.getByLabel("Benchmark 模型").selectOption("mock");
-  await page.getByRole("button", { name: "執行四模式比較" }).click();
+  const benchmarkResponse = page.waitForResponse(r => r.url().endsWith("/api/benchmarks") && r.request().method() === "POST");
+  await page.getByRole("button", { name: "執行所選比較", exact: true }).click();
+  const benchmark = await (await benchmarkResponse).json();
+  expect(benchmark.modes).toEqual(["rule-only", "rag-only", "single-agent", "multi-agent"]);
+  expectPendingMock(benchmark.results.find((r: any) => r.mode === "multi-agent" && r.case_id === "case-01-complete"));
   await expect(
     page.getByRole("link", { name: "匯出逐案例結果與摘要" }),
   ).toBeVisible({ timeout: 30000 });
